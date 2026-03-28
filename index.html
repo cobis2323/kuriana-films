@@ -1,0 +1,1186 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KURIANA FILMS</title>
+<style>
+/* ========== RESET & BASE ========== */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0a0a;--bg2:#111;--bg3:#1a1a1a;--bg4:#222;
+  --text:#e0e0e0;--text2:#888;--border:#333;
+  --cine:#d4a843;--anime:#e84393;--horror:#c0392b;
+  --grilla:#00cec9;--video:#00b894;
+  --active:var(--cine);
+  --radius:8px;
+}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+::selection{background:var(--active);color:#000}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+/* ========== HEADER ========== */
+.header{
+  padding:20px 30px;display:flex;align-items:center;
+  justify-content:space-between;border-bottom:1px solid var(--border);
+  background:var(--bg2);position:sticky;top:0;z-index:100;
+}
+.logo{font-size:1.5rem;font-weight:800;letter-spacing:3px}
+.logo span{color:var(--active);transition:color .3s}
+.header-sub{font-size:.7rem;color:var(--text2);letter-spacing:5px;text-transform:uppercase}
+
+/* ========== TABS ========== */
+.tabs{
+  display:flex;gap:0;background:var(--bg2);
+  border-bottom:1px solid var(--border);
+  padding:0 30px;position:sticky;top:65px;z-index:99;
+}
+.tab{
+  padding:14px 24px;cursor:pointer;font-size:.85rem;
+  font-weight:600;letter-spacing:1px;color:var(--text2);
+  border-bottom:2px solid transparent;transition:all .3s;
+  display:flex;align-items:center;gap:8px;
+}
+.tab:hover{color:var(--text);background:var(--bg3)}
+.tab.active{color:var(--active);border-bottom-color:var(--active)}
+.tab-icon{font-size:1.1rem}
+
+/* ========== LAYOUT ========== */
+.main{display:flex;min-height:calc(100vh - 120px)}
+.panel-left{
+  flex:1;padding:30px;overflow-y:auto;
+  max-height:calc(100vh - 120px);
+}
+.panel-right{
+  width:400px;background:var(--bg2);border-left:1px solid var(--border);
+  padding:24px;position:sticky;top:120px;
+  max-height:calc(100vh - 120px);overflow-y:auto;
+  display:flex;flex-direction:column;
+}
+
+/* ========== MODULES ========== */
+.module{
+  margin-bottom:24px;border:1px solid var(--border);
+  border-radius:var(--radius);overflow:hidden;
+}
+.module-header{
+  padding:14px 18px;background:var(--bg3);
+  display:flex;align-items:center;gap:10px;
+  cursor:pointer;user-select:none;
+}
+.module-header h3{
+  font-size:.85rem;letter-spacing:2px;
+  text-transform:uppercase;color:var(--active);
+  font-weight:700;
+}
+.module-number{
+  font-size:.7rem;background:var(--active);color:#000;
+  padding:2px 8px;border-radius:10px;font-weight:800;
+}
+.module-body{padding:18px;background:var(--bg)}
+.module-body.collapsed{display:none}
+
+/* ========== FORM ELEMENTS ========== */
+.field{margin-bottom:16px}
+.field-label{
+  font-size:.75rem;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--active);margin-bottom:6px;font-weight:600;
+}
+.field-row{display:flex;gap:12px}
+.field-row .field{flex:1}
+textarea,.text-input{
+  width:100%;background:var(--bg3);border:1px solid var(--border);
+  color:var(--text);padding:12px;border-radius:var(--radius);
+  font-family:inherit;font-size:.9rem;resize:vertical;
+  transition:border-color .3s;
+}
+textarea:focus,.text-input:focus{outline:none;border-color:var(--active)}
+textarea{min-height:80px}
+select{
+  width:100%;background:var(--bg3);border:1px solid var(--border);
+  color:var(--text);padding:12px;border-radius:var(--radius);
+  font-family:inherit;font-size:.9rem;cursor:pointer;
+  appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23888' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 12px center;
+  transition:border-color .3s;
+}
+select:focus{outline:none;border-color:var(--active)}
+select option{background:var(--bg3);color:var(--text)}
+
+.checkbox-field{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 0;cursor:pointer;
+}
+.checkbox-field input[type="checkbox"]{
+  appearance:none;width:18px;height:18px;
+  border:2px solid var(--border);border-radius:4px;
+  cursor:pointer;position:relative;transition:all .2s;
+}
+.checkbox-field input[type="checkbox"]:checked{
+  background:var(--active);border-color:var(--active);
+}
+.checkbox-field input[type="checkbox"]:checked::after{
+  content:'✓';position:absolute;top:-1px;left:3px;
+  font-size:12px;color:#000;font-weight:bold;
+}
+.checkbox-label{font-size:.85rem;color:var(--text)}
+
+/* ========== PROMPT PANEL ========== */
+.prompt-title{
+  font-size:.75rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--active);font-weight:700;margin-bottom:12px;
+}
+.prompt-box{
+  background:var(--bg);border:1px solid var(--border);
+  border-radius:var(--radius);padding:16px;
+  font-size:.85rem;line-height:1.6;color:var(--text);
+  min-height:200px;max-height:400px;overflow-y:auto;
+  margin-bottom:16px;word-wrap:break-word;
+  font-family:'Courier New',monospace;
+}
+.prompt-box.empty{color:var(--text2);font-style:italic;font-family:inherit}
+.prompt-actions{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.btn{
+  padding:10px 18px;border:1px solid var(--border);
+  border-radius:var(--radius);cursor:pointer;
+  font-family:inherit;font-size:.8rem;font-weight:600;
+  letter-spacing:1px;transition:all .3s;
+  display:flex;align-items:center;gap:6px;
+}
+.btn-primary{background:var(--active);color:#000;border-color:var(--active)}
+.btn-primary:hover{filter:brightness(1.2)}
+.btn-secondary{background:transparent;color:var(--text)}
+.btn-secondary:hover{background:var(--bg3)}
+.btn-copied{background:#27ae60!important;color:#fff!important;border-color:#27ae60!important}
+.prompt-meta{font-size:.75rem;color:var(--text2)}
+.prompt-meta span{color:var(--active)}
+
+/* ========== TAB CONTENT ========== */
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* ========== COMING SOON ========== */
+.coming-soon{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;padding:80px 20px;text-align:center;
+}
+.coming-soon-icon{font-size:4rem;margin-bottom:20px;opacity:.3}
+.coming-soon h2{color:var(--text2);font-size:1.2rem;margin-bottom:8px}
+.coming-soon p{color:var(--text2);font-size:.85rem;opacity:.6}
+
+/* ========== RESPONSIVE ========== */
+@media(max-width:900px){
+  .main{flex-direction:column}
+  .panel-right{width:100%;position:relative;top:0;max-height:none;border-left:none;border-top:1px solid var(--border)}
+  .tabs{overflow-x:auto;padding:0 10px}
+  .tab{padding:12px 16px;font-size:.75rem;white-space:nowrap}
+  .field-row{flex-direction:column;gap:0}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div>
+    <div class="logo"><span>KURIANA</span> FILMS</div>
+    <div class="header-sub">Cinematic Prompt Generator</div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <div class="tab active" data-tab="cine" data-color="var(--cine)">
+    <span class="tab-icon">🎬</span> CINE
+  </div>
+  <div class="tab" data-tab="anime" data-color="var(--anime)">
+    <span class="tab-icon">🎨</span> ANIMACIÓN
+  </div>
+  <div class="tab" data-tab="horror" data-color="var(--horror)">
+    <span class="tab-icon">💀</span> HORROR
+  </div>
+  <div class="tab" data-tab="grilla" data-color="var(--grilla)">
+    <span class="tab-icon">🔲</span> GRILLA
+  </div>
+  <div class="tab" data-tab="video" data-color="var(--video)">
+    <span class="tab-icon">🎥</span> VIDEO
+  </div>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="main">
+
+  <!-- LEFT PANEL -->
+  <div class="panel-left">
+
+    <!-- ==================== TAB: CINE ==================== -->
+    <div class="tab-content active" id="tab-cine">
+
+      <!-- MODULE 01: SUBJECT & FRAMING -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">01</span>
+          <h3>Subject & Framing</h3>
+        </div>
+        <div class="module-body">
+
+          <div class="field">
+            <div class="field-label">Subject & Action</div>
+            <textarea id="subject" placeholder="Ej: A woman in a trench coat checking her phone while standing under a flickering streetlight..." oninput="buildPrompt()"></textarea>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <div class="field-label">Shot Type / Angle</div>
+              <select id="shotType" onchange="buildPrompt()">
+                <option value="">Select style...</option>
+                <optgroup label="── CLOSE SHOTS ──">
+                  <option>Extreme Close Up</option>
+                  <option>Close Up</option>
+                  <option>Medium Close Up</option>
+                  <option>Tight Headshot</option>
+                  <option>Headshot</option>
+                </optgroup>
+                <optgroup label="── MEDIUM SHOTS ──">
+                  <option>Medium Shot</option>
+                  <option>Medium Wide Shot</option>
+                  <option>Upper Body</option>
+                  <option>Three Quarter Body</option>
+                  <option>Cowboy Shot</option>
+                </optgroup>
+                <optgroup label="── WIDE SHOTS ──">
+                  <option>Wide Shot</option>
+                  <option>Extreme Wide Shot</option>
+                  <option>Entire Body</option>
+                  <option>Establishing Shot</option>
+                </optgroup>
+                <optgroup label="── ANGLES ──">
+                  <option>Low Angle Shot</option>
+                  <option>High Angle Shot</option>
+                  <option>Dutch Angle</option>
+                  <option>Bird's-Eye View</option>
+                  <option>Worm's-Eye View</option>
+                  <option>Overhead Shot</option>
+                </optgroup>
+                <optgroup label="── COMPOSITION ──">
+                  <option>Over The Shoulder Shot</option>
+                  <option>Two Shot</option>
+                  <option>Group Shot</option>
+                  <option>Point of View Shot</option>
+                  <option>Reverse Shot</option>
+                  <option>Reaction Shot</option>
+                  <option>Insert Shot</option>
+                  <option>Cutaway Shot</option>
+                  <option>Silhouette Shot</option>
+                </optgroup>
+                <optgroup label="── MOVEMENT ──">
+                  <option>Tracking Shot</option>
+                  <option>Dolly Shot</option>
+                  <option>Steadicam Shot</option>
+                  <option>Crane Shot</option>
+                  <option>Aerial Shot</option>
+                  <option>Whip Pan</option>
+                  <option>Zoom Shot</option>
+                  <option>Rack Focus Shot</option>
+                </optgroup>
+                <optgroup label="── SPECIAL ──">
+                  <option>Trunk Shot</option>
+                  <option>Mirror Shot</option>
+                  <option>Through Frame Shot</option>
+                  <option>Snorricam Shot</option>
+                  <option>Split Screen</option>
+                </optgroup>
+              </select>
+            </div>
+
+            <div class="field">
+              <div class="field-label">Viewing Direction</div>
+              <select id="viewDirection" onchange="buildPrompt()">
+                <option value="">Select style...</option>
+                <optgroup label="── FRONT ──">
+                  <option>From The Front</option>
+                  <option>Three Quarter Front Left</option>
+                  <option>Three Quarter Front Right</option>
+                </optgroup>
+                <optgroup label="── SIDE ──">
+                  <option>Profile Left</option>
+                  <option>Profile Right</option>
+                </optgroup>
+                <optgroup label="── BACK ──">
+                  <option>From The Back</option>
+                  <option>Three Quarter Back Left</option>
+                  <option>Three Quarter Back Right</option>
+                </optgroup>
+                <optgroup label="── VERTICAL ──">
+                  <option>From Above</option>
+                  <option>From Below</option>
+                </optgroup>
+                <optgroup label="── OVER SHOULDER ──">
+                  <option>Over The Shoulder Left</option>
+                  <option>Over The Shoulder Right</option>
+                </optgroup>
+              </select>
+            </div>
+          </div>
+
+          <div class="checkbox-field" onclick="this.querySelector('input').click()">
+            <input type="checkbox" id="subjectUnaware" onchange="buildPrompt()" onclick="event.stopPropagation()">
+            <span class="checkbox-label">Subject unaware of camera</span>
+          </div>
+
+          <div class="field">
+            <div class="field-label">Environment</div>
+            <textarea id="environment" placeholder="Ej: A rainy London bus stop at night, wet cobblestone streets reflecting neon signs..." oninput="buildPrompt()" style="min-height:60px"></textarea>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- MODULE 02: LIGHTING & MOOD -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">02</span>
+          <h3>Lighting & Mood</h3>
+        </div>
+        <div class="module-body">
+
+          <div class="field">
+            <div class="field-label">Lighting Source</div>
+            <select id="lighting" onchange="buildPrompt()">
+              <option value="">Select style...</option>
+              <optgroup label="── PORTRAIT CLASSIC ──">
+                <option>Rembrandt Lighting</option>
+                <option>Butterfly / Paramount Lighting</option>
+                <option>Split Lighting</option>
+                <option>Loop Lighting</option>
+                <option>Broad Lighting</option>
+                <option>Short Lighting</option>
+              </optgroup>
+              <optgroup label="── STUDIO ──">
+                <option>High Key Lighting</option>
+                <option>Low Key Lighting</option>
+                <option>Soft Lighting</option>
+                <option>Hard Lighting</option>
+                <option>Three Point Lighting</option>
+                <option>Backlighting / Rim Light</option>
+                <option>Softbox Key Lighting</option>
+                <option>Top Lighting</option>
+                <option>Underlighting</option>
+                <option>Cross Lighting</option>
+                <option>Silhouette Lighting</option>
+                <option>Negative Fill</option>
+              </optgroup>
+              <optgroup label="── NATURAL / AMBIENT ──">
+                <option>Golden Hour</option>
+                <option>Blue Hour</option>
+                <option>Magic Hour</option>
+                <option>Midday Sun</option>
+                <option>Moonlight</option>
+                <option>Overcast Lighting</option>
+                <option>Open Shade</option>
+                <option>Window Spill</option>
+                <option>Fog Diffusion</option>
+                <option>Volumetric Lighting</option>
+              </optgroup>
+              <optgroup label="── PRACTICAL / URBAN ──">
+                <option>Neon Lighting</option>
+                <option>Candlelight Lighting</option>
+                <option>LED Streetlights</option>
+                <option>Sodium Streetlamps</option>
+                <option>Firelight / Campfire</option>
+                <option>Gobo Lighting</option>
+                <option>Color Gels</option>
+                <option>Direct Flash</option>
+                <option>Phone Flashlight</option>
+                <option>Chiaroscuro Lighting</option>
+                <option>Teal and Orange</option>
+                <option>Disco / Party Strobe</option>
+                <option>Fluorescent Flicker</option>
+              </optgroup>
+              <optgroup label="── SPECIAL ──">
+                <option>Product Side Key</option>
+                <option>Top-Down Flat Lay</option>
+                <option>Bioluminescent Glow</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <div class="field-label">Atmosphere</div>
+              <select id="atmosphere" onchange="buildPrompt()">
+                <option value="">Select style...</option>
+                <optgroup label="── WEATHER ──">
+                  <option>Clear & Crisp</option>
+                  <option>Foggy & Misty</option>
+                  <option>Light Haze</option>
+                  <option>Heavy Rain</option>
+                  <option>Light Drizzle</option>
+                  <option>Snowfall</option>
+                  <option>Sandstorm</option>
+                  <option>Dusty</option>
+                  <option>Stormy & Dramatic Clouds</option>
+                  <option>Wind-Swept</option>
+                </optgroup>
+                <optgroup label="── SMOKE & PARTICLES ──">
+                  <option>Smoky / Hazy</option>
+                  <option>Fire & Embers</option>
+                  <option>Dust Particles in Light</option>
+                  <option>Sparks Flying</option>
+                  <option>Ash Falling</option>
+                </optgroup>
+                <optgroup label="── WATER & REFLECTIONS ──">
+                  <option>Wet Streets / Puddles</option>
+                  <option>Steam / Hot Springs</option>
+                  <option>Dewy Morning</option>
+                  <option>Frozen / Icy</option>
+                </optgroup>
+                <optgroup label="── LIGHT EFFECTS ──">
+                  <option>God Rays / Light Shafts</option>
+                  <option>Bokeh Lights</option>
+                  <option>Neon Glow</option>
+                  <option>Lens Flare Heavy</option>
+                </optgroup>
+              </select>
+            </div>
+
+            <div class="field">
+              <div class="field-label">Mood</div>
+              <select id="mood" onchange="buildPrompt()">
+                <option value="">Select style...</option>
+                <optgroup label="── DARK / DRAMATIC ──">
+                  <option>Moody</option>
+                  <option>Cinematic</option>
+                  <option>Gritty</option>
+                  <option>Dark & Brooding</option>
+                  <option>Noir</option>
+                  <option>Tense & Suspenseful</option>
+                  <option>Ominous & Threatening</option>
+                  <option>Eerie & Unsettling</option>
+                  <option>Apocalyptic</option>
+                </optgroup>
+                <optgroup label="── REFLECTIVE ──">
+                  <option>Melancholic</option>
+                  <option>Lonely & Isolated</option>
+                  <option>Contemplative</option>
+                  <option>Nostalgic</option>
+                  <option>Bittersweet</option>
+                  <option>Vulnerable</option>
+                </optgroup>
+                <optgroup label="── WARM / POSITIVE ──">
+                  <option>Romantic</option>
+                  <option>Dreamy & Ethereal</option>
+                  <option>Hopeful & Uplifting</option>
+                  <option>Warm & Intimate</option>
+                  <option>Joyful & Vibrant</option>
+                  <option>Peaceful & Serene</option>
+                  <option>Magical & Enchanting</option>
+                </optgroup>
+                <optgroup label="── ACTION / ENERGY ──">
+                  <option>Epic & Grand</option>
+                  <option>Heroic</option>
+                  <option>Intense & Raw</option>
+                  <option>Chaotic & Frantic</option>
+                  <option>Powerful & Dominant</option>
+                </optgroup>
+                <optgroup label="── MYSTERY / FANTASY ──">
+                  <option>Mysterious</option>
+                  <option>Surreal & Otherworldly</option>
+                  <option>Futuristic</option>
+                  <option>Ancient & Mythical</option>
+                  <option>Psychedelic</option>
+                </optgroup>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-label">Custom Atmosphere Details (optional)</div>
+            <input type="text" class="text-input" id="customMood" placeholder="Add specific atmosphere details..." oninput="buildPrompt()">
+          </div>
+
+        </div>
+      </div>
+
+      <!-- MODULE 03: CAMERA GEAR -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">03</span>
+          <h3>Camera Gear</h3>
+        </div>
+        <div class="module-body">
+
+          <div class="field-row">
+            <div class="field">
+              <div class="field-label">Camera Body</div>
+              <select id="cameraBody" onchange="buildPrompt()">
+                <option value="">Select style...</option>
+                <optgroup label="── CINEMA PROFESSIONAL ──">
+                  <option>ARRI Alexa Mini</option>
+                  <option>ARRI Alexa Mini LF</option>
+                  <option>ARRI Alexa 35</option>
+                  <option>ARRI Alexa 65</option>
+                  <option>RED V-Raptor</option>
+                  <option>RED Komodo</option>
+                  <option>Blackmagic URSA Mini Pro 12K</option>
+                  <option>Blackmagic Pocket 6K Pro</option>
+                  <option>Canon C300 Mark III</option>
+                  <option>Canon C500 Mark II</option>
+                  <option>Sony Venice</option>
+                  <option>Sony Burano</option>
+                  <option>Sony FX6</option>
+                  <option>Sony FX3</option>
+                  <option>Panavision Panaflex</option>
+                  <option>Panavision Millennium DXL2</option>
+                  <option>IMAX MSM 9802</option>
+                </optgroup>
+                <optgroup label="── FILM CAMERAS ──">
+                  <option>8mm Film Camera</option>
+                  <option>Super 16mm Film Camera</option>
+                  <option>35mm Film Camera</option>
+                  <option>Aaton XTR</option>
+                  <option>Bolex H16</option>
+                </optgroup>
+                <optgroup label="── DIGITAL MIRRORLESS ──">
+                  <option>Sony A7S III</option>
+                  <option>Sony A1</option>
+                  <option>Canon EOS R5</option>
+                  <option>Canon EOS 5D</option>
+                  <option>Nikon Z9</option>
+                  <option>Fujifilm X-T5</option>
+                  <option>Panasonic Lumix GH5</option>
+                </optgroup>
+                <optgroup label="── MEDIUM FORMAT ──">
+                  <option>Hasselblad X1D II</option>
+                  <option>Hasselblad 500CM</option>
+                  <option>Phase One XF IQ4</option>
+                  <option>Fujifilm GFX 100 II</option>
+                  <option>Mamiya RB67</option>
+                  <option>Pentax 645Z</option>
+                  <option>Rolleiflex</option>
+                </optgroup>
+                <optgroup label="── VINTAGE 35mm ──">
+                  <option>Leica M3</option>
+                  <option>Nikon F2</option>
+                  <option>Nikon FM2</option>
+                  <option>Canon AE-1</option>
+                  <option>Contax T2</option>
+                  <option>Minolta SRT-101</option>
+                  <option>Olympus OM-1</option>
+                  <option>Pentax K1000</option>
+                  <option>Yashica T4</option>
+                </optgroup>
+                <optgroup label="── TOY / LOMO ──">
+                  <option>Holga 120N</option>
+                  <option>Diana F+</option>
+                  <option>Lomo LC-A</option>
+                  <option>Kodak Brownie</option>
+                </optgroup>
+                <optgroup label="── INSTANT ──">
+                  <option>Polaroid 600</option>
+                  <option>Polaroid SX-70</option>
+                </optgroup>
+                <optgroup label="── SPECIAL ──">
+                  <option>GoPro Hero</option>
+                  <option>iPhone Pro</option>
+                  <option>VHS Camera</option>
+                  <option>Security Camera</option>
+                  <option>Webcam</option>
+                </optgroup>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Focal Length</div>
+              <select id="focalLength" onchange="buildPrompt()">
+                <option value="">Select style...</option>
+                <optgroup label="── ULTRA WIDE ──">
+                  <option>8mm Fisheye</option>
+                  <option>14mm Ultra Wide</option>
+                  <option>16mm Ultra Wide</option>
+                  <option>18mm Wide</option>
+                  <option>20mm Wide</option>
+                </optgroup>
+                <optgroup label="── WIDE ──">
+                  <option>24mm Wide Angle</option>
+                  <option>28mm Wide</option>
+                  <option>32mm Cinematic Wide</option>
+                  <option>35mm Wide</option>
+                </optgroup>
+                <optgroup label="── STANDARD ──">
+                  <option>40mm Mild Wide</option>
+                  <option>50mm Standard</option>
+                  <option>58mm Classic</option>
+                </optgroup>
+                <optgroup label="── PORTRAIT ──">
+                  <option>85mm Portrait</option>
+                  <option>105mm Portrait</option>
+                  <option>135mm Telephoto</option>
+                </optgroup>
+                <optgroup label="── TELEPHOTO ──">
+                  <option>200mm Super Telephoto</option>
+                  <option>300mm Extreme Telephoto</option>
+                  <option>400mm Extreme</option>
+                </optgroup>
+                <optgroup label="── MACRO ──">
+                  <option>100mm Macro</option>
+                </optgroup>
+              </select>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <div class="field-label">Lens Type</div>
+              <select id="lensType" onchange="buildPrompt()">
+                <option value="">Select style...</option>
+                <optgroup label="── ANAMORPHIC CINEMA ──">
+                  <option>Anamorphic Cinema Lens</option>
+                  <option>Cooke Anamorphic /i</option>
+                  <option>Panavision C-Series Anamorphic</option>
+                  <option>Atlas Mercury Anamorphic</option>
+                </optgroup>
+                <optgroup label="── SPHERICAL CINEMA ──">
+                  <option>ARRI Signature Prime</option>
+                  <option>ARRI Master Prime</option>
+                  <option>Cooke S4/i</option>
+                  <option>Cooke Speed Panchro</option>
+                  <option>Zeiss Supreme Prime</option>
+                  <option>Zeiss Master Prime</option>
+                  <option>Leica Summilux-C</option>
+                  <option>Canon K35</option>
+                </optgroup>
+                <optgroup label="── VINTAGE CHARACTER ──">
+                  <option>Helios 44-2 Swirly Bokeh</option>
+                  <option>Takumar 50mm f/1.4</option>
+                  <option>Petzval Portrait Lens</option>
+                  <option>Meyer Optik Trioplan</option>
+                  <option>Canon FD Vintage</option>
+                </optgroup>
+                <optgroup label="── SPECIAL ──">
+                  <option>Macro Lens</option>
+                  <option>Fisheye Lens</option>
+                  <option>Tilt Shift Lens</option>
+                  <option>Lensbaby / Selective Focus</option>
+                  <option>Soft Focus Portrait Lens</option>
+                  <option>Toy Plastic Lens</option>
+                  <option>Catadioptric (Mirror) Lens</option>
+                  <option>Pinhole</option>
+                </optgroup>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Film Stock</div>
+              <select id="filmStock" onchange="buildPrompt()">
+                <option value="">Select style...</option>
+                <optgroup label="── CINEMA ──">
+                  <option>Kodak Vision3 500T</option>
+                  <option>Kodak Vision3 250D</option>
+                  <option>Kodak Vision3 50D</option>
+                  <option>CineStill 800T</option>
+                  <option>CineStill 50D</option>
+                  <option>Kodak 5222 Double-X</option>
+                </optgroup>
+                <optgroup label="── COLOR PROFESSIONAL ──">
+                  <option>Kodak Portra 400</option>
+                  <option>Kodak Portra 160</option>
+                  <option>Kodak Portra 800</option>
+                  <option>Kodak Ektar 100</option>
+                  <option>Fuji Pro 400H</option>
+                </optgroup>
+                <optgroup label="── COLOR CONSUMER ──">
+                  <option>Kodak Gold 200</option>
+                  <option>Kodak Ultramax 400</option>
+                  <option>Fuji Superia 400</option>
+                </optgroup>
+                <optgroup label="── SLIDE / REVERSAL ──">
+                  <option>Kodachrome 64</option>
+                  <option>Ektachrome E100</option>
+                  <option>Fuji Velvia 50</option>
+                  <option>Fuji Provia 100F</option>
+                </optgroup>
+                <optgroup label="── BLACK & WHITE ──">
+                  <option>Kodak Tri-X 400</option>
+                  <option>Ilford HP5 Plus</option>
+                  <option>Ilford Delta</option>
+                  <option>Fuji Acros 100</option>
+                  <option>Kodak T-Max 400</option>
+                </optgroup>
+                <optgroup label="── EXPERIMENTAL ──">
+                  <option>Kodak Aerochrome (Infrared)</option>
+                  <option>Lomochrome Turquoise</option>
+                  <option>Lomography Purple</option>
+                  <option>Cross-Processed</option>
+                  <option>Bleach Bypass</option>
+                  <option>Expired Film Look</option>
+                </optgroup>
+                <optgroup label="── DIGITAL ──">
+                  <option>No Film Stock (Digital Clean)</option>
+                </optgroup>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-label">Aspect Ratio</div>
+            <select id="aspectRatio" onchange="buildPrompt()">
+              <option value="">Select ratio...</option>
+              <optgroup label="── CINEMA ──">
+                <option>2.39:1 Anamorphic Scope</option>
+                <option>2.35:1 Panavision Scope</option>
+                <option>1.85:1 US Standard</option>
+                <option>1.66:1 European</option>
+                <option>1.43:1 IMAX</option>
+              </optgroup>
+              <optgroup label="── DIGITAL ──">
+                <option>16:9 HD/4K Standard</option>
+                <option>21:9 Ultra Wide</option>
+                <option>4:3 Classic TV</option>
+                <option>1:1 Square</option>
+              </optgroup>
+              <optgroup label="── VERTICAL ──">
+                <option>9:16 TikTok/Reels</option>
+                <option>4:5 Instagram Portrait</option>
+              </optgroup>
+            </select>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- MODULE 04: COLOR & GRADING -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">04</span>
+          <h3>Color & Grading</h3>
+        </div>
+        <div class="module-body">
+          <div class="field-row">
+            <div class="field">
+              <div class="field-label">Color Palette</div>
+              <select id="colorPalette" onchange="buildPrompt()">
+                <option value="">Select style...</option>
+                <option>Warm Tones (amber, gold)</option>
+                <option>Cool Tones (blue, steel)</option>
+                <option>Neon / Cyberpunk (magenta, cyan)</option>
+                <option>Earth Tones (brown, olive)</option>
+                <option>Pastel (soft pink, lavender)</option>
+                <option>Monochrome Warm (sepia)</option>
+                <option>Monochrome Cool (grays, blues)</option>
+                <option>Black & White</option>
+                <option>Desaturated / Muted</option>
+                <option>Vibrant / Saturated</option>
+                <option>Golden Hour Palette</option>
+                <option>Blue Hour Palette</option>
+                <option>Autumn (reds, oranges)</option>
+                <option>Winter (whites, pale blues)</option>
+                <option>Tropical (greens, turquoise)</option>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Color Grading / LUT</div>
+              <select id="colorGrading" onchange="buildPrompt()">
+                <option value="">Select style...</option>
+                <option>Teal & Orange (Hollywood)</option>
+                <option>Bleach Bypass</option>
+                <option>Cross Process</option>
+                <option>Kodachrome Look</option>
+                <option>Portra 400 Look</option>
+                <option>CineStill 800T Look</option>
+                <option>Fujifilm Pro 400H Look</option>
+                <option>Technicolor</option>
+                <option>Film Noir Grade</option>
+                <option>ENR / Skip Bleach</option>
+                <option>Vintage 70s Grade</option>
+                <option>Vintage 80s Grade</option>
+                <option>K-Drama Soft Grade</option>
+                <option>LOG / Flat (no grading)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODULE 05: REFERENCES -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">05</span>
+          <h3>References</h3>
+        </div>
+        <div class="module-body">
+          <div class="field-row">
+            <div class="field">
+              <div class="field-label">Photographer Style</div>
+              <select id="photographer" onchange="buildPrompt()">
+                <option value="">Select photographer...</option>
+                <optgroup label="── PORTRAIT / FASHION ──">
+                  <option>Annie Leibovitz</option>
+                  <option>Peter Lindbergh</option>
+                  <option>Richard Avedon</option>
+                  <option>Helmut Newton</option>
+                  <option>Peter Coulson</option>
+                  <option>Irving Penn</option>
+                  <option>Herb Ritts</option>
+                  <option>Platon</option>
+                  <option>Brandon Woelfel</option>
+                </optgroup>
+                <optgroup label="── STREET ──">
+                  <option>Daido Moriyama</option>
+                  <option>Alex Webb</option>
+                  <option>Saul Leiter</option>
+                  <option>Vivian Maier</option>
+                  <option>Fan Ho</option>
+                  <option>Henri Cartier-Bresson</option>
+                </optgroup>
+                <optgroup label="── LANDSCAPE ──">
+                  <option>Ansel Adams</option>
+                  <option>Michael Kenna</option>
+                  <option>Alex Strohl</option>
+                  <option>Benjamin Hardman</option>
+                </optgroup>
+                <optgroup label="── DOCUMENTARY ──">
+                  <option>Steve McCurry</option>
+                  <option>Sebastião Salgado</option>
+                  <option>James Nachtwey</option>
+                  <option>Robert Capa</option>
+                </optgroup>
+                <optgroup label="── ART / CONCEPTUAL ──">
+                  <option>Gregory Crewdson</option>
+                  <option>Cindy Sherman</option>
+                  <option>Andreas Gursky</option>
+                  <option>Alec Soth</option>
+                  <option>Todd Hido</option>
+                  <option>William Eggleston</option>
+                </optgroup>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Movie Aesthetic</div>
+              <select id="movieRef" onchange="buildPrompt()">
+                <option value="">Select movie...</option>
+                <optgroup label="── CINEMATOGRAPHY ICONS ──">
+                  <option>Blade Runner 2049 (Deakins)</option>
+                  <option>Dune (Greig Fraser)</option>
+                  <option>1917 (Deakins)</option>
+                  <option>The Revenant (Lubezki)</option>
+                  <option>Children of Men (Lubezki)</option>
+                  <option>Interstellar (Hoytema)</option>
+                  <option>Oppenheimer (Hoytema)</option>
+                  <option>No Country for Old Men (Deakins)</option>
+                </optgroup>
+                <optgroup label="── STYLIZED ──">
+                  <option>Amélie (Delbonnel)</option>
+                  <option>In the Mood for Love (Doyle)</option>
+                  <option>The Grand Budapest Hotel</option>
+                  <option>Drive (Refn)</option>
+                  <option>Enter the Void (Noé)</option>
+                  <option>Neon Demon (Refn)</option>
+                  <option>Spider-Verse</option>
+                </optgroup>
+                <optgroup label="── DARK / NOIR ──">
+                  <option>Se7en (Fincher)</option>
+                  <option>Fight Club (Fincher)</option>
+                  <option>The Batman (Fraser)</option>
+                  <option>Sicario (Deakins)</option>
+                  <option>Collateral (Mann)</option>
+                  <option>Nightcrawler</option>
+                  <option>Joker</option>
+                </optgroup>
+                <optgroup label="── HORROR ──">
+                  <option>Hereditary (Aster)</option>
+                  <option>Midsommar (Aster)</option>
+                  <option>The Lighthouse (Eggers)</option>
+                  <option>Nosferatu 2024 (Eggers)</option>
+                  <option>Annihilation</option>
+                  <option>The Shining (Kubrick)</option>
+                  <option>Suspiria (Argento)</option>
+                </optgroup>
+                <optgroup label="── SCI-FI ──">
+                  <option>2001: A Space Odyssey</option>
+                  <option>Blade Runner (1982)</option>
+                  <option>Alien (Ridley Scott)</option>
+                  <option>Arrival (Villeneuve)</option>
+                  <option>The Matrix</option>
+                  <option>Ex Machina</option>
+                </optgroup>
+                <optgroup label="── CLASSIC ──">
+                  <option>The Godfather (Willis)</option>
+                  <option>Apocalypse Now (Storaro)</option>
+                  <option>Barry Lyndon (Kubrick)</option>
+                  <option>Days of Heaven (Almendros)</option>
+                  <option>Lawrence of Arabia</option>
+                  <option>Casablanca</option>
+                </optgroup>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <div class="field-label">Custom Reference (optional)</div>
+            <input type="text" class="text-input" id="customRef" placeholder="Any other director, photographer, artist, or film..." oninput="buildPrompt()">
+          </div>
+        </div>
+      </div>
+
+      <!-- MODULE 06: SETTINGS -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">⚙️</span>
+          <h3>Output Settings</h3>
+        </div>
+        <div class="module-body">
+          <div class="field-row">
+            <div class="field">
+              <div class="field-label">Resolution</div>
+              <select id="resolution" onchange="buildPrompt()">
+                <option value="1K">1K (1024×1024)</option>
+                <option value="2K">2K (2048×2048)</option>
+                <option value="4K">4K (4096×4096)</option>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Temperature (Creativity)</div>
+              <select id="temperature">
+                <option value="focused">🧊 Focused (exact)</option>
+                <option value="balanced" selected>⚖️ Balanced (recommended)</option>
+                <option value="creative">🔥 Creative (surprise me)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end tab-cine -->
+
+    <!-- ==================== TAB: ANIMACIÓN ==================== -->
+    <div class="tab-content" id="tab-anime">
+      <div class="coming-soon">
+        <div class="coming-soon-icon">🎨</div>
+        <h2>ANIMACIÓN</h2>
+        <p>Módulo en construcción — Próxima entrega</p>
+      </div>
+    </div>
+
+    <!-- ==================== TAB: HORROR ==================== -->
+    <div class="tab-content" id="tab-horror">
+      <div class="coming-soon">
+        <div class="coming-soon-icon">💀</div>
+        <h2>HORROR</h2>
+        <p>Módulo en construcción — Próxima entrega</p>
+      </div>
+    </div>
+
+    <!-- ==================== TAB: GRILLA ==================== -->
+    <div class="tab-content" id="tab-grilla">
+      <div class="coming-soon">
+        <div class="coming-soon-icon">🔲</div>
+        <h2>GRILLA</h2>
+        <p>Módulo en construcción — Próxima entrega</p>
+      </div>
+    </div>
+
+    <!-- ==================== TAB: VIDEO ==================== -->
+    <div class="tab-content" id="tab-video">
+      <div class="coming-soon">
+        <div class="coming-soon-icon">🎥</div>
+        <h2>VIDEO</h2>
+        <p>Módulo en construcción — Próxima entrega</p>
+      </div>
+    </div>
+
+  </div><!-- end panel-left -->
+
+  <!-- RIGHT PANEL: PROMPT OUTPUT -->
+  <div class="panel-right">
+    <div class="prompt-title">CONSTRUCTED PROMPT</div>
+    <div class="prompt-box empty" id="promptBox">
+      Your cinematic prompt will appear here in real-time as you configure the modules...
+    </div>
+    <div class="prompt-actions">
+      <button class="btn btn-primary" id="copyBtn" onclick="copyPrompt()">
+        📋 COPY PROMPT
+      </button>
+      <button class="btn btn-secondary" onclick="exportJSON()">
+        💾 JSON
+      </button>
+      <button class="btn btn-secondary" onclick="clearAll()">
+        🗑️ CLEAR
+      </button>
+    </div>
+    <div class="prompt-meta">
+      Characters: <span id="charCount">0</span> |
+      Words: <span id="wordCount">0</span>
+    </div>
+  </div>
+
+</div><!-- end main -->
+
+<script>
+// ========== TAB SWITCHING ==========
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    tab.classList.add('active');
+    const color = tab.dataset.color;
+    document.documentElement.style.setProperty('--active', color);
+    document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+  });
+});
+
+// ========== MODULE TOGGLE ==========
+function toggleModule(header) {
+  header.nextElementSibling.classList.toggle('collapsed');
+}
+
+// ========== BUILD PROMPT IN REAL TIME ==========
+function buildPrompt() {
+  const parts = [];
+
+  const subject = document.getElementById('subject').value.trim();
+  const shotType = document.getElementById('shotType').value;
+  const viewDir = document.getElementById('viewDirection').value;
+  const unaware = document.getElementById('subjectUnaware').checked;
+  const env = document.getElementById('environment').value.trim();
+  const lighting = document.getElementById('lighting').value;
+  const atmosphere = document.getElementById('atmosphere').value;
+  const mood = document.getElementById('mood').value;
+  const customMood = document.getElementById('customMood').value.trim();
+  const camera = document.getElementById('cameraBody').value;
+  const focal = document.getElementById('focalLength').value;
+  const lens = document.getElementById('lensType').value;
+  const film = document.getElementById('filmStock').value;
+  const aspect = document.getElementById('aspectRatio').value;
+  const palette = document.getElementById('colorPalette').value;
+  const grading = document.getElementById('colorGrading').value;
+  const photog = document.getElementById('photographer').value;
+  const movie = document.getElementById('movieRef').value;
+  const customRef = document.getElementById('customRef').value.trim();
+  const resolution = document.getElementById('resolution').value;
+
+  // Build opening
+  let opening = 'A photographic image';
+  if (shotType) opening += ' of a ' + shotType.toLowerCase();
+  if (viewDir) opening += ', viewed ' + viewDir.toLowerCase();
+  if (unaware) opening += ', where the subject is unaware they are on camera';
+  parts.push(opening + '.');
+
+  // Subject
+  if (subject) parts.push(subject + '.');
+
+  // Environment
+  if (env) parts.push('Set in ' + env + '.');
+
+  // Lighting
+  if (lighting || atmosphere || mood || customMood) {
+    let lightParts = [];
+    if (lighting) lightParts.push('illuminated by ' + lighting.toLowerCase());
+    if (atmosphere) lightParts.push(atmosphere.toLowerCase() + ' atmosphere');
+    if (mood) lightParts.push(mood.toLowerCase() + ' mood');
+    if (customMood) lightParts.push(customMood);
+    parts.push('The scene features ' + lightParts.join(', ') + '.');
+  }
+
+  // Camera
+  if (camera || focal || lens || film) {
+    let camParts = [];
+    if (camera) camParts.push('shot on ' + camera);
+    if (focal) camParts.push(focal);
+    if (lens) camParts.push(lens);
+    if (film) camParts.push(film + ' film stock');
+    parts.push('Captured with ' + camParts.join(', ') + '.');
+  }
+
+  // Color
+  if (palette || grading) {
+    let colParts = [];
+    if (palette) colParts.push(palette + ' color palette');
+    if (grading) colParts.push(grading + ' color grading');
+    parts.push(colParts.join(' with ') + '.');
+  }
+
+  // References
+  if (photog || movie || customRef) {
+    let refParts = [];
+    if (photog) refParts.push('photography style of ' + photog);
+    if (movie) refParts.push('visual aesthetic of ' + movie);
+    if (customRef) refParts.push('inspired by ' + customRef);
+    parts.push('In the ' + refParts.join(', ') + '.');
+  }
+
+  // Aspect & Resolution
+  if (aspect) parts.push('The image should be in ' + aspect + ' format.');
+  parts.push(resolution + ' resolution, hyper-realistic details, masterful composition.');
+
+  // Update UI
+  const promptBox = document.getElementById('promptBox');
+  const finalPrompt = parts.join(' ');
+
+  if (subject || shotType || lighting || camera) {
+    promptBox.textContent = finalPrompt;
+    promptBox.classList.remove('empty');
+  } else {
+    promptBox.textContent = 'Your cinematic prompt will appear here in real-time as you configure the modules...';
+    promptBox.classList.add('empty');
+  }
+
+  document.getElementById('charCount').textContent = finalPrompt.length;
+  document.getElementById('wordCount').textContent = finalPrompt.split(/\s+/).filter(w=>w).length;
+}
+
+// ========== COPY PROMPT ==========
+function copyPrompt() {
+  const text = document.getElementById('promptBox').textContent;
+  if (text.includes('will appear here')) return;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.classList.add('btn-copied');
+    btn.innerHTML = '✅ COPIED!';
+    setTimeout(() => {
+      btn.classList.remove('btn-copied');
+      btn.innerHTML = '📋 COPY PROMPT';
+    }, 2000);
+  });
+}
+
+// ========== EXPORT JSON ==========
+function exportJSON() {
+  const data = {
+    subject: document.getElementById('subject').value,
+    shotType: document.getElementById('shotType').value,
+    viewDirection: document.getElementById('viewDirection').value,
+    subjectUnaware: document.getElementById('subjectUnaware').checked,
+    environment: document.getElementById('environment').value,
+    lighting: document.getElementById('lighting').value,
+    atmosphere: document.getElementById('atmosphere').value,
+    mood: document.getElementById('mood').value,
+    cameraBody: document.getElementById('cameraBody').value,
+    focalLength: document.getElementById('focalLength').value,
+    lensType: document.getElementById('lensType').value,
+    filmStock: document.getElementById('filmStock').value,
+    aspectRatio: document.getElementById('aspectRatio').value,
+    colorPalette: document.getElementById('colorPalette').value,
+    colorGrading: document.getElementById('colorGrading').value,
+    photographer: document.getElementById('photographer').value,
+    movieRef: document.getElementById('movieRef').value,
+    resolution: document.getElementById('resolution').value,
+    prompt: document.getElementById('promptBox').textContent
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'kuriana-project.json';
+  a.click();
+}
+
+// ========== CLEAR ALL ==========
+function clearAll() {
+  document.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+  document.querySelectorAll('textarea, input[type="text"]').forEach(i => i.value = '');
+  document.getElementById('subjectUnaware').checked = false;
+  buildPrompt();
+}
+</script>
+</body>
+</html>
