@@ -1445,14 +1445,14 @@ select option{background:var(--bg3);color:var(--text)}
       <div class="module">
         <div class="module-header" onclick="toggleModule(this)">
           <span class="module-number">01</span>
-          <h3>Animation Style</h3>
+          <h3>Estilo de Animación</h3>
         </div>
         <div class="module-body">
           <div class="field">
-            <div class="field-label">Style / Aesthetic</div>
+            <div class="field-label">Estilo / Estética</div>
             <select id="animeStyle" onchange="buildAnimePrompt()">
-              <option value="">Select animation style...</option>
-              <optgroup label="── ANIME CLASSIC / RETRO ──">
+              <option value="">"Seleccionar estilo de animación..."</option>
+              <optgroup label="── ANIME CLÁSICO / RETRO ──">
                 <option>70s Anime (Mazinger, Heidi)</option>
                 <option>80s Anime (Akira, Dragon Ball, Macross)</option>
                 <option>80s OVA Style (Bubblegum Crisis)</option>
@@ -1461,7 +1461,7 @@ select option{background:var(--bg3);color:var(--text)}
                 <option>Modern Anime (Demon Slayer, JJK)</option>
                 <option>Retro-Futuristic Anime (Cowboy Bebop, Trigun)</option>
               </optgroup>
-              <optgroup label="── ANIME BY STUDIO ──">
+              <optgroup label="── ANIME POR ESTUDIO ──">
                 <option>Studio Ghibli (Miyazaki)</option>
                 <option>Studio Ghibli Dark (Mononoke, Nausicaä)</option>
                 <option>Makoto Shinkai (Your Name)</option>
@@ -1476,7 +1476,7 @@ select option{background:var(--bg3);color:var(--text)}
                 <option>Kyoto Animation (Violet Evergarden)</option>
                 <option>Toei Classic (Dragon Ball, Sailor Moon)</option>
               </optgroup>
-              <optgroup label="── ANIME GENRE ──">
+              <optgroup label="── ANIME POR GÉNERO ──">
                 <option>Shonen Style (action, power)</option>
                 <option>Shojo Style (romance, sparkles)</option>
                 <option>Seinen Style (mature, detailed)</option>
@@ -1487,7 +1487,7 @@ select option{background:var(--bg3);color:var(--text)}
                 <option>Dark Anime / Gothic (Berserk)</option>
                 <option>Anime Watercolor</option>
               </optgroup>
-              <optgroup label="── WESTERN ANIMATION ──">
+              <optgroup label="── ANIMACIÓN OCCIDENTAL ──">
                 <option>Disney Renaissance 90s</option>
                 <option>Disney Classic (30s-60s)</option>
                 <option>Pixar Style (Toy Story, Up)</option>
@@ -1504,7 +1504,7 @@ select option{background:var(--bg3);color:var(--text)}
                 <option>Adult Swim (Rick and Morty)</option>
                 <option>Aardman Claymation (Wallace & Gromit)</option>
               </optgroup>
-              <optgroup label="── ART MOVEMENTS ──">
+              <optgroup label="── MOVIMIENTOS ARTÍSTICOS ──">
                 <option>Art Nouveau Animation</option>
                 <option>Art Deco Animation</option>
                 <option>Ukiyo-e Animation (Japanese woodblock)</option>
@@ -1515,7 +1515,7 @@ select option{background:var(--bg3);color:var(--text)}
                 <option>Paper Cut Animation</option>
                 <option>Woodcut / Linocut Animation</option>
               </optgroup>
-              <optgroup label="── PUNK GENRES ──">
+              <optgroup label="── GÉNEROS PUNK ──">
                 <option>Cyberpunk</option>
                 <option>Steampunk</option>
                 <option>Dieselpunk</option>
@@ -1529,7 +1529,7 @@ select option{background:var(--bg3);color:var(--text)}
                 <option>Silkpunk (Asian steampunk)</option>
                 <option>Mythpunk (reimagined mythology)</option>
               </optgroup>
-              <optgroup label="── COMIC / SUPERHERO ──">
+              <optgroup label="── CÓMIC / SUPERHÉROE ──">
                 <option>Marvel Comic Classic</option>
                 <option>DC Comic Dark (Frank Miller)</option>
                 <option>Sin City Style (B&W + color)</option>
@@ -1539,7 +1539,7 @@ select option{background:var(--bg3);color:var(--text)}
                 <option>Pop Art (Warhol, Lichtenstein)</option>
                 <option>Graphic Novel Realism</option>
               </optgroup>
-              <optgroup label="── OTHER STYLES ──">
+              <optgroup label="── OTROS ESTILOS ──">
                 <option>LEGO Style</option>
                 <option>Voxel Art (3D pixel)</option>
                 <option>Pixel Art (16-bit, 32-bit)</option>
@@ -1559,20 +1559,20 @@ select option{background:var(--bg3);color:var(--text)}
       <div class="module">
         <div class="module-header" onclick="toggleModule(this)">
           <span class="module-number">02</span>
-          <h3>Subject & Scene</h3>
+          <h3>Sujeto y Escena</h3>
         </div>
         <div class="module-body">
           <div class="field">
-            <div class="field-label">Scene Description</div>
-            <textarea id="animeSubject" placeholder="Ej: A young samurai standing on a cliff overlooking a burning city at sunset, wind blowing through his hair, cherry blossoms falling..." oninput="buildAnimePrompt()"></textarea>
+            <div class="field-label">Descripción de Escena</div>
+            <textarea id="animeSubject" placeholder="Ej: Un joven samurái de pie en un acantilado contemplando una ciudad en llamas al atardecer, el viento mueve su cabello, pétalos de cerezo caen..." oninput="buildAnimePrompt()"></textarea>
           </div>
           <div class="field">
-            <div class="field-label">Character Details (optional)</div>
-            <textarea id="animeCharacter" placeholder="Ej: Silver hair, red eyes, black armor with gold trim, scar across left cheek, katana strapped to back..." oninput="buildAnimePrompt()" style="min-height:60px"></textarea>
+            <div class="field-label">Detalles del Personaje (opcional)</div>
+            <textarea id="animeCharacter" placeholder="Ej: Cabello plateado, ojos rojos, armadura negra con detalles dorados, cicatriz en la mejilla izquierda, katana en la espalda..." oninput="buildAnimePrompt()" style="min-height:60px"></textarea>
           </div>
           <div class="field">
-            <div class="field-label">Environment Details (optional)</div>
-            <input type="text" class="text-input" id="animeEnvironment" placeholder="Ej: Futuristic Tokyo, enchanted forest, space station interior..." oninput="buildAnimePrompt()">
+            <div class="field-label">Detalles del Entorno (opcional)</div>
+            <input type="text" class="text-input" id="animeEnvironment" placeholder="Ej: Tokyo futurista, bosque encantado, interior de estación espacial..." oninput="buildAnimePrompt()">
           </div>
         </div>
       </div>
@@ -1581,12 +1581,12 @@ select option{background:var(--bg3);color:var(--text)}
       <div class="module">
         <div class="module-header" onclick="toggleModule(this)">
           <span class="module-number">03</span>
-          <h3>Visual Settings</h3>
+          <h3>Configuración Visual</h3>
         </div>
         <div class="module-body">
           <div class="field-row">
             <div class="field">
-              <div class="field-label">Color Palette</div>
+              <div class="field-label">Paleta de Colores</div>
               <select id="animeColorPalette" onchange="buildAnimePrompt()">
                 <option value="">Select palette...</option>
                 <option>Warm Tones (amber, gold, sunset)</option>
@@ -1607,7 +1607,7 @@ select option{background:var(--bg3);color:var(--text)}
               </select>
             </div>
             <div class="field">
-              <div class="field-label">Mood / Atmosphere</div>
+              <div class="field-label">Estado de Ánimo / Atmósfera</div>
               <select id="animeMood" onchange="buildAnimePrompt()">
                 <option value="">Select mood...</option>
                 <option>Epic & Grand</option>
@@ -1631,7 +1631,7 @@ select option{background:var(--bg3);color:var(--text)}
 
           <div class="field-row">
             <div class="field">
-              <div class="field-label">Lighting</div>
+              <div class="field-label">Iluminación</div>
               <select id="animeLighting" onchange="buildAnimePrompt()">
                 <option value="">Select lighting...</option>
                 <option>Dramatic Backlight</option>
@@ -1651,7 +1651,7 @@ select option{background:var(--bg3);color:var(--text)}
               </select>
             </div>
             <div class="field">
-              <div class="field-label">Composition / Shot</div>
+              <div class="field-label">Composición / Plano</div>
               <select id="animeShot" onchange="buildAnimePrompt()">
                 <option value="">Select shot...</option>
                 <option>Close Up (face detail)</option>
@@ -1678,15 +1678,15 @@ select option{background:var(--bg3);color:var(--text)}
       <div class="module">
         <div class="module-header" onclick="toggleModule(this)">
           <span class="module-number">04</span>
-          <h3>References</h3>
+          <h3>Referencias</h3>
         </div>
         <div class="module-body">
           <div class="field-row">
             <div class="field">
-              <div class="field-label">Director / Artist</div>
+              <div class="field-label">Director / Artista</div>
               <select id="animeDirector" onchange="buildAnimePrompt()">
                 <option value="">Select director...</option>
-                <optgroup label="── JAPANESE ──">
+                <optgroup label="── JAPONESES ──">
                   <option>Hayao Miyazaki</option>
                   <option>Makoto Shinkai</option>
                   <option>Satoshi Kon</option>
@@ -1703,7 +1703,7 @@ select option{background:var(--bg3);color:var(--text)}
                   <option>Kunihiko Ikuhara</option>
                   <option>Takeshi Koike</option>
                 </optgroup>
-                <optgroup label="── WESTERN ──">
+                <optgroup label="── OCCIDENTALES ──">
                   <option>Walt Disney</option>
                   <option>Pete Docter (Pixar)</option>
                   <option>Brad Bird (Pixar)</option>
@@ -1717,7 +1717,7 @@ select option{background:var(--bg3);color:var(--text)}
                   <option>René Laloux</option>
                   <option>Glen Keane</option>
                 </optgroup>
-                <optgroup label="── ARTISTS / ILLUSTRATORS ──">
+                <optgroup label="── ARTISTAS / ILUSTRADORES ──">
                   <option>Moebius / Jean Giraud</option>
                   <option>Yoshitaka Amano</option>
                   <option>Kentaro Miura (Berserk)</option>
@@ -1729,10 +1729,10 @@ select option{background:var(--bg3);color:var(--text)}
               </select>
             </div>
             <div class="field">
-              <div class="field-label">Film / Series Reference</div>
+              <div class="field-label">Referencia de Película / Serie</div>
               <select id="animeFilmRef" onchange="buildAnimePrompt()">
                 <option value="">Select reference...</option>
-                <optgroup label="── ANIME FILMS ──">
+                <optgroup label="── PELÍCULAS ANIME ──">
                   <option>Spirited Away</option>
                   <option>Princess Mononoke</option>
                   <option>Your Name (Kimi no Na wa)</option>
@@ -1749,7 +1749,7 @@ select option{background:var(--bg3);color:var(--text)}
                   <option>Vampire Hunter D: Bloodlust</option>
                   <option>Ninja Scroll</option>
                 </optgroup>
-                <optgroup label="── ANIME SERIES ──">
+                <optgroup label="── SERIES ANIME ──">
                   <option>Cowboy Bebop</option>
                   <option>Neon Genesis Evangelion</option>
                   <option>Attack on Titan</option>
@@ -1765,7 +1765,7 @@ select option{background:var(--bg3);color:var(--text)}
                   <option>Berserk (1997)</option>
                   <option>Serial Experiments Lain</option>
                 </optgroup>
-                <optgroup label="── WESTERN ANIMATION ──">
+                <optgroup label="── ANIMACIÓN OCCIDENTAL ──">
                   <option>Spider-Man: Into the Spider-Verse</option>
                   <option>Arcane</option>
                   <option>Coraline</option>
@@ -1781,8 +1781,8 @@ select option{background:var(--bg3);color:var(--text)}
             </div>
           </div>
           <div class="field">
-            <div class="field-label">Custom Reference (optional)</div>
-            <input type="text" class="text-input" id="animeCustomRef" placeholder="Any other anime, artist, game, or visual reference..." oninput="buildAnimePrompt()">
+            <div class="field-label">Referencia Personalizada (opcional)</div>
+            <input type="text" class="text-input" id="animeCustomRef" placeholder="Cualquier otro anime, artista, videojuego o referencia visual..." oninput="buildAnimePrompt()">
           </div>
         </div>
       </div>
@@ -1791,12 +1791,12 @@ select option{background:var(--bg3);color:var(--text)}
       <div class="module">
         <div class="module-header" onclick="toggleModule(this)">
           <span class="module-number">⚙️</span>
-          <h3>Output Settings</h3>
+          <h3>Configuración de Salida</h3>
         </div>
         <div class="module-body">
           <div class="field-row">
             <div class="field">
-              <div class="field-label">Aspect Ratio</div>
+              <div class="field-label">Relación de Aspecto</div>
               <select id="animeAspect" onchange="buildAnimePrompt()">
                 <option value="">Select ratio...</option>
                 <option>16:9 Widescreen</option>
@@ -1809,7 +1809,7 @@ select option{background:var(--bg3);color:var(--text)}
               </select>
             </div>
             <div class="field">
-              <div class="field-label">Resolution</div>
+              <div class="field-label">Resolución</div>
               <select id="animeResolution" onchange="buildAnimePrompt()">
                 <option value="1K">1K</option>
                 <option value="2K">2K</option>
@@ -1818,7 +1818,7 @@ select option{background:var(--bg3);color:var(--text)}
             </div>
           </div>
           <div class="field">
-            <div class="field-label">Quality Keywords</div>
+            <div class="field-label">Palabras de Calidad</div>
             <select id="animeQuality" onchange="buildAnimePrompt()">
               <option value="high quality, detailed">High Quality Detailed</option>
               <option value="masterpiece, best quality, ultra detailed">Masterpiece Ultra Detailed</option>
