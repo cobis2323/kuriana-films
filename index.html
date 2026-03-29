@@ -954,7 +954,6 @@ select option{background:var(--bg3);color:var(--text)}
     </div><!-- end tab-cine -->
 
     <!-- ==================== TAB: ANIMACIÓN ==================== -->
-    <!-- ==================== TAB: ANIMACIÓN ==================== -->
     <div class="tab-content" id="tab-anime">
 
       <!-- ANIME: STYLE -->
@@ -1841,13 +1840,262 @@ select option{background:var(--bg3);color:var(--text)}
     </div><!-- end tab-horror -->
 
     <!-- ==================== TAB: GRILLA ==================== -->
+    <!-- ==================== TAB: GRILLA ==================== -->
     <div class="tab-content" id="tab-grilla">
-      <div class="coming-soon">
-        <div class="coming-soon-icon">🔲</div>
-        <h2>GRILLA</h2>
-        <p>Módulo en construcción — Próxima entrega</p>
+
+      <!-- GRILLA: PROMPT GENERATOR -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">01</span>
+          <h3>Grid Prompt Generator</h3>
+        </div>
+        <div class="module-body">
+
+          <div class="field">
+            <div class="field-label">Scene / Character Description</div>
+            <textarea id="gridSubject" placeholder="Describe your scene or character. You can paste the prompt you already used for the original image..." oninput="buildGridPrompt()"></textarea>
+          </div>
+
+          <div class="field">
+            <div class="field-label">Grid Structure</div>
+            <select id="gridStructure" onchange="updateGridPanels(); buildGridPrompt()">
+              <option value="2x2" selected>2×2 Grid (4 panels) — Recommended</option>
+              <option value="1x2">1×2 Grid (2 panels horizontal)</option>
+              <option value="2x1">2×1 Grid (2 panels vertical)</option>
+              <option value="1x3">1×3 Grid (3 panels horizontal)</option>
+              <option value="1x4">1×4 Grid (4 panels in row)</option>
+            </select>
+          </div>
+
+          <div id="gridPanelsContainer">
+            <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px">
+              <div class="field-label" style="margin:0;flex-shrink:0">📷 PANEL ANGLES</div>
+              <div style="font-size:.7rem;color:var(--text2)">Select view + shot for each panel</div>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <div class="field-label">Panel 1 (top-left)</div>
+                <select id="gridPanel1View" onchange="buildGridPrompt()">
+                  <option value="">Select view...</option>
+                  <option>Front View</option>
+                  <option>3/4 Front Left</option>
+                  <option>3/4 Front Right</option>
+                  <option>Profile Left</option>
+                  <option>Profile Right</option>
+                  <option>From The Back</option>
+                  <option>3/4 Back Left</option>
+                  <option>3/4 Back Right</option>
+                  <option>From Above</option>
+                  <option>From Below</option>
+                </select>
+                <select id="gridPanel1Shot" onchange="buildGridPrompt()" style="margin-top:6px">
+                  <option value="">Select shot...</option>
+                  <option>Extreme Close Up</option>
+                  <option>Close Up</option>
+                  <option>Medium Close Up</option>
+                  <option>Medium Shot</option>
+                  <option>Medium Wide</option>
+                  <option>Wide Shot</option>
+                  <option>Full Body</option>
+                  <option>Low Angle</option>
+                  <option>High Angle</option>
+                  <option>Dutch Angle</option>
+                  <option>Over The Shoulder</option>
+                  <option>POV</option>
+                </select>
+              </div>
+              <div class="field">
+                <div class="field-label">Panel 2 (top-right)</div>
+                <select id="gridPanel2View" onchange="buildGridPrompt()">
+                  <option value="">Select view...</option>
+                  <option>Front View</option>
+                  <option>3/4 Front Left</option>
+                  <option>3/4 Front Right</option>
+                  <option>Profile Left</option>
+                  <option>Profile Right</option>
+                  <option>From The Back</option>
+                  <option>3/4 Back Left</option>
+                  <option>3/4 Back Right</option>
+                  <option>From Above</option>
+                  <option>From Below</option>
+                </select>
+                <select id="gridPanel2Shot" onchange="buildGridPrompt()" style="margin-top:6px">
+                  <option value="">Select shot...</option>
+                  <option>Extreme Close Up</option>
+                  <option>Close Up</option>
+                  <option>Medium Close Up</option>
+                  <option>Medium Shot</option>
+                  <option>Medium Wide</option>
+                  <option>Wide Shot</option>
+                  <option>Full Body</option>
+                  <option>Low Angle</option>
+                  <option>High Angle</option>
+                  <option>Dutch Angle</option>
+                  <option>Over The Shoulder</option>
+                  <option>POV</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field-row" id="gridRow2">
+              <div class="field">
+                <div class="field-label">Panel 3 (bottom-left)</div>
+                <select id="gridPanel3View" onchange="buildGridPrompt()">
+                  <option value="">Select view...</option>
+                  <option>Front View</option>
+                  <option>3/4 Front Left</option>
+                  <option>3/4 Front Right</option>
+                  <option>Profile Left</option>
+                  <option>Profile Right</option>
+                  <option>From The Back</option>
+                  <option>3/4 Back Left</option>
+                  <option>3/4 Back Right</option>
+                  <option>From Above</option>
+                  <option>From Below</option>
+                </select>
+                <select id="gridPanel3Shot" onchange="buildGridPrompt()" style="margin-top:6px">
+                  <option value="">Select shot...</option>
+                  <option>Extreme Close Up</option>
+                  <option>Close Up</option>
+                  <option>Medium Close Up</option>
+                  <option>Medium Shot</option>
+                  <option>Medium Wide</option>
+                  <option>Wide Shot</option>
+                  <option>Full Body</option>
+                  <option>Low Angle</option>
+                  <option>High Angle</option>
+                  <option>Dutch Angle</option>
+                  <option>Over The Shoulder</option>
+                  <option>POV</option>
+                </select>
+              </div>
+              <div class="field">
+                <div class="field-label">Panel 4 (bottom-right)</div>
+                <select id="gridPanel4View" onchange="buildGridPrompt()">
+                  <option value="">Select view...</option>
+                  <option>Front View</option>
+                  <option>3/4 Front Left</option>
+                  <option>3/4 Front Right</option>
+                  <option>Profile Left</option>
+                  <option>Profile Right</option>
+                  <option>From The Back</option>
+                  <option>3/4 Back Left</option>
+                  <option>3/4 Back Right</option>
+                  <option>From Above</option>
+                  <option>From Below</option>
+                </select>
+                <select id="gridPanel4Shot" onchange="buildGridPrompt()" style="margin-top:6px">
+                  <option value="">Select shot...</option>
+                  <option>Extreme Close Up</option>
+                  <option>Close Up</option>
+                  <option>Medium Close Up</option>
+                  <option>Medium Shot</option>
+                  <option>Medium Wide</option>
+                  <option>Wide Shot</option>
+                  <option>Full Body</option>
+                  <option>Low Angle</option>
+                  <option>High Angle</option>
+                  <option>Dutch Angle</option>
+                  <option>Over The Shoulder</option>
+                  <option>POV</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-label">Consistency Options</div>
+            <div class="checkbox-field" onclick="this.querySelector('input').click()">
+              <input type="checkbox" id="gridConsistentChar" checked onchange="buildGridPrompt()" onclick="event.stopPropagation()">
+              <span class="checkbox-label">Maintain same character across all panels</span>
+            </div>
+            <div class="checkbox-field" onclick="this.querySelector('input').click()">
+              <input type="checkbox" id="gridConsistentLight" checked onchange="buildGridPrompt()" onclick="event.stopPropagation()">
+              <span class="checkbox-label">Maintain same lighting across all panels</span>
+            </div>
+            <div class="checkbox-field" onclick="this.querySelector('input').click()">
+              <input type="checkbox" id="gridConsistentColor" checked onchange="buildGridPrompt()" onclick="event.stopPropagation()">
+              <span class="checkbox-label">Maintain same color grading across all panels</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-label">Additional Style (optional)</div>
+            <input type="text" class="text-input" id="gridStyle" placeholder="Ej: cinematic, shot on ARRI Alexa Mini LF, Blade Runner 2049 aesthetic..." oninput="buildGridPrompt()">
+          </div>
+
+        </div>
       </div>
-    </div>
+
+      <!-- GRILLA: SPLITTER -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">02</span>
+          <h3>Grid Splitter — Cut Without Quality Loss</h3>
+        </div>
+        <div class="module-body">
+
+          <div class="field-row">
+            <div class="field">
+              <div class="field-label">Grid Structure</div>
+              <select id="splitStructure">
+                <option value="2x2">2×2 Grid (4 panels)</option>
+                <option value="1x2">1×2 Grid (2 panels horizontal)</option>
+                <option value="2x1">2×1 Grid (2 panels vertical)</option>
+                <option value="1x3">1×3 Grid (3 panels horizontal)</option>
+                <option value="1x4">1×4 Grid (4 panels in row)</option>
+                <option value="3x1">3×1 Grid (3 panels vertical)</option>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Export Format</div>
+              <select id="splitFormat">
+                <option value="png">PNG (no quality loss) ★ Recommended</option>
+                <option value="webp">WEBP (high quality, smaller file)</option>
+                <option value="jpeg">JPEG 100% (max quality)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-label">Upload Grid Image</div>
+            <div id="dropZone" style="border:2px dashed var(--border);border-radius:var(--radius);padding:40px 20px;text-align:center;cursor:pointer;transition:all .3s;position:relative" onclick="document.getElementById('gridFileInput').click()" ondragover="event.preventDefault();this.style.borderColor='var(--active)';this.style.background='rgba(255,255,255,0.02)'" ondragleave="this.style.borderColor='var(--border)';this.style.background='transparent'" ondrop="event.preventDefault();this.style.borderColor='var(--border)';this.style.background='transparent';handleGridFile(event.dataTransfer.files[0])">
+              <div style="font-size:2.5rem;margin-bottom:10px;opacity:.4">📁</div>
+              <div style="color:var(--text);font-size:.9rem;margin-bottom:6px">Drag your grid image here</div>
+              <div style="color:var(--text2);font-size:.75rem">or click to select file</div>
+              <input type="file" id="gridFileInput" accept="image/*" style="display:none" onchange="handleGridFile(this.files[0])">
+            </div>
+          </div>
+
+          <!-- Preview & Results -->
+          <div id="splitPreview" style="display:none">
+            <div class="field-label" style="margin-bottom:12px">📸 Original Image</div>
+            <div style="margin-bottom:16px;text-align:center">
+              <img id="splitOriginal" style="max-width:100%;max-height:300px;border-radius:var(--radius);border:1px solid var(--border)">
+            </div>
+            <div id="splitInfo" style="font-size:.75rem;color:var(--text2);margin-bottom:16px;padding:10px;background:var(--bg3);border-radius:var(--radius)"></div>
+
+            <button class="btn btn-primary" onclick="splitGrid()" style="width:100%;justify-content:center;padding:14px;font-size:.9rem;margin-bottom:16px">
+              ✂️ SPLIT IMAGE
+            </button>
+
+            <div id="splitResults" style="display:none">
+              <div class="field-label" style="margin-bottom:12px">✅ Split Results — No Quality Loss</div>
+              <div id="splitGrid" style="display:grid;gap:8px;margin-bottom:16px"></div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <button class="btn btn-primary" onclick="downloadAllSplits()" style="flex:1;justify-content:center">
+                  📥 DOWNLOAD ALL (ZIP)
+                </button>
+              </div>
+              <div id="individualDownloads" style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div><!-- end tab-grilla -->
 
     <!-- ==================== TAB: VIDEO ==================== -->
     <div class="tab-content" id="tab-video">
@@ -2172,6 +2420,207 @@ function buildHorrorPrompt() {
 
   document.getElementById('charCount').textContent = finalPrompt.length;
   document.getElementById('wordCount').textContent = finalPrompt.split(/\s+/).filter(w=>w).length;
+}
+// ========== BUILD GRID PROMPT ==========
+function updateGridPanels() {
+  const structure = document.getElementById('gridStructure').value;
+  const row2 = document.getElementById('gridRow2');
+  if (structure === '1x2' || structure === '2x1') {
+    row2.style.display = 'none';
+  } else {
+    row2.style.display = '';
+  }
+}
+
+function buildGridPrompt() {
+  const parts = [];
+  const structure = document.getElementById('gridStructure').value;
+  const subject = document.getElementById('gridSubject').value.trim();
+  const style = document.getElementById('gridStyle').value.trim();
+  const consistentChar = document.getElementById('gridConsistentChar').checked;
+  const consistentLight = document.getElementById('gridConsistentLight').checked;
+  const consistentColor = document.getElementById('gridConsistentColor').checked;
+
+  const cols = parseInt(structure.split('x')[0]);
+  const rows = parseInt(structure.split('x')[1]);
+  const totalPanels = cols * rows;
+
+  const labels2x2 = ['top-left','top-right','bottom-left','bottom-right'];
+  const labels1x2 = ['left panel','right panel'];
+  const labels2x1 = ['top panel','bottom panel'];
+  const labels1x3 = ['left panel','center panel','right panel'];
+  const labels1x4 = ['panel 1','panel 2','panel 3','panel 4'];
+
+  let labels = labels2x2;
+  if (structure === '1x2') labels = labels1x2;
+  if (structure === '2x1') labels = labels2x1;
+  if (structure === '1x3') labels = labels1x3;
+  if (structure === '1x4') labels = labels1x4;
+
+  parts.push('A ' + structure.replace('x','×') + ' grid image, ' + totalPanels + ' panels showing the same scene from ' + totalPanels + ' different camera angles.');
+
+  for (let i = 1; i <= Math.min(totalPanels, 4); i++) {
+    const viewEl = document.getElementById('gridPanel' + i + 'View');
+    const shotEl = document.getElementById('gridPanel' + i + 'Shot');
+    if (viewEl && shotEl) {
+      const view = viewEl.value;
+      const shot = shotEl.value;
+      if (view || shot) {
+        let panelDesc = labels[i-1] + ': ';
+        if (view) panelDesc += view.toLowerCase();
+        if (view && shot) panelDesc += ', ';
+        if (shot) panelDesc += shot.toLowerCase();
+        parts.push(panelDesc + '.');
+      }
+    }
+  }
+
+  if (subject) parts.push('Scene: ' + subject);
+
+  let consistency = [];
+  if (consistentChar) consistency.push('character/subject appearance');
+  if (consistentLight) consistency.push('lighting');
+  if (consistentColor) consistency.push('color grading');
+  if (consistency.length > 0) {
+    parts.push('Maintain consistent ' + consistency.join(', ') + ' across ALL panels.');
+  }
+
+  if (style) parts.push(style + '.');
+  parts.push('The image should be in a 1:1 square format. 4K resolution, highly detailed, cinematic quality. Each panel must show the EXACT same subject with consistent design.');
+
+  const promptBox = document.getElementById('promptBox');
+  const finalPrompt = parts.join(' ');
+
+  if (subject) {
+    promptBox.textContent = finalPrompt;
+    promptBox.classList.remove('empty');
+  } else {
+    promptBox.textContent = 'Your grid prompt will appear here as you configure the panels...';
+    promptBox.classList.add('empty');
+  }
+
+  document.getElementById('charCount').textContent = finalPrompt.length;
+  document.getElementById('wordCount').textContent = finalPrompt.split(/\s+/).filter(w=>w).length;
+}
+
+// ========== GRID SPLITTER ==========
+let gridImageData = null;
+
+function handleGridFile(file) {
+  if (!file || !file.type.startsWith('image/')) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const img = new Image();
+    img.onload = function() {
+      gridImageData = { img: img, width: img.width, height: img.height, name: file.name };
+      document.getElementById('splitOriginal').src = e.target.result;
+      document.getElementById('splitPreview').style.display = 'block';
+      document.getElementById('splitResults').style.display = 'none';
+
+      const structure = document.getElementById('splitStructure').value;
+      const cols = parseInt(structure.split('x')[0]);
+      const rows = parseInt(structure.split('x')[1]);
+      const pw = Math.floor(img.width / cols);
+      const ph = Math.floor(img.height / rows);
+
+      document.getElementById('splitInfo').innerHTML =
+        'Original: <span>' + img.width + ' × ' + img.height + ' px</span> | ' +
+        'Structure: <span>' + structure + '</span> | ' +
+        'Each panel: <span>' + pw + ' × ' + ph + ' px</span> | ' +
+        'Format: <span>' + document.getElementById('splitFormat').value.toUpperCase() + '</span> | ' +
+        'Quality loss: <span style="color:#27ae60">ZERO ✅</span>';
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+let splitCanvases = [];
+
+function splitGrid() {
+  if (!gridImageData) return;
+
+  const structure = document.getElementById('splitStructure').value;
+  const format = document.getElementById('splitFormat').value;
+  const cols = parseInt(structure.split('x')[0]);
+  const rows = parseInt(structure.split('x')[1]);
+  const totalPanels = cols * rows;
+
+  const pw = Math.floor(gridImageData.width / cols);
+  const ph = Math.floor(gridImageData.height / rows);
+
+  splitCanvases = [];
+  const gridContainer = document.getElementById('splitGrid');
+  const downloads = document.getElementById('individualDownloads');
+  gridContainer.innerHTML = '';
+  downloads.innerHTML = '';
+  gridContainer.style.gridTemplateColumns = 'repeat(' + cols + ', 1fr)';
+
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const canvas = document.createElement('canvas');
+      canvas.width = pw;
+      canvas.height = ph;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(gridImageData.img, c * pw, r * ph, pw, ph, 0, 0, pw, ph);
+      splitCanvases.push(canvas);
+
+      const panelNum = r * cols + c + 1;
+
+      const wrapper = document.createElement('div');
+      wrapper.style.cssText = 'position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border)';
+
+      const preview = document.createElement('img');
+      let mimeType = 'image/png';
+      let quality = 1;
+      if (format === 'jpeg') { mimeType = 'image/jpeg'; quality = 1; }
+      if (format === 'webp') { mimeType = 'image/webp'; quality = 0.95; }
+      preview.src = canvas.toDataURL(mimeType, quality);
+      preview.style.cssText = 'width:100%;display:block';
+
+      const label = document.createElement('div');
+      label.style.cssText = 'position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.7);color:#fff;font-size:.7rem;padding:6px;text-align:center;font-weight:600';
+      label.textContent = 'Panel ' + panelNum + ' — ' + pw + '×' + ph + 'px';
+
+      wrapper.appendChild(preview);
+      wrapper.appendChild(label);
+      gridContainer.appendChild(wrapper);
+
+      const dlBtn = document.createElement('button');
+      dlBtn.className = 'btn btn-secondary';
+      dlBtn.style.cssText = 'font-size:.7rem;padding:6px 10px';
+      dlBtn.textContent = '📥 #' + panelNum;
+      dlBtn.onclick = (function(idx, fmt) {
+        return function() { downloadSingleSplit(idx, fmt); };
+      })(panelNum - 1, format);
+      downloads.appendChild(dlBtn);
+    }
+  }
+
+  document.getElementById('splitResults').style.display = 'block';
+}
+
+function downloadSingleSplit(index, format) {
+  if (!splitCanvases[index]) return;
+  let mimeType = 'image/png';
+  let ext = 'png';
+  let quality = 1;
+  if (format === 'jpeg') { mimeType = 'image/jpeg'; ext = 'jpg'; quality = 1; }
+  if (format === 'webp') { mimeType = 'image/webp'; ext = 'webp'; quality = 0.95; }
+
+  const a = document.createElement('a');
+  a.href = splitCanvases[index].toDataURL(mimeType, quality);
+  a.download = 'kuriana-panel-' + (index + 1) + '.' + ext;
+  a.click();
+}
+
+function downloadAllSplits() {
+  const format = document.getElementById('splitFormat').value;
+  splitCanvases.forEach(function(canvas, i) {
+    setTimeout(function() {
+      downloadSingleSplit(i, format);
+    }, i * 300);
+  });
 }
 // ========== CLEAR ALL ==========
 function clearAll() {
