@@ -2564,32 +2564,68 @@ select option{background:var(--bg3);color:var(--text)}
 
   </div><!-- end panel-left -->
 
-  <!-- RIGHT PANEL: PROMPT OUTPUT -->
+    <!-- RIGHT PANEL: PROMPT OUTPUT -->
   <div class="panel-right">
-    <div class="prompt-title">CONSTRUCTED PROMPT</div>
+
+    <!-- PROMPT NORMAL -->
+    <div class="prompt-title">���� PROMPT GENERADO</div>
     <div class="prompt-box empty" id="promptBox">
-      Your cinematic prompt will appear here in real-time as you configure the modules...
+      Tu prompt cinematográfico aparecerá aquí en tiempo real mientras configuras los módulos...
     </div>
     <div class="prompt-actions">
       <button class="btn btn-primary" id="copyBtn" onclick="copyPrompt()">
-        📋 COPY PROMPT
+        📋 COPIAR PROMPT
       </button>
-      <button class="btn btn-secondary" onclick="exportJSON()">
-        💾 JSON
-      </button>
-      <button class="btn btn-secondary" onclick="clearAll()">
-        🗑️ CLEAR
+      <button class="btn btn-secondary" onclick="openTranslate()">
+        🌐 TRADUCIR
       </button>
     </div>
-    <div class="prompt-meta">
-      Characters: <span id="charCount">0</span> |
-      Words: <span id="wordCount">0</span>
+    <div class="prompt-meta" style="margin-bottom:20px">
+      Caracteres: <span id="charCount">0</span> |
+      Palabras: <span id="wordCount">0</span>
     </div>
+
+    <!-- DIVIDER -->
+    <div style="border-top:1px solid var(--border);margin:8px 0 20px 0"></div>
+
+    <!-- JSON VISIBLE -->
+    <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;margin-bottom:8px" onclick="toggleJsonPanel()">
+      <div class="prompt-title" style="margin:0">📄 PROMPT JSON</div>
+      <div id="jsonToggleIcon" style="color:var(--text2);font-size:.8rem">▼ Mostrar</div>
+    </div>
+    <div id="jsonPanel" style="display:none">
+      <div class="prompt-box" id="jsonBox" style="font-size:.7rem;min-height:120px;max-height:250px;background:var(--bg3)">
+        { }
+      </div>
+      <div class="prompt-actions">
+        <button class="btn btn-secondary" onclick="copyJSON()">
+          📋 Copiar JSON
+        </button>
+        <button class="btn btn-secondary" onclick="exportJSON()">
+          💾 Guardar .json
+        </button>
+      </div>
+    </div>
+
+    <!-- DIVIDER -->
+    <div style="border-top:1px solid var(--border);margin:8px 0 20px 0"></div>
+
+    <!-- CARGAR PROYECTO -->
+    <div class="prompt-title">📂 PROYECTO</div>
+    <div class="prompt-actions" style="flex-direction:column;gap:6px">
+      <button class="btn btn-secondary" onclick="document.getElementById('loadJsonInput').click()" style="width:100%;justify-content:center">
+        📂 Cargar proyecto (.json)
+      </button>
+      <input type="file" id="loadJsonInput" accept=".json" style="display:none" onchange="loadJSON(this)">
+      <button class="btn btn-secondary" onclick="clearAll()" style="width:100%;justify-content:center">
+        🗑️ Limpiar todo
+      </button>
+    </div>
+
   </div>
 
 </div><!-- end main -->
 
-<script>
 // ========== TAB SWITCHING ==========
 document.querySelectorAll('.tab').forEach(tab => {
   tab.addEventListener('click', () => {
@@ -2607,7 +2643,26 @@ function toggleModule(header) {
   header.nextElementSibling.classList.toggle('collapsed');
 }
 
-// ========== BUILD PROMPT IN REAL TIME ==========
+// ========== JSON PANEL TOGGLE ==========
+function toggleJsonPanel() {
+  const panel = document.getElementById('jsonPanel');
+  const icon = document.getElementById('jsonToggleIcon');
+  if (panel.style.display === 'none') {
+    panel.style.display = 'block';
+    icon.textContent = '▲ Ocultar';
+  } else {
+    panel.style.display = 'none';
+    icon.textContent = '▼ Mostrar';
+  }
+}
+
+// ========== GET CURRENT TAB ==========
+function getCurrentTab() {
+  const active = document.querySelector('.tab.active');
+  return active ? active.dataset.tab : 'cine';
+}
+
+// ========== BUILD PROMPT — CINE ==========
 function buildPrompt() {
   const parts = [];
 
@@ -2624,6 +2679,11 @@ function buildPrompt() {
   const focal = document.getElementById('focalLength').value;
   const lens = document.getElementById('lensType').value;
   const film = document.getElementById('filmStock').value;
+  const aperture = document.getElementById('aperture').value;
+  const shutter = document.getElementById('shutterSpeed').value;
+  const isoVal = document.getElementById('iso').value;
+  const lensFilter = document.getElementById('lensFilter').value;
+  const filmGrain = document.getElementById('filmGrain').value;
   const aspect = document.getElementById('aspectRatio').value;
   const palette = document.getElementById('colorPalette').value;
   const grading = document.getElementById('colorGrading').value;
@@ -2632,148 +2692,64 @@ function buildPrompt() {
   const customRef = document.getElementById('customRef').value.trim();
   const resolution = document.getElementById('resolution').value;
 
-  // Build opening
   let opening = 'A photographic image';
   if (shotType) opening += ' of a ' + shotType.toLowerCase();
   if (viewDir) opening += ', viewed ' + viewDir.toLowerCase();
   if (unaware) opening += ', where the subject is unaware they are on camera';
   parts.push(opening + '.');
 
-  // Subject
   if (subject) parts.push(subject + '.');
-
-  // Environment
   if (env) parts.push('Set in ' + env + '.');
 
-  // Lighting
   if (lighting || atmosphere || mood || customMood) {
-    let lightParts = [];
-    if (lighting) lightParts.push('illuminated by ' + lighting.toLowerCase());
-    if (atmosphere) lightParts.push(atmosphere.toLowerCase() + ' atmosphere');
-    if (mood) lightParts.push(mood.toLowerCase() + ' mood');
-    if (customMood) lightParts.push(customMood);
-    parts.push('The scene features ' + lightParts.join(', ') + '.');
+    let lp = [];
+    if (lighting) lp.push('illuminated by ' + lighting.toLowerCase());
+    if (atmosphere) lp.push(atmosphere.toLowerCase() + ' atmosphere');
+    if (mood) lp.push(mood.toLowerCase() + ' mood');
+    if (customMood) lp.push(customMood);
+    parts.push('The scene features ' + lp.join(', ') + '.');
   }
-
-    // Camera
-  const aperture = document.getElementById('aperture').value;
-  const shutter = document.getElementById('shutterSpeed').value;
-  const isoVal = document.getElementById('iso').value;
-  const lensFilter = document.getElementById('lensFilter').value;
-  const filmGrain = document.getElementById('filmGrain').value;
 
   if (camera || focal || lens || film || aperture || shutter || isoVal) {
-    let camParts = [];
-    if (camera) camParts.push('shot on ' + camera);
-    if (focal) camParts.push(focal);
-    if (lens) camParts.push(lens);
-    if (aperture) camParts.push(aperture.split(' (')[0]);
-    if (shutter) camParts.push(shutter.split(' (')[0] + ' shutter speed');
-    if (isoVal) camParts.push(isoVal.split(' (')[0]);
-    if (film) camParts.push(film + ' film stock');
-    parts.push('Captured with ' + camParts.join(', ') + '.');
+    let cp = [];
+    if (camera) cp.push('shot on ' + camera);
+    if (focal) cp.push(focal);
+    if (lens) cp.push(lens);
+    if (aperture) cp.push(aperture.split(' (')[0]);
+    if (shutter) cp.push(shutter.split(' (')[0] + ' shutter speed');
+    if (isoVal) cp.push(isoVal.split(' (')[0]);
+    if (film) cp.push(film + ' film stock');
+    parts.push('Captured with ' + cp.join(', ') + '.');
   }
 
-  // Filter
-  if (lensFilter) {
-    parts.push('Through a ' + lensFilter.split(' (')[0] + ' filter.');
-  }
+  if (lensFilter) parts.push('Through a ' + lensFilter.split(' (')[0] + ' filter.');
+  if (filmGrain) parts.push('With ' + filmGrain.split(' (')[0] + ' texture.');
 
-  // Grain
-  if (filmGrain) {
-    parts.push('With ' + filmGrain.split(' (')[0] + ' texture.');
-  }
-
-  // Color
   if (palette || grading) {
-    let colParts = [];
-    if (palette) colParts.push(palette + ' color palette');
-    if (grading) colParts.push(grading + ' color grading');
-    parts.push(colParts.join(' with ') + '.');
+    let col = [];
+    if (palette) col.push(palette + ' color palette');
+    if (grading) col.push(grading + ' color grading');
+    parts.push(col.join(' with ') + '.');
   }
 
-  // References
   if (photog || movie || customRef) {
-    let refParts = [];
-    if (photog) refParts.push('photography style of ' + photog);
-    if (movie) refParts.push('visual aesthetic of ' + movie);
-    if (customRef) refParts.push('inspired by ' + customRef);
-    parts.push('In the ' + refParts.join(', ') + '.');
+    let ref = [];
+    if (photog) ref.push('photography style of ' + photog);
+    if (movie) ref.push('visual aesthetic of ' + movie);
+    if (customRef) ref.push('inspired by ' + customRef);
+    parts.push('In the ' + ref.join(', ') + '.');
   }
 
-  // Aspect & Resolution
   if (aspect) parts.push('The image should be in ' + aspect + ' format.');
   parts.push(resolution + ' resolution, hyper-realistic details, masterful composition.');
 
-  // Update UI
-  const promptBox = document.getElementById('promptBox');
-  const finalPrompt = parts.join(' ');
-
-  if (subject || shotType || lighting || camera) {
-    promptBox.textContent = finalPrompt;
-    promptBox.classList.remove('empty');
-  } else {
-    promptBox.textContent = 'Your cinematic prompt will appear here in real-time as you configure the modules...';
-    promptBox.classList.add('empty');
-  }
-
-  document.getElementById('charCount').textContent = finalPrompt.length;
-  document.getElementById('wordCount').textContent = finalPrompt.split(/\s+/).filter(w=>w).length;
+  updatePromptDisplay(parts, subject || shotType || lighting || camera);
+  updateJSONDisplay();
 }
 
-// ========== COPY PROMPT ==========
-function copyPrompt() {
-  const text = document.getElementById('promptBox').textContent;
-  if (text.includes('will appear here')) return;
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = document.getElementById('copyBtn');
-    btn.classList.add('btn-copied');
-    btn.innerHTML = '✅ COPIED!';
-    setTimeout(() => {
-      btn.classList.remove('btn-copied');
-      btn.innerHTML = '📋 COPY PROMPT';
-    }, 2000);
-  });
-}
-
-// ========== EXPORT JSON ==========
-function exportJSON() {
-  const data = {
-    subject: document.getElementById('subject').value,
-    shotType: document.getElementById('shotType').value,
-    viewDirection: document.getElementById('viewDirection').value,
-    subjectUnaware: document.getElementById('subjectUnaware').checked,
-    environment: document.getElementById('environment').value,
-    lighting: document.getElementById('lighting').value,
-    atmosphere: document.getElementById('atmosphere').value,
-    mood: document.getElementById('mood').value,
-    cameraBody: document.getElementById('cameraBody').value,
-    focalLength: document.getElementById('focalLength').value,
-    lensType: document.getElementById('lensType').value,
-    filmStock: document.getElementById('filmStock').value,
-    aperture: document.getElementById('aperture').value,
-    shutterSpeed: document.getElementById('shutterSpeed').value,
-    iso: document.getElementById('iso').value,
-    lensFilter: document.getElementById('lensFilter').value,
-    filmGrain: document.getElementById('filmGrain').value,
-    aspectRatio: document.getElementById('aspectRatio').value,
-    colorPalette: document.getElementById('colorPalette').value,
-    colorGrading: document.getElementById('colorGrading').value,
-    photographer: document.getElementById('photographer').value,
-    movieRef: document.getElementById('movieRef').value,
-    resolution: document.getElementById('resolution').value,
-    prompt: document.getElementById('promptBox').textContent
-  };
-  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'kuriana-project.json';
-  a.click();
-}
-// ========== BUILD ANIME PROMPT ==========
+// ========== BUILD PROMPT — ANIME ==========
 function buildAnimePrompt() {
   const parts = [];
-
   const style = document.getElementById('animeStyle').value;
   const subject = document.getElementById('animeSubject').value.trim();
   const character = document.getElementById('animeCharacter').value.trim();
@@ -2803,24 +2779,13 @@ function buildAnimePrompt() {
   if (aspect) parts.push(aspect + ' format.');
   parts.push(quality + ', ' + resolution + ' resolution.');
 
-  const promptBox = document.getElementById('promptBox');
-  const finalPrompt = parts.join(' ');
-
-  if (style || subject) {
-    promptBox.textContent = finalPrompt;
-    promptBox.classList.remove('empty');
-  } else {
-    promptBox.textContent = 'Your animation prompt will appear here in real-time as you configure the modules...';
-    promptBox.classList.add('empty');
-  }
-
-  document.getElementById('charCount').textContent = finalPrompt.length;
-  document.getElementById('wordCount').textContent = finalPrompt.split(/\s+/).filter(w=>w).length;
+  updatePromptDisplay(parts, style || subject);
+  updateJSONDisplay();
 }
-// ========== BUILD HORROR PROMPT ==========
+
+// ========== BUILD PROMPT — HORROR ==========
 function buildHorrorPrompt() {
   const parts = [];
-
   const subgenre = document.getElementById('horrorSubgenre').value;
   const subject = document.getElementById('horrorSubject').value.trim();
   const entity = document.getElementById('horrorEntity').value.trim();
@@ -2840,76 +2805,45 @@ function buildHorrorPrompt() {
   const aspect = document.getElementById('horrorAspect').value;
   const resolution = document.getElementById('horrorResolution').value;
 
-  // Opening
   let opening = 'Cinematic horror photography';
   if (subgenre) opening = subgenre + ' cinematic photography';
   if (shot) opening += ', ' + shot.toLowerCase();
   if (unaware) opening += ', where the subject is unaware they are on camera';
   parts.push(opening + '.');
-
-  // Subject
   if (subject) parts.push(subject);
-
-  // Entity
   if (entity) parts.push('The entity: ' + entity);
-
-  // Environment
   if (env) parts.push('Set in ' + env + '.');
-
-  // Atmosphere & Mood
   if (atmosphere || mood) {
-    let atmParts = [];
-    if (atmosphere) atmParts.push(atmosphere.toLowerCase());
-    if (mood) atmParts.push(mood.toLowerCase());
-    parts.push('The atmosphere evokes ' + atmParts.join(', creating a sense of ') + '.');
+    let a = [];
+    if (atmosphere) a.push(atmosphere.toLowerCase());
+    if (mood) a.push(mood.toLowerCase());
+    parts.push('The atmosphere evokes ' + a.join(', creating a sense of ') + '.');
   }
-
-  // Lighting & Color
   if (lighting) parts.push('Illuminated by ' + lighting.toLowerCase() + '.');
   if (color) parts.push(color + ' color treatment.');
-
-  // Camera
   if (camera || lens || film) {
-    let camParts = [];
-    if (camera) camParts.push('shot on ' + camera);
-    if (lens) camParts.push(lens);
-    if (film) camParts.push(film);
-    parts.push('Captured with ' + camParts.join(', ') + '.');
+    let c = [];
+    if (camera) c.push('shot on ' + camera);
+    if (lens) c.push(lens);
+    if (film) c.push(film);
+    parts.push('Captured with ' + c.join(', ') + '.');
   }
-
-  // References
   if (author) parts.push('In the visual style of ' + author + '.');
   if (filmRef) parts.push('Aesthetic inspired by ' + filmRef + '.');
   if (customRef) parts.push('Referenced from ' + customRef + '.');
-
-  // Output
   if (aspect) parts.push(aspect + ' format.');
   parts.push('High contrast, ' + resolution + ' resolution, hyper-realistic details, masterful horror composition, deeply unsettling.');
 
-  // Update UI
-  const promptBox = document.getElementById('promptBox');
-  const finalPrompt = parts.join(' ');
-
-  if (subgenre || subject) {
-    promptBox.textContent = finalPrompt;
-    promptBox.classList.remove('empty');
-  } else {
-    promptBox.textContent = 'Your horror prompt will appear here in real-time as you configure the modules...';
-    promptBox.classList.add('empty');
-  }
-
-  document.getElementById('charCount').textContent = finalPrompt.length;
-  document.getElementById('wordCount').textContent = finalPrompt.split(/\s+/).filter(w=>w).length;
+  updatePromptDisplay(parts, subgenre || subject);
+  updateJSONDisplay();
 }
-// ========== BUILD GRID PROMPT ==========
+
+// ========== BUILD PROMPT — GRID ==========
 function updateGridPanels() {
   const structure = document.getElementById('gridStructure').value;
   const row2 = document.getElementById('gridRow2');
-  if (structure === '1x2' || structure === '2x1') {
-    row2.style.display = 'none';
-  } else {
-    row2.style.display = '';
-  }
+  if (structure === '1x2' || structure === '2x1') { row2.style.display = 'none'; }
+  else { row2.style.display = ''; }
 }
 
 function buildGridPrompt() {
@@ -2917,74 +2851,285 @@ function buildGridPrompt() {
   const structure = document.getElementById('gridStructure').value;
   const subject = document.getElementById('gridSubject').value.trim();
   const style = document.getElementById('gridStyle').value.trim();
-  const consistentChar = document.getElementById('gridConsistentChar').checked;
-  const consistentLight = document.getElementById('gridConsistentLight').checked;
-  const consistentColor = document.getElementById('gridConsistentColor').checked;
+  const cc = document.getElementById('gridConsistentChar').checked;
+  const cl = document.getElementById('gridConsistentLight').checked;
+  const ccl = document.getElementById('gridConsistentColor').checked;
 
   const cols = parseInt(structure.split('x')[0]);
   const rows = parseInt(structure.split('x')[1]);
-  const totalPanels = cols * rows;
+  const total = cols * rows;
+  const labels = {
+    '2x2': ['top-left','top-right','bottom-left','bottom-right'],
+    '1x2': ['left panel','right panel'],
+    '2x1': ['top panel','bottom panel'],
+    '1x3': ['left','center','right'],
+    '1x4': ['panel 1','panel 2','panel 3','panel 4']
+  };
+  const lb = labels[structure] || labels['2x2'];
 
-  const labels2x2 = ['top-left','top-right','bottom-left','bottom-right'];
-  const labels1x2 = ['left panel','right panel'];
-  const labels2x1 = ['top panel','bottom panel'];
-  const labels1x3 = ['left panel','center panel','right panel'];
-  const labels1x4 = ['panel 1','panel 2','panel 3','panel 4'];
+  parts.push('A ' + structure.replace('x','×') + ' grid image, ' + total + ' panels showing the same scene from different camera angles.');
 
-  let labels = labels2x2;
-  if (structure === '1x2') labels = labels1x2;
-  if (structure === '2x1') labels = labels2x1;
-  if (structure === '1x3') labels = labels1x3;
-  if (structure === '1x4') labels = labels1x4;
-
-  parts.push('A ' + structure.replace('x','×') + ' grid image, ' + totalPanels + ' panels showing the same scene from ' + totalPanels + ' different camera angles.');
-
-  for (let i = 1; i <= Math.min(totalPanels, 4); i++) {
-    const viewEl = document.getElementById('gridPanel' + i + 'View');
-    const shotEl = document.getElementById('gridPanel' + i + 'Shot');
-    if (viewEl && shotEl) {
-      const view = viewEl.value;
-      const shot = shotEl.value;
-      if (view || shot) {
-        let panelDesc = labels[i-1] + ': ';
-        if (view) panelDesc += view.toLowerCase();
-        if (view && shot) panelDesc += ', ';
-        if (shot) panelDesc += shot.toLowerCase();
-        parts.push(panelDesc + '.');
-      }
+  for (let i = 1; i <= Math.min(total, 4); i++) {
+    const v = document.getElementById('gridPanel'+i+'View');
+    const s = document.getElementById('gridPanel'+i+'Shot');
+    if (v && s && (v.value || s.value)) {
+      let p = lb[i-1] + ': ';
+      if (v.value) p += v.value.toLowerCase();
+      if (v.value && s.value) p += ', ';
+      if (s.value) p += s.value.toLowerCase();
+      parts.push(p + '.');
     }
   }
 
   if (subject) parts.push('Scene: ' + subject);
-
-  let consistency = [];
-  if (consistentChar) consistency.push('character/subject appearance');
-  if (consistentLight) consistency.push('lighting');
-  if (consistentColor) consistency.push('color grading');
-  if (consistency.length > 0) {
-    parts.push('Maintain consistent ' + consistency.join(', ') + ' across ALL panels.');
-  }
-
+  let con = [];
+  if (cc) con.push('character appearance');
+  if (cl) con.push('lighting');
+  if (ccl) con.push('color grading');
+  if (con.length) parts.push('Maintain consistent ' + con.join(', ') + ' across ALL panels.');
   if (style) parts.push(style + '.');
-  parts.push('The image should be in a 1:1 square format. 4K resolution, highly detailed, cinematic quality. Each panel must show the EXACT same subject with consistent design.');
+  parts.push('1:1 square format. 4K resolution, highly detailed, cinematic quality.');
 
+  updatePromptDisplay(parts, subject);
+  updateJSONDisplay();
+}
+
+// ========== BUILD PROMPT — VIDEO ==========
+function buildVideoPrompt() {
+  const parts = [];
+  const source = document.getElementById('videoSourcePrompt').value.trim();
+  const platform = document.getElementById('videoPlatform');
+  const pVal = platform.value;
+  const pText = platform.selectedIndex > 0 ? platform.options[platform.selectedIndex].text : '';
+  const camMove = document.getElementById('videoCameraMove').value;
+  const camSpeed = document.getElementById('videoCameraSpeed').value;
+  const subAct = document.getElementById('videoSubjectAction').value.trim();
+  const envMot = document.getElementById('videoEnvMotion').value.trim();
+  const dur = document.getElementById('videoDuration').value;
+  const fps = document.getElementById('videoFPS').value;
+  const tStart = document.getElementById('videoTransStart').value;
+  const tEnd = document.getElementById('videoTransEnd').value;
+  const fx = document.getElementById('videoEffects').value;
+  const audio = document.getElementById('videoAudio').value;
+  const aspect = document.getElementById('videoAspect').value;
+  const quality = document.getElementById('videoQuality').value;
+
+  const tipEl = document.getElementById('platformTip');
+  const tips = {
+    'veo3':'💡 Veo 3: Usa lenguaje natural detallado. Menciona movimientos de cámara explícitamente.',
+    'kling':'💡 Kling: Excelente image-to-video. Sé específico con dirección y velocidad del movimiento.',
+    'runway':'💡 Runway Gen-4: Excelente control de movimiento. Usa descripciones claras y concisas.',
+    'pika':'💡 Pika: Bueno para clips cortos. Mantén el prompt simple y enfocado en una acción principal.',
+    'luma':'💡 Luma: Fuerte en looks cinematográficos. Describe el mood y movimiento de cámara claramente.',
+    'minimax':'💡 Minimax/Hailuo: Buena calidad. Describe el movimiento paso a paso.',
+    'wan':'💡 Wan 2.1: Open source. Usa prompts detallados en inglés con términos específicos de cámara.',
+    'seedance':'💡 Seedance: Modelo de ByteDance. Usa descripciones claras de movimiento. Soporta image-to-video.',
+    'grok':'💡 Grok: Usa lenguaje natural. Sé específico sobre qué cambia a lo largo del tiempo.',
+    'qwen':'💡 Qwen: Modelo de Alibaba. Los prompts detallados funcionan mejor. Especifica duración y movimiento.',
+    'generic':'💡 Genérico: Prompt universal que funciona en la mayoría de plataformas.'
+  };
+  if (pVal && tips[pVal]) { tipEl.textContent = tips[pVal]; tipEl.style.display = 'block'; }
+  else { tipEl.style.display = 'none'; }
+
+  parts.push('VIDEO GENERATION PROMPT');
+  if (pText && pVal) parts.push('[Platform: ' + pText + ']');
+  if (source) parts.push('Scene: ' + source);
+  if (camMove) {
+    let cs = 'Camera: ' + camMove;
+    if (camSpeed) cs += ', ' + camSpeed.toLowerCase() + ' speed';
+    parts.push(cs + '.');
+  }
+  if (subAct) parts.push('Subject action: ' + subAct);
+  if (envMot) parts.push('Environment: ' + envMot);
+  if (tStart) parts.push('Opens with: ' + tStart.toLowerCase() + '.');
+  if (tEnd) parts.push('Ends with: ' + tEnd.toLowerCase() + '.');
+  if (dur) parts.push('Duration: ' + dur.split(' ')[0] + ' seconds.');
+  if (fps) parts.push(fps + '.');
+  if (fx) parts.push('Effect: ' + fx.toLowerCase() + '.');
+  if (audio) parts.push('Audio mood: ' + audio.toLowerCase() + '.');
+  if (aspect) parts.push(aspect + ' format.');
+  parts.push(quality + ', smooth motion, cinematic video.');
+
+  updatePromptDisplay(parts, source || camMove || subAct);
+  updateJSONDisplay();
+}
+
+// ========== UPDATE PROMPT DISPLAY ==========
+function updatePromptDisplay(parts, hasContent) {
   const promptBox = document.getElementById('promptBox');
-  const finalPrompt = parts.join(' ');
-
-  if (subject) {
+  const finalPrompt = parts.join(' ').replace(/  +/g,' ').trim();
+  if (hasContent) {
     promptBox.textContent = finalPrompt;
     promptBox.classList.remove('empty');
   } else {
-    promptBox.textContent = 'Your grid prompt will appear here as you configure the panels...';
+    promptBox.textContent = 'Tu prompt cinematográfico aparecerá aquí en tiempo real mientras configuras los módulos...';
     promptBox.classList.add('empty');
   }
-
   document.getElementById('charCount').textContent = finalPrompt.length;
   document.getElementById('wordCount').textContent = finalPrompt.split(/\s+/).filter(w=>w).length;
 }
 
+// ========== UPDATE JSON DISPLAY ==========
+function updateJSONDisplay() {
+  const jsonBox = document.getElementById('jsonBox');
+  if (jsonBox) {
+    const data = collectAllData();
+    jsonBox.textContent = JSON.stringify(data, null, 2);
+  }
+}
+
+// ========== COLLECT ALL DATA ==========
+function collectAllData() {
+  const tab = getCurrentTab();
+  const data = { tab: tab, timestamp: new Date().toISOString() };
+
+  if (tab === 'cine') {
+    data.subject = gv('subject'); data.shotType = gv('shotType'); data.viewDirection = gv('viewDirection');
+    data.subjectUnaware = gc('subjectUnaware'); data.environment = gv('environment');
+    data.lighting = gv('lighting'); data.atmosphere = gv('atmosphere'); data.mood = gv('mood');
+    data.customMood = gv('customMood'); data.cameraBody = gv('cameraBody'); data.focalLength = gv('focalLength');
+    data.lensType = gv('lensType'); data.filmStock = gv('filmStock'); data.aperture = gv('aperture');
+    data.shutterSpeed = gv('shutterSpeed'); data.iso = gv('iso'); data.lensFilter = gv('lensFilter');
+    data.filmGrain = gv('filmGrain'); data.aspectRatio = gv('aspectRatio');
+    data.colorPalette = gv('colorPalette'); data.colorGrading = gv('colorGrading');
+    data.photographer = gv('photographer'); data.movieRef = gv('movieRef');
+    data.customRef = gv('customRef'); data.resolution = gv('resolution'); data.temperature = gv('temperature');
+  } else if (tab === 'anime') {
+    data.style = gv('animeStyle'); data.subject = gv('animeSubject'); data.character = gv('animeCharacter');
+    data.environment = gv('animeEnvironment'); data.palette = gv('animeColorPalette'); data.mood = gv('animeMood');
+    data.lighting = gv('animeLighting'); data.shot = gv('animeShot'); data.director = gv('animeDirector');
+    data.filmRef = gv('animeFilmRef'); data.customRef = gv('animeCustomRef');
+    data.aspect = gv('animeAspect'); data.resolution = gv('animeResolution'); data.quality = gv('animeQuality');
+  } else if (tab === 'horror') {
+    data.subgenre = gv('horrorSubgenre'); data.subject = gv('horrorSubject'); data.entity = gv('horrorEntity');
+    data.environment = gv('horrorEnvironment'); data.atmosphere = gv('horrorAtmosphere'); data.mood = gv('horrorMood');
+    data.lighting = gv('horrorLighting'); data.color = gv('horrorColor'); data.camera = gv('horrorCamera');
+    data.lens = gv('horrorLens'); data.shot = gv('horrorShot'); data.film = gv('horrorFilm');
+    data.unaware = gc('horrorUnaware'); data.author = gv('horrorAuthor'); data.filmRef = gv('horrorFilmRef');
+    data.customRef = gv('horrorCustomRef'); data.aspect = gv('horrorAspect'); data.resolution = gv('horrorResolution');
+  } else if (tab === 'video') {
+    data.source = gv('videoSourcePrompt'); data.platform = gv('videoPlatform');
+    data.cameraMove = gv('videoCameraMove'); data.cameraSpeed = gv('videoCameraSpeed');
+    data.subjectAction = gv('videoSubjectAction'); data.envMotion = gv('videoEnvMotion');
+    data.duration = gv('videoDuration'); data.fps = gv('videoFPS');
+    data.transStart = gv('videoTransStart'); data.transEnd = gv('videoTransEnd');
+    data.effects = gv('videoEffects'); data.audio = gv('videoAudio');
+    data.aspect = gv('videoAspect'); data.quality = gv('videoQuality');
+  }
+
+  data.prompt = document.getElementById('promptBox').textContent;
+  return data;
+}
+
+function gv(id) { const e = document.getElementById(id); return e ? (e.tagName === 'SELECT' ? e.value : e.value) : ''; }
+function gc(id) { const e = document.getElementById(id); return e ? e.checked : false; }
+function sv(id, val) { const e = document.getElementById(id); if (e) { if (e.tagName === 'SELECT') { for(let i=0;i<e.options.length;i++){if(e.options[i].value===val||e.options[i].text===val){e.selectedIndex=i;break;}} } else { e.value = val; } } }
+function sc(id, val) { const e = document.getElementById(id); if (e) e.checked = val; }
+
+// ========== COPY PROMPT ==========
+function copyPrompt() {
+  const text = document.getElementById('promptBox').textContent;
+  if (text.includes('aparecerá aquí')) return;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.classList.add('btn-copied');
+    btn.innerHTML = '✅ ¡COPIADO!';
+    setTimeout(() => { btn.classList.remove('btn-copied'); btn.innerHTML = '📋 COPIAR PROMPT'; }, 2000);
+  });
+}
+
+// ========== COPY JSON ==========
+function copyJSON() {
+  const text = document.getElementById('jsonBox').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    alert('✅ JSON copiado al portapapeles');
+  });
+}
+
+// ========== EXPORT JSON ==========
+function exportJSON() {
+  const data = collectAllData();
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'kuriana-' + data.tab + '-' + Date.now() + '.json';
+  a.click();
+}
+
+// ========== LOAD JSON ==========
+function loadJSON(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!data.tab) { alert('❌ Archivo JSON no válido'); return; }
+
+      // Switch to correct tab
+      document.querySelectorAll('.tab').forEach(t => {
+        if (t.dataset.tab === data.tab) { t.click(); }
+      });
+
+      setTimeout(() => {
+        if (data.tab === 'cine') {
+          sv('subject', data.subject); sv('shotType', data.shotType); sv('viewDirection', data.viewDirection);
+          sc('subjectUnaware', data.subjectUnaware); sv('environment', data.environment);
+          sv('lighting', data.lighting); sv('atmosphere', data.atmosphere); sv('mood', data.mood);
+          sv('customMood', data.customMood); sv('cameraBody', data.cameraBody); sv('focalLength', data.focalLength);
+          sv('lensType', data.lensType); sv('filmStock', data.filmStock); sv('aperture', data.aperture);
+          sv('shutterSpeed', data.shutterSpeed); sv('iso', data.iso); sv('lensFilter', data.lensFilter);
+          sv('filmGrain', data.filmGrain); sv('aspectRatio', data.aspectRatio);
+          sv('colorPalette', data.colorPalette); sv('colorGrading', data.colorGrading);
+          sv('photographer', data.photographer); sv('movieRef', data.movieRef);
+          sv('customRef', data.customRef); sv('resolution', data.resolution); sv('temperature', data.temperature);
+          buildPrompt();
+        } else if (data.tab === 'anime') {
+          sv('animeStyle', data.style); sv('animeSubject', data.subject); sv('animeCharacter', data.character);
+          sv('animeEnvironment', data.environment); sv('animeColorPalette', data.palette); sv('animeMood', data.mood);
+          sv('animeLighting', data.lighting); sv('animeShot', data.shot); sv('animeDirector', data.director);
+          sv('animeFilmRef', data.filmRef); sv('animeCustomRef', data.customRef);
+          sv('animeAspect', data.aspect); sv('animeResolution', data.resolution); sv('animeQuality', data.quality);
+          buildAnimePrompt();
+        } else if (data.tab === 'horror') {
+          sv('horrorSubgenre', data.subgenre); sv('horrorSubject', data.subject); sv('horrorEntity', data.entity);
+          sv('horrorEnvironment', data.environment); sv('horrorAtmosphere', data.atmosphere); sv('horrorMood', data.mood);
+          sv('horrorLighting', data.lighting); sv('horrorColor', data.color); sv('horrorCamera', data.camera);
+          sv('horrorLens', data.lens); sv('horrorShot', data.shot); sv('horrorFilm', data.film);
+          sc('horrorUnaware', data.unaware); sv('horrorAuthor', data.author); sv('horrorFilmRef', data.filmRef);
+          sv('horrorCustomRef', data.customRef); sv('horrorAspect', data.aspect); sv('horrorResolution', data.resolution);
+          buildHorrorPrompt();
+        } else if (data.tab === 'video') {
+          sv('videoSourcePrompt', data.source); sv('videoPlatform', data.platform);
+          sv('videoCameraMove', data.cameraMove); sv('videoCameraSpeed', data.cameraSpeed);
+          sv('videoSubjectAction', data.subjectAction); sv('videoEnvMotion', data.envMotion);
+          sv('videoDuration', data.duration); sv('videoFPS', data.fps);
+          sv('videoTransStart', data.transStart); sv('videoTransEnd', data.transEnd);
+          sv('videoEffects', data.effects); sv('videoAudio', data.audio);
+          sv('videoAspect', data.aspect); sv('videoQuality', data.quality);
+          buildVideoPrompt();
+        }
+        alert('✅ Proyecto cargado correctamente desde: ' + file.name);
+      }, 300);
+    } catch(err) {
+      alert('❌ Error al leer el archivo: ' + err.message);
+    }
+  };
+  reader.readAsText(file);
+  input.value = '';
+}
+
+// ========== TRANSLATE ==========
+function openTranslate() {
+  const text = document.getElementById('promptBox').textContent;
+  if (text.includes('aparecerá aquí')) return;
+  const url = 'https://translate.google.com/?sl=es&tl=en&text=' + encodeURIComponent(text);
+  window.open(url, '_blank');
+}
+
 // ========== GRID SPLITTER ==========
 let gridImageData = null;
+let splitCanvases = [];
 
 function handleGridFile(file) {
   if (!file || !file.type.startsWith('image/')) return;
@@ -2996,202 +3141,85 @@ function handleGridFile(file) {
       document.getElementById('splitOriginal').src = e.target.result;
       document.getElementById('splitPreview').style.display = 'block';
       document.getElementById('splitResults').style.display = 'none';
-
-      const structure = document.getElementById('splitStructure').value;
-      const cols = parseInt(structure.split('x')[0]);
-      const rows = parseInt(structure.split('x')[1]);
-      const pw = Math.floor(img.width / cols);
-      const ph = Math.floor(img.height / rows);
-
+      const st = document.getElementById('splitStructure').value;
+      const c = parseInt(st.split('x')[0]), r = parseInt(st.split('x')[1]);
+      const pw = Math.floor(img.width/c), ph = Math.floor(img.height/r);
       document.getElementById('splitInfo').innerHTML =
-        'Original: <span>' + img.width + ' × ' + img.height + ' px</span> | ' +
-        'Structure: <span>' + structure + '</span> | ' +
-        'Each panel: <span>' + pw + ' × ' + ph + ' px</span> | ' +
-        'Format: <span>' + document.getElementById('splitFormat').value.toUpperCase() + '</span> | ' +
-        'Quality loss: <span style="color:#27ae60">ZERO ✅</span>';
+        'Original: <span>'+img.width+' × '+img.height+' px</span> | Cada panel: <span>'+pw+' × '+ph+' px</span> | Pérdida de calidad: <span style="color:#27ae60">CERO ✅</span>';
     };
     img.src = e.target.result;
   };
   reader.readAsDataURL(file);
 }
 
-let splitCanvases = [];
-
 function splitGrid() {
   if (!gridImageData) return;
-
-  const structure = document.getElementById('splitStructure').value;
-  const format = document.getElementById('splitFormat').value;
-  const cols = parseInt(structure.split('x')[0]);
-  const rows = parseInt(structure.split('x')[1]);
-  const totalPanels = cols * rows;
-
-  const pw = Math.floor(gridImageData.width / cols);
-  const ph = Math.floor(gridImageData.height / rows);
-
+  const st = document.getElementById('splitStructure').value;
+  const fmt = document.getElementById('splitFormat').value;
+  const c = parseInt(st.split('x')[0]), r = parseInt(st.split('x')[1]);
+  const pw = Math.floor(gridImageData.width/c), ph = Math.floor(gridImageData.height/r);
   splitCanvases = [];
-  const gridContainer = document.getElementById('splitGrid');
-  const downloads = document.getElementById('individualDownloads');
-  gridContainer.innerHTML = '';
-  downloads.innerHTML = '';
-  gridContainer.style.gridTemplateColumns = 'repeat(' + cols + ', 1fr)';
+  const gc2 = document.getElementById('splitGrid');
+  const dl = document.getElementById('individualDownloads');
+  gc2.innerHTML = ''; dl.innerHTML = '';
+  gc2.style.gridTemplateColumns = 'repeat('+c+', 1fr)';
 
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < cols; c++) {
-      const canvas = document.createElement('canvas');
-      canvas.width = pw;
-      canvas.height = ph;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(gridImageData.img, c * pw, r * ph, pw, ph, 0, 0, pw, ph);
-      splitCanvases.push(canvas);
-
-      const panelNum = r * cols + c + 1;
-
-      const wrapper = document.createElement('div');
-      wrapper.style.cssText = 'position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border)';
-
-      const preview = document.createElement('img');
-      let mimeType = 'image/png';
-      let quality = 1;
-      if (format === 'jpeg') { mimeType = 'image/jpeg'; quality = 1; }
-      if (format === 'webp') { mimeType = 'image/webp'; quality = 0.95; }
-      preview.src = canvas.toDataURL(mimeType, quality);
-      preview.style.cssText = 'width:100%;display:block';
-
-      const label = document.createElement('div');
-      label.style.cssText = 'position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.7);color:#fff;font-size:.7rem;padding:6px;text-align:center;font-weight:600';
-      label.textContent = 'Panel ' + panelNum + ' — ' + pw + '×' + ph + 'px';
-
-      wrapper.appendChild(preview);
-      wrapper.appendChild(label);
-      gridContainer.appendChild(wrapper);
-
-      const dlBtn = document.createElement('button');
-      dlBtn.className = 'btn btn-secondary';
-      dlBtn.style.cssText = 'font-size:.7rem;padding:6px 10px';
-      dlBtn.textContent = '📥 #' + panelNum;
-      dlBtn.onclick = (function(idx, fmt) {
-        return function() { downloadSingleSplit(idx, fmt); };
-      })(panelNum - 1, format);
-      downloads.appendChild(dlBtn);
+  for (let row=0; row<r; row++) {
+    for (let col=0; col<c; col++) {
+      const cv = document.createElement('canvas');
+      cv.width = pw; cv.height = ph;
+      cv.getContext('2d').drawImage(gridImageData.img, col*pw, row*ph, pw, ph, 0, 0, pw, ph);
+      splitCanvases.push(cv);
+      const n = row*c+col+1;
+      const w = document.createElement('div');
+      w.style.cssText = 'position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border)';
+      const p = document.createElement('img');
+      let mt = 'image/png', q = 1;
+      if (fmt==='jpeg'){mt='image/jpeg';} if(fmt==='webp'){mt='image/webp';q=0.95;}
+      p.src = cv.toDataURL(mt,q); p.style.cssText = 'width:100%;display:block';
+      const lb = document.createElement('div');
+      lb.style.cssText = 'position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.7);color:#fff;font-size:.7rem;padding:6px;text-align:center;font-weight:600';
+      lb.textContent = 'Panel '+n+' — '+pw+'×'+ph+'px';
+      w.appendChild(p); w.appendChild(lb); gc2.appendChild(w);
+      const b = document.createElement('button');
+      b.className = 'btn btn-secondary'; b.style.cssText = 'font-size:.7rem;padding:6px 10px';
+      b.textContent = '📥 #'+n;
+      b.onclick = (function(i,f){return function(){downloadSingleSplit(i,f);};})(n-1,fmt);
+      dl.appendChild(b);
     }
   }
-
   document.getElementById('splitResults').style.display = 'block';
 }
 
-function downloadSingleSplit(index, format) {
-  if (!splitCanvases[index]) return;
-  let mimeType = 'image/png';
-  let ext = 'png';
-  let quality = 1;
-  if (format === 'jpeg') { mimeType = 'image/jpeg'; ext = 'jpg'; quality = 1; }
-  if (format === 'webp') { mimeType = 'image/webp'; ext = 'webp'; quality = 0.95; }
-
+function downloadSingleSplit(i,fmt) {
+  if (!splitCanvases[i]) return;
+  let mt='image/png',ext='png',q=1;
+  if(fmt==='jpeg'){mt='image/jpeg';ext='jpg';}if(fmt==='webp'){mt='image/webp';ext='webp';q=0.95;}
   const a = document.createElement('a');
-  a.href = splitCanvases[index].toDataURL(mimeType, quality);
-  a.download = 'kuriana-panel-' + (index + 1) + '.' + ext;
-  a.click();
+  a.href = splitCanvases[i].toDataURL(mt,q);
+  a.download = 'kuriana-panel-'+(i+1)+'.'+ext; a.click();
 }
 
 function downloadAllSplits() {
-  const format = document.getElementById('splitFormat').value;
-  splitCanvases.forEach(function(canvas, i) {
-    setTimeout(function() {
-      downloadSingleSplit(i, format);
-    }, i * 300);
-  });
+  const fmt = document.getElementById('splitFormat').value;
+  splitCanvases.forEach(function(c,i){ setTimeout(function(){ downloadSingleSplit(i,fmt); }, i*300); });
 }
-// ========== BUILD VIDEO PROMPT ==========
-function buildVideoPrompt() {
-  const parts = [];
 
-  const source = document.getElementById('videoSourcePrompt').value.trim();
-  const platform = document.getElementById('videoPlatform');
-  const platformVal = platform.value;
-  const platformText = platform.options[platform.selectedIndex] ? platform.options[platform.selectedIndex].text : '';
-  const cameraMove = document.getElementById('videoCameraMove').value;
-  const cameraSpeed = document.getElementById('videoCameraSpeed').value;
-  const subjectAction = document.getElementById('videoSubjectAction').value.trim();
-  const envMotion = document.getElementById('videoEnvMotion').value.trim();
-  const duration = document.getElementById('videoDuration').value;
-  const fps = document.getElementById('videoFPS').value;
-  const transStart = document.getElementById('videoTransStart').value;
-  const transEnd = document.getElementById('videoTransEnd').value;
-  const effects = document.getElementById('videoEffects').value;
-  const audio = document.getElementById('videoAudio').value;
-  const aspect = document.getElementById('videoAspect').value;
-  const quality = document.getElementById('videoQuality').value;
-
-  // Platform tips
-  const tipEl = document.getElementById('platformTip');
-  const tips = {
-    'veo3': '💡 Veo 3: Supports image-to-video. Use detailed natural language. Mention camera movements explicitly.',
-    'kling': '💡 Kling: Great with image-to-video. Be specific about motion direction and speed. Supports 5s and 10s.',
-    'runway': '💡 Runway Gen-4: Excellent motion control. Use concise, clear descriptions. Supports camera control keywords.',
-    'pika': '💡 Pika: Good with short clips. Keep prompts simple and focused on one main action.',
-    'luma': '💡 Luma: Strong at cinematic looks. Describe the mood and camera movement clearly.',
-    'minimax': '💡 Minimax/Hailuo: Good quality, describe motion step by step.',
-    'wan': '💡 Wan 2.1: Open source, use detailed English prompts. Works well with specific camera terms.',
-    'seedance': '💡 Seedance: ByteDance model. Use clear motion descriptions. Supports image-to-video.',
-    'grok': '💡 Grok: Use natural language descriptions. Be specific about what changes over time.',
-    'qwen': '💡 Qwen: Alibaba model. Detailed prompts work best. Specify duration and motion.',
-    'generic': '💡 Generic: Universal prompt that works on most platforms. Adjust as needed.'
-  };
-  if (platformVal && tips[platformVal]) {
-    tipEl.textContent = tips[platformVal];
-    tipEl.style.display = 'block';
-  } else {
-    tipEl.style.display = 'none';
-  }
-
-  // Build prompt
-  parts.push('VIDEO GENERATION PROMPT');
-  if (platformText && platformVal) parts.push('[Platform: ' + platformText + ']');
-  parts.push('');
-
-  if (source) parts.push('Scene: ' + source);
-
-  if (cameraMove) {
-    let camStr = 'Camera: ' + cameraMove;
-    if (cameraSpeed) camStr += ', ' + cameraSpeed.toLowerCase() + ' speed';
-    parts.push(camStr + '.');
-  }
-
-  if (subjectAction) parts.push('Subject action: ' + subjectAction);
-  if (envMotion) parts.push('Environment: ' + envMotion);
-
-  if (transStart) parts.push('Opens with: ' + transStart.toLowerCase() + '.');
-  if (transEnd) parts.push('Ends with: ' + transEnd.toLowerCase() + '.');
-
-  if (duration) parts.push('Duration: ' + duration.split(' ')[0] + ' seconds.');
-  if (fps) parts.push(fps + '.');
-  if (effects) parts.push('Effect: ' + effects.toLowerCase() + '.');
-  if (audio) parts.push('Audio mood: ' + audio.toLowerCase() + '.');
-  if (aspect) parts.push(aspect + ' format.');
-  parts.push(quality + ', smooth motion, cinematic video.');
-
-  const promptBox = document.getElementById('promptBox');
-  const finalPrompt = parts.join(' ').replace(/  +/g, ' ').trim();
-
-  if (source || cameraMove || subjectAction) {
-    promptBox.textContent = finalPrompt;
-    promptBox.classList.remove('empty');
-  } else {
-    promptBox.textContent = 'Your video prompt will appear here in real-time as you configure the modules...';
-    promptBox.classList.add('empty');
-  }
-
-  document.getElementById('charCount').textContent = finalPrompt.length;
-  document.getElementById('wordCount').textContent = finalPrompt.split(/\s+/).filter(w=>w).length;
-}
 // ========== CLEAR ALL ==========
 function clearAll() {
   document.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
   document.querySelectorAll('textarea, input[type="text"]').forEach(i => i.value = '');
-  document.getElementById('subjectUnaware').checked = false;
-  buildPrompt();
+  document.querySelectorAll('input[type="checkbox"]').forEach(c => {
+    if (c.id==='gridConsistentChar'||c.id==='gridConsistentLight'||c.id==='gridConsistentColor') c.checked = true;
+    else c.checked = false;
+  });
+  const pb = document.getElementById('promptBox');
+  pb.textContent = 'Tu prompt cinematográfico aparecerá aquí en tiempo real mientras configuras los módulos...';
+  pb.classList.add('empty');
+  document.getElementById('charCount').textContent = '0';
+  document.getElementById('wordCount').textContent = '0';
+  const jb = document.getElementById('jsonBox'); if(jb) jb.textContent = '{ }';
+  const tp = document.getElementById('platformTip'); if(tp) tp.style.display = 'none';
 }
-</script>
 </body>
 </html>
