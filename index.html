@@ -10,7 +10,7 @@
 :root{
   --bg:#0a0a0a;--bg2:#111;--bg3:#1a1a1a;--bg4:#222;
   --text:#e0e0e0;--text2:#888;--border:#333;
-  --cine:#d4a843;--anime:#e84393;--horror:#c0392b;
+  --cine:#d4a843;--anime:#e84393;--horror:#80ff00;
   --grilla:#00cec9;--video:#00b894;
   --sheet:#a29bfe;
   --active:var(--cine);
@@ -533,41 +533,41 @@ select option{background:var(--bg3);color:var(--text)}
       <div class="module">
         <div class="module-header" onclick="toggleModule(this)">
           <span class="module-number">01</span>
-          <h3>Subject & Framing</h3>
+          <h3>Subject & Framing</<h3>Sujeto y Encuadre</h3>
         </div>
         <div class="module-body">
 
           <div class="field">
-            <div class="field-label">Subject & Action</div>
+            <div class="field-label">Sujeto y Acción</div>
             <textarea id="subject" placeholder="Ej: A woman in a trench coat checking her phone while standing under a flickering streetlight..." oninput="buildPrompt()"></textarea>
           </div>
 
           <div class="field-row">
             <div class="field">
-              <div class="field-label">Shot Type / Angle</div>
+              <div class="field-label">Tipo de Plano / Ángulo</div>
               <select id="shotType" onchange="buildPrompt()">
-                <option value="">Select style...</option>
-                <optgroup label="── CLOSE SHOTS ──">
+                <option value="">Seleccionar plano...</option>
+                <optgroup label="── PLANOS CERRADOS ──">
                   <option>Extreme Close Up</option>
                   <option>Close Up</option>
                   <option>Medium Close Up</option>
                   <option>Tight Headshot</option>
                   <option>Headshot</option>
                 </optgroup>
-                <optgroup label="── MEDIUM SHOTS ──">
+                <optgroup label="── PLANOS MEDIOS ──">
                   <option>Medium Shot</option>
                   <option>Medium Wide Shot</option>
                   <option>Upper Body</option>
                   <option>Three Quarter Body</option>
                   <option>Cowboy Shot</option>
                 </optgroup>
-                <optgroup label="── WIDE SHOTS ──">
+                <optgroup label="── PLANOS ABIERTOS ──">
                   <option>Wide Shot</option>
                   <option>Extreme Wide Shot</option>
                   <option>Entire Body</option>
                   <option>Establishing Shot</option>
                 </optgroup>
-                <optgroup label="── ANGLES ──">
+                <optgroup label="── ÁNGULOS ──">
                   <option>Low Angle Shot</option>
                   <option>High Angle Shot</option>
                   <option>Dutch Angle</option>
@@ -575,7 +575,7 @@ select option{background:var(--bg3);color:var(--text)}
                   <option>Worm's-Eye View</option>
                   <option>Overhead Shot</option>
                 </optgroup>
-                <optgroup label="── COMPOSITION ──">
+                <optgroup label="── COMPOSICIÓN ──">
                   <option>Over The Shoulder Shot</option>
                   <option>Two Shot</option>
                   <option>Group Shot</option>
@@ -586,7 +586,7 @@ select option{background:var(--bg3);color:var(--text)}
                   <option>Cutaway Shot</option>
                   <option>Silhouette Shot</option>
                 </optgroup>
-                <optgroup label="── MOVEMENT ──">
+                <optgroup label="── MOVIMIENTO ──">
                   <option>Tracking Shot</option>
                   <option>Dolly Shot</option>
                   <option>Steadicam Shot</option>
@@ -596,7 +596,7 @@ select option{background:var(--bg3);color:var(--text)}
                   <option>Zoom Shot</option>
                   <option>Rack Focus Shot</option>
                 </optgroup>
-                <optgroup label="── SPECIAL ──">
+                <optgroup label="── ESPECIALES ──">
                   <option>Trunk Shot</option>
                   <option>Mirror Shot</option>
                   <option>Through Frame Shot</option>
@@ -607,19 +607,19 @@ select option{background:var(--bg3);color:var(--text)}
             </div>
 
             <div class="field">
-              <div class="field-label">Viewing Direction</div>
+              <div class="field-label">Dirección de Vista</div>
               <select id="viewDirection" onchange="buildPrompt()">
-                <option value="">Select style...</option>
-                <optgroup label="── FRONT ──">
+                <option value="">Seleccionar dirección...</option>
+                <optgroup label="── FRONTAL ──">
                   <option>From The Front</option>
                   <option>Three Quarter Front Left</option>
                   <option>Three Quarter Front Right</option>
                 </optgroup>
-                <optgroup label="── SIDE ──">
+                <optgroup label="── LATERAL ──">
                   <option>Profile Left</option>
                   <option>Profile Right</option>
                 </optgroup>
-                <optgroup label="── BACK ──">
+                <optgroup label="── POSTERIOR ──">
                   <option>From The Back</option>
                   <option>Three Quarter Back Left</option>
                   <option>Three Quarter Back Right</option>
@@ -628,7 +628,7 @@ select option{background:var(--bg3);color:var(--text)}
                   <option>From Above</option>
                   <option>From Below</option>
                 </optgroup>
-                <optgroup label="── OVER SHOULDER ──">
+                <optgroup label="── SOBRE HOMBRO ──">
                   <option>Over The Shoulder Left</option>
                   <option>Over The Shoulder Right</option>
                 </optgroup>
@@ -638,18 +638,18 @@ select option{background:var(--bg3);color:var(--text)}
 
           <div class="checkbox-field" onclick="this.querySelector('input').click()">
             <input type="checkbox" id="subjectUnaware" onchange="buildPrompt()" onclick="event.stopPropagation()">
-            <span class="checkbox-label">Subject unaware of camera</span>
+            <span class="checkbox-label">Sujeto no mira a cámara</span>
           </div>
 
           <div class="field">
-            <div class="field-label">Environment</div>
+            <div class="field-label">Entorno / Ambiente</div>
             <textarea id="environment" placeholder="Ej: A rainy London bus stop at night, wet cobblestone streets reflecting neon signs..." oninput="buildPrompt()" style="min-height:60px"></textarea>
           </div>
 
         </div>
       </div>
 
-      <!-- MODULE 02: LIGHTING & MOOD -->
+      <!-- MODULE 02: ILUMINACIÓN Y AMBIENTE -->
       <div class="module">
         <div class="module-header" onclick="toggleModule(this)">
           <span class="module-number">02</span>
@@ -658,10 +658,10 @@ select option{background:var(--bg3);color:var(--text)}
         <div class="module-body">
 
           <div class="field">
-            <div class="field-label">Lighting Source</div>
+            <div class="field-label">Fuente de Luz</div>
             <select id="lighting" onchange="buildPrompt()">
               <option value="">Select style...</option>
-              <optgroup label="── PORTRAIT CLASSIC ──">
+              <optgroup label="── RETRATO CLÁSICO ──">
                 <option>Rembrandt Lighting</option>
                 <option>Butterfly / Paramount Lighting</option>
                 <option>Split Lighting</option>
@@ -669,7 +669,7 @@ select option{background:var(--bg3);color:var(--text)}
                 <option>Broad Lighting</option>
                 <option>Short Lighting</option>
               </optgroup>
-              <optgroup label="── STUDIO ──">
+              <optgroup label="── ESTUDIO ──">
                 <option>High Key Lighting</option>
                 <option>Low Key Lighting</option>
                 <option>Soft Lighting</option>
@@ -683,7 +683,7 @@ select option{background:var(--bg3);color:var(--text)}
                 <option>Silhouette Lighting</option>
                 <option>Negative Fill</option>
               </optgroup>
-              <optgroup label="── NATURAL / AMBIENT ──">
+              <optgroup label="── NATURAL / AMBIENTAL ──">
                 <option>Golden Hour</option>
                 <option>Blue Hour</option>
                 <option>Magic Hour</option>
@@ -695,7 +695,7 @@ select option{background:var(--bg3);color:var(--text)}
                 <option>Fog Diffusion</option>
                 <option>Volumetric Lighting</option>
               </optgroup>
-              <optgroup label="── PRACTICAL / URBAN ──">
+              <optgroup label="── PRÁCTICA / URBANA ──">
                 <option>Neon Lighting</option>
                 <option>Candlelight Lighting</option>
                 <option>LED Streetlights</option>
@@ -710,7 +710,7 @@ select option{background:var(--bg3);color:var(--text)}
                 <option>Disco / Party Strobe</option>
                 <option>Fluorescent Flicker</option>
               </optgroup>
-              <optgroup label="── SPECIAL ──">
+              <optgroup label="── ESPECIAL ──">
                 <option>Product Side Key</option>
                 <option>Top-Down Flat Lay</option>
                 <option>Bioluminescent Glow</option>
@@ -720,10 +720,10 @@ select option{background:var(--bg3);color:var(--text)}
 
           <div class="field-row">
             <div class="field">
-              <div class="field-label">Atmosphere</div>
+              <div class="field-label">Atmósfera</div>
               <select id="atmosphere" onchange="buildPrompt()">
                 <option value="">Select style...</option>
-                <optgroup label="── WEATHER ──">
+                <optgroup label="── CLIMA ──">
                   <option>Clear & Crisp</option>
                   <option>Foggy & Misty</option>
                   <option>Light Haze</option>
@@ -735,20 +735,20 @@ select option{background:var(--bg3);color:var(--text)}
                   <option>Stormy & Dramatic Clouds</option>
                   <option>Wind-Swept</option>
                 </optgroup>
-                <optgroup label="── SMOKE & PARTICLES ──">
+                <optgroup label="── HUMO Y PARTÍCULAS ──">
                   <option>Smoky / Hazy</option>
                   <option>Fire & Embers</option>
                   <option>Dust Particles in Light</option>
                   <option>Sparks Flying</option>
                   <option>Ash Falling</option>
                 </optgroup>
-                <optgroup label="── WATER & REFLECTIONS ──">
+                <optgroup label="── AGUA Y REFLEJOS ──">
                   <option>Wet Streets / Puddles</option>
                   <option>Steam / Hot Springs</option>
                   <option>Dewy Morning</option>
                   <option>Frozen / Icy</option>
                 </optgroup>
-                <optgroup label="── LIGHT EFFECTS ──">
+                <optgroup label="── EFECTOS DE LUZ ──">
                   <option>God Rays / Light Shafts</option>
                   <option>Bokeh Lights</option>
                   <option>Neon Glow</option>
@@ -758,10 +758,10 @@ select option{background:var(--bg3);color:var(--text)}
             </div>
 
             <div class="field">
-              <div class="field-label">Mood</div>
+              <div class="field-label">Estado de Ánimo y Emoción</div>
               <select id="mood" onchange="buildPrompt()">
                 <option value="">Select style...</option>
-                <optgroup label="── DARK / DRAMATIC ──">
+                <optgroup label="── OSCURO / DRAMÁTICO ──">
                   <option>Moody</option>
                   <option>Cinematic</option>
                   <option>Gritty</option>
@@ -772,7 +772,7 @@ select option{background:var(--bg3);color:var(--text)}
                   <option>Eerie & Unsettling</option>
                   <option>Apocalyptic</option>
                 </optgroup>
-                <optgroup label="── REFLECTIVE ──">
+                <optgroup label="── REFLEXIVO ──">
                   <option>Melancholic</option>
                   <option>Lonely & Isolated</option>
                   <option>Contemplative</option>
@@ -780,7 +780,7 @@ select option{background:var(--bg3);color:var(--text)}
                   <option>Bittersweet</option>
                   <option>Vulnerable</option>
                 </optgroup>
-                <optgroup label="── WARM / POSITIVE ──">
+                <optgroup label="── CÁLIDO / POSITIVO ──">
                   <option>Romantic</option>
                   <option>Dreamy & Ethereal</option>
                   <option>Hopeful & Uplifting</option>
@@ -789,14 +789,14 @@ select option{background:var(--bg3);color:var(--text)}
                   <option>Peaceful & Serene</option>
                   <option>Magical & Enchanting</option>
                 </optgroup>
-                <optgroup label="── ACTION / ENERGY ──">
+                <optgroup label="── ACCIÓN / ENERGÍA ──">
                   <option>Epic & Grand</option>
                   <option>Heroic</option>
                   <option>Intense & Raw</option>
                   <option>Chaotic & Frantic</option>
                   <option>Powerful & Dominant</option>
                 </optgroup>
-                <optgroup label="── MYSTERY / FANTASY ──">
+                <optgroup label="── MISTERIO / FANTASÍA ──">
                   <option>Mysterious</option>
                   <option>Surreal & Otherworldly</option>
                   <option>Futuristic</option>
@@ -808,14 +808,14 @@ select option{background:var(--bg3);color:var(--text)}
           </div>
 
           <div class="field">
-            <div class="field-label">Custom Atmosphere Details (optional)</div>
+            <div class="field-label">Detalles Adicionales de Atmósfera (opcional)</div>
             <input type="text" class="text-input" id="customMood" placeholder="Add specific atmosphere details..." oninput="buildPrompt()">
           </div>
 
         </div>
       </div>
 
-      <!-- MODULE 03: CAMERA GEAR -->
+      <!-- MODULE 03: CÁMARAS Y EQUIPO -->
       <div class="module">
         <div class="module-header" onclick="toggleModule(this)">
           <span class="module-number">03</span>
@@ -825,10 +825,10 @@ select option{background:var(--bg3);color:var(--text)}
 
           <div class="field-row">
             <div class="field">
-              <div class="field-label">Camera Body</div>
+              <div class="field-label">Tipo de Cámara</div>
               <select id="cameraBody" onchange="buildPrompt()">
                 <option value="">Select style...</option>
-                <optgroup label="── CINEMA PROFESSIONAL ──">
+                <optgroup label="── CINE CINEMATOGRÁFICAS ──">
                   <option>ARRI Alexa Mini</option>
                   <option>ARRI Alexa Mini LF</option>
                   <option>ARRI Alexa 35</option>
@@ -847,14 +847,14 @@ select option{background:var(--bg3);color:var(--text)}
                   <option>Panavision Millennium DXL2</option>
                   <option>IMAX MSM 9802</option>
                 </optgroup>
-                <optgroup label="── FILM CAMERAS ──">
+                <optgroup label="── CÁMARAS PROFESIONAL ──">
                   <option>8mm Film Camera</option>
                   <option>Super 16mm Film Camera</option>
                   <option>35mm Film Camera</option>
                   <option>Aaton XTR</option>
                   <option>Bolex H16</option>
                 </optgroup>
-                <optgroup label="── DIGITAL MIRRORLESS ──">
+                <optgroup label="── CÁMARAS DIGITALES SIN ESPEJO ──">
                   <option>Sony A7S III</option>
                   <option>Sony A1</option>
                   <option>Canon EOS R5</option>
@@ -863,7 +863,7 @@ select option{background:var(--bg3);color:var(--text)}
                   <option>Fujifilm X-T5</option>
                   <option>Panasonic Lumix GH5</option>
                 </optgroup>
-                <optgroup label="── MEDIUM FORMAT ──">
+                <optgroup label="── CÁMARAS DE MEDIO FORMATO ──">
                   <option>Hasselblad X1D II</option>
                   <option>Hasselblad 500CM</option>
                   <option>Phase One XF IQ4</option>
@@ -872,7 +872,7 @@ select option{background:var(--bg3);color:var(--text)}
                   <option>Pentax 645Z</option>
                   <option>Rolleiflex</option>
                 </optgroup>
-                <optgroup label="── VINTAGE 35mm ──">
+                <optgroup label="── CÁMARAS VINTAGE 35mm ──">
                   <option>Leica M3</option>
                   <option>Nikon F2</option>
                   <option>Nikon FM2</option>
@@ -883,17 +883,17 @@ select option{background:var(--bg3);color:var(--text)}
                   <option>Pentax K1000</option>
                   <option>Yashica T4</option>
                 </optgroup>
-                <optgroup label="── TOY / LOMO ──">
+                <optgroup label="── CÁMARAS ANALÓGICAS DE ROLLO ──">
                   <option>Holga 120N</option>
                   <option>Diana F+</option>
                   <option>Lomo LC-A</option>
                   <option>Kodak Brownie</option>
                 </optgroup>
-                <optgroup label="── INSTANT ──">
+                <optgroup label="── CÁMARAS INSTANTÁNEA ──">
                   <option>Polaroid 600</option>
                   <option>Polaroid SX-70</option>
                 </optgroup>
-                <optgroup label="── SPECIAL ──">
+                <optgroup label="── CÁMARAS ESPECIALES ──">
                   <option>GoPro Hero</option>
                   <option>iPhone Pro</option>
                   <option>VHS Camera</option>
@@ -903,7 +903,7 @@ select option{background:var(--bg3);color:var(--text)}
               </select>
             </div>
             <div class="field">
-              <div class="field-label">Focal Length</div>
+              <div class="field-label">Distancia Focal</div>
               <select id="focalLength" onchange="buildPrompt()">
                 <option value="">Select style...</option>
                 <optgroup label="── ULTRA WIDE ──">
@@ -943,7 +943,7 @@ select option{background:var(--bg3);color:var(--text)}
 
           <div class="field-row">
             <div class="field">
-              <div class="field-label">Lens Type</div>
+              <div class="field-label">Tipo de Lente</div>
               <select id="lensType" onchange="buildPrompt()">
                 <option value="">Select style...</option>
                 <optgroup label="── ANAMORPHIC CINEMA ──">
@@ -982,7 +982,7 @@ select option{background:var(--bg3);color:var(--text)}
               </select>
             </div>
             <div class="field">
-              <div class="field-label">Film Stock</div>
+              <div class="field-label">Material de Película</div>
               <select id="filmStock" onchange="buildPrompt()">
                 <option value="">Select style...</option>
                 <optgroup label="── CINEMA ──">
@@ -1034,7 +1034,7 @@ select option{background:var(--bg3);color:var(--text)}
           </div>
                    <div class="field-row">
             <div class="field">
-              <div class="field-label">Aperture (f-stop)</div>
+              <div class="field-label">Apertura (f-stop)</div>
               <select id="aperture" onchange="buildPrompt()">
                 <option value="">Select aperture...</option>
                 <optgroup label="── EXTREME BOKEH ──">
@@ -1060,7 +1060,7 @@ select option{background:var(--bg3);color:var(--text)}
               </select>
             </div>
             <div class="field">
-              <div class="field-label">Shutter Speed</div>
+              <div class="field-label">Velocidad de Obturación</div>
               <select id="shutterSpeed" onchange="buildPrompt()">
                 <option value="">Select shutter...</option>
                 <optgroup label="── FREEZE MOTION ──">
@@ -1092,7 +1092,7 @@ select option{background:var(--bg3);color:var(--text)}
 
           <div class="field-row">
             <div class="field">
-              <div class="field-label">ISO</div>
+              <div class="field-label">ISO (Sensibilidad)</div>
               <select id="iso" onchange="buildPrompt()">
                 <option value="">Select ISO...</option>
                 <optgroup label="── CLEAN / LOW NOISE ──">
@@ -1116,7 +1116,7 @@ select option{background:var(--bg3);color:var(--text)}
               </select>
             </div>
             <div class="field">
-              <div class="field-label">Lens Filter</div>
+              <div class="field-label">Filtros de Lentes</div>
               <select id="lensFilter" onchange="buildPrompt()">
                 <option value="">No filter...</option>
                 <optgroup label="── DIFFUSION / SOFT ──">
@@ -1162,7 +1162,7 @@ select option{background:var(--bg3);color:var(--text)}
           </div>
 
           <div class="field">
-            <div class="field-label">Film Grain & Emulsion</div>
+            <div class="field-label">Grano y Emulsión</div>
             <select id="filmGrain" onchange="buildPrompt()">
               <option value="">No grain/emulsion...</option>
               <optgroup label="── CELLULOID GRAIN ──">
@@ -1207,7 +1207,7 @@ select option{background:var(--bg3);color:var(--text)}
             </select>
           </div>
           <div class="field">
-            <div class="field-label">Aspect Ratio</div>
+            <div class="field-label">Relación de Aspecto</div>
             <select id="aspectRatio" onchange="buildPrompt()">
               <option value="">Select ratio...</option>
               <optgroup label="── CINEMA ──">
@@ -1233,7 +1233,7 @@ select option{background:var(--bg3);color:var(--text)}
         </div>
       </div>
 
-      <!-- MODULE 04: COLOR & GRADING -->
+      <!-- MODULE 04: COLOR & GRADACIÓN -->
       <div class="module">
         <div class="module-header" onclick="toggleModule(this)">
           <span class="module-number">04</span>
@@ -1242,7 +1242,7 @@ select option{background:var(--bg3);color:var(--text)}
         <div class="module-body">
           <div class="field-row">
             <div class="field">
-              <div class="field-label">Color Palette</div>
+              <div class="field-label">Paleta de Colores</div>
               <select id="colorPalette" onchange="buildPrompt()">
                 <option value="">Select style...</option>
                 <option>Warm Tones (amber, gold)</option>
@@ -1263,7 +1263,7 @@ select option{background:var(--bg3);color:var(--text)}
               </select>
             </div>
             <div class="field">
-              <div class="field-label">Color Grading / LUT</div>
+              <div class="field-label">Gradación de Color / LUT</div>
               <select id="colorGrading" onchange="buildPrompt()">
                 <option value="">Select style...</option>
                 <option>Teal & Orange (Hollywood)</option>
@@ -1286,7 +1286,7 @@ select option{background:var(--bg3);color:var(--text)}
         </div>
       </div>
 
-      <!-- MODULE 05: REFERENCES -->
+      <!-- MODULE 05: REFERENCIAS Y ESTILOS -->
       <div class="module">
         <div class="module-header" onclick="toggleModule(this)">
           <span class="module-number">05</span>
@@ -1295,10 +1295,10 @@ select option{background:var(--bg3);color:var(--text)}
         <div class="module-body">
           <div class="field-row">
             <div class="field">
-              <div class="field-label">Photographer Style</div>
+              <div class="field-label">Estilo Fotográfico</div>
               <select id="photographer" onchange="buildPrompt()">
                 <option value="">Select photographer...</option>
-                <optgroup label="── PORTRAIT / FASHION ──">
+                <optgroup label="── RETRATO / MODA ──">
                   <option>Annie Leibovitz</option>
                   <option>Peter Lindbergh</option>
                   <option>Richard Avedon</option>
@@ -1309,7 +1309,7 @@ select option{background:var(--bg3);color:var(--text)}
                   <option>Platon</option>
                   <option>Brandon Woelfel</option>
                 </optgroup>
-                <optgroup label="── STREET ──">
+                <optgroup label="── CALLEJERA y URBANA ──">
                   <option>Daido Moriyama</option>
                   <option>Alex Webb</option>
                   <option>Saul Leiter</option>
@@ -1317,19 +1317,19 @@ select option{background:var(--bg3);color:var(--text)}
                   <option>Fan Ho</option>
                   <option>Henri Cartier-Bresson</option>
                 </optgroup>
-                <optgroup label="── LANDSCAPE ──">
+                <optgroup label="── PAISAJE ──">
                   <option>Ansel Adams</option>
                   <option>Michael Kenna</option>
                   <option>Alex Strohl</option>
                   <option>Benjamin Hardman</option>
                 </optgroup>
-                <optgroup label="── DOCUMENTARY ──">
+                <optgroup label="── DOCUMENTAL ──">
                   <option>Steve McCurry</option>
                   <option>Sebastião Salgado</option>
                   <option>James Nachtwey</option>
                   <option>Robert Capa</option>
                 </optgroup>
-                <optgroup label="── ART / CONCEPTUAL ──">
+                <optgroup label="── ARTE CONCEPTUAL ──">
                   <option>Gregory Crewdson</option>
                   <option>Cindy Sherman</option>
                   <option>Andreas Gursky</option>
@@ -1340,12 +1340,14 @@ select option{background:var(--bg3);color:var(--text)}
               </select>
             </div>
             <div class="field">
-              <div class="field-label">Movie Aesthetic</div>
+              <div class="field-label">Estética Visual de Película</div>
               <select id="movieRef" onchange="buildPrompt()">
                 <option value="">Select movie...</option>
-                <optgroup label="── CINEMATOGRAPHY ICONS ──">
+                <optgroup label="── ESTÉTICAS CINEMATOGRÁFICAS ──">
                   <option>Blade Runner 2049 (Deakins)</option>
                   <option>Dune (Greig Fraser)</option>
+                  <option>Vesper (Feliksas Abrukauskas)</option>
+                  <option>Prometheus (Dariusz Wolski)</option>
                   <option>1917 (Deakins)</option>
                   <option>The Revenant (Lubezki)</option>
                   <option>Children of Men (Lubezki)</option>
@@ -1353,7 +1355,7 @@ select option{background:var(--bg3);color:var(--text)}
                   <option>Oppenheimer (Hoytema)</option>
                   <option>No Country for Old Men (Deakins)</option>
                 </optgroup>
-                <optgroup label="── STYLIZED ──">
+                <optgroup label="── ARTIFICIAL Y ONÍRICO ──">
                   <option>Amélie (Delbonnel)</option>
                   <option>In the Mood for Love (Doyle)</option>
                   <option>The Grand Budapest Hotel</option>
@@ -1362,7 +1364,7 @@ select option{background:var(--bg3);color:var(--text)}
                   <option>Neon Demon (Refn)</option>
                   <option>Spider-Verse</option>
                 </optgroup>
-                <optgroup label="── DARK / NOIR ──">
+                <optgroup label="── OSCURAS / NOIR ──">
                   <option>Se7en (Fincher)</option>
                   <option>Fight Club (Fincher)</option>
                   <option>The Batman (Fraser)</option>
@@ -1371,7 +1373,7 @@ select option{background:var(--bg3);color:var(--text)}
                   <option>Nightcrawler</option>
                   <option>Joker</option>
                 </optgroup>
-                <optgroup label="── HORROR ──">
+                <optgroup label="── HORROR Y TERROR ──">
                   <option>Hereditary (Aster)</option>
                   <option>Midsommar (Aster)</option>
                   <option>The Lighthouse (Eggers)</option>
@@ -1380,7 +1382,7 @@ select option{background:var(--bg3);color:var(--text)}
                   <option>The Shining (Kubrick)</option>
                   <option>Suspiria (Argento)</option>
                 </optgroup>
-                <optgroup label="── SCI-FI ──">
+                <optgroup label="── CIENCIA FICCIÓN ──">
                   <option>2001: A Space Odyssey</option>
                   <option>Blade Runner (1982)</option>
                   <option>Alien (Ridley Scott)</option>
@@ -1388,7 +1390,7 @@ select option{background:var(--bg3);color:var(--text)}
                   <option>The Matrix</option>
                   <option>Ex Machina</option>
                 </optgroup>
-                <optgroup label="── CLASSIC ──">
+                <optgroup label="── CLÁSICAS ──">
                   <option>The Godfather (Willis)</option>
                   <option>Apocalypse Now (Storaro)</option>
                   <option>Barry Lyndon (Kubrick)</option>
@@ -1400,13 +1402,13 @@ select option{background:var(--bg3);color:var(--text)}
             </div>
           </div>
           <div class="field">
-            <div class="field-label">Custom Reference (optional)</div>
+            <div class="field-label">Referencia Personalizada (opcional)</div>
             <input type="text" class="text-input" id="customRef" placeholder="Any other director, photographer, artist, or film..." oninput="buildPrompt()">
           </div>
         </div>
       </div>
 
-      <!-- MODULE 06: SETTINGS -->
+      <!-- MODULE 06: CONFIGURACIÓN DE SALIDA -->
       <div class="module">
         <div class="module-header" onclick="toggleModule(this)">
           <span class="module-number">⚙️</span>
@@ -1415,7 +1417,7 @@ select option{background:var(--bg3);color:var(--text)}
         <div class="module-body">
           <div class="field-row">
             <div class="field">
-              <div class="field-label">Resolution</div>
+              <div class="field-label">Resolución</div>
               <select id="resolution" onchange="buildPrompt()">
                 <option value="1K">1K (1024×1024)</option>
                 <option value="2K">2K (2048×2048)</option>
@@ -1423,7 +1425,7 @@ select option{background:var(--bg3);color:var(--text)}
               </select>
             </div>
             <div class="field">
-              <div class="field-label">Temperature (Creativity)</div>
+              <div class="field-label">Creatividad</div>
               <select id="temperature">
                 <option value="focused">🧊 Focused (exact)</option>
                 <option value="balanced" selected>⚖️ Balanced (recommended)</option>
