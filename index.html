@@ -1840,7 +1840,6 @@ select option{background:var(--bg3);color:var(--text)}
     </div><!-- end tab-horror -->
 
     <!-- ==================== TAB: GRILLA ==================== -->
-    <!-- ==================== TAB: GRILLA ==================== -->
     <div class="tab-content" id="tab-grilla">
 
       <!-- GRILLA: PROMPT GENERATOR -->
@@ -2097,14 +2096,298 @@ select option{background:var(--bg3);color:var(--text)}
 
     </div><!-- end tab-grilla -->
 
-    <!-- ==================== TAB: VIDEO ==================== -->
+   <!-- ==================== TAB: VIDEO ==================== -->
     <div class="tab-content" id="tab-video">
-      <div class="coming-soon">
-        <div class="coming-soon-icon">🎥</div>
-        <h2>VIDEO</h2>
-        <p>Módulo en construcción — Próxima entrega</p>
+
+      <!-- VIDEO: ORIGINAL PROMPT -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">01</span>
+          <h3>Source Image Prompt</h3>
+        </div>
+        <div class="module-body">
+          <div class="field">
+            <div class="field-label">Original Image Prompt / Scene Description</div>
+            <textarea id="videoSourcePrompt" placeholder="Paste the prompt you used to generate your image, or describe the scene you want to animate..." oninput="buildVideoPrompt()"></textarea>
+          </div>
+        </div>
       </div>
-    </div>
+
+      <!-- VIDEO: PLATFORM -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">02</span>
+          <h3>Video Platform</h3>
+        </div>
+        <div class="module-body">
+          <div class="field">
+            <div class="field-label">Target Platform</div>
+            <select id="videoPlatform" onchange="buildVideoPrompt()">
+              <option value="">Select platform...</option>
+              <optgroup label="── GOOGLE ──">
+                <option value="veo3">Veo 3 (Google)</option>
+              </optgroup>
+              <optgroup label="── POPULAR ──">
+                <option value="kling">Kling 2.0 (Kuaishou)</option>
+                <option value="runway">Runway Gen-4</option>
+                <option value="pika">Pika 2.0</option>
+                <option value="luma">Luma Dream Machine</option>
+                <option value="minimax">Minimax / Hailuo</option>
+              </optgroup>
+              <optgroup label="── OPEN SOURCE ──">
+                <option value="wan">Wan 2.1 (Alibaba)</option>
+                <option value="seedance">Seedance 1.0 (ByteDance)</option>
+                <option value="qwen">Qwen (Alibaba)</option>
+              </optgroup>
+              <optgroup label="── OTHER ──">
+                <option value="grok">Grok (xAI)</option>
+                <option value="generic">Generic (universal prompt)</option>
+              </optgroup>
+            </select>
+          </div>
+          <div id="platformTip" style="font-size:.75rem;color:var(--text2);padding:8px 0;display:none"></div>
+        </div>
+      </div>
+
+      <!-- VIDEO: CAMERA MOTION -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">03</span>
+          <h3>Camera Motion</h3>
+        </div>
+        <div class="module-body">
+          <div class="field-row">
+            <div class="field">
+              <div class="field-label">Primary Camera Movement</div>
+              <select id="videoCameraMove" onchange="buildVideoPrompt()">
+                <option value="">Select movement...</option>
+                <optgroup label="── STATIC ──">
+                  <option>Static / Locked Off (no movement)</option>
+                  <option>Subtle Handheld (slight shake)</option>
+                </optgroup>
+                <optgroup label="── PUSH / PULL ──">
+                  <option>Slow Dolly In (approach subject)</option>
+                  <option>Slow Dolly Out (reveal environment)</option>
+                  <option>Fast Dolly In (dramatic rush)</option>
+                  <option>Slow Zoom In</option>
+                  <option>Slow Zoom Out</option>
+                  <option>Vertigo / Dolly Zoom</option>
+                </optgroup>
+                <optgroup label="── PAN / TILT ──">
+                  <option>Slow Pan Left</option>
+                  <option>Slow Pan Right</option>
+                  <option>Slow Tilt Up (ground to sky)</option>
+                  <option>Slow Tilt Down (sky to ground)</option>
+                  <option>Whip Pan (fast swipe)</option>
+                </optgroup>
+                <optgroup label="── ORBIT / ROTATE ──">
+                  <option>Orbit Around Subject (clockwise)</option>
+                  <option>Orbit Around Subject (counter-clockwise)</option>
+                  <option>Half Orbit (180° around)</option>
+                  <option>Dutch Angle Rotation</option>
+                </optgroup>
+                <optgroup label="── COMPLEX ──">
+                  <option>Tracking Shot (follow subject)</option>
+                  <option>Steadicam Follow (behind subject)</option>
+                  <option>Crane Up (ground to aerial)</option>
+                  <option>Crane Down (aerial to ground)</option>
+                  <option>Aerial / Drone Rise</option>
+                  <option>Aerial Flyover</option>
+                  <option>Through / Impossicam (pass through objects)</option>
+                  <option>First Person POV Walk</option>
+                </optgroup>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Camera Speed</div>
+              <select id="videoCameraSpeed" onchange="buildVideoPrompt()">
+                <option value="">Select speed...</option>
+                <option>Ultra Slow (dreamlike)</option>
+                <option>Slow (cinematic)</option>
+                <option>Medium (natural)</option>
+                <option>Fast (energetic)</option>
+                <option>Accelerating (slow to fast)</option>
+                <option>Decelerating (fast to slow)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIDEO: SUBJECT & ENVIRONMENT MOTION -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">04</span>
+          <h3>Subject & Environment Motion</h3>
+        </div>
+        <div class="module-body">
+          <div class="field">
+            <div class="field-label">Subject Action / Movement</div>
+            <textarea id="videoSubjectAction" placeholder="What does the subject DO during the video?&#10;Ej: She slowly turns her head toward the camera, hair blowing in the wind, a tear rolling down her cheek..." oninput="buildVideoPrompt()" style="min-height:70px"></textarea>
+          </div>
+          <div class="field">
+            <div class="field-label">Environment / Background Motion</div>
+            <textarea id="videoEnvMotion" placeholder="What moves in the background/environment?&#10;Ej: Rain intensifies, neon signs flicker, leaves blow across the street, fog rolls in slowly..." oninput="buildVideoPrompt()" style="min-height:70px"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIDEO: TIMING & EFFECTS -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">05</span>
+          <h3>Timing & Effects</h3>
+        </div>
+        <div class="module-body">
+          <div class="field-row">
+            <div class="field">
+              <div class="field-label">Duration</div>
+              <select id="videoDuration" onchange="buildVideoPrompt()">
+                <option value="">Select duration...</option>
+                <option>3 seconds (short, impactful)</option>
+                <option>5 seconds (standard)</option>
+                <option>8 seconds (extended)</option>
+                <option>10 seconds (long, narrative)</option>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Frame Rate Feel</div>
+              <select id="videoFPS" onchange="buildVideoPrompt()">
+                <option value="">Select feel...</option>
+                <option>24fps Cinematic (standard film)</option>
+                <option>30fps Smooth (TV/documentary)</option>
+                <option>60fps Ultra Smooth (hyper-real)</option>
+                <option>Slow Motion (120fps effect)</option>
+                <option>Timelapse (sped up time)</option>
+                <option>Stop Motion (frame-by-frame)</option>
+              </select>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <div class="field-label">Transition Start</div>
+              <select id="videoTransStart" onchange="buildVideoPrompt()">
+                <option value="">None</option>
+                <option>Fade In from Black</option>
+                <option>Fade In from White</option>
+                <option>Blur to Sharp (focus pull)</option>
+                <option>Emerge from Fog</option>
+                <option>Light Leak Opening</option>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Transition End</div>
+              <select id="videoTransEnd" onchange="buildVideoPrompt()">
+                <option value="">None</option>
+                <option>Fade to Black</option>
+                <option>Fade to White</option>
+                <option>Freeze Frame</option>
+                <option>Slow Motion Ending</option>
+                <option>Sharp to Blur (defocus)</option>
+                <option>Dissolve into Particles</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <div class="field-label">Special Effects (optional)</div>
+            <select id="videoEffects" onchange="buildVideoPrompt()">
+              <option value="">None</option>
+              <option>Lens Flare</option>
+              <option>Film Grain</option>
+              <option>VHS Distortion / Glitch</option>
+              <option>Motion Blur</option>
+              <option>Depth of Field Shift</option>
+              <option>Color Shift / Chromatic Aberration</option>
+              <option>Light Leaks</option>
+              <option>Particle Effects (dust, embers, snow)</option>
+              <option>Screen Shake / Impact</option>
+              <option>Split Second Flash</option>
+              <option>Anamorphic Flare</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIDEO: AUDIO MOOD -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">06</span>
+          <h3>Audio Mood (text cue for AI)</h3>
+        </div>
+        <div class="module-body">
+          <div class="field">
+            <div class="field-label">Sound / Music Mood Cue</div>
+            <select id="videoAudio" onchange="buildVideoPrompt()">
+              <option value="">No audio cue...</option>
+              <optgroup label="── CINEMATIC ──">
+                <option>Epic orchestral crescendo</option>
+                <option>Quiet ambient tension</option>
+                <option>Melancholic piano</option>
+                <option>Dramatic drums and brass</option>
+                <option>Ethereal choir voices</option>
+              </optgroup>
+              <optgroup label="── MODERN ──">
+                <option>Synthwave / Retrowave</option>
+                <option>Dark ambient drone</option>
+                <option>Lo-fi hip hop calm</option>
+                <option>Trap / Bass heavy</option>
+                <option>Electronic / EDM pulse</option>
+              </optgroup>
+              <optgroup label="── ENVIRONMENT ──">
+                <option>Rain and thunder</option>
+                <option>Wind howling</option>
+                <option>Ocean waves</option>
+                <option>City traffic / Urban noise</option>
+                <option>Complete silence (void)</option>
+                <option>Heartbeat</option>
+                <option>Clock ticking</option>
+              </optgroup>
+              <optgroup label="── HORROR ──">
+                <option>Dissonant strings (horror)</option>
+                <option>Low frequency rumble (dread)</option>
+                <option>Whispers and breathing</option>
+                <option>Static / Radio interference</option>
+                <option>Distorted music box</option>
+              </optgroup>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIDEO: OUTPUT -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">⚙️</span>
+          <h3>Output Settings</h3>
+        </div>
+        <div class="module-body">
+          <div class="field-row">
+            <div class="field">
+              <div class="field-label">Aspect Ratio</div>
+              <select id="videoAspect" onchange="buildVideoPrompt()">
+                <option value="">Select ratio...</option>
+                <option>16:9 Landscape (standard)</option>
+                <option>9:16 Vertical (TikTok/Reels)</option>
+                <option>1:1 Square (Instagram)</option>
+                <option>2.39:1 Cinematic Scope</option>
+                <option>4:3 Classic</option>
+                <option>21:9 Ultra Wide</option>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Quality</div>
+              <select id="videoQuality" onchange="buildVideoPrompt()">
+                <option value="high quality">High Quality</option>
+                <option value="cinematic quality, hyper-detailed">Cinematic Ultra Detailed</option>
+                <option value="raw, realistic">Raw Realistic</option>
+                <option value="stylized, artistic">Stylized Artistic</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end tab-video -->
 
   </div><!-- end panel-left -->
 
@@ -2621,6 +2904,89 @@ function downloadAllSplits() {
       downloadSingleSplit(i, format);
     }, i * 300);
   });
+}
+// ========== BUILD VIDEO PROMPT ==========
+function buildVideoPrompt() {
+  const parts = [];
+
+  const source = document.getElementById('videoSourcePrompt').value.trim();
+  const platform = document.getElementById('videoPlatform');
+  const platformVal = platform.value;
+  const platformText = platform.options[platform.selectedIndex] ? platform.options[platform.selectedIndex].text : '';
+  const cameraMove = document.getElementById('videoCameraMove').value;
+  const cameraSpeed = document.getElementById('videoCameraSpeed').value;
+  const subjectAction = document.getElementById('videoSubjectAction').value.trim();
+  const envMotion = document.getElementById('videoEnvMotion').value.trim();
+  const duration = document.getElementById('videoDuration').value;
+  const fps = document.getElementById('videoFPS').value;
+  const transStart = document.getElementById('videoTransStart').value;
+  const transEnd = document.getElementById('videoTransEnd').value;
+  const effects = document.getElementById('videoEffects').value;
+  const audio = document.getElementById('videoAudio').value;
+  const aspect = document.getElementById('videoAspect').value;
+  const quality = document.getElementById('videoQuality').value;
+
+  // Platform tips
+  const tipEl = document.getElementById('platformTip');
+  const tips = {
+    'veo3': '💡 Veo 3: Supports image-to-video. Use detailed natural language. Mention camera movements explicitly.',
+    'kling': '💡 Kling: Great with image-to-video. Be specific about motion direction and speed. Supports 5s and 10s.',
+    'runway': '💡 Runway Gen-4: Excellent motion control. Use concise, clear descriptions. Supports camera control keywords.',
+    'pika': '💡 Pika: Good with short clips. Keep prompts simple and focused on one main action.',
+    'luma': '💡 Luma: Strong at cinematic looks. Describe the mood and camera movement clearly.',
+    'minimax': '💡 Minimax/Hailuo: Good quality, describe motion step by step.',
+    'wan': '💡 Wan 2.1: Open source, use detailed English prompts. Works well with specific camera terms.',
+    'seedance': '💡 Seedance: ByteDance model. Use clear motion descriptions. Supports image-to-video.',
+    'grok': '💡 Grok: Use natural language descriptions. Be specific about what changes over time.',
+    'qwen': '💡 Qwen: Alibaba model. Detailed prompts work best. Specify duration and motion.',
+    'generic': '💡 Generic: Universal prompt that works on most platforms. Adjust as needed.'
+  };
+  if (platformVal && tips[platformVal]) {
+    tipEl.textContent = tips[platformVal];
+    tipEl.style.display = 'block';
+  } else {
+    tipEl.style.display = 'none';
+  }
+
+  // Build prompt
+  parts.push('VIDEO GENERATION PROMPT');
+  if (platformText && platformVal) parts.push('[Platform: ' + platformText + ']');
+  parts.push('');
+
+  if (source) parts.push('Scene: ' + source);
+
+  if (cameraMove) {
+    let camStr = 'Camera: ' + cameraMove;
+    if (cameraSpeed) camStr += ', ' + cameraSpeed.toLowerCase() + ' speed';
+    parts.push(camStr + '.');
+  }
+
+  if (subjectAction) parts.push('Subject action: ' + subjectAction);
+  if (envMotion) parts.push('Environment: ' + envMotion);
+
+  if (transStart) parts.push('Opens with: ' + transStart.toLowerCase() + '.');
+  if (transEnd) parts.push('Ends with: ' + transEnd.toLowerCase() + '.');
+
+  if (duration) parts.push('Duration: ' + duration.split(' ')[0] + ' seconds.');
+  if (fps) parts.push(fps + '.');
+  if (effects) parts.push('Effect: ' + effects.toLowerCase() + '.');
+  if (audio) parts.push('Audio mood: ' + audio.toLowerCase() + '.');
+  if (aspect) parts.push(aspect + ' format.');
+  parts.push(quality + ', smooth motion, cinematic video.');
+
+  const promptBox = document.getElementById('promptBox');
+  const finalPrompt = parts.join(' ').replace(/  +/g, ' ').trim();
+
+  if (source || cameraMove || subjectAction) {
+    promptBox.textContent = finalPrompt;
+    promptBox.classList.remove('empty');
+  } else {
+    promptBox.textContent = 'Your video prompt will appear here in real-time as you configure the modules...';
+    promptBox.classList.add('empty');
+  }
+
+  document.getElementById('charCount').textContent = finalPrompt.length;
+  document.getElementById('wordCount').textContent = finalPrompt.split(/\s+/).filter(w=>w).length;
 }
 // ========== CLEAR ALL ==========
 function clearAll() {
