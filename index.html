@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -954,22 +954,891 @@ select option{background:var(--bg3);color:var(--text)}
     </div><!-- end tab-cine -->
 
     <!-- ==================== TAB: ANIMACIÓN ==================== -->
+    <!-- ==================== TAB: ANIMACIÓN ==================== -->
     <div class="tab-content" id="tab-anime">
-      <div class="coming-soon">
-        <div class="coming-soon-icon">🎨</div>
-        <h2>ANIMACIÓN</h2>
-        <p>Módulo en construcción — Próxima entrega</p>
+
+      <!-- ANIME: STYLE -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">01</span>
+          <h3>Animation Style</h3>
+        </div>
+        <div class="module-body">
+          <div class="field">
+            <div class="field-label">Style / Aesthetic</div>
+            <select id="animeStyle" onchange="buildAnimePrompt()">
+              <option value="">Select animation style...</option>
+              <optgroup label="── ANIME CLASSIC / RETRO ──">
+                <option>70s Anime (Mazinger, Heidi)</option>
+                <option>80s Anime (Akira, Dragon Ball, Macross)</option>
+                <option>80s OVA Style (Bubblegum Crisis)</option>
+                <option>90s Anime (Evangelion, Cowboy Bebop)</option>
+                <option>Early 2000s Anime (FLCL, Samurai Champloo)</option>
+                <option>Modern Anime (Demon Slayer, JJK)</option>
+                <option>Retro-Futuristic Anime (Cowboy Bebop, Trigun)</option>
+              </optgroup>
+              <optgroup label="── ANIME BY STUDIO ──">
+                <option>Studio Ghibli (Miyazaki)</option>
+                <option>Studio Ghibli Dark (Mononoke, Nausicaä)</option>
+                <option>Makoto Shinkai (Your Name)</option>
+                <option>Satoshi Kon (Perfect Blue, Paprika)</option>
+                <option>Masaaki Yuasa (Devilman Crybaby)</option>
+                <option>Ufotable (Demon Slayer)</option>
+                <option>MAPPA (Jujutsu Kaisen, AoT)</option>
+                <option>Madhouse (Death Note, One Punch Man)</option>
+                <option>Wit Studio (Attack on Titan S1-3)</option>
+                <option>Trigger (Kill la Kill, Promare)</option>
+                <option>Shaft (Monogatari, Madoka)</option>
+                <option>Kyoto Animation (Violet Evergarden)</option>
+                <option>Toei Classic (Dragon Ball, Sailor Moon)</option>
+              </optgroup>
+              <optgroup label="── ANIME GENRE ──">
+                <option>Shonen Style (action, power)</option>
+                <option>Shojo Style (romance, sparkles)</option>
+                <option>Seinen Style (mature, detailed)</option>
+                <option>Chibi / Super Deformed</option>
+                <option>Mecha Anime (giant robots)</option>
+                <option>Isekai Fantasy (another world, RPG)</option>
+                <option>Slice of Life (warm, daily)</option>
+                <option>Dark Anime / Gothic (Berserk)</option>
+                <option>Anime Watercolor</option>
+              </optgroup>
+              <optgroup label="── WESTERN ANIMATION ──">
+                <option>Disney Renaissance 90s</option>
+                <option>Disney Classic (30s-60s)</option>
+                <option>Pixar Style (Toy Story, Up)</option>
+                <option>Pixar Stylized (Soul, Elemental)</option>
+                <option>DreamWorks (Shrek, Kung Fu Panda)</option>
+                <option>Laika (Coraline, Kubo)</option>
+                <option>Spider-Verse Style</option>
+                <option>Arcane Style (League of Legends)</option>
+                <option>Castlevania Style (Netflix)</option>
+                <option>Samurai Jack Style</option>
+                <option>Primal (Genndy Tartakovsky)</option>
+                <option>Love Death Robots Style</option>
+                <option>Cartoon Network (Adventure Time)</option>
+                <option>Adult Swim (Rick and Morty)</option>
+                <option>Aardman Claymation (Wallace & Gromit)</option>
+              </optgroup>
+              <optgroup label="── ART MOVEMENTS ──">
+                <option>Art Nouveau Animation</option>
+                <option>Art Deco Animation</option>
+                <option>Ukiyo-e Animation (Japanese woodblock)</option>
+                <option>Ink Wash / Sumi-e Animation</option>
+                <option>Oil Painting Animation (Loving Vincent)</option>
+                <option>Charcoal / Pencil Animation</option>
+                <option>Stained Glass Animation</option>
+                <option>Paper Cut Animation</option>
+                <option>Woodcut / Linocut Animation</option>
+              </optgroup>
+              <optgroup label="── PUNK GENRES ──">
+                <option>Cyberpunk</option>
+                <option>Steampunk</option>
+                <option>Dieselpunk</option>
+                <option>Atompunk / Raygun Gothic</option>
+                <option>Solarpunk</option>
+                <option>Biopunk</option>
+                <option>Cassettepunk / Synthwave</option>
+                <option>Decopunk (Bioshock, Metropolis)</option>
+                <option>Lunarpunk (bioluminescent)</option>
+                <option>Salvagepunk / Trashpunk (Mad Max)</option>
+                <option>Silkpunk (Asian steampunk)</option>
+                <option>Mythpunk (reimagined mythology)</option>
+              </optgroup>
+              <optgroup label="── COMIC / SUPERHERO ──">
+                <option>Marvel Comic Classic</option>
+                <option>DC Comic Dark (Frank Miller)</option>
+                <option>Sin City Style (B&W + color)</option>
+                <option>Mike Mignola / Hellboy</option>
+                <option>Moebius / Jean Giraud</option>
+                <option>Manga Panel Style</option>
+                <option>Pop Art (Warhol, Lichtenstein)</option>
+                <option>Graphic Novel Realism</option>
+              </optgroup>
+              <optgroup label="── OTHER STYLES ──">
+                <option>LEGO Style</option>
+                <option>Voxel Art (3D pixel)</option>
+                <option>Pixel Art (16-bit, 32-bit)</option>
+                <option>Low Poly 3D</option>
+                <option>Isometric Art</option>
+                <option>Flat Design / Vector</option>
+                <option>Claymation / Stop Motion</option>
+                <option>Rotoscoping (A Scanner Darkly)</option>
+                <option>Silhouette Animation</option>
+              </optgroup>
+            </select>
+          </div>
+        </div>
       </div>
-    </div>
+
+      <!-- ANIME: SUBJECT -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">02</span>
+          <h3>Subject & Scene</h3>
+        </div>
+        <div class="module-body">
+          <div class="field">
+            <div class="field-label">Scene Description</div>
+            <textarea id="animeSubject" placeholder="Ej: A young samurai standing on a cliff overlooking a burning city at sunset, wind blowing through his hair, cherry blossoms falling..." oninput="buildAnimePrompt()"></textarea>
+          </div>
+          <div class="field">
+            <div class="field-label">Character Details (optional)</div>
+            <textarea id="animeCharacter" placeholder="Ej: Silver hair, red eyes, black armor with gold trim, scar across left cheek, katana strapped to back..." oninput="buildAnimePrompt()" style="min-height:60px"></textarea>
+          </div>
+          <div class="field">
+            <div class="field-label">Environment Details (optional)</div>
+            <input type="text" class="text-input" id="animeEnvironment" placeholder="Ej: Futuristic Tokyo, enchanted forest, space station interior..." oninput="buildAnimePrompt()">
+          </div>
+        </div>
+      </div>
+
+      <!-- ANIME: VISUAL SETTINGS -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">03</span>
+          <h3>Visual Settings</h3>
+        </div>
+        <div class="module-body">
+          <div class="field-row">
+            <div class="field">
+              <div class="field-label">Color Palette</div>
+              <select id="animeColorPalette" onchange="buildAnimePrompt()">
+                <option value="">Select palette...</option>
+                <option>Warm Tones (amber, gold, sunset)</option>
+                <option>Cool Tones (blue, cyan, steel)</option>
+                <option>Neon / Cyberpunk (magenta, cyan, violet)</option>
+                <option>Pastel Soft (pink, lavender, mint)</option>
+                <option>Earth Tones (brown, olive, forest)</option>
+                <option>Vibrant / Saturated</option>
+                <option>Desaturated / Muted</option>
+                <option>Monochrome (B&W or single color)</option>
+                <option>Golden Hour Warm</option>
+                <option>Dark & Moody (deep shadows)</option>
+                <option>Candy / Pop Colors</option>
+                <option>Autumn (reds, oranges, golds)</option>
+                <option>Winter (whites, pale blues)</option>
+                <option>Sunset Gradient (orange to purple)</option>
+                <option>Night Neon (dark + bright accents)</option>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Mood / Atmosphere</div>
+              <select id="animeMood" onchange="buildAnimePrompt()">
+                <option value="">Select mood...</option>
+                <option>Epic & Grand</option>
+                <option>Peaceful & Serene</option>
+                <option>Dark & Brooding</option>
+                <option>Romantic & Dreamy</option>
+                <option>Action & Dynamic</option>
+                <option>Mysterious & Eerie</option>
+                <option>Nostalgic & Bittersweet</option>
+                <option>Comedic & Playful</option>
+                <option>Melancholic & Lonely</option>
+                <option>Heroic & Triumphant</option>
+                <option>Psychedelic & Surreal</option>
+                <option>Cozy & Warm</option>
+                <option>Tense & Suspenseful</option>
+                <option>Magical & Enchanting</option>
+                <option>Post-Apocalyptic & Desolate</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <div class="field-label">Lighting</div>
+              <select id="animeLighting" onchange="buildAnimePrompt()">
+                <option value="">Select lighting...</option>
+                <option>Dramatic Backlight</option>
+                <option>Golden Hour Sunlight</option>
+                <option>Soft Diffused Light</option>
+                <option>Moonlight / Night</option>
+                <option>Neon Glow</option>
+                <option>Candlelight / Fire</option>
+                <option>Volumetric God Rays</option>
+                <option>Underwater Caustics</option>
+                <option>Flat Anime Lighting</option>
+                <option>High Contrast (cel-shaded)</option>
+                <option>Bioluminescent</option>
+                <option>Overcast / Cloudy</option>
+                <option>Magical Particle Effects</option>
+                <option>Lens Flare Heavy</option>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Composition / Shot</div>
+              <select id="animeShot" onchange="buildAnimePrompt()">
+                <option value="">Select shot...</option>
+                <option>Close Up (face detail)</option>
+                <option>Medium Shot (waist up)</option>
+                <option>Full Body Shot</option>
+                <option>Wide Establishing Shot</option>
+                <option>Extreme Close Up (eyes)</option>
+                <option>Bird's Eye View</option>
+                <option>Low Angle (heroic)</option>
+                <option>Dutch Angle (dynamic)</option>
+                <option>Over The Shoulder</option>
+                <option>Dynamic Action Pose</option>
+                <option>Panoramic Landscape</option>
+                <option>Isometric View</option>
+                <option>Split Screen</option>
+                <option>Manga Panel Layout</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ANIME: REFERENCES -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">04</span>
+          <h3>References</h3>
+        </div>
+        <div class="module-body">
+          <div class="field-row">
+            <div class="field">
+              <div class="field-label">Director / Artist</div>
+              <select id="animeDirector" onchange="buildAnimePrompt()">
+                <option value="">Select director...</option>
+                <optgroup label="── JAPANESE ──">
+                  <option>Hayao Miyazaki</option>
+                  <option>Makoto Shinkai</option>
+                  <option>Satoshi Kon</option>
+                  <option>Mamoru Hosoda</option>
+                  <option>Masaaki Yuasa</option>
+                  <option>Katsuhiro Otomo</option>
+                  <option>Mamoru Oshii</option>
+                  <option>Hideaki Anno</option>
+                  <option>Shinichiro Watanabe</option>
+                  <option>Naoko Yamada</option>
+                  <option>Yoshiaki Kawajiri</option>
+                  <option>Isao Takahata</option>
+                  <option>Osamu Tezuka</option>
+                  <option>Kunihiko Ikuhara</option>
+                  <option>Takeshi Koike</option>
+                </optgroup>
+                <optgroup label="── WESTERN ──">
+                  <option>Walt Disney</option>
+                  <option>Pete Docter (Pixar)</option>
+                  <option>Brad Bird (Pixar)</option>
+                  <option>Genndy Tartakovsky</option>
+                  <option>Don Bluth</option>
+                  <option>Henry Selick</option>
+                  <option>Wes Anderson (animation)</option>
+                  <option>Guillermo del Toro (animation)</option>
+                  <option>Phil Lord & Chris Miller</option>
+                  <option>Tomm Moore (Cartoon Saloon)</option>
+                  <option>René Laloux</option>
+                  <option>Glen Keane</option>
+                </optgroup>
+                <optgroup label="── ARTISTS / ILLUSTRATORS ──">
+                  <option>Moebius / Jean Giraud</option>
+                  <option>Yoshitaka Amano</option>
+                  <option>Kentaro Miura (Berserk)</option>
+                  <option>Junji Ito</option>
+                  <option>Akira Toriyama</option>
+                  <option>Takehiko Inoue</option>
+                  <option>Pascal Campion</option>
+                </optgroup>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Film / Series Reference</div>
+              <select id="animeFilmRef" onchange="buildAnimePrompt()">
+                <option value="">Select reference...</option>
+                <optgroup label="── ANIME FILMS ──">
+                  <option>Spirited Away</option>
+                  <option>Princess Mononoke</option>
+                  <option>Your Name (Kimi no Na wa)</option>
+                  <option>Akira</option>
+                  <option>Ghost in the Shell (1995)</option>
+                  <option>Perfect Blue</option>
+                  <option>Paprika</option>
+                  <option>Redline</option>
+                  <option>Weathering With You</option>
+                  <option>Howl's Moving Castle</option>
+                  <option>Nausicaä</option>
+                  <option>Grave of the Fireflies</option>
+                  <option>A Silent Voice</option>
+                  <option>Vampire Hunter D: Bloodlust</option>
+                  <option>Ninja Scroll</option>
+                </optgroup>
+                <optgroup label="── ANIME SERIES ──">
+                  <option>Cowboy Bebop</option>
+                  <option>Neon Genesis Evangelion</option>
+                  <option>Attack on Titan</option>
+                  <option>Demon Slayer</option>
+                  <option>Jujutsu Kaisen</option>
+                  <option>Violet Evergarden</option>
+                  <option>Mob Psycho 100</option>
+                  <option>Devilman Crybaby</option>
+                  <option>Samurai Champloo</option>
+                  <option>FLCL</option>
+                  <option>Kill la Kill</option>
+                  <option>Monogatari Series</option>
+                  <option>Berserk (1997)</option>
+                  <option>Serial Experiments Lain</option>
+                </optgroup>
+                <optgroup label="── WESTERN ANIMATION ──">
+                  <option>Spider-Man: Into the Spider-Verse</option>
+                  <option>Arcane</option>
+                  <option>Coraline</option>
+                  <option>The Iron Giant</option>
+                  <option>Fantastic Planet (1973)</option>
+                  <option>Wolfwalkers</option>
+                  <option>Primal</option>
+                  <option>Isle of Dogs</option>
+                  <option>WALL-E</option>
+                  <option>Soul (Pixar)</option>
+                </optgroup>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <div class="field-label">Custom Reference (optional)</div>
+            <input type="text" class="text-input" id="animeCustomRef" placeholder="Any other anime, artist, game, or visual reference..." oninput="buildAnimePrompt()">
+          </div>
+        </div>
+      </div>
+
+      <!-- ANIME: OUTPUT -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">⚙️</span>
+          <h3>Output Settings</h3>
+        </div>
+        <div class="module-body">
+          <div class="field-row">
+            <div class="field">
+              <div class="field-label">Aspect Ratio</div>
+              <select id="animeAspect" onchange="buildAnimePrompt()">
+                <option value="">Select ratio...</option>
+                <option>16:9 Widescreen</option>
+                <option>1:1 Square</option>
+                <option>4:3 Classic</option>
+                <option>9:16 Vertical</option>
+                <option>2.39:1 Cinematic Scope</option>
+                <option>21:9 Ultra Wide</option>
+                <option>3:4 Manga Page</option>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Resolution</div>
+              <select id="animeResolution" onchange="buildAnimePrompt()">
+                <option value="1K">1K</option>
+                <option value="2K">2K</option>
+                <option value="4K">4K</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <div class="field-label">Quality Keywords</div>
+            <select id="animeQuality" onchange="buildAnimePrompt()">
+              <option value="high quality, detailed">High Quality Detailed</option>
+              <option value="masterpiece, best quality, ultra detailed">Masterpiece Ultra Detailed</option>
+              <option value="sketch, concept art">Sketch / Concept Art</option>
+              <option value="clean lineart, flat colors">Clean Lineart Flat Colors</option>
+              <option value="painterly, textured, artistic">Painterly Textured</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end tab-anime -->
 
     <!-- ==================== TAB: HORROR ==================== -->
     <div class="tab-content" id="tab-horror">
-      <div class="coming-soon">
-        <div class="coming-soon-icon">💀</div>
-        <h2>HORROR</h2>
-        <p>Módulo en construcción — Próxima entrega</p>
+
+      <!-- HORROR: SUBGENRE -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">01</span>
+          <h3>Horror Subgenre</h3>
+        </div>
+        <div class="module-body">
+          <div class="field">
+            <div class="field-label">Subgenre</div>
+            <select id="horrorSubgenre" onchange="buildHorrorPrompt()">
+              <option value="">Select subgenre...</option>
+              <optgroup label="── COSMIC / LOVECRAFTIAN ──">
+                <option>Lovecraftian Classic</option>
+                <option>Existential Cosmic Horror</option>
+                <option>Scientific Cosmic Horror</option>
+                <option>Oceanic / Abyssal Horror</option>
+                <option>Biological Cosmic Horror</option>
+                <option>Urban Cosmic Horror</option>
+                <option>Cosmic Nihilism</option>
+                <option>Cosmic Indifference</option>
+              </optgroup>
+              <optgroup label="── ONTOLOGICAL ──">
+                <option>Ontological Horror</option>
+                <option>Wrong Reality</option>
+                <option>Liminal Spaces Horror</option>
+                <option>Uncanny Valley Horror</option>
+              </optgroup>
+              <optgroup label="── SUPERNATURAL ──">
+                <option>Gothic Horror</option>
+                <option>Folk Horror</option>
+                <option>Supernatural Horror</option>
+                <option>Occult Horror</option>
+                <option>Religious Horror</option>
+                <option>Haunted House</option>
+                <option>Possession Horror</option>
+                <option>Witch Horror</option>
+                <option>Cult Horror</option>
+              </optgroup>
+              <optgroup label="── BODY HORROR ──">
+                <option>Body Horror (Cronenberg)</option>
+                <option>Surgical Horror</option>
+                <option>Parasite Horror</option>
+                <option>Infection / Plague</option>
+                <option>Splatter / Gore</option>
+              </optgroup>
+              <optgroup label="── PSYCHOLOGICAL ──">
+                <option>Psychological Horror</option>
+                <option>Gaslighting Horror</option>
+                <option>Isolation Horror</option>
+                <option>Paranoia Horror</option>
+                <option>Dream Horror / Nightmare</option>
+                <option>Memory Horror</option>
+              </optgroup>
+              <optgroup label="── ATMOSPHERIC ──">
+                <option>Slow Burn Horror</option>
+                <option>Dread / Creeping Horror</option>
+                <option>Quiet Horror</option>
+                <option>Southern Gothic Horror</option>
+                <option>Winter Horror / Isolation</option>
+                <option>Underwater Horror</option>
+                <option>Space Horror</option>
+              </optgroup>
+              <optgroup label="── MODERN ──">
+                <option>Found Footage Horror</option>
+                <option>Analog Horror (VHS)</option>
+                <option>Creepypasta / Internet Horror</option>
+                <option>J-Horror (Japanese)</option>
+                <option>K-Horror (Korean)</option>
+                <option>Elevated Horror / A24 Style</option>
+                <option>Slasher</option>
+                <option>Survival Horror</option>
+                <option>Apocalyptic Horror</option>
+                <option>Post-Apocalyptic Horror</option>
+                <option>Kaiju Horror</option>
+              </optgroup>
+            </select>
+          </div>
+        </div>
       </div>
-    </div>
+
+      <!-- HORROR: SUBJECT -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">02</span>
+          <h3>Subject & Scene</h3>
+        </div>
+        <div class="module-body">
+          <div class="field">
+            <div class="field-label">Scene Description</div>
+            <textarea id="horrorSubject" placeholder="Ej: A lone researcher descends into a cavern where ancient walls are covered in impossible geometry that seems to shift when observed directly..." oninput="buildHorrorPrompt()"></textarea>
+          </div>
+          <div class="field">
+            <div class="field-label">Entity / Creature (optional)</div>
+            <textarea id="horrorEntity" placeholder="Ej: A towering figure with too many limbs, its body made of translucent flesh revealing dark organs, eyeless face with a permanent smile..." oninput="buildHorrorPrompt()" style="min-height:60px"></textarea>
+          </div>
+          <div class="field">
+            <div class="field-label">Environment</div>
+            <input type="text" class="text-input" id="horrorEnvironment" placeholder="Ej: Abandoned asylum, deep ocean trench, impossible architecture, fog-covered forest..." oninput="buildHorrorPrompt()">
+          </div>
+        </div>
+      </div>
+
+      <!-- HORROR: ATMOSPHERE -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">03</span>
+          <h3>Horror Atmosphere</h3>
+        </div>
+        <div class="module-body">
+          <div class="field-row">
+            <div class="field">
+              <div class="field-label">Atmosphere</div>
+              <select id="horrorAtmosphere" onchange="buildHorrorPrompt()">
+                <option value="">Select atmosphere...</option>
+                <option>Thick Fog / Impenetrable Mist</option>
+                <option>Heavy Rain / Storm</option>
+                <option>Complete Darkness</option>
+                <option>Underwater Pressure</option>
+                <option>Ash Falling / Post-Destruction</option>
+                <option>Frozen / Sub-Zero</option>
+                <option>Humid / Suffocating Heat</option>
+                <option>Decay / Rot / Organic Growth</option>
+                <option>Static / Glitch / Reality Distortion</option>
+                <option>Vacuum of Space</option>
+                <option>Bioluminescent Deep Sea</option>
+                <option>Smoke / Industrial Pollution</option>
+                <option>Dust Particles / Abandoned</option>
+                <option>Blood Rain / Unnatural Weather</option>
+                <option>Eclipse / Unnatural Sky</option>
+                <option>Spores / Fungal Infection</option>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Mood / Dread Level</div>
+              <select id="horrorMood" onchange="buildHorrorPrompt()">
+                <option value="">Select mood...</option>
+                <option>Creeping Dread</option>
+                <option>Pure Terror</option>
+                <option>Existential Despair</option>
+                <option>Paranoid Anxiety</option>
+                <option>Cosmic Insignificance</option>
+                <option>Quiet Unease</option>
+                <option>Maddening Revelation</option>
+                <option>Oppressive Claustrophobia</option>
+                <option>Helpless Vulnerability</option>
+                <option>Uncanny Wrongness</option>
+                <option>Primal Fear</option>
+                <option>Melancholic Horror</option>
+                <option>Nihilistic Void</option>
+                <option>Religious Awe / Terror</option>
+                <option>Fever Dream Delirium</option>
+                <option>Body Revulsion / Disgust</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <div class="field-label">Horror Lighting</div>
+              <select id="horrorLighting" onchange="buildHorrorPrompt()">
+                <option value="">Select lighting...</option>
+                <option>Single Candle / Dying Flame</option>
+                <option>Flickering Fluorescent</option>
+                <option>Moonlight Through Clouds</option>
+                <option>Complete Darkness + Flash</option>
+                <option>Underlighting (face from below)</option>
+                <option>Red Emergency Lighting</option>
+                <option>Bioluminescent Glow</option>
+                <option>Lightning Strikes</option>
+                <option>TV Static / Screen Glow</option>
+                <option>Flashlight Beam Only</option>
+                <option>Fire / Burning</option>
+                <option>Sickly Green Light</option>
+                <option>Volumetric Fog + Backlight</option>
+                <option>Chiaroscuro (extreme contrast)</option>
+                <option>Pale Overcast / No Shadows</option>
+                <option>Sodium Streetlamp (orange isolation)</option>
+                <option>UV / Blacklight</option>
+                <option>Phone Screen in Darkness</option>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Color Treatment</div>
+              <select id="horrorColor" onchange="buildHorrorPrompt()">
+                <option value="">Select color...</option>
+                <option>Desaturated Cold (blue-gray)</option>
+                <option>Sickly Green / Yellow</option>
+                <option>Deep Crimson / Blood Red</option>
+                <option>Black & White High Contrast</option>
+                <option>Sepia / Aged Brown</option>
+                <option>Teal & Orange (horror grade)</option>
+                <option>Bleach Bypass (washed out)</option>
+                <option>Monochrome Blue</option>
+                <option>VHS Distortion Colors</option>
+                <option>Infrared Red</option>
+                <option>Night Vision Green</option>
+                <option>Cross-Processed (unnatural)</option>
+                <option>Dark Purple / Violet</option>
+                <option>Muted Earth Tones / Decay</option>
+                <option>Neon Against Darkness</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HORROR: CAMERA -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">04</span>
+          <h3>Camera & Composition</h3>
+        </div>
+        <div class="module-body">
+          <div class="field-row">
+            <div class="field">
+              <div class="field-label">Camera Body</div>
+              <select id="horrorCamera" onchange="buildHorrorPrompt()">
+                <option value="">Select camera...</option>
+                <optgroup label="── CINEMA ──">
+                  <option>ARRI Alexa Mini LF</option>
+                  <option>ARRI Alexa 65</option>
+                  <option>RED V-Raptor</option>
+                  <option>Sony Venice</option>
+                  <option>Canon C500 Mark II</option>
+                  <option>Blackmagic Pocket 6K</option>
+                  <option>IMAX Film Camera</option>
+                  <option>16mm Film Camera</option>
+                  <option>35mm Film Camera</option>
+                </optgroup>
+                <optgroup label="── FOUND FOOTAGE ──">
+                  <option>VHS Camera (analog horror)</option>
+                  <option>Handycam / DV Camera</option>
+                  <option>Security Camera / CCTV</option>
+                  <option>Webcam</option>
+                  <option>Ring Doorbell Camera</option>
+                  <option>iPhone / Phone Camera</option>
+                  <option>Trail Camera / Wildlife Cam</option>
+                  <option>Body Cam</option>
+                  <option>Dashcam</option>
+                </optgroup>
+                <optgroup label="── VINTAGE ──">
+                  <option>Bolex H16 (16mm vintage)</option>
+                  <option>Leica M3</option>
+                  <option>Polaroid SX-70</option>
+                  <option>Kodak Brownie</option>
+                  <option>Large Format 4x5</option>
+                </optgroup>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Lens Type</div>
+              <select id="horrorLens" onchange="buildHorrorPrompt()">
+                <option value="">Select lens...</option>
+                <option>Wide Angle 24mm (distortion, dread)</option>
+                <option>Ultra Wide 14mm (claustrophobia)</option>
+                <option>Standard 50mm (voyeuristic)</option>
+                <option>Telephoto 135mm (stalker, compressed)</option>
+                <option>Macro (disturbing detail)</option>
+                <option>Fisheye (security cam, paranoia)</option>
+                <option>Anamorphic (cinematic horror)</option>
+                <option>Vintage Soft Focus (ghostly)</option>
+                <option>Tilt-Shift (uncanny miniature)</option>
+                <option>Broken / Cracked Lens</option>
+                <option>Pinhole (ethereal, soft)</option>
+              </select>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <div class="field-label">Shot Type</div>
+              <select id="horrorShot" onchange="buildHorrorPrompt()">
+                <option value="">Select shot...</option>
+                <option>Extreme Close Up (eye, detail)</option>
+                <option>Close Up (face, terror)</option>
+                <option>Medium Shot (reveal)</option>
+                <option>Wide Shot (isolation, scale)</option>
+                <option>Extreme Wide (cosmic scale)</option>
+                <option>Dutch Angle (disorientation)</option>
+                <option>Low Angle (entity looming)</option>
+                <option>High Angle (vulnerability)</option>
+                <option>Bird's Eye (surveillance)</option>
+                <option>Over The Shoulder (something behind)</option>
+                <option>POV (first person terror)</option>
+                <option>Trunk Shot (trapped)</option>
+                <option>Through Doorway / Frame</option>
+                <option>Reflection (mirror, water)</option>
+                <option>Silhouette (unknown shape)</option>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Film Stock</div>
+              <select id="horrorFilm" onchange="buildHorrorPrompt()">
+                <option value="">Select film...</option>
+                <option>Kodak Vision3 500T (cinematic)</option>
+                <option>CineStill 800T (neon halos)</option>
+                <option>Kodak Tri-X 400 (B&W grain)</option>
+                <option>Kodak 5222 Double-X (Lighthouse)</option>
+                <option>Ilford HP5 (B&W classic)</option>
+                <option>Expired Film (degraded, eerie)</option>
+                <option>VHS Tape (analog distortion)</option>
+                <option>Kodak Aerochrome (infrared red)</option>
+                <option>Cross-Processed (unnatural color)</option>
+                <option>Bleach Bypass (desaturated harsh)</option>
+                <option>No Film Stock (digital clean)</option>
+              </select>
+            </div>
+          </div>
+          <div class="checkbox-field" onclick="this.querySelector('input').click()">
+            <input type="checkbox" id="horrorUnaware" onchange="buildHorrorPrompt()" onclick="event.stopPropagation()">
+            <span class="checkbox-label">Subject unaware of camera</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- HORROR: REFERENCES -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">05</span>
+          <h3>Horror References</h3>
+        </div>
+        <div class="module-body">
+          <div class="field-row">
+            <div class="field">
+              <div class="field-label">Horror Author / Visual Artist</div>
+              <select id="horrorAuthor" onchange="buildHorrorPrompt()">
+                <option value="">Select author/artist...</option>
+                <optgroup label="── LITERARY PRECURSORS ──">
+                  <option>H.P. Lovecraft</option>
+                  <option>Edgar Allan Poe</option>
+                  <option>Arthur Machen</option>
+                  <option>Algernon Blackwood</option>
+                  <option>William Hope Hodgson</option>
+                  <option>Robert W. Chambers</option>
+                  <option>Clark Ashton Smith</option>
+                  <option>M.R. James</option>
+                </optgroup>
+                <optgroup label="── MODERN AUTHORS ──">
+                  <option>Stephen King</option>
+                  <option>Clive Barker</option>
+                  <option>Thomas Ligotti</option>
+                  <option>Shirley Jackson</option>
+                  <option>Junji Ito</option>
+                </optgroup>
+                <optgroup label="── CONTEMPORARY ──">
+                  <option>Caitlín R. Kiernan</option>
+                  <option>John Langan</option>
+                  <option>Laird Barron</option>
+                  <option>Todd Keisling</option>
+                  <option>Philip Fracassi</option>
+                  <option>Hailey Piper</option>
+                  <option>Paul Tremblay</option>
+                  <option>Nathan Ballingrud</option>
+                  <option>Brian Evenson</option>
+                  <option>Carmen Maria Machado</option>
+                </optgroup>
+                <optgroup label="── VISUAL ARTISTS ──">
+                  <option>H.R. Giger (biomechanical)</option>
+                  <option>Zdzisław Beksiński (surreal terror)</option>
+                  <option>Wayne Barlowe (hellscapes)</option>
+                  <option>Trevor Henderson (Siren Head)</option>
+                  <option>Simon Stålenhag (sci-fi horror)</option>
+                  <option>Junji Ito (manga horror)</option>
+                  <option>Bernie Wrightson (Frankenstein)</option>
+                  <option>Mike Mignola (Hellboy)</option>
+                  <option>Kentaro Miura (Berserk)</option>
+                  <option>Gustave Doré (Dante's Inferno)</option>
+                  <option>Francisco Goya (Black Paintings)</option>
+                  <option>Francis Bacon (distorted figures)</option>
+                  <option>Hieronymus Bosch (Garden of Delights)</option>
+                  <option>John Kenn Mortensen (post-it monsters)</option>
+                  <option>Yoshitaka Amano (dark fantasy)</option>
+                </optgroup>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Horror Film Reference</div>
+              <select id="horrorFilmRef" onchange="buildHorrorPrompt()">
+                <option value="">Select film...</option>
+                <optgroup label="── COSMIC / EXISTENTIAL ──">
+                  <option>Annihilation (2018)</option>
+                  <option>Color Out of Space (2019)</option>
+                  <option>Event Horizon (1997)</option>
+                  <option>The Void (2016)</option>
+                  <option>In the Mouth of Madness (1994)</option>
+                  <option>The Mist (2007)</option>
+                  <option>Nope (2022)</option>
+                  <option>Under the Skin (2013)</option>
+                  <option>Coherence (2013)</option>
+                  <option>Stalker (1979)</option>
+                </optgroup>
+                <optgroup label="── BODY HORROR ──">
+                  <option>The Thing (1982)</option>
+                  <option>The Fly (1986)</option>
+                  <option>Videodrome (1983)</option>
+                  <option>Tetsuo: The Iron Man (1989)</option>
+                  <option>Possessor (2020)</option>
+                  <option>Titane (2021)</option>
+                  <option>Society (1989)</option>
+                </optgroup>
+                <optgroup label="── ELEVATED / A24 ──">
+                  <option>Hereditary (2018)</option>
+                  <option>Midsommar (2019)</option>
+                  <option>The Witch (2015)</option>
+                  <option>The Lighthouse (2019)</option>
+                  <option>Nosferatu (2024)</option>
+                  <option>It Follows (2014)</option>
+                  <option>The Babadook (2014)</option>
+                  <option>Saint Maud (2019)</option>
+                  <option>mother! (2017)</option>
+                </optgroup>
+                <optgroup label="── CLASSIC ──">
+                  <option>The Shining (1980)</option>
+                  <option>The Exorcist (1973)</option>
+                  <option>Alien (1979)</option>
+                  <option>Suspiria (1977)</option>
+                  <option>Suspiria (2018)</option>
+                  <option>Rosemary's Baby (1968)</option>
+                  <option>The Omen (1976)</option>
+                  <option>A Clockwork Orange (1971)</option>
+                </optgroup>
+                <optgroup label="── J-HORROR ──">
+                  <option>Ringu (1998)</option>
+                  <option>Ju-On: The Grudge (2002)</option>
+                  <option>Pulse / Kairo (2001)</option>
+                  <option>Audition (1999)</option>
+                  <option>Dark Water (2002)</option>
+                  <option>Noroi: The Curse (2005)</option>
+                </optgroup>
+                <optgroup label="── FOUND FOOTAGE / ANALOG ──">
+                  <option>The Blair Witch Project (1999)</option>
+                  <option>REC (2007)</option>
+                  <option>V/H/S (2012)</option>
+                  <option>Skinamarink (2022)</option>
+                  <option>Incantation (2022)</option>
+                  <option>The Poughkeepsie Tapes (2007)</option>
+                </optgroup>
+                <optgroup label="── SCI-FI HORROR ──">
+                  <option>Alien (1979)</option>
+                  <option>Aliens (1986)</option>
+                  <option>Event Horizon (1997)</option>
+                  <option>Sunshine (2007)</option>
+                  <option>Pandorum (2009)</option>
+                  <option>Life (2017)</option>
+                </optgroup>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <div class="field-label">Custom Reference (optional)</div>
+            <input type="text" class="text-input" id="horrorCustomRef" placeholder="Any other horror reference: games, books, artists, SCP entries..." oninput="buildHorrorPrompt()">
+          </div>
+        </div>
+      </div>
+
+      <!-- HORROR: OUTPUT -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">⚙️</span>
+          <h3>Output Settings</h3>
+        </div>
+        <div class="module-body">
+          <div class="field-row">
+            <div class="field">
+              <div class="field-label">Aspect Ratio</div>
+              <select id="horrorAspect" onchange="buildHorrorPrompt()">
+                <option value="">Select ratio...</option>
+                <option>16:9 Widescreen</option>
+                <option>2.39:1 Anamorphic Scope</option>
+                <option>4:3 Classic Horror</option>
+                <option>1:1 Square</option>
+                <option>1.19:1 Lighthouse Ratio</option>
+                <option>9:16 Vertical (analog horror)</option>
+                <option>21:9 Ultra Wide (cosmic scale)</option>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Resolution</div>
+              <select id="horrorResolution" onchange="buildHorrorPrompt()">
+                <option value="1K">1K</option>
+                <option value="2K">2K</option>
+                <option value="4K">4K</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end tab-horror -->
 
     <!-- ==================== TAB: GRILLA ==================== -->
     <div class="tab-content" id="tab-grilla">
@@ -1173,7 +2042,137 @@ function exportJSON() {
   a.download = 'kuriana-project.json';
   a.click();
 }
+// ========== BUILD ANIME PROMPT ==========
+function buildAnimePrompt() {
+  const parts = [];
 
+  const style = document.getElementById('animeStyle').value;
+  const subject = document.getElementById('animeSubject').value.trim();
+  const character = document.getElementById('animeCharacter').value.trim();
+  const env = document.getElementById('animeEnvironment').value.trim();
+  const palette = document.getElementById('animeColorPalette').value;
+  const mood = document.getElementById('animeMood').value;
+  const lighting = document.getElementById('animeLighting').value;
+  const shot = document.getElementById('animeShot').value;
+  const director = document.getElementById('animeDirector').value;
+  const filmRef = document.getElementById('animeFilmRef').value;
+  const customRef = document.getElementById('animeCustomRef').value.trim();
+  const aspect = document.getElementById('animeAspect').value;
+  const resolution = document.getElementById('animeResolution').value;
+  const quality = document.getElementById('animeQuality').value;
+
+  if (style) parts.push(style + ' style illustration.');
+  if (shot) parts.push(shot + '.');
+  if (subject) parts.push(subject + '.');
+  if (character) parts.push('Character: ' + character + '.');
+  if (env) parts.push('Setting: ' + env + '.');
+  if (lighting) parts.push(lighting + ' lighting.');
+  if (mood) parts.push(mood + ' mood and atmosphere.');
+  if (palette) parts.push(palette + ' color palette.');
+  if (director) parts.push('In the visual style of ' + director + '.');
+  if (filmRef) parts.push('Aesthetic inspired by ' + filmRef + '.');
+  if (customRef) parts.push('Referenced from ' + customRef + '.');
+  if (aspect) parts.push(aspect + ' format.');
+  parts.push(quality + ', ' + resolution + ' resolution.');
+
+  const promptBox = document.getElementById('promptBox');
+  const finalPrompt = parts.join(' ');
+
+  if (style || subject) {
+    promptBox.textContent = finalPrompt;
+    promptBox.classList.remove('empty');
+  } else {
+    promptBox.textContent = 'Your animation prompt will appear here in real-time as you configure the modules...';
+    promptBox.classList.add('empty');
+  }
+
+  document.getElementById('charCount').textContent = finalPrompt.length;
+  document.getElementById('wordCount').textContent = finalPrompt.split(/\s+/).filter(w=>w).length;
+}
+// ========== BUILD HORROR PROMPT ==========
+function buildHorrorPrompt() {
+  const parts = [];
+
+  const subgenre = document.getElementById('horrorSubgenre').value;
+  const subject = document.getElementById('horrorSubject').value.trim();
+  const entity = document.getElementById('horrorEntity').value.trim();
+  const env = document.getElementById('horrorEnvironment').value.trim();
+  const atmosphere = document.getElementById('horrorAtmosphere').value;
+  const mood = document.getElementById('horrorMood').value;
+  const lighting = document.getElementById('horrorLighting').value;
+  const color = document.getElementById('horrorColor').value;
+  const camera = document.getElementById('horrorCamera').value;
+  const lens = document.getElementById('horrorLens').value;
+  const shot = document.getElementById('horrorShot').value;
+  const film = document.getElementById('horrorFilm').value;
+  const unaware = document.getElementById('horrorUnaware').checked;
+  const author = document.getElementById('horrorAuthor').value;
+  const filmRef = document.getElementById('horrorFilmRef').value;
+  const customRef = document.getElementById('horrorCustomRef').value.trim();
+  const aspect = document.getElementById('horrorAspect').value;
+  const resolution = document.getElementById('horrorResolution').value;
+
+  // Opening
+  let opening = 'Cinematic horror photography';
+  if (subgenre) opening = subgenre + ' cinematic photography';
+  if (shot) opening += ', ' + shot.toLowerCase();
+  if (unaware) opening += ', where the subject is unaware they are on camera';
+  parts.push(opening + '.');
+
+  // Subject
+  if (subject) parts.push(subject);
+
+  // Entity
+  if (entity) parts.push('The entity: ' + entity);
+
+  // Environment
+  if (env) parts.push('Set in ' + env + '.');
+
+  // Atmosphere & Mood
+  if (atmosphere || mood) {
+    let atmParts = [];
+    if (atmosphere) atmParts.push(atmosphere.toLowerCase());
+    if (mood) atmParts.push(mood.toLowerCase());
+    parts.push('The atmosphere evokes ' + atmParts.join(', creating a sense of ') + '.');
+  }
+
+  // Lighting & Color
+  if (lighting) parts.push('Illuminated by ' + lighting.toLowerCase() + '.');
+  if (color) parts.push(color + ' color treatment.');
+
+  // Camera
+  if (camera || lens || film) {
+    let camParts = [];
+    if (camera) camParts.push('shot on ' + camera);
+    if (lens) camParts.push(lens);
+    if (film) camParts.push(film);
+    parts.push('Captured with ' + camParts.join(', ') + '.');
+  }
+
+  // References
+  if (author) parts.push('In the visual style of ' + author + '.');
+  if (filmRef) parts.push('Aesthetic inspired by ' + filmRef + '.');
+  if (customRef) parts.push('Referenced from ' + customRef + '.');
+
+  // Output
+  if (aspect) parts.push(aspect + ' format.');
+  parts.push('High contrast, ' + resolution + ' resolution, hyper-realistic details, masterful horror composition, deeply unsettling.');
+
+  // Update UI
+  const promptBox = document.getElementById('promptBox');
+  const finalPrompt = parts.join(' ');
+
+  if (subgenre || subject) {
+    promptBox.textContent = finalPrompt;
+    promptBox.classList.remove('empty');
+  } else {
+    promptBox.textContent = 'Your horror prompt will appear here in real-time as you configure the modules...';
+    promptBox.classList.add('empty');
+  }
+
+  document.getElementById('charCount').textContent = finalPrompt.length;
+  document.getElementById('wordCount').textContent = finalPrompt.split(/\s+/).filter(w=>w).length;
+}
 // ========== CLEAR ALL ==========
 function clearAll() {
   document.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
