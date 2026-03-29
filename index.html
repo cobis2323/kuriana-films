@@ -12,6 +12,7 @@
   --text:#e0e0e0;--text2:#888;--border:#333;
   --cine:#d4a843;--anime:#e84393;--horror:#c0392b;
   --grilla:#00cec9;--video:#00b894;
+  --sheet:#a29bfe;
   --active:var(--cine);
   --radius:8px;
 }
@@ -193,6 +194,9 @@ select option{background:var(--bg3);color:var(--text)}
 
 <!-- TABS -->
 <div class="tabs">
+  <div class="tab" data-tab="sheet" data-color="var(--sheet)">
+    <span class="tab-icon">🧑</span> SHEET
+  </div>
   <div class="tab active" data-tab="cine" data-color="var(--cine)">
     <span class="tab-icon">🎬</span> CINE
   </div>
@@ -215,6 +219,312 @@ select option{background:var(--bg3);color:var(--text)}
 
   <!-- LEFT PANEL -->
   <div class="panel-left">
+
+    <!-- ==================== TAB: SHEET ==================== -->
+    <div class="tab-content" id="tab-sheet">
+
+      <!-- SHEET: CHARACTER -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">01</span>
+          <h3>Descripción del Personaje</h3>
+        </div>
+        <div class="module-body">
+          <div class="field">
+            <div class="field-label">Personaje Principal</div>
+            <textarea id="sheetCharacter" placeholder="Describe tu personaje en detalle: género, edad, complexión, vestimenta, accesorios, rasgos faciales, cicatrices, tatuajes, color de piel, expresión...&#10;&#10;Ej: A cyberpunk female warrior, age 25, athletic build, short silver hair with neon blue tips, red cybernetic left eye, black tactical vest with glowing circuits, combat boots, katana on her back, confident smirk..." oninput="buildSheetPrompt()"></textarea>
+          </div>
+          <div class="field">
+            <div class="field-label">Detalles de Vestimenta / Accesorios (opcional)</div>
+            <textarea id="sheetClothing" placeholder="Ej: Worn leather jacket with patches, silver rings on both hands, dog tags necklace, holster on right thigh, fingerless gloves..." oninput="buildSheetPrompt()" style="min-height:60px"></textarea>
+          </div>
+          <div class="field">
+            <div class="field-label">Cantidad de Personajes</div>
+            <select id="sheetCharCount" onchange="buildSheetPrompt()">
+              <option value="single">1 Personaje (individual)</option>
+              <option value="duo">2 Personajes (comparativa)</option>
+              <option value="group">3+ Personajes (grupo)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- SHEET: VIEWS -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">02</span>
+          <h3>Vistas del Personaje</h3>
+        </div>
+        <div class="module-body">
+          <div class="field">
+            <div class="field-label">Selección de Vistas</div>
+            <select id="sheetViews" onchange="buildSheetPrompt()">
+              <option value="">Seleccionar vistas...</option>
+              <optgroup label="── TURNAROUND ESTÁNDAR ──">
+                <option value="front, 3/4 front, side profile, 3/4 back, back view">5 Vistas Completo (Front, 3/4, Side, 3/4 Back, Back)</option>
+                <option value="front, side profile, back view">3 Vistas Básico (Front, Side, Back)</option>
+                <option value="front, 3/4 front right, side profile right, back view">4 Vistas (Front, 3/4, Side, Back)</option>
+              </optgroup>
+              <optgroup label="── RETRATO / ROSTRO ──">
+                <option value="front face close-up, 3/4 face left, profile left, 3/4 face right, profile right">5 Vistas Rostro (close-up faces)</option>
+                <option value="front face, 3/4 face, profile">3 Vistas Rostro</option>
+              </optgroup>
+              <optgroup label="── CUERPO COMPLETO + DETALLES ──">
+                <option value="front full body, side full body, back full body, face close-up, hand detail, feet detail">6 Vistas Full Body + Detalles</option>
+                <option value="front full body, 3/4 front, side, back, face close-up, upper body, weapon/accessory detail">7 Vistas Completo + Detalles</option>
+              </optgroup>
+              <optgroup label="── POSES DE ACCIÓN ──">
+                <option value="front standing, action pose, combat stance, running pose">4 Vistas con Poses</option>
+                <option value="neutral standing front, neutral standing side, action pose front, action pose side">4 Vistas Neutral + Acción</option>
+              </optgroup>
+              <optgroup label="── EXPRESIONES ──">
+                <option value="neutral expression, happy, angry, sad, surprised, determined">6 Expresiones Faciales</option>
+                <option value="neutral, battle cry, smirk, pain, fear">5 Expresiones de Combate</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="field">
+            <div class="field-label">Vistas Personalizadas (opcional)</div>
+            <input type="text" class="text-input" id="sheetCustomViews" placeholder="Ej: front view, 3/4 view with weapon drawn, back view showing tattoo detail..." oninput="buildSheetPrompt()">
+          </div>
+        </div>
+      </div>
+
+      <!-- SHEET: CAMERA & STUDIO -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">03</span>
+          <h3>Cámara de Estudio</h3>
+        </div>
+        <div class="module-body">
+          <div class="field-row">
+            <div class="field">
+              <div class="field-label">Cámara</div>
+              <select id="sheetCamera" onchange="buildSheetPrompt()">
+                <option value="">Seleccionar cámara...</option>
+                <optgroup label="── MEDIO FORMATO (Máxima Calidad) ──">
+                  <option>Hasselblad X2D 100C</option>
+                  <option>Hasselblad H6D-400c</option>
+                  <option>Hasselblad 503CW</option>
+                  <option>Hasselblad 500CM</option>
+                  <option>Phase One IQ4 150MP</option>
+                  <option>Phase One XF IQ4</option>
+                  <option>Fujifilm GFX 100 II</option>
+                  <option>Fujifilm GFX 100S</option>
+                  <option>Mamiya RZ67</option>
+                  <option>Pentax 645Z</option>
+                  <option>Pentax 67</option>
+                  <option>Rolleiflex 2.8F</option>
+                </optgroup>
+                <optgroup label="── FULL FRAME PRO ──">
+                  <option>Canon EOS R5 Mark II</option>
+                  <option>Canon EOS R5</option>
+                  <option>Nikon Z9</option>
+                  <option>Nikon Z8</option>
+                  <option>Sony A1</option>
+                  <option>Sony A7R V</option>
+                  <option>Leica SL3</option>
+                  <option>Leica S3</option>
+                </optgroup>
+                <optgroup label="── GRAN FORMATO ──">
+                  <option>Large Format 4x5</option>
+                  <option>Large Format 8x10</option>
+                  <option>Graflex Speed Graphic</option>
+                </optgroup>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Lente de Estudio</div>
+              <select id="sheetLens" onchange="buildSheetPrompt()">
+                <option value="">Seleccionar lente...</option>
+                <optgroup label="── RETRATO ESTUDIO ──">
+                  <option>80mm f/2.8 Medium Format</option>
+                  <option>100mm f/2.2 Studio Portrait</option>
+                  <option>110mm f/2.0 Medium Format</option>
+                  <option>120mm f/4.0 Macro Studio</option>
+                  <option>150mm f/3.5 Compressed Portrait</option>
+                </optgroup>
+                <optgroup label="── 35mm EQUIVALENTE ──">
+                  <option>85mm f/1.2 (extreme bokeh)</option>
+                  <option>85mm f/1.4 (classic portrait)</option>
+                  <option>105mm f/1.4 (compression + bokeh)</option>
+                  <option>70-200mm f/2.8 (versatile zoom)</option>
+                  <option>135mm f/1.8 (beautiful compression)</option>
+                </optgroup>
+                <optgroup label="── ESPECIALES ──">
+                  <option>Zeiss Otus 85mm (maximum sharpness)</option>
+                  <option>Leica Noctilux 50mm f/0.95</option>
+                  <option>Sigma Art 105mm f/1.4</option>
+                  <option>Canon RF 85mm f/1.2L</option>
+                </optgroup>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SHEET: BACKGROUND & STYLE -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">04</span>
+          <h3>Fondo y Estilo</h3>
+        </div>
+        <div class="module-body">
+          <div class="field-row">
+            <div class="field">
+              <div class="field-label">Fondo</div>
+              <select id="sheetBackground" onchange="buildSheetPrompt()">
+                <option value="pure white background (#FFFFFF)">Blanco Puro ⬜</option>
+                <option value="neutral gray background (18% gray)">Gris Neutro (18%) ⬛</option>
+                <option value="light gray background">Gris Claro</option>
+                <option value="pure black background (#000000)">Negro Puro ⬛</option>
+                <option value="soft gradient white to light gray">Gradiente Blanco-Gris</option>
+                <option value="studio seamless paper backdrop">Fondo Seamless de Estudio</option>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Estilo de Sheet</div>
+              <select id="sheetStyle" onchange="buildSheetPrompt()">
+                <option value="">Seleccionar estilo...</option>
+                <option value="concept art character sheet">Concept Art</option>
+                <option value="fashion lookbook style">Fashion Lookbook</option>
+                <option value="3D model reference sheet">Referencia para Modelo 3D</option>
+                <option value="animation character turnaround">Turnaround de Animación</option>
+                <option value="costume design reference sheet">Diseño de Vestuario</option>
+                <option value="orthographic blueprint character reference">Blueprint Ortográfico</option>
+                <option value="video game character design sheet">Diseño de Videojuego</option>
+                <option value="comic book character model sheet">Model Sheet de Cómic</option>
+                <option value="realistic photographic character study">Estudio Fotográfico Realista</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-label">Iluminación de Estudio</div>
+            <select id="sheetLighting" onchange="buildSheetPrompt()">
+              <option value="">Seleccionar iluminación...</option>
+              <optgroup label="── ESTUDIO PROFESIONAL ──">
+                <option>Flat studio lighting (even, no shadows)</option>
+                <option>Soft diffused studio lighting</option>
+                <option>Beauty dish lighting (glamour)</option>
+                <option>Softbox key + fill (standard studio)</option>
+                <option>Rim light + soft fill (defined edges)</option>
+                <option>High key lighting (bright, clean)</option>
+              </optgroup>
+              <optgroup label="── CON CARÁCTER ──">
+                <option>Dramatic side key (one light)</option>
+                <option>Rembrandt studio lighting</option>
+                <option>Split lighting (half shadow)</option>
+                <option>Butterfly lighting (glamour portrait)</option>
+                <option>Clamshell lighting (fashion)</option>
+                <option>Cross lighting (two opposing lights)</option>
+              </optgroup>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- SHEET: GRID STRUCTURE -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">05</span>
+          <h3>Estructura de Grilla</h3>
+        </div>
+        <div class="module-body">
+          <div class="field-row">
+            <div class="field">
+              <div class="field-label">Layout de la Grilla</div>
+              <select id="sheetGrid" onchange="buildSheetPrompt()">
+                <option value="">Automático según vistas</option>
+                <option value="2x2 grid, 4 panels">2×2 (4 paneles)</option>
+                <option value="1x3 grid, 3 panels in a row">1×3 (3 paneles en fila)</option>
+                <option value="1x4 grid, 4 panels in a row">1×4 (4 en fila)</option>
+                <option value="1x5 grid, 5 panels in a row">1×5 (5 en fila)</option>
+                <option value="2x3 grid, 6 panels">2×3 (6 paneles)</option>
+                <option value="1x6 grid, 6 panels in a row">1×6 (6 en fila)</option>
+                <option value="1x7 grid, 7 panels in a row">1×7 (7 en fila)</option>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Resolución</div>
+              <select id="sheetResolution" onchange="buildSheetPrompt()">
+                <option value="1K">1K</option>
+                <option value="2K">2K</option>
+                <option value="4K" selected>4K (recomendado para sheets)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SHEET: SPLITTER -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">✂️</span>
+          <h3>Cortador de Sheet — Sin Pérdida de Calidad</h3>
+        </div>
+        <div class="module-body">
+          <div class="field-row">
+            <div class="field">
+              <div class="field-label">Estructura para Cortar</div>
+              <select id="sheetSplitStructure">
+                <option value="2x2">2×2 (4 paneles)</option>
+                <option value="1x2">1×2 (2 horizontal)</option>
+                <option value="2x1">2×1 (2 vertical)</option>
+                <option value="1x3">1×3 (3 horizontal)</option>
+                <option value="3x1">3×1 (3 vertical)</option>
+                <option value="1x4">1×4 (4 horizontal)</option>
+                <option value="4x1">4×1 (4 vertical)</option>
+                <option value="1x5">1×5 (5 horizontal)</option>
+                <option value="5x1">5×1 (5 vertical)</option>
+                <option value="2x3">2×3 (6 paneles)</option>
+                <option value="3x2">3×2 (6 paneles)</option>
+                <option value="1x6">1×6 (6 horizontal)</option>
+                <option value="1x7">1×7 (7 horizontal)</option>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Formato de Exportación</div>
+              <select id="sheetSplitFormat">
+                <option value="png">PNG (sin pérdida) ★ Recomendado</option>
+                <option value="webp">WEBP (alta calidad, menor peso)</option>
+                <option value="jpeg">JPEG 100% (máxima calidad)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-label">Subir Imagen de Sheet</div>
+            <div style="border:2px dashed var(--border);border-radius:var(--radius);padding:40px 20px;text-align:center;cursor:pointer;transition:all .3s" onclick="document.getElementById('sheetFileInput').click()" ondragover="event.preventDefault();this.style.borderColor='var(--active)'" ondragleave="this.style.borderColor='var(--border)'" ondrop="event.preventDefault();this.style.borderColor='var(--border)';handleSheetFile(event.dataTransfer.files[0])">
+              <div style="font-size:2.5rem;margin-bottom:10px;opacity:.4">🧑</div>
+              <div style="color:var(--text);font-size:.9rem;margin-bottom:6px">Arrastra tu imagen de sheet aquí</div>
+              <div style="color:var(--text2);font-size:.75rem">o haz click para seleccionar</div>
+              <input type="file" id="sheetFileInput" accept="image/*" style="display:none" onchange="handleSheetFile(this.files[0])">
+            </div>
+          </div>
+
+          <div id="sheetSplitPreview" style="display:none">
+            <div class="field-label" style="margin-bottom:12px">📸 Imagen Original</div>
+            <div style="margin-bottom:16px;text-align:center">
+              <img id="sheetSplitOriginal" style="max-width:100%;max-height:300px;border-radius:var(--radius);border:1px solid var(--border)">
+            </div>
+            <div id="sheetSplitInfo" style="font-size:.75rem;color:var(--text2);margin-bottom:16px;padding:10px;background:var(--bg3);border-radius:var(--radius)"></div>
+            <button class="btn btn-primary" onclick="splitSheet()" style="width:100%;justify-content:center;padding:14px;font-size:.9rem;margin-bottom:16px">
+              ✂️ CORTAR SHEET
+            </button>
+            <div id="sheetSplitResults" style="display:none">
+              <div class="field-label" style="margin-bottom:12px">✅ Resultados — Sin Pérdida de Calidad</div>
+              <div id="sheetSplitGrid" style="display:grid;gap:8px;margin-bottom:16px"></div>
+              <button class="btn btn-primary" onclick="downloadAllSheetSplits()" style="width:100%;justify-content:center;margin-bottom:8px">
+                📥 DESCARGAR TODAS
+              </button>
+              <div id="sheetIndividualDL" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end tab-sheet -->
 
     <!-- ==================== TAB: CINE ==================== -->
     <div class="tab-content active" id="tab-cine">
@@ -2984,6 +3294,14 @@ function collectAllData() {
   const tab = getCurrentTab();
   const data = { tab: tab, timestamp: new Date().toISOString() };
 
+  if (tab === 'sheet') {
+    data.character = gv('sheetCharacter'); data.clothing = gv('sheetClothing');
+    data.charCount = gv('sheetCharCount'); data.views = gv('sheetViews');
+    data.customViews = gv('sheetCustomViews'); data.camera = gv('sheetCamera');
+    data.lens = gv('sheetLens'); data.background = gv('sheetBackground');
+    data.style = gv('sheetStyle'); data.lighting = gv('sheetLighting');
+    data.grid = gv('sheetGrid'); data.resolution = gv('sheetResolution');
+  } else
   if (tab === 'cine') {
     data.subject = gv('subject'); data.shotType = gv('shotType'); data.viewDirection = gv('viewDirection');
     data.subjectUnaware = gc('subjectUnaware'); data.environment = gv('environment');
@@ -3073,6 +3391,15 @@ function loadJSON(input) {
       });
 
       setTimeout(() => {
+        if (data.tab === 'sheet') {
+          sv('sheetCharacter', data.character); sv('sheetClothing', data.clothing);
+          sv('sheetCharCount', data.charCount); sv('sheetViews', data.views);
+          sv('sheetCustomViews', data.customViews); sv('sheetCamera', data.camera);
+          sv('sheetLens', data.lens); sv('sheetBackground', data.background);
+          sv('sheetStyle', data.style); sv('sheetLighting', data.lighting);
+          sv('sheetGrid', data.grid); sv('sheetResolution', data.resolution);
+          buildSheetPrompt();
+        } else
         if (data.tab === 'cine') {
           sv('subject', data.subject); sv('shotType', data.shotType); sv('viewDirection', data.viewDirection);
           sc('subjectUnaware', data.subjectUnaware); sv('environment', data.environment);
@@ -3204,6 +3531,152 @@ function downloadSingleSplit(i,fmt) {
 function downloadAllSplits() {
   const fmt = document.getElementById('splitFormat').value;
   splitCanvases.forEach(function(c,i){ setTimeout(function(){ downloadSingleSplit(i,fmt); }, i*300); });
+}
+// ========== BUILD SHEET PROMPT ==========
+function buildSheetPrompt() {
+  const parts = [];
+  const character = document.getElementById('sheetCharacter').value.trim();
+  const clothing = document.getElementById('sheetClothing').value.trim();
+  const charCount = document.getElementById('sheetCharCount').value;
+  const views = document.getElementById('sheetViews').value;
+  const customViews = document.getElementById('sheetCustomViews').value.trim();
+  const camera = document.getElementById('sheetCamera').value;
+  const lens = document.getElementById('sheetLens').value;
+  const bg = document.getElementById('sheetBackground').value;
+  const style = document.getElementById('sheetStyle').value;
+  const lighting = document.getElementById('sheetLighting').value;
+  const grid = document.getElementById('sheetGrid').value;
+  const resolution = document.getElementById('sheetResolution').value;
+
+  // Opening
+  parts.push('Character design reference sheet.');
+
+  // Style
+  if (style) parts.push(style + '.');
+
+  // Grid
+  const finalViews = customViews || views;
+  if (grid) {
+    parts.push(grid + '.');
+  } else if (finalViews) {
+    const viewCount = finalViews.split(',').length;
+    if (viewCount <= 3) parts.push('1x' + viewCount + ' grid, ' + viewCount + ' panels in a row.');
+    else if (viewCount === 4) parts.push('2x2 grid, 4 panels.');
+    else if (viewCount <= 6) parts.push('2x3 grid, ' + viewCount + ' panels.');
+    else parts.push('1x' + viewCount + ' grid, ' + viewCount + ' panels in a row.');
+  }
+
+  // Views
+  if (finalViews) {
+    const viewList = finalViews.split(',').map(v => v.trim());
+    parts.push('Showing: ' + viewList.join(', ') + '.');
+  }
+
+  // Character
+  if (charCount === 'duo') parts.push('Two characters shown side by side for comparison.');
+  if (charCount === 'group') parts.push('Multiple characters shown together.');
+
+  if (character) parts.push('Character: ' + character);
+  if (clothing) parts.push('Clothing/accessories: ' + clothing);
+
+  // Background
+  parts.push(bg + '.');
+
+  // Camera
+  if (camera || lens) {
+    let cp = [];
+    if (camera) cp.push('shot on ' + camera);
+    if (lens) cp.push(lens);
+    parts.push('Captured with ' + cp.join(', ') + '.');
+  }
+
+  // Lighting
+  if (lighting) parts.push(lighting + '.');
+
+  // Consistency
+  parts.push('Consistent character design, proportions, colors, and details across ALL views. Clean separation between panels. Professional quality.');
+  parts.push(resolution + ' resolution, highly detailed, sharp focus on character.');
+
+  updatePromptDisplay(parts, character);
+  updateJSONDisplay();
+}
+
+// ========== SHEET SPLITTER ==========
+let sheetImageData = null;
+let sheetSplitCanvases = [];
+
+function handleSheetFile(file) {
+  if (!file || !file.type.startsWith('image/')) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const img = new Image();
+    img.onload = function() {
+      sheetImageData = { img: img, width: img.width, height: img.height };
+      document.getElementById('sheetSplitOriginal').src = e.target.result;
+      document.getElementById('sheetSplitPreview').style.display = 'block';
+      document.getElementById('sheetSplitResults').style.display = 'none';
+      const st = document.getElementById('sheetSplitStructure').value;
+      const c = parseInt(st.split('x')[0]), r = parseInt(st.split('x')[1]);
+      const pw = Math.floor(img.width/c), ph = Math.floor(img.height/r);
+      document.getElementById('sheetSplitInfo').innerHTML =
+        'Original: <span>'+img.width+' × '+img.height+' px</span> | Cada panel: <span>'+pw+' × '+ph+' px</span> | Pérdida: <span style="color:#27ae60">CERO ✅</span>';
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function splitSheet() {
+  if (!sheetImageData) return;
+  const st = document.getElementById('sheetSplitStructure').value;
+  const fmt = document.getElementById('sheetSplitFormat').value;
+  const c = parseInt(st.split('x')[0]), r = parseInt(st.split('x')[1]);
+  const pw = Math.floor(sheetImageData.width/c), ph = Math.floor(sheetImageData.height/r);
+  sheetSplitCanvases = [];
+  const gc = document.getElementById('sheetSplitGrid');
+  const dl = document.getElementById('sheetIndividualDL');
+  gc.innerHTML = ''; dl.innerHTML = '';
+  gc.style.gridTemplateColumns = 'repeat('+c+', 1fr)';
+
+  for (let row=0; row<r; row++) {
+    for (let col=0; col<c; col++) {
+      const cv = document.createElement('canvas');
+      cv.width = pw; cv.height = ph;
+      cv.getContext('2d').drawImage(sheetImageData.img, col*pw, row*ph, pw, ph, 0, 0, pw, ph);
+      sheetSplitCanvases.push(cv);
+      const n = row*c+col+1;
+      const w = document.createElement('div');
+      w.style.cssText = 'position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border)';
+      const p = document.createElement('img');
+      let mt='image/png',q=1;
+      if(fmt==='jpeg'){mt='image/jpeg';}if(fmt==='webp'){mt='image/webp';q=0.95;}
+      p.src = cv.toDataURL(mt,q); p.style.cssText = 'width:100%;display:block';
+      const lb = document.createElement('div');
+      lb.style.cssText = 'position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.7);color:#fff;font-size:.7rem;padding:6px;text-align:center;font-weight:600';
+      lb.textContent = 'Vista '+n+' — '+pw+'×'+ph+'px';
+      w.appendChild(p); w.appendChild(lb); gc.appendChild(w);
+      const b = document.createElement('button');
+      b.className = 'btn btn-secondary'; b.style.cssText = 'font-size:.7rem;padding:6px 10px';
+      b.textContent = '📥 #'+n;
+      b.onclick = (function(i,f){return function(){dlSheetSplit(i,f);};})(n-1,fmt);
+      dl.appendChild(b);
+    }
+  }
+  document.getElementById('sheetSplitResults').style.display = 'block';
+}
+
+function dlSheetSplit(i,fmt) {
+  if (!sheetSplitCanvases[i]) return;
+  let mt='image/png',ext='png',q=1;
+  if(fmt==='jpeg'){mt='image/jpeg';ext='jpg';}if(fmt==='webp'){mt='image/webp';ext='webp';q=0.95;}
+  const a = document.createElement('a');
+  a.href = sheetSplitCanvases[i].toDataURL(mt,q);
+  a.download = 'kuriana-sheet-vista-'+(i+1)+'.'+ext; a.click();
+}
+
+function downloadAllSheetSplits() {
+  const fmt = document.getElementById('sheetSplitFormat').value;
+  sheetSplitCanvases.forEach(function(c,i){ setTimeout(function(){ dlSheetSplit(i,fmt); }, i*300); });
 }
 
 // ========== CLEAR ALL ==========
