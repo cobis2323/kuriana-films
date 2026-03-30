@@ -26,7 +26,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 .header{
   padding:20px 30px;display:flex;align-items:center;
   justify-content:space-between;border-bottom:1px solid var(--border);
-  background:var(--bg2);position:sticky;top:0;z-index:100;
+  background:var(--bg2);position:sticky;top:0;z-index:999;
 }
 .logo{font-size:1.5rem;font-weight:800;letter-spacing:3px}
 .logo span{color:var(--active);transition:color .3s}
@@ -36,7 +36,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(
 .tabs{
   display:flex;gap:0;background:var(--bg2);
   border-bottom:1px solid var(--border);
-  padding:0 30px;position:sticky;top:65px;z-index:99;
+  padding:0 30px;position:sticky;top:65px;z-index:998;
 }
 .tab{
   padding:14px 24px;cursor:pointer;font-size:.85rem;
@@ -195,7 +195,7 @@ select option{background:var(--bg3);color:var(--text)}
 
 .modal-overlay{
   position:fixed;top:0;left:0;right:0;bottom:0;
-  background:rgba(0,0,0,.85);z-index:1000;
+  background:rgba(0,0,0,.85);z-index:9999;
   display:none;align-items:center;justify-content:center;
   padding:20px;backdrop-filter:blur(8px);
   opacity:0;transition:opacity .25s ease;
