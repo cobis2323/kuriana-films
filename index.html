@@ -4165,8 +4165,11 @@ function loadJSON(input) {
           sv('musicDuration', data.duration); sv('musicQuality', data.quality);
           updateBPMLabel(); updateStructurePreview(); buildMusicPrompt();
         } else if (data.tab === 'video') {
-          sv('videoCameraMove', data.cameraMove); sv('videoCameraIntensity', data.cameraIntensity || '3'); sv('videoPlatform', data.platform);
+          sv('videoSourcePrompt', data.source); sv('videoPlatform', data.platform);
           sv('videoCameraMove', data.cameraMove);
+          var intensityEl = document.getElementById('videoCameraIntensity');
+          if (intensityEl) intensityEl.value = data.cameraIntensity || '3';
+          if (typeof updateIntensityLabel === 'function') updateIntensityLabel();
           sv('videoSubjectAction', data.subjectAction); sv('videoEnvMotion', data.envMotion);
           sv('videoDuration', data.duration); sv('videoFPS', data.fps);
           sv('videoTransStart', data.transStart); sv('videoTransEnd', data.transEnd);
