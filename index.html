@@ -3648,7 +3648,7 @@ function abrirModal(id) {
     var h = '';
     var cur = document.getElementById(id) ? document.getElementById(id).value : '';
     SHOT_DATA.forEach(function(group) {
-      h += '<div style="font-size:.7rem;letter-spacing:2px;color:#888;font-weight:700;margin:14px 0 8px;padding-bottom:6px;border-bottom:1px solid #333;text-transform:uppercase">' + group.g + '</div>';
+      h += '<div style="font-size:.7rem;letter-spacing:2px;color:var(--active);font-weight:700;margin:14px 0 8px;padding-bottom:6px;border-bottom:1px solid #333;text-transform:uppercase">' + group.g + '</div>';
       h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-bottom:8px">';
       group.items.forEach(function(item) {
         var border = item.v === cur ? '2px solid var(--active)' : '1px solid #333';
