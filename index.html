@@ -1970,7 +1970,7 @@ select option{background:var(--bg3);color:var(--text)}
             <div class="field">
               <div class="field-label">Nivel de Miedo / Angustia</div>
               <select id="horrorMood" onchange="buildHorrorPrompt()">
-                <option value="">Select mood...</option>
+                <option value="">Seleccionar Emoción...</option>
                 <option>Creeping Dread</option>
                 <option>Pure Terror</option>
                 <option>Existential Despair</option>
@@ -1995,7 +1995,7 @@ select option{background:var(--bg3);color:var(--text)}
             <div class="field">
               <div class="field-label">Iluminación de Terror</div>
               <select id="horrorLighting" onchange="buildHorrorPrompt()">
-                <option value="">Select lighting...</option>
+                <option value="">Seleccionar Esquema de Luz...</option>
                 <option>Single Candle / Dying Flame</option>
                 <option>Flickering Fluorescent</option>
                 <option>Moonlight Through Clouds</option>
@@ -2212,7 +2212,7 @@ select option{background:var(--bg3);color:var(--text)}
             <div class="field">
               <div class="field-label">Referencia de Película de Horror y Terror</div>
               <select id="horrorFilmRef" onchange="buildHorrorPrompt()">
-                <option value="">Select film...</option>
+                <option value="">Seleccionar Estética...</option>
                 <optgroup label="── HORROR CÓSMICO / EXISTENCIAL ──">
                   <option>Annihilation (2018)</option>
                   <option>Color Out of Space (2019)</option>
@@ -2331,50 +2331,50 @@ select option{background:var(--bg3);color:var(--text)}
       <div class="module">
         <div class="module-header" onclick="toggleModule(this)">
           <span class="module-number">01</span>
-          <h3>Grid Prompt Generator</h3>
+          <h3>Generador de Prompt para Grilla</h3>
         </div>
         <div class="module-body">
 
           <div class="field">
-            <div class="field-label">Scene / Character Description</div>
-            <textarea id="gridSubject" placeholder="Describe your scene or character. You can paste the prompt you already used for the original image..." oninput="buildGridPrompt()"></textarea>
+            <div class="field-label">Descripción de Escena / Personaje</div>
+            <textarea id="gridSubject" placeholder="Describe tu escena o personaje. Puedes pegar el prompt que ya usaste para la imagen original..." oninput="buildGridPrompt()"></textarea>
           </div>
 
           <div class="field">
-            <div class="field-label">Grid Structure</div>
+            <div class="field-label">Estructura de Grilla</div>
             <select id="gridStructure" onchange="updateGridPanels(); buildGridPrompt()">
               <option value="2x2" selected>2×2 Grid (4 panels) — Recommended</option>
-              <option value="1x2">1×2 Grid (2 panels horizontal)</option>
-              <option value="2x1">2×1 Grid (2 panels vertical)</option>
-              <option value="1x3">1×3 Grid (3 panels horizontal)</option>
+              <option value="1x2">1×2 Grid (2 panels in horizontal)</option>
+              <option value="2x1">2×1 Grid (2 panels in vertical)</option>
+              <option value="1x3">1×3 Grid (3 panels in horizontal)</option>
               <option value="1x4">1×4 Grid (4 panels in row)</option>
             </select>
           </div>
 
           <div id="gridPanelsContainer">
             <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px">
-              <div class="field-label" style="margin:0;flex-shrink:0">📷 PANEL ANGLES</div>
-              <div style="font-size:.7rem;color:var(--text2)">Select view + shot for each panel</div>
+              <div class="field-label" style="margin:0;flex-shrink:0">📷 ÁNGULOS POR PANEL</div>
+              <div style="font-size:.7rem;color:var(--text2)">Selecciona vista + plano para cada panel</div>
             </div>
 
             <div class="field-row">
               <div class="field">
-                <div class="field-label">Panel 1 (top-left)</div>
+                <div class="field-label">Panel 1 (arriba-izquierda)</div>
                 <select id="gridPanel1View" onchange="buildGridPrompt()">
-                  <option value="">Select view...</option>
+                  <option value="">Seleccionar vista...</option>
                   <option>Front View</option>
-                  <option>3/4 Front Left</option>
-                  <option>3/4 Front Right</option>
-                  <option>Profile Left</option>
-                  <option>Profile Right</option>
-                  <option>From The Back</option>
-                  <option>3/4 Back Left</option>
-                  <option>3/4 Back Right</option>
+                  <option>3/4 Front left</option>
+                  <option>3/4 Front right</option>
+                  <option>Profile left</option>
+                  <option>Profile right</option>
+                  <option>From Back</option>
+                  <option>3/4 Back left</option>
+                  <option>3/4 Back right</option>
                   <option>From Above</option>
                   <option>From Below</option>
                 </select>
                 <select id="gridPanel1Shot" onchange="buildGridPrompt()" style="margin-top:6px">
-                  <option value="">Select shot...</option>
+                  <option value="">Seleccionar plano...</option>
                   <option>Extreme Close Up</option>
                   <option>Close Up</option>
                   <option>Medium Close Up</option>
@@ -2390,9 +2390,9 @@ select option{background:var(--bg3);color:var(--text)}
                 </select>
               </div>
               <div class="field">
-                <div class="field-label">Panel 2 (top-right)</div>
+                <div class="field-label">Panel 2 (arriba-derecha)</div>
                 <select id="gridPanel2View" onchange="buildGridPrompt()">
-                  <option value="">Select view...</option>
+                  <option value="">Seleccionar vista...</option>
                   <option>Front View</option>
                   <option>3/4 Front Left</option>
                   <option>3/4 Front Right</option>
@@ -2405,7 +2405,7 @@ select option{background:var(--bg3);color:var(--text)}
                   <option>From Below</option>
                 </select>
                 <select id="gridPanel2Shot" onchange="buildGridPrompt()" style="margin-top:6px">
-                  <option value="">Select shot...</option>
+                  <option value="">Seleccionar plano...</option>
                   <option>Extreme Close Up</option>
                   <option>Close Up</option>
                   <option>Medium Close Up</option>
@@ -2424,9 +2424,9 @@ select option{background:var(--bg3);color:var(--text)}
 
             <div class="field-row" id="gridRow2">
               <div class="field">
-                <div class="field-label">Panel 3 (bottom-left)</div>
+                <div class="field-label">Panel 3 (abajo-izquierda)</div>
                 <select id="gridPanel3View" onchange="buildGridPrompt()">
-                  <option value="">Select view...</option>
+                  <option value="">Seleccionar vista...</option>
                   <option>Front View</option>
                   <option>3/4 Front Left</option>
                   <option>3/4 Front Right</option>
@@ -2439,7 +2439,7 @@ select option{background:var(--bg3);color:var(--text)}
                   <option>From Below</option>
                 </select>
                 <select id="gridPanel3Shot" onchange="buildGridPrompt()" style="margin-top:6px">
-                  <option value="">Select shot...</option>
+                  <option value="">Seleccionar plano...</option>
                   <option>Extreme Close Up</option>
                   <option>Close Up</option>
                   <option>Medium Close Up</option>
@@ -2455,9 +2455,9 @@ select option{background:var(--bg3);color:var(--text)}
                 </select>
               </div>
               <div class="field">
-                <div class="field-label">Panel 4 (bottom-right)</div>
+                <div class="field-label">Panel 4 (abajo-derecha)</div>
                 <select id="gridPanel4View" onchange="buildGridPrompt()">
-                  <option value="">Select view...</option>
+                  <option value="">Seleccionar vista...</option>
                   <option>Front View</option>
                   <option>3/4 Front Left</option>
                   <option>3/4 Front Right</option>
@@ -2470,7 +2470,7 @@ select option{background:var(--bg3);color:var(--text)}
                   <option>From Below</option>
                 </select>
                 <select id="gridPanel4Shot" onchange="buildGridPrompt()" style="margin-top:6px">
-                  <option value="">Select shot...</option>
+                  <option value="">Seleccionar plano...</option>
                   <option>Extreme Close Up</option>
                   <option>Close Up</option>
                   <option>Medium Close Up</option>
@@ -2489,24 +2489,24 @@ select option{background:var(--bg3);color:var(--text)}
           </div>
 
           <div class="field">
-            <div class="field-label">Consistency Options</div>
+            <div class="field-label">Opciones de Consistencia</div>
             <div class="checkbox-field" onclick="this.querySelector('input').click()">
               <input type="checkbox" id="gridConsistentChar" checked onchange="buildGridPrompt()" onclick="event.stopPropagation()">
-              <span class="checkbox-label">Maintain same character across all panels</span>
+              <span class="checkbox-label">Mantener mismo personaje en todos los paneles</span>
             </div>
             <div class="checkbox-field" onclick="this.querySelector('input').click()">
               <input type="checkbox" id="gridConsistentLight" checked onchange="buildGridPrompt()" onclick="event.stopPropagation()">
-              <span class="checkbox-label">Maintain same lighting across all panels</span>
+              <span class="checkbox-label">Mantener misma iluminación en todos los paneles</span>
             </div>
             <div class="checkbox-field" onclick="this.querySelector('input').click()">
               <input type="checkbox" id="gridConsistentColor" checked onchange="buildGridPrompt()" onclick="event.stopPropagation()">
-              <span class="checkbox-label">Maintain same color grading across all panels</span>
+              <span class="checkbox-label">Mantener misma gradación de color en todos los paneles</span>
             </div>
           </div>
 
           <div class="field">
-            <div class="field-label">Additional Style (optional)</div>
-            <input type="text" class="text-input" id="gridStyle" placeholder="Ej: cinematic, shot on ARRI Alexa Mini LF, Blade Runner 2049 aesthetic..." oninput="buildGridPrompt()">
+            <div class="field-label">Estilo Adicional (opcional)</div>
+            <input type="text" class="text-input" id="gridStyle" placeholder="Ej: cinematográfico, shot on ARRI Alexa Mini LF, estética Blade Runner 2049..." oninput="buildGridPrompt()">
           </div>
 
         </div>
@@ -2516,60 +2516,60 @@ select option{background:var(--bg3);color:var(--text)}
       <div class="module">
         <div class="module-header" onclick="toggleModule(this)">
           <span class="module-number">02</span>
-          <h3>Grid Splitter — Cut Without Quality Loss</h3>
+          <h3>Cortador de Grilla — Sin Pérdida de Calidad</h3>
         </div>
         <div class="module-body">
 
           <div class="field-row">
             <div class="field">
-              <div class="field-label">Grid Structure</div>
+              <div class="field-label">Estructura de Grilla</div>
               <select id="splitStructure">
-                <option value="2x2">2×2 Grid (4 panels)</option>
-                <option value="1x2">1×2 Grid (2 panels horizontal)</option>
-                <option value="2x1">2×1 Grid (2 panels vertical)</option>
-                <option value="1x3">1×3 Grid (3 panels horizontal)</option>
+                <option value="2x2">2×2 Grid (4 paneles)</option>
+                <option value="1x2">1×2 Grid (2 panels in horizontal)</option>
+                <option value="2x1">2×1 Grid (2 panels in vertical)</option>
+                <option value="1x3">1×3 Grid (3 panels in horizontal)</option>
                 <option value="1x4">1×4 Grid (4 panels in row)</option>
-                <option value="3x1">3×1 Grid (3 panels vertical)</option>
+                <option value="3x1">3×1 Grid (3 panels in vertical)</option>
               </select>
             </div>
             <div class="field">
-              <div class="field-label">Export Format</div>
+              <div class="field-label">Formato de Exportación</div>
               <select id="splitFormat">
-                <option value="png">PNG (no quality loss) ★ Recommended</option>
-                <option value="webp">WEBP (high quality, smaller file)</option>
-                <option value="jpeg">JPEG 100% (max quality)</option>
+                <option value="png">PNG (Sin Pérdida de Calidad) ★ Recommended</option>
+                <option value="webp">WEBP (Alta calidad, archivo pequeño)</option>
+                <option value="jpeg">JPEG 100% (Máxima claidad)</option>
               </select>
             </div>
           </div>
 
           <div class="field">
-            <div class="field-label">Upload Grid Image</div>
+            <div class="field-label">Subir Imagen de Grilla</div>
             <div id="dropZone" style="border:2px dashed var(--border);border-radius:var(--radius);padding:40px 20px;text-align:center;cursor:pointer;transition:all .3s;position:relative" onclick="document.getElementById('gridFileInput').click()" ondragover="event.preventDefault();this.style.borderColor='var(--active)';this.style.background='rgba(255,255,255,0.02)'" ondragleave="this.style.borderColor='var(--border)';this.style.background='transparent'" ondrop="event.preventDefault();this.style.borderColor='var(--border)';this.style.background='transparent';handleGridFile(event.dataTransfer.files[0])">
               <div style="font-size:2.5rem;margin-bottom:10px;opacity:.4">📁</div>
-              <div style="color:var(--text);font-size:.9rem;margin-bottom:6px">Drag your grid image here</div>
-              <div style="color:var(--text2);font-size:.75rem">or click to select file</div>
+              <div style="color:var(--text);font-size:.9rem;margin-bottom:6px">Arrastra tu imagen de grilla aquí</div>
+              <div style="color:var(--text2);font-size:.75rem">o haz click para seleccionar</div>
               <input type="file" id="gridFileInput" accept="image/*" style="display:none" onchange="handleGridFile(this.files[0])">
             </div>
           </div>
 
           <!-- Preview & Results -->
           <div id="splitPreview" style="display:none">
-            <div class="field-label" style="margin-bottom:12px">📸 Original Image</div>
+            <div class="field-label" style="margin-bottom:12px">📸 Imagen Original</div>
             <div style="margin-bottom:16px;text-align:center">
               <img id="splitOriginal" style="max-width:100%;max-height:300px;border-radius:var(--radius);border:1px solid var(--border)">
             </div>
             <div id="splitInfo" style="font-size:.75rem;color:var(--text2);margin-bottom:16px;padding:10px;background:var(--bg3);border-radius:var(--radius)"></div>
 
             <button class="btn btn-primary" onclick="splitGrid()" style="width:100%;justify-content:center;padding:14px;font-size:.9rem;margin-bottom:16px">
-              ✂️ SPLIT IMAGE
+              ✂️ CORTAR IMAGEN
             </button>
 
             <div id="splitResults" style="display:none">
-              <div class="field-label" style="margin-bottom:12px">✅ Split Results — No Quality Loss</div>
+              <div class="field-label" style="margin-bottom:12px">✅ Resultados — Sin Pérdida de Calidad</div>
               <div id="splitGrid" style="display:grid;gap:8px;margin-bottom:16px"></div>
               <div style="display:flex;gap:8px;flex-wrap:wrap">
                 <button class="btn btn-primary" onclick="downloadAllSplits()" style="flex:1;justify-content:center">
-                  📥 DOWNLOAD ALL (ZIP)
+                  📥 DESCARGAR TODAS (ZIP)
                 </button>
               </div>
               <div id="individualDownloads" style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap"></div>
@@ -2588,12 +2588,12 @@ select option{background:var(--bg3);color:var(--text)}
       <div class="module">
         <div class="module-header" onclick="toggleModule(this)">
           <span class="module-number">01</span>
-          <h3>Source Image Prompt</h3>
+          <h3>Prompt de Imagen Original</h3>
         </div>
         <div class="module-body">
           <div class="field">
-            <div class="field-label">Original Image Prompt / Scene Description</div>
-            <textarea id="videoSourcePrompt" placeholder="Paste the prompt you used to generate your image, or describe the scene you want to animate..." oninput="buildVideoPrompt()"></textarea>
+            <div class="field-label">Prompt Original / Descripción de Escena</div>
+            <textarea id="videoSourcePrompt" placeholder="Pega el prompt que usaste para generar tu imagen, o describe la escena que quieres animar..." oninput="buildVideoPrompt()"></textarea>
           </div>
         </div>
       </div>
@@ -2602,29 +2602,29 @@ select option{background:var(--bg3);color:var(--text)}
       <div class="module">
         <div class="module-header" onclick="toggleModule(this)">
           <span class="module-number">02</span>
-          <h3>Video Platform</h3>
+          <h3>Plataforma de Video</h3>
         </div>
         <div class="module-body">
           <div class="field">
-            <div class="field-label">Target Platform</div>
+            <div class="field-label">Plataforma Destino</div>
             <select id="videoPlatform" onchange="buildVideoPrompt()">
-              <option value="">Select platform...</option>
+              <option value="">Seleccionar plataforma...</option>
               <optgroup label="── GOOGLE ──">
                 <option value="veo3">Veo 3 (Google)</option>
               </optgroup>
-              <optgroup label="── POPULAR ──">
+              <optgroup label="── PRIVADOS ──">
                 <option value="kling">Kling 2.0 (Kuaishou)</option>
                 <option value="runway">Runway Gen-4</option>
                 <option value="pika">Pika 2.0</option>
                 <option value="luma">Luma Dream Machine</option>
                 <option value="minimax">Minimax / Hailuo</option>
               </optgroup>
-              <optgroup label="── OPEN SOURCE ──">
+              <optgroup label="── CÓDIGO ABIERTO ──">
                 <option value="wan">Wan 2.1 (Alibaba)</option>
                 <option value="seedance">Seedance 1.0 (ByteDance)</option>
                 <option value="qwen">Qwen (Alibaba)</option>
               </optgroup>
-              <optgroup label="── OTHER ──">
+              <optgroup label="── POPULARES ──">
                 <option value="grok">Grok (xAI)</option>
                 <option value="generic">Generic (universal prompt)</option>
               </optgroup>
@@ -2638,19 +2638,19 @@ select option{background:var(--bg3);color:var(--text)}
       <div class="module">
         <div class="module-header" onclick="toggleModule(this)">
           <span class="module-number">03</span>
-          <h3>Camera Motion</h3>
+          <h3>Movimiento de Cámara</h3>
         </div>
         <div class="module-body">
           <div class="field-row">
             <div class="field">
-              <div class="field-label">Primary Camera Movement</div>
+              <div class="field-label">Movimiento Principal de Cámara</div>
               <select id="videoCameraMove" onchange="buildVideoPrompt()">
-                <option value="">Select movement...</option>
-                <optgroup label="── STATIC ──">
+                <option value="">Seleccionar movimiento...</option>
+                <optgroup label="── ESTÁTICO ──">
                   <option>Static / Locked Off (no movement)</option>
                   <option>Subtle Handheld (slight shake)</option>
                 </optgroup>
-                <optgroup label="── PUSH / PULL ──">
+                <optgroup label="── ACERCAMIENTO / ALEJAMIENTO ──">
                   <option>Slow Dolly In (approach subject)</option>
                   <option>Slow Dolly Out (reveal environment)</option>
                   <option>Fast Dolly In (dramatic rush)</option>
@@ -2658,20 +2658,20 @@ select option{background:var(--bg3);color:var(--text)}
                   <option>Slow Zoom Out</option>
                   <option>Vertigo / Dolly Zoom</option>
                 </optgroup>
-                <optgroup label="── PAN / TILT ──">
+                <optgroup label="── PANORÁMICA / INCLINACIÓN ──">
                   <option>Slow Pan Left</option>
                   <option>Slow Pan Right</option>
                   <option>Slow Tilt Up (ground to sky)</option>
                   <option>Slow Tilt Down (sky to ground)</option>
                   <option>Whip Pan (fast swipe)</option>
                 </optgroup>
-                <optgroup label="── ORBIT / ROTATE ──">
+                <optgroup label="── ÓRBITA / ROTACIÓN ──">
                   <option>Orbit Around Subject (clockwise)</option>
                   <option>Orbit Around Subject (counter-clockwise)</option>
                   <option>Half Orbit (180° around)</option>
                   <option>Dutch Angle Rotation</option>
                 </optgroup>
-                <optgroup label="── COMPLEX ──">
+                <optgroup label="── COMPLEJOS ──">
                   <option>Tracking Shot (follow subject)</option>
                   <option>Steadicam Follow (behind subject)</option>
                   <option>Crane Up (ground to aerial)</option>
@@ -2684,9 +2684,9 @@ select option{background:var(--bg3);color:var(--text)}
               </select>
             </div>
             <div class="field">
-              <div class="field-label">Camera Speed</div>
+              <div class="field-label">Velocidad de Cámara</div>
               <select id="videoCameraSpeed" onchange="buildVideoPrompt()">
-                <option value="">Select speed...</option>
+                <option value="">Seleccionar velocidad...</option>
                 <option>Ultra Slow (dreamlike)</option>
                 <option>Slow (cinematic)</option>
                 <option>Medium (natural)</option>
@@ -2703,16 +2703,16 @@ select option{background:var(--bg3);color:var(--text)}
       <div class="module">
         <div class="module-header" onclick="toggleModule(this)">
           <span class="module-number">04</span>
-          <h3>Subject & Environment Motion</h3>
+          <h3>Movimiento de Sujeto y Entorno</h3>
         </div>
         <div class="module-body">
           <div class="field">
-            <div class="field-label">Subject Action / Movement</div>
-            <textarea id="videoSubjectAction" placeholder="What does the subject DO during the video?&#10;Ej: She slowly turns her head toward the camera, hair blowing in the wind, a tear rolling down her cheek..." oninput="buildVideoPrompt()" style="min-height:70px"></textarea>
+            <div class="field-label">Acción / Movimiento del Sujeto</div>
+            <textarea id="videoSubjectAction" placeholder="¿Qué HACE el sujeto durante el video?&#10;Ej: Ella gira lentamente la cabeza hacia la cámara, el cabello se mueve con el viento, una lágrima corre por su mejilla..." oninput="buildVideoPrompt()" style="min-height:70px"></textarea>
           </div>
           <div class="field">
-            <div class="field-label">Environment / Background Motion</div>
-            <textarea id="videoEnvMotion" placeholder="What moves in the background/environment?&#10;Ej: Rain intensifies, neon signs flicker, leaves blow across the street, fog rolls in slowly..." oninput="buildVideoPrompt()" style="min-height:70px"></textarea>
+            <div class="field-label">Movimiento del Entorno / Fondo</div>
+            <textarea id="videoEnvMotion" placeholder="¿Qué se mueve en el fondo/entorno?&#10;Ej: La lluvia se intensifica, los letreros neón parpadean, las hojas cruzan la calle, la niebla avanza lentamente..." oninput="buildVideoPrompt()" style="min-height:70px"></textarea>
           </div>
         </div>
       </div>
@@ -2721,14 +2721,14 @@ select option{background:var(--bg3);color:var(--text)}
       <div class="module">
         <div class="module-header" onclick="toggleModule(this)">
           <span class="module-number">05</span>
-          <h3>Timing & Effects</h3>
+          <h3>Tiempo y Efectos</h3>
         </div>
         <div class="module-body">
           <div class="field-row">
             <div class="field">
-              <div class="field-label">Duration</div>
+              <div class="field-label">Duración</div>
               <select id="videoDuration" onchange="buildVideoPrompt()">
-                <option value="">Select duration...</option>
+                <option value="">Seleccionar duración...</option>
                 <option>3 seconds (short, impactful)</option>
                 <option>5 seconds (standard)</option>
                 <option>8 seconds (extended)</option>
@@ -2736,9 +2736,9 @@ select option{background:var(--bg3);color:var(--text)}
               </select>
             </div>
             <div class="field">
-              <div class="field-label">Frame Rate Feel</div>
+              <div class="field-label">Sensación de Velocidad</div>
               <select id="videoFPS" onchange="buildVideoPrompt()">
-                <option value="">Select feel...</option>
+                <option value="">Seleccionar sensación...</option>
                 <option>24fps Cinematic (standard film)</option>
                 <option>30fps Smooth (TV/documentary)</option>
                 <option>60fps Ultra Smooth (hyper-real)</option>
@@ -2750,7 +2750,7 @@ select option{background:var(--bg3);color:var(--text)}
           </div>
           <div class="field-row">
             <div class="field">
-              <div class="field-label">Transition Start</div>
+              <div class="field-label">Transición de Inicio</div>
               <select id="videoTransStart" onchange="buildVideoPrompt()">
                 <option value="">None</option>
                 <option>Fade In from Black</option>
@@ -2761,7 +2761,7 @@ select option{background:var(--bg3);color:var(--text)}
               </select>
             </div>
             <div class="field">
-              <div class="field-label">Transition End</div>
+              <div class="field-label">Transición Final</div>
               <select id="videoTransEnd" onchange="buildVideoPrompt()">
                 <option value="">None</option>
                 <option>Fade to Black</option>
@@ -2774,7 +2774,7 @@ select option{background:var(--bg3);color:var(--text)}
             </div>
           </div>
           <div class="field">
-            <div class="field-label">Special Effects (optional)</div>
+            <div class="field-label">Efectos Especiales (opcional)</div>
             <select id="videoEffects" onchange="buildVideoPrompt()">
               <option value="">None</option>
               <option>Lens Flare</option>
@@ -2797,28 +2797,28 @@ select option{background:var(--bg3);color:var(--text)}
       <div class="module">
         <div class="module-header" onclick="toggleModule(this)">
           <span class="module-number">06</span>
-          <h3>Audio Mood (text cue for AI)</h3>
+          <h3>Ambiente Sonoro (indicación para IA)</h3>
         </div>
         <div class="module-body">
           <div class="field">
-            <div class="field-label">Sound / Music Mood Cue</div>
+            <div class="field-label">Indicación de Sonido / Música</div>
             <select id="videoAudio" onchange="buildVideoPrompt()">
-              <option value="">No audio cue...</option>
-              <optgroup label="── CINEMATIC ──">
+              <option value="">Sin indicación de audio...</option>
+              <optgroup label="── CINEMATOGRÁFICO ──">
                 <option>Epic orchestral crescendo</option>
                 <option>Quiet ambient tension</option>
                 <option>Melancholic piano</option>
                 <option>Dramatic drums and brass</option>
                 <option>Ethereal choir voices</option>
               </optgroup>
-              <optgroup label="── MODERN ──">
+              <optgroup label="── MODERNO ──">
                 <option>Synthwave / Retrowave</option>
                 <option>Dark ambient drone</option>
                 <option>Lo-fi hip hop calm</option>
                 <option>Trap / Bass heavy</option>
                 <option>Electronic / EDM pulse</option>
               </optgroup>
-              <optgroup label="── ENVIRONMENT ──">
+              <optgroup label="── AMBIENTE ──">
                 <option>Rain and thunder</option>
                 <option>Wind howling</option>
                 <option>Ocean waves</option>
@@ -2843,7 +2843,7 @@ select option{background:var(--bg3);color:var(--text)}
       <div class="module">
         <div class="module-header" onclick="toggleModule(this)">
           <span class="module-number">⚙️</span>
-          <h3>Output Settings</h3>
+          <h3>Configuración de Salida</h3>
         </div>
         <div class="module-body">
           <div class="field-row">
@@ -2860,7 +2860,7 @@ select option{background:var(--bg3);color:var(--text)}
               </select>
             </div>
             <div class="field">
-              <div class="field-label">Quality</div>
+              <div class="field-label">Calidad</div>
               <select id="videoQuality" onchange="buildVideoPrompt()">
                 <option value="high quality">High Quality</option>
                 <option value="cinematic quality, hyper-detailed">Cinematic Ultra Detailed</option>
@@ -2880,7 +2880,7 @@ select option{background:var(--bg3);color:var(--text)}
   <div class="panel-right">
 
     <!-- PROMPT NORMAL -->
-    <div class="prompt-title">���� PROMPT GENERADO</div>
+    <div class="prompt-title">🎬📽️💯 PROMPT GENERADO</div>
     <div class="prompt-box empty" id="promptBox">
       Tu prompt cinematográfico aparecerá aquí en tiempo real mientras configuras los módulos...
     </div>
