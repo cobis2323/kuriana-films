@@ -3612,91 +3612,77 @@ select option{background:var(--bg3);color:var(--text)}
 
 <script>
 // ========== TAB SWITCHING ==========
-document.querySelectorAll('.tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+document.querySelectorAll('.tab').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+    document.querySelectorAll('.tab-content').forEach(function(c) { c.classList.remove('active'); });
     tab.classList.add('active');
-    const color = tab.dataset.color;
-    document.documentElement.style.setProperty('--active', color);
+    document.documentElement.style.setProperty('--active', tab.dataset.color);
     document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
   });
 });
 
 // ========== MODULE TOGGLE ==========
-function toggleModule(header) {
-  header.nextElementSibling.classList.toggle('collapsed');
-}
+function toggleModule(header) { header.nextElementSibling.classList.toggle('collapsed'); }
 
 // ========== JSON PANEL TOGGLE ==========
 function toggleJsonPanel() {
-  const panel = document.getElementById('jsonPanel');
-  const icon = document.getElementById('jsonToggleIcon');
-  if (panel.style.display === 'none') {
-    panel.style.display = 'block';
-    icon.textContent = '▲ Ocultar';
-  } else {
-    panel.style.display = 'none';
-    icon.textContent = '▼ Mostrar';
-  }
+  var p = document.getElementById('jsonPanel');
+  var i = document.getElementById('jsonToggleIcon');
+  if (p.style.display === 'none') { p.style.display = 'block'; i.textContent = '▲ Ocultar'; }
+  else { p.style.display = 'none'; i.textContent = '▼ Mostrar'; }
 }
 
-// ========== GET CURRENT TAB ==========
-function getCurrentTab() {
-  const active = document.querySelector('.tab.active');
-  return active ? active.dataset.tab : 'cine';
+// ========== HELPERS ==========
+function getCurrentTab() { var a = document.querySelector('.tab.active'); return a ? a.dataset.tab : 'cine'; }
+function gv(id) { var e = document.getElementById(id); return e ? e.value : ''; }
+function gc(id) { var e = document.getElementById(id); return e ? e.checked : false; }
+function sv(id, val) { var e = document.getElementById(id); if (!e || !val) return; if (e.tagName === 'SELECT') { for (var i = 0; i < e.options.length; i++) { if (e.options[i].value === val || e.options[i].text === val) { e.selectedIndex = i; break; } } } else { e.value = val; } }
+function sc(id, val) { var e = document.getElementById(id); if (e) e.checked = val; }
+
+// ========== UPDATE DISPLAYS ==========
+function updatePromptDisplay(parts, hasContent) {
+  var pb = document.getElementById('promptBox');
+  var fp = parts.join(' ').replace(/  +/g, ' ').trim();
+  if (hasContent) { pb.textContent = fp; pb.classList.remove('empty'); }
+  else { pb.textContent = 'Tu prompt aparecerá aquí en tiempo real mientras configuras los módulos...'; pb.classList.add('empty'); }
+  document.getElementById('charCount').textContent = fp.length;
+  document.getElementById('wordCount').textContent = fp.split(/\s+/).filter(function(w) { return w; }).length;
+}
+function updateJSONDisplay() {
+  var jb = document.getElementById('jsonBox');
+  if (jb) { jb.textContent = JSON.stringify(collectAllData(), null, 2); }
 }
 
-// ========== BUILD PROMPT — CINE ==========
+// ========== BUILD CINE ==========
 function buildPrompt() {
-  const parts = [];
+  var parts = [];
+  var subject = gv('subject'), shotType = gv('shotType'), viewDir = gv('viewDirection');
+  var unaware = gc('subjectUnaware'), env = gv('environment');
+  var lighting = gv('lighting'), atmosphere = gv('atmosphere'), mood = gv('mood'), customMood = gv('customMood');
+  var camera = gv('cameraBody'), focal = gv('focalLength'), lens = gv('lensType'), film = gv('filmStock');
+  var aperture = gv('aperture'), shutter = gv('shutterSpeed'), isoVal = gv('iso');
+  var lensFilter = gv('lensFilter'), filmGrain = gv('filmGrain');
+  var aspect = gv('aspectRatio'), palette = gv('colorPalette'), grading = gv('colorGrading');
+  var photog = gv('photographer'), movie = gv('movieRef'), customRef = gv('customRef'), resolution = gv('resolution');
 
-  const subject = document.getElementById('subject').value.trim();
-  const shotType = document.getElementById('shotType').value;
-  const viewDir = document.getElementById('viewDirection').value;
-  const unaware = document.getElementById('subjectUnaware').checked;
-  const env = document.getElementById('environment').value.trim();
-  const lighting = document.getElementById('lighting').value;
-  const atmosphere = document.getElementById('atmosphere').value;
-  const mood = document.getElementById('mood').value;
-  const customMood = document.getElementById('customMood').value.trim();
-  const camera = document.getElementById('cameraBody').value;
-  const focal = document.getElementById('focalLength').value;
-  const lens = document.getElementById('lensType').value;
-  const film = document.getElementById('filmStock').value;
-  const aperture = document.getElementById('aperture').value;
-  const shutter = document.getElementById('shutterSpeed').value;
-  const isoVal = document.getElementById('iso').value;
-  const lensFilter = document.getElementById('lensFilter').value;
-  const filmGrain = document.getElementById('filmGrain').value;
-  const aspect = document.getElementById('aspectRatio').value;
-  const palette = document.getElementById('colorPalette').value;
-  const grading = document.getElementById('colorGrading').value;
-  const photog = document.getElementById('photographer').value;
-  const movie = document.getElementById('movieRef').value;
-  const customRef = document.getElementById('customRef').value.trim();
-  const resolution = document.getElementById('resolution').value;
-
-  let opening = 'A photographic image';
-  if (shotType) opening += ' of a ' + shotType.toLowerCase();
-  if (viewDir) opening += ', viewed ' + viewDir.toLowerCase();
-  if (unaware) opening += ', where the subject is unaware they are on camera';
-  parts.push(opening + '.');
-
+  var op = 'A photographic image';
+  if (shotType) op += ' of a ' + shotType.toLowerCase();
+  if (viewDir) op += ', viewed ' + viewDir.toLowerCase();
+  if (unaware) op += ', where the subject is unaware they are on camera';
+  parts.push(op + '.');
   if (subject) parts.push(subject + '.');
   if (env) parts.push('Set in ' + env + '.');
-
   if (lighting || atmosphere || mood || customMood) {
-    let lp = [];
+    var lp = [];
     if (lighting) lp.push('illuminated by ' + lighting.toLowerCase());
     if (atmosphere) lp.push(atmosphere.toLowerCase() + ' atmosphere');
     if (mood) lp.push(mood.toLowerCase() + ' mood');
     if (customMood) lp.push(customMood);
     parts.push('The scene features ' + lp.join(', ') + '.');
   }
-
   if (camera || focal || lens || film || aperture || shutter || isoVal) {
-    let cp = [];
+    var cp = [];
     if (camera) cp.push('shot on ' + camera);
     if (focal) cp.push(focal);
     if (lens) cp.push(lens);
@@ -3706,50 +3692,35 @@ function buildPrompt() {
     if (film) cp.push(film + ' film stock');
     parts.push('Captured with ' + cp.join(', ') + '.');
   }
-
   if (lensFilter) parts.push('Through a ' + lensFilter.split(' (')[0] + ' filter.');
   if (filmGrain) parts.push('With ' + filmGrain.split(' (')[0] + ' texture.');
-
   if (palette || grading) {
-    let col = [];
+    var col = [];
     if (palette) col.push(palette + ' color palette');
     if (grading) col.push(grading + ' color grading');
     parts.push(col.join(' with ') + '.');
   }
-
   if (photog || movie || customRef) {
-    let ref = [];
+    var ref = [];
     if (photog) ref.push('photography style of ' + photog);
     if (movie) ref.push('visual aesthetic of ' + movie);
     if (customRef) ref.push('inspired by ' + customRef);
     parts.push('In the ' + ref.join(', ') + '.');
   }
-
   if (aspect) parts.push('The image should be in ' + aspect + ' format.');
   parts.push(resolution + ' resolution, hyper-realistic details, masterful composition.');
-
   updatePromptDisplay(parts, subject || shotType || lighting || camera);
   updateJSONDisplay();
 }
 
-// ========== BUILD PROMPT — ANIME ==========
+// ========== BUILD ANIME ==========
 function buildAnimePrompt() {
-  const parts = [];
-  const style = document.getElementById('animeStyle').value;
-  const subject = document.getElementById('animeSubject').value.trim();
-  const character = document.getElementById('animeCharacter').value.trim();
-  const env = document.getElementById('animeEnvironment').value.trim();
-  const palette = document.getElementById('animeColorPalette').value;
-  const mood = document.getElementById('animeMood').value;
-  const lighting = document.getElementById('animeLighting').value;
-  const shot = document.getElementById('animeShot').value;
-  const director = document.getElementById('animeDirector').value;
-  const filmRef = document.getElementById('animeFilmRef').value;
-  const customRef = document.getElementById('animeCustomRef').value.trim();
-  const aspect = document.getElementById('animeAspect').value;
-  const resolution = document.getElementById('animeResolution').value;
-  const quality = document.getElementById('animeQuality').value;
-
+  var parts = [];
+  var style = gv('animeStyle'), subject = gv('animeSubject'), character = gv('animeCharacter');
+  var env = gv('animeEnvironment'), palette = gv('animeColorPalette'), mood = gv('animeMood');
+  var lighting = gv('animeLighting'), shot = gv('animeShot'), director = gv('animeDirector');
+  var filmRef = gv('animeFilmRef'), customRef = gv('animeCustomRef');
+  var aspect = gv('animeAspect'), resolution = gv('animeResolution'), quality = gv('animeQuality');
   if (style) parts.push(style + ' style illustration.');
   if (shot) parts.push(shot + '.');
   if (subject) parts.push(subject + '.');
@@ -3763,43 +3734,30 @@ function buildAnimePrompt() {
   if (customRef) parts.push('Referenced from ' + customRef + '.');
   if (aspect) parts.push(aspect + ' format.');
   parts.push(quality + ', ' + resolution + ' resolution.');
-
   updatePromptDisplay(parts, style || subject);
   updateJSONDisplay();
 }
 
-// ========== BUILD PROMPT — HORROR ==========
+// ========== BUILD HORROR ==========
 function buildHorrorPrompt() {
-  const parts = [];
-  const subgenre = document.getElementById('horrorSubgenre').value;
-  const subject = document.getElementById('horrorSubject').value.trim();
-  const entity = document.getElementById('horrorEntity').value.trim();
-  const env = document.getElementById('horrorEnvironment').value.trim();
-  const atmosphere = document.getElementById('horrorAtmosphere').value;
-  const mood = document.getElementById('horrorMood').value;
-  const lighting = document.getElementById('horrorLighting').value;
-  const color = document.getElementById('horrorColor').value;
-  const camera = document.getElementById('horrorCamera').value;
-  const lens = document.getElementById('horrorLens').value;
-  const shot = document.getElementById('horrorShot').value;
-  const film = document.getElementById('horrorFilm').value;
-  const unaware = document.getElementById('horrorUnaware').checked;
-  const author = document.getElementById('horrorAuthor').value;
-  const filmRef = document.getElementById('horrorFilmRef').value;
-  const customRef = document.getElementById('horrorCustomRef').value.trim();
-  const aspect = document.getElementById('horrorAspect').value;
-  const resolution = document.getElementById('horrorResolution').value;
-
-  let opening = 'Cinematic horror photography';
-  if (subgenre) opening = subgenre + ' cinematic photography';
-  if (shot) opening += ', ' + shot.toLowerCase();
-  if (unaware) opening += ', where the subject is unaware they are on camera';
-  parts.push(opening + '.');
+  var parts = [];
+  var subgenre = gv('horrorSubgenre'), subject = gv('horrorSubject'), entity = gv('horrorEntity');
+  var env = gv('horrorEnvironment'), atmosphere = gv('horrorAtmosphere'), mood = gv('horrorMood');
+  var lighting = gv('horrorLighting'), color = gv('horrorColor');
+  var camera = gv('horrorCamera'), lens = gv('horrorLens'), shot = gv('horrorShot'), film = gv('horrorFilm');
+  var unaware = gc('horrorUnaware');
+  var author = gv('horrorAuthor'), filmRef = gv('horrorFilmRef'), customRef = gv('horrorCustomRef');
+  var aspect = gv('horrorAspect'), resolution = gv('horrorResolution');
+  var op = 'Cinematic horror photography';
+  if (subgenre) op = subgenre + ' cinematic photography';
+  if (shot) op += ', ' + shot.toLowerCase();
+  if (unaware) op += ', where the subject is unaware they are on camera';
+  parts.push(op + '.');
   if (subject) parts.push(subject);
   if (entity) parts.push('The entity: ' + entity);
   if (env) parts.push('Set in ' + env + '.');
   if (atmosphere || mood) {
-    let a = [];
+    var a = [];
     if (atmosphere) a.push(atmosphere.toLowerCase());
     if (mood) a.push(mood.toLowerCase());
     parts.push('The atmosphere evokes ' + a.join(', creating a sense of ') + '.');
@@ -3807,7 +3765,7 @@ function buildHorrorPrompt() {
   if (lighting) parts.push('Illuminated by ' + lighting.toLowerCase() + '.');
   if (color) parts.push(color + ' color treatment.');
   if (camera || lens || film) {
-    let c = [];
+    var c = [];
     if (camera) c.push('shot on ' + camera);
     if (lens) c.push(lens);
     if (film) c.push(film);
@@ -3818,206 +3776,287 @@ function buildHorrorPrompt() {
   if (customRef) parts.push('Referenced from ' + customRef + '.');
   if (aspect) parts.push(aspect + ' format.');
   parts.push('High contrast, ' + resolution + ' resolution, hyper-realistic details, masterful horror composition, deeply unsettling.');
-
   updatePromptDisplay(parts, subgenre || subject);
   updateJSONDisplay();
 }
 
-// ========== BUILD PROMPT — GRID ==========
+// ========== BUILD GRID ==========
 function updateGridPanels() {
-  const structure = document.getElementById('gridStructure').value;
-  const row2 = document.getElementById('gridRow2');
-  if (structure === '1x2' || structure === '2x1') { row2.style.display = 'none'; }
-  else { row2.style.display = ''; }
+  var s = gv('gridStructure');
+  var r = document.getElementById('gridRow2');
+  if (s === '1x2' || s === '2x1') { r.style.display = 'none'; } else { r.style.display = ''; }
 }
-
 function buildGridPrompt() {
-  const parts = [];
-  const structure = document.getElementById('gridStructure').value;
-  const subject = document.getElementById('gridSubject').value.trim();
-  const style = document.getElementById('gridStyle').value.trim();
-  const cc = document.getElementById('gridConsistentChar').checked;
-  const cl = document.getElementById('gridConsistentLight').checked;
-  const ccl = document.getElementById('gridConsistentColor').checked;
-
-  const cols = parseInt(structure.split('x')[0]);
-  const rows = parseInt(structure.split('x')[1]);
-  const total = cols * rows;
-  const labels = {
-    '2x2': ['top-left','top-right','bottom-left','bottom-right'],
-    '1x2': ['left panel','right panel'],
-    '2x1': ['top panel','bottom panel'],
-    '1x3': ['left','center','right'],
-    '1x4': ['panel 1','panel 2','panel 3','panel 4']
-  };
-  const lb = labels[structure] || labels['2x2'];
-
-  parts.push('A ' + structure.replace('x','×') + ' grid image, ' + total + ' panels showing the same scene from different camera angles.');
-
-  for (let i = 1; i <= Math.min(total, 4); i++) {
-    const v = document.getElementById('gridPanel'+i+'View');
-    const s = document.getElementById('gridPanel'+i+'Shot');
-    if (v && s && (v.value || s.value)) {
-      let p = lb[i-1] + ': ';
-      if (v.value) p += v.value.toLowerCase();
-      if (v.value && s.value) p += ', ';
-      if (s.value) p += s.value.toLowerCase();
-      parts.push(p + '.');
-    }
+  var parts = [];
+  var structure = gv('gridStructure'), subject = gv('gridSubject'), style = gv('gridStyle');
+  var cc = gc('gridConsistentChar'), cl = gc('gridConsistentLight'), ccl = gc('gridConsistentColor');
+  var cols = parseInt(structure.split('x')[0]), rows = parseInt(structure.split('x')[1]);
+  var total = cols * rows;
+  var lb = { '2x2':['top-left','top-right','bottom-left','bottom-right'], '1x2':['left','right'], '2x1':['top','bottom'], '1x3':['left','center','right'], '1x4':['panel 1','panel 2','panel 3','panel 4'] };
+  var labels = lb[structure] || lb['2x2'];
+  parts.push('A ' + structure.replace('x','x') + ' grid image, ' + total + ' panels showing the same scene from different angles.');
+  for (var i = 1; i <= Math.min(total, 4); i++) {
+    var v = gv('gridPanel' + i + 'View'), s = gv('gridPanel' + i + 'Shot');
+    if (v || s) { var p = labels[i-1] + ': '; if (v) p += v.toLowerCase(); if (v && s) p += ', '; if (s) p += s.toLowerCase(); parts.push(p + '.'); }
   }
-
   if (subject) parts.push('Scene: ' + subject);
-  let con = [];
-  if (cc) con.push('character appearance');
-  if (cl) con.push('lighting');
-  if (ccl) con.push('color grading');
+  var con = [];
+  if (cc) con.push('character'); if (cl) con.push('lighting'); if (ccl) con.push('color grading');
   if (con.length) parts.push('Maintain consistent ' + con.join(', ') + ' across ALL panels.');
   if (style) parts.push(style + '.');
   parts.push('1:1 square format. 4K resolution, highly detailed, cinematic quality.');
-
   updatePromptDisplay(parts, subject);
   updateJSONDisplay();
 }
 
-// ========== BUILD VIDEO PROMPT ==========
+// ========== BUILD VIDEO ==========
 function updateIntensityLabel() {
-  const val = document.getElementById('videoCameraIntensity').value;
-  const labels = {
-    '1': 'Nivel 1 — Muy Sutil (extremely slow and subtle)',
-    '2': 'Nivel 2 — Lento (slow and steady)',
-    '3': 'Nivel 3 — Normal (moderate)',
-    '4': 'Nivel 4 — Rápido (rapid and dynamic)',
-    '5': 'Nivel 5 — Muy Agresivo (extremely fast and aggressive)'
-  };
+  var val = gv('videoCameraIntensity');
+  var labels = { '1':'Nivel 1 — Muy Sutil', '2':'Nivel 2 — Lento', '3':'Nivel 3 — Normal', '4':'Nivel 4 — Rápido', '5':'Nivel 5 — Muy Agresivo' };
   document.getElementById('intensityLabel').textContent = labels[val] || labels['3'];
 }
-
 function getSpeedText(level) {
-  const speeds = {
-    '1': 'with extremely slow and subtle movement intensity',
-    '2': 'with slow and steady movement intensity',
-    '3': 'with moderate movement intensity',
-    '4': 'with rapid and dynamic movement intensity',
-    '5': 'with extremely fast and aggressive movement intensity'
-  };
-  return speeds[level] || speeds['3'];
+  var s = { '1':'with extremely slow and subtle movement intensity', '2':'with slow and steady movement intensity', '3':'with moderate movement intensity', '4':'with rapid and dynamic movement intensity', '5':'with extremely fast and aggressive movement intensity' };
+  return s[level] || s['3'];
 }
-
 function buildVideoPrompt() {
-  const parts = [];
-
-  const source = document.getElementById('videoSourcePrompt').value.trim();
-  const platform = document.getElementById('videoPlatform');
-  const pVal = platform.value;
-  const pText = platform.selectedIndex > 0 ? platform.options[platform.selectedIndex].text : '';
-  const camMoveRaw = document.getElementById('videoCameraMove').value;
-  const intensity = document.getElementById('videoCameraIntensity').value;
-  const subAct = document.getElementById('videoSubjectAction').value.trim();
-  const envMot = document.getElementById('videoEnvMotion').value.trim();
-  const dur = document.getElementById('videoDuration').value;
-  const fps = document.getElementById('videoFPS').value;
-  const tStart = document.getElementById('videoTransStart').value;
-  const tEnd = document.getElementById('videoTransEnd').value;
-  const fx = document.getElementById('videoEffects').value;
-  const audio = document.getElementById('videoAudio').value;
-  const aspect = document.getElementById('videoAspect').value;
-  const quality = document.getElementById('videoQuality').value;
-
-  // Platform tips
-  const tipEl = document.getElementById('platformTip');
-  const tips = {
-    'veo3':'💡 Veo 3: Usa lenguaje natural detallado. Las fórmulas de coordenadas mejoran la precisión del movimiento.',
-    'kling':'💡 Kling: Excelente con image-to-video. Las coordenadas de ejes ayudan a controlar la dirección exacta.',
-    'runway':'💡 Runway Gen-4: Excelente control de movimiento. Las fórmulas vectoriales mejoran la consistencia.',
-    'pika':'💡 Pika: Bueno para clips cortos. Usa las fórmulas para movimientos precisos.',
-    'luma':'💡 Luma: Fuerte en looks cinematográficos. Las coordenadas dan control profesional.',
-    'minimax':'💡 Minimax/Hailuo: Buena calidad. Las fórmulas de ejes mejoran la dirección del movimiento.',
-    'wan':'💡 Wan 2.1: Open source. Responde muy bien a instrucciones de coordenadas cartesianas.',
-    'seedance':'💡 Seedance: Las fórmulas de traslación/rotación dan resultados más predecibles.',
-    'grok':'💡 Grok: Usa las fórmulas para especificar exactamente qué ejes se mueven.',
-    'qwen':'💡 Qwen: Responde bien a instrucciones de ejes X, Y, Z y rotaciones Yaw/Pitch/Roll.',
-    'generic':'💡 Genérico: Las fórmulas de coordenadas funcionan en la mayoría de plataformas.'
-  };
-  if (pVal && tips[pVal]) { tipEl.textContent = tips[pVal]; tipEl.style.display = 'block'; }
-  else { tipEl.style.display = 'none'; }
-
-  // Build prompt
+  var parts = [];
+  var source = gv('videoSourcePrompt'), pVal = gv('videoPlatform');
+  var pEl = document.getElementById('videoPlatform');
+  var pText = pEl && pEl.selectedIndex > 0 ? pEl.options[pEl.selectedIndex].text : '';
+  var camMoveRaw = gv('videoCameraMove'), intensity = gv('videoCameraIntensity');
+  var subAct = gv('videoSubjectAction'), envMot = gv('videoEnvMotion');
+  var dur = gv('videoDuration'), fps = gv('videoFPS');
+  var tStart = gv('videoTransStart'), tEnd = gv('videoTransEnd');
+  var fx = gv('videoEffects'), audio = gv('videoAudio');
+  var aspect = gv('videoAspect'), quality = gv('videoQuality');
+  var tipEl = document.getElementById('platformTip');
+  var tips = { 'veo3':'Veo 3: Usa lenguaje natural detallado.', 'kling':'Kling: Excelente con image-to-video.', 'runway':'Runway Gen-4: Excelente control.', 'pika':'Pika: Bueno para clips cortos.', 'luma':'Luma: Fuerte en looks cinematográficos.', 'minimax':'Minimax: Buena calidad.', 'wan':'Wan 2.1: Responde bien a coordenadas.', 'seedance':'Seedance: Fórmulas dan resultados predecibles.', 'grok':'Grok: Usa fórmulas para ejes específicos.', 'qwen':'Qwen: Responde bien a ejes X,Y,Z.', 'generic':'Genérico: Universal.' };
+  if (pVal && tips[pVal]) { tipEl.textContent = tips[pVal]; tipEl.style.display = 'block'; } else { tipEl.style.display = 'none'; }
   if (pText && pVal) parts.push('[Platform: ' + pText + ']');
-
   if (source) parts.push('Scene: ' + source);
-
-  // Camera motion with coordinates formula
-  if (camMoveRaw) {
-    const speedText = getSpeedText(intensity);
-    const camFormula = camMoveRaw.replace('{SPEED}', speedText);
-    parts.push(camFormula);
-  }
-
+  if (camMoveRaw) { parts.push(camMoveRaw.replace('{SPEED}', getSpeedText(intensity))); }
   if (subAct) parts.push('Subject action: ' + subAct);
-  if (envMot) parts.push('Environment motion: ' + envMot);
-
+  if (envMot) parts.push('Environment: ' + envMot);
   if (tStart) parts.push('Opens with: ' + tStart.toLowerCase() + '.');
   if (tEnd) parts.push('Ends with: ' + tEnd.toLowerCase() + '.');
-
   if (dur) parts.push('Duration: ' + dur.split(' ')[0] + ' seconds.');
   if (fps) parts.push(fps + '.');
   if (fx) parts.push('Effect: ' + fx.toLowerCase() + '.');
   if (audio) parts.push('Audio mood: ' + audio.toLowerCase() + '.');
   if (aspect) parts.push(aspect + ' format.');
   parts.push(quality + ', smooth motion, cinematic video.');
-
-  const promptBox = document.getElementById('promptBox');
-  const finalPrompt = parts.join(' ').replace(/  +/g,' ').trim();
-
-  if (source || camMoveRaw || subAct) {
-    promptBox.textContent = finalPrompt;
-    promptBox.classList.remove('empty');
-  } else {
-    promptBox.textContent = 'Tu prompt de video aparecerá aquí en tiempo real mientras configuras los módulos...';
-    promptBox.classList.add('empty');
-  }
-
-  document.getElementById('charCount').textContent = finalPrompt.length;
-  document.getElementById('wordCount').textContent = finalPrompt.split(/\s+/).filter(w=>w).length;
+  updatePromptDisplay(parts, source || camMoveRaw || subAct);
+  updateJSONDisplay();
 }
 
-// ========== UPDATE PROMPT DISPLAY ==========
-function updatePromptDisplay(parts, hasContent) {
-  const promptBox = document.getElementById('promptBox');
-  const finalPrompt = parts.join(' ').replace(/  +/g,' ').trim();
-  if (hasContent) {
-    promptBox.textContent = finalPrompt;
-    promptBox.classList.remove('empty');
-  } else {
-    promptBox.textContent = 'Tu prompt cinematográfico aparecerá aquí en tiempo real mientras configuras los módulos...';
-    promptBox.classList.add('empty');
-  }
-  document.getElementById('charCount').textContent = finalPrompt.length;
-  document.getElementById('wordCount').textContent = finalPrompt.split(/\s+/).filter(w=>w).length;
+// ========== BUILD SHEET ==========
+function buildSheetPrompt() {
+  var parts = [];
+  var character = gv('sheetCharacter'), clothing = gv('sheetClothing'), charCount = gv('sheetCharCount');
+  var views = gv('sheetViews'), customViews = gv('sheetCustomViews');
+  var camera = gv('sheetCamera'), lens = gv('sheetLens');
+  var bg = gv('sheetBackground'), style = gv('sheetStyle'), lighting = gv('sheetLighting');
+  var grid = gv('sheetGrid'), resolution = gv('sheetResolution');
+  parts.push('Character design reference sheet.');
+  if (style) parts.push(style + '.');
+  var finalViews = customViews || views;
+  if (grid) { parts.push(grid + '.'); }
+  else if (finalViews) { var vc = finalViews.split(',').length; if (vc <= 3) parts.push('1x' + vc + ' grid.'); else if (vc === 4) parts.push('2x2 grid.'); else parts.push('2x3 grid.'); }
+  if (finalViews) parts.push('Showing: ' + finalViews + '.');
+  if (charCount === 'duo') parts.push('Two characters side by side.');
+  if (charCount === 'group') parts.push('Multiple characters.');
+  if (character) parts.push('Character: ' + character);
+  if (clothing) parts.push('Clothing: ' + clothing);
+  parts.push(bg + '.');
+  if (camera || lens) { var cp = []; if (camera) cp.push('shot on ' + camera); if (lens) cp.push(lens); parts.push('Captured with ' + cp.join(', ') + '.'); }
+  if (lighting) parts.push(lighting + '.');
+  parts.push('Consistent design across ALL views. ' + resolution + ' resolution, highly detailed.');
+  updatePromptDisplay(parts, character);
+  updateJSONDisplay();
 }
 
-// ========== UPDATE JSON DISPLAY ==========
-function updateJSONDisplay() {
-  const jsonBox = document.getElementById('jsonBox');
-  if (jsonBox) {
-    const data = collectAllData();
-    jsonBox.textContent = JSON.stringify(data, null, 2);
-  }
+// ========== BUILD MUSIC ==========
+function updateBPMLabel() {
+  var bpm = gv('musicBPM');
+  var feel = '';
+  if (bpm <= 60) feel = 'Ambient'; else if (bpm <= 80) feel = 'Balada'; else if (bpm <= 100) feel = 'Moderado';
+  else if (bpm <= 120) feel = 'Pop'; else if (bpm <= 140) feel = 'Rock'; else if (bpm <= 160) feel = 'Dance';
+  else if (bpm <= 180) feel = 'Drum & Bass'; else feel = 'Extremo';
+  document.getElementById('bpmLabel').textContent = bpm + ' BPM — ' + feel;
+}
+function updateStructurePreview() {
+  var val = gv('musicStructure');
+  var preview = document.getElementById('structurePreview');
+  if (val) { preview.textContent = val.replace(/\\n/g, '\n'); } else { preview.textContent = 'Selecciona una estructura...'; }
+  buildMusicPrompt();
+}
+function buildMusicPrompt() {
+  var genre = gv('musicGenre'), subGenre = gv('musicSubGenre'), leadInst = gv('musicLeadInst');
+  var supportInst = gv('musicSupportInst'), production = gv('musicProduction');
+  var voiceType = gv('musicVoiceType'), language = gv('musicLanguage');
+  var mood = gv('musicMood'), use = gv('musicUse'), bpm = gv('musicBPM');
+  var key = gv('musicKey'), texture = gv('musicTexture'), era = gv('musicEra');
+  var artistRef = gv('musicArtistRef'), filmRef = gv('musicFilmRef'), customRef = gv('musicCustomRef');
+  var structure = gv('musicStructure'), duration = gv('musicDuration'), quality = gv('musicQuality');
+  var sp = [];
+  if (genre) sp.push(genre.toLowerCase());
+  if (subGenre) sp.push(subGenre.toLowerCase());
+  if (leadInst) sp.push(leadInst.toLowerCase());
+  if (supportInst) sp.push(supportInst.toLowerCase());
+  if (production) sp.push(production);
+  if (mood) sp.push(mood);
+  if (use) sp.push(use);
+  if (bpm) sp.push(bpm + ' BPM');
+  if (key) sp.push(key.split(' ')[0] + ' ' + (key.includes('minor') ? 'minor' : 'major'));
+  if (texture) sp.push(texture);
+  if (era) sp.push(era);
+  if (artistRef) sp.push(artistRef);
+  if (filmRef) sp.push('inspired by ' + filmRef);
+  if (customRef) sp.push(customRef);
+  if (voiceType) sp.push(voiceType);
+  if (language) sp.push(language);
+  if (duration) sp.push(duration);
+  sp.push(quality);
+  var stylePrompt = sp.join(', ');
+  var structureText = structure ? structure.replace(/\\n/g, '\n') : '';
+  var fullPrompt = '';
+  if (stylePrompt.trim()) { fullPrompt += 'STYLE PROMPT: ' + stylePrompt; }
+  if (structureText) { fullPrompt += '\n\nESTRUCTURA:\n' + structureText; }
+  var pb = document.getElementById('promptBox');
+  if (genre || leadInst || mood) { pb.textContent = fullPrompt; pb.classList.remove('empty'); }
+  else { pb.textContent = 'Tu prompt de música aparecerá aquí...'; pb.classList.add('empty'); }
+  document.getElementById('charCount').textContent = stylePrompt.length;
+  document.getElementById('wordCount').textContent = stylePrompt.split(/\s+/).filter(function(w) { return w; }).length;
+  updateJSONDisplay();
 }
 
-// ========== COLLECT ALL DATA ==========
+// ========== GRID SPLITTER ==========
+var gridImageData = null;
+var splitCanvases = [];
+function handleGridFile(file) {
+  if (!file || !file.type.startsWith('image/')) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var img = new Image();
+    img.onload = function() {
+      gridImageData = { img: img, width: img.width, height: img.height };
+      document.getElementById('splitOriginal').src = e.target.result;
+      document.getElementById('splitPreview').style.display = 'block';
+      document.getElementById('splitResults').style.display = 'none';
+      var st = gv('splitStructure'), c = parseInt(st.split('x')[0]), r = parseInt(st.split('x')[1]);
+      document.getElementById('splitInfo').innerHTML = 'Original: <span>' + img.width + 'x' + img.height + '</span> | Panel: <span>' + Math.floor(img.width/c) + 'x' + Math.floor(img.height/r) + '</span> | Pérdida: <span style="color:#27ae60">CERO</span>';
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+function splitGrid() {
+  if (!gridImageData) return;
+  var st = gv('splitStructure'), fmt = gv('splitFormat');
+  var c = parseInt(st.split('x')[0]), r = parseInt(st.split('x')[1]);
+  var pw = Math.floor(gridImageData.width/c), ph = Math.floor(gridImageData.height/r);
+  splitCanvases = [];
+  var gc2 = document.getElementById('splitGrid'), dl = document.getElementById('individualDownloads');
+  gc2.innerHTML = ''; dl.innerHTML = '';
+  gc2.style.gridTemplateColumns = 'repeat(' + c + ', 1fr)';
+  for (var row = 0; row < r; row++) {
+    for (var col = 0; col < c; col++) {
+      var cv = document.createElement('canvas'); cv.width = pw; cv.height = ph;
+      cv.getContext('2d').drawImage(gridImageData.img, col*pw, row*ph, pw, ph, 0, 0, pw, ph);
+      splitCanvases.push(cv);
+      var n = row*c + col + 1;
+      var w = document.createElement('div'); w.style.cssText = 'position:relative;border-radius:8px;overflow:hidden;border:1px solid #333';
+      var p = document.createElement('img');
+      var mt = 'image/png', q = 1;
+      if (fmt === 'jpeg') mt = 'image/jpeg'; if (fmt === 'webp') { mt = 'image/webp'; q = 0.95; }
+      p.src = cv.toDataURL(mt, q); p.style.cssText = 'width:100%;display:block';
+      var lb = document.createElement('div'); lb.style.cssText = 'position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.7);color:#fff;font-size:.7rem;padding:6px;text-align:center';
+      lb.textContent = 'Panel ' + n + ' — ' + pw + 'x' + ph;
+      w.appendChild(p); w.appendChild(lb); gc2.appendChild(w);
+      var b = document.createElement('button'); b.className = 'btn btn-secondary'; b.style.cssText = 'font-size:.7rem;padding:6px 10px';
+      b.textContent = '#' + n; b.onclick = (function(i, f) { return function() { dlSplit(i, f); }; })(n-1, fmt);
+      dl.appendChild(b);
+    }
+  }
+  document.getElementById('splitResults').style.display = 'block';
+}
+function dlSplit(i, fmt) {
+  if (!splitCanvases[i]) return;
+  var mt = 'image/png', ext = 'png', q = 1;
+  if (fmt === 'jpeg') { mt = 'image/jpeg'; ext = 'jpg'; } if (fmt === 'webp') { mt = 'image/webp'; ext = 'webp'; q = 0.95; }
+  var a = document.createElement('a'); a.href = splitCanvases[i].toDataURL(mt, q); a.download = 'kuriana-panel-' + (i+1) + '.' + ext; a.click();
+}
+function downloadAllSplits() { var f = gv('splitFormat'); splitCanvases.forEach(function(c, i) { setTimeout(function() { dlSplit(i, f); }, i * 300); }); }
+
+// ========== SHEET SPLITTER ==========
+var sheetImageData = null;
+var sheetSplitCanvases = [];
+function handleSheetFile(file) {
+  if (!file || !file.type.startsWith('image/')) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var img = new Image();
+    img.onload = function() {
+      sheetImageData = { img: img, width: img.width, height: img.height };
+      document.getElementById('sheetSplitOriginal').src = e.target.result;
+      document.getElementById('sheetSplitPreview').style.display = 'block';
+      document.getElementById('sheetSplitResults').style.display = 'none';
+      var st = gv('sheetSplitStructure'), c = parseInt(st.split('x')[0]), r = parseInt(st.split('x')[1]);
+      document.getElementById('sheetSplitInfo').innerHTML = 'Original: <span>' + img.width + 'x' + img.height + '</span> | Panel: <span>' + Math.floor(img.width/c) + 'x' + Math.floor(img.height/r) + '</span> | Pérdida: <span style="color:#27ae60">CERO</span>';
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+function splitSheet() {
+  if (!sheetImageData) return;
+  var st = gv('sheetSplitStructure'), fmt = gv('sheetSplitFormat');
+  var c = parseInt(st.split('x')[0]), r = parseInt(st.split('x')[1]);
+  var pw = Math.floor(sheetImageData.width/c), ph = Math.floor(sheetImageData.height/r);
+  sheetSplitCanvases = [];
+  var gc = document.getElementById('sheetSplitGrid'), dl = document.getElementById('sheetIndividualDL');
+  gc.innerHTML = ''; dl.innerHTML = '';
+  gc.style.gridTemplateColumns = 'repeat(' + c + ', 1fr)';
+  for (var row = 0; row < r; row++) {
+    for (var col = 0; col < c; col++) {
+      var cv = document.createElement('canvas'); cv.width = pw; cv.height = ph;
+      cv.getContext('2d').drawImage(sheetImageData.img, col*pw, row*ph, pw, ph, 0, 0, pw, ph);
+      sheetSplitCanvases.push(cv);
+      var n = row*c + col + 1;
+      var w = document.createElement('div'); w.style.cssText = 'position:relative;border-radius:8px;overflow:hidden;border:1px solid #333';
+      var p = document.createElement('img');
+      var mt = 'image/png', q = 1;
+      if (fmt === 'jpeg') mt = 'image/jpeg'; if (fmt === 'webp') { mt = 'image/webp'; q = 0.95; }
+      p.src = cv.toDataURL(mt, q); p.style.cssText = 'width:100%;display:block';
+      var lb = document.createElement('div'); lb.style.cssText = 'position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.7);color:#fff;font-size:.7rem;padding:6px;text-align:center';
+      lb.textContent = 'Vista ' + n + ' — ' + pw + 'x' + ph;
+      w.appendChild(p); w.appendChild(lb); gc.appendChild(w);
+      var b = document.createElement('button'); b.className = 'btn btn-secondary'; b.style.cssText = 'font-size:.7rem;padding:6px 10px';
+      b.textContent = '#' + n; b.onclick = (function(i, f) { return function() { dlSheetSplit(i, f); }; })(n-1, fmt);
+      dl.appendChild(b);
+    }
+  }
+  document.getElementById('sheetSplitResults').style.display = 'block';
+}
+function dlSheetSplit(i, fmt) {
+  if (!sheetSplitCanvases[i]) return;
+  var mt = 'image/png', ext = 'png', q = 1;
+  if (fmt === 'jpeg') { mt = 'image/jpeg'; ext = 'jpg'; } if (fmt === 'webp') { mt = 'image/webp'; ext = 'webp'; q = 0.95; }
+  var a = document.createElement('a'); a.href = sheetSplitCanvases[i].toDataURL(mt, q); a.download = 'kuriana-sheet-' + (i+1) + '.' + ext; a.click();
+}
+function downloadAllSheetSplits() { var f = gv('sheetSplitFormat'); sheetSplitCanvases.forEach(function(c, i) { setTimeout(function() { dlSheetSplit(i, f); }, i * 300); }); }
+
+// ========== COLLECT DATA ==========
 function collectAllData() {
-  const tab = getCurrentTab();
-  const data = { tab: tab, timestamp: new Date().toISOString() };
-
+  var tab = getCurrentTab();
+  var data = { tab: tab, timestamp: new Date().toISOString() };
   if (tab === 'sheet') {
-    data.character = gv('sheetCharacter'); data.clothing = gv('sheetClothing');
-    data.charCount = gv('sheetCharCount'); data.views = gv('sheetViews');
-    data.customViews = gv('sheetCustomViews'); data.camera = gv('sheetCamera');
-    data.lens = gv('sheetLens'); data.background = gv('sheetBackground');
-    data.style = gv('sheetStyle'); data.lighting = gv('sheetLighting');
-    data.grid = gv('sheetGrid'); data.resolution = gv('sheetResolution');
-  } else
+    data.character = gv('sheetCharacter'); data.clothing = gv('sheetClothing'); data.charCount = gv('sheetCharCount');
+    data.views = gv('sheetViews'); data.customViews = gv('sheetCustomViews'); data.camera = gv('sheetCamera');
+    data.lens = gv('sheetLens'); data.background = gv('sheetBackground'); data.style = gv('sheetStyle');
+    data.lighting = gv('sheetLighting'); data.grid = gv('sheetGrid'); data.resolution = gv('sheetResolution');
+  }
   if (tab === 'cine') {
     data.subject = gv('subject'); data.shotType = gv('shotType'); data.viewDirection = gv('viewDirection');
     data.subjectUnaware = gc('subjectUnaware'); data.environment = gv('environment');
@@ -4029,30 +4068,32 @@ function collectAllData() {
     data.colorPalette = gv('colorPalette'); data.colorGrading = gv('colorGrading');
     data.photographer = gv('photographer'); data.movieRef = gv('movieRef');
     data.customRef = gv('customRef'); data.resolution = gv('resolution'); data.temperature = gv('temperature');
-  } else if (tab === 'anime') {
+  }
+  if (tab === 'anime') {
     data.style = gv('animeStyle'); data.subject = gv('animeSubject'); data.character = gv('animeCharacter');
     data.environment = gv('animeEnvironment'); data.palette = gv('animeColorPalette'); data.mood = gv('animeMood');
     data.lighting = gv('animeLighting'); data.shot = gv('animeShot'); data.director = gv('animeDirector');
     data.filmRef = gv('animeFilmRef'); data.customRef = gv('animeCustomRef');
     data.aspect = gv('animeAspect'); data.resolution = gv('animeResolution'); data.quality = gv('animeQuality');
-  } else if (tab === 'horror') {
+  }
+  if (tab === 'horror') {
     data.subgenre = gv('horrorSubgenre'); data.subject = gv('horrorSubject'); data.entity = gv('horrorEntity');
     data.environment = gv('horrorEnvironment'); data.atmosphere = gv('horrorAtmosphere'); data.mood = gv('horrorMood');
     data.lighting = gv('horrorLighting'); data.color = gv('horrorColor'); data.camera = gv('horrorCamera');
     data.lens = gv('horrorLens'); data.shot = gv('horrorShot'); data.film = gv('horrorFilm');
     data.unaware = gc('horrorUnaware'); data.author = gv('horrorAuthor'); data.filmRef = gv('horrorFilmRef');
     data.customRef = gv('horrorCustomRef'); data.aspect = gv('horrorAspect'); data.resolution = gv('horrorResolution');
+  }
   if (tab === 'musica') {
-    data.genre = gv('musicGenre'); data.subGenre = gv('musicSubGenre');
-    data.leadInst = gv('musicLeadInst'); data.supportInst = gv('musicSupportInst');
-    data.production = gv('musicProduction'); data.voiceType = gv('musicVoiceType');
-    data.language = gv('musicLanguage'); data.mood = gv('musicMood');
+    data.genre = gv('musicGenre'); data.subGenre = gv('musicSubGenre'); data.leadInst = gv('musicLeadInst');
+    data.supportInst = gv('musicSupportInst'); data.production = gv('musicProduction');
+    data.voiceType = gv('musicVoiceType'); data.language = gv('musicLanguage'); data.mood = gv('musicMood');
     data.use = gv('musicUse'); data.bpm = gv('musicBPM'); data.key = gv('musicKey');
-    data.texture = gv('musicTexture'); data.era = gv('musicEra');
-    data.artistRef = gv('musicArtistRef'); data.filmRef = gv('musicFilmRef');
-    data.customRef = gv('musicCustomRef'); data.structure = gv('musicStructure');
-    data.duration = gv('musicDuration'); data.quality = gv('musicQuality');
-  } else if (tab === 'video') {
+    data.texture = gv('musicTexture'); data.era = gv('musicEra'); data.artistRef = gv('musicArtistRef');
+    data.filmRef = gv('musicFilmRef'); data.customRef = gv('musicCustomRef');
+    data.structure = gv('musicStructure'); data.duration = gv('musicDuration'); data.quality = gv('musicQuality');
+  }
+  if (tab === 'video') {
     data.source = gv('videoSourcePrompt'); data.platform = gv('videoPlatform');
     data.cameraMove = gv('videoCameraMove'); data.cameraIntensity = gv('videoCameraIntensity');
     data.subjectAction = gv('videoSubjectAction'); data.envMotion = gv('videoEnvMotion');
@@ -4061,44 +4102,31 @@ function collectAllData() {
     data.effects = gv('videoEffects'); data.audio = gv('videoAudio');
     data.aspect = gv('videoAspect'); data.quality = gv('videoQuality');
   }
-
   data.prompt = document.getElementById('promptBox').textContent;
   return data;
 }
 
-function gv(id) { const e = document.getElementById(id); return e ? (e.tagName === 'SELECT' ? e.value : e.value) : ''; }
-function gc(id) { const e = document.getElementById(id); return e ? e.checked : false; }
-function sv(id, val) { const e = document.getElementById(id); if (e) { if (e.tagName === 'SELECT') { for(let i=0;i<e.options.length;i++){if(e.options[i].value===val||e.options[i].text===val){e.selectedIndex=i;break;}} } else { e.value = val; } } }
-function sc(id, val) { const e = document.getElementById(id); if (e) e.checked = val; }
-
-// ========== COPY PROMPT ==========
+// ========== COPY / EXPORT ==========
 function copyPrompt() {
-  const text = document.getElementById('promptBox').textContent;
-  if (text.includes('aparecerá aquí')) return;
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = document.getElementById('copyBtn');
-    btn.classList.add('btn-copied');
-    btn.innerHTML = '✅ ¡COPIADO!';
-    setTimeout(() => { btn.classList.remove('btn-copied'); btn.innerHTML = '📋 COPIAR PROMPT'; }, 2000);
+  var t = document.getElementById('promptBox').textContent;
+  if (t.includes('aparecerá aquí')) return;
+  navigator.clipboard.writeText(t).then(function() {
+    var btn = document.getElementById('copyBtn');
+    btn.classList.add('btn-copied'); btn.innerHTML = '✅ ¡COPIADO!';
+    setTimeout(function() { btn.classList.remove('btn-copied'); btn.innerHTML = '📋 COPIAR PROMPT'; }, 2000);
   });
 }
-
-// ========== COPY JSON ==========
-function copyJSON() {
-  const text = document.getElementById('jsonBox').textContent;
-  navigator.clipboard.writeText(text).then(() => {
-    alert('✅ JSON copiado al portapapeles');
-  });
-}
-
-// ========== EXPORT JSON ==========
+function copyJSON() { navigator.clipboard.writeText(document.getElementById('jsonBox').textContent); }
 function exportJSON() {
-  const data = collectAllData();
-  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'kuriana-' + data.tab + '-' + Date.now() + '.json';
-  a.click();
+  var data = collectAllData();
+  var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  var a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'kuriana-' + data.tab + '-' + Date.now() + '.json'; a.click();
+}
+function openTranslate() {
+  var t = document.getElementById('promptBox').textContent;
+  if (t.includes('aparecerá aquí')) return;
+  window.open('https://translate.google.com/?sl=es&tl=en&text=' + encodeURIComponent(t), '_blank');
 }
 
 // ========== LOAD JSON ==========
@@ -4109,440 +4137,38 @@ function loadJSON(input) {
   reader.onload = function(e) {
     try {
       var data = JSON.parse(e.target.result);
-      if (!data.tab) { alert('Archivo JSON no válido'); return; }
-
-      document.querySelectorAll('.tab').forEach(function(t) {
-        if (t.dataset.tab === data.tab) { t.click(); }
-      });
-
+      if (!data.tab) { alert('Archivo no válido'); return; }
+      document.querySelectorAll('.tab').forEach(function(t) { if (t.dataset.tab === data.tab) t.click(); });
       setTimeout(function() {
-        if (data.tab === 'sheet') {
-          sv('sheetCharacter', data.character); sv('sheetClothing', data.clothing);
-          sv('sheetCharCount', data.charCount); sv('sheetViews', data.views);
-          sv('sheetCustomViews', data.customViews); sv('sheetCamera', data.camera);
-          sv('sheetLens', data.lens); sv('sheetBackground', data.background);
-          sv('sheetStyle', data.style); sv('sheetLighting', data.lighting);
-          sv('sheetGrid', data.grid); sv('sheetResolution', data.resolution);
-          buildSheetPrompt();
-        }
-        if (data.tab === 'cine') {
-          sv('subject', data.subject); sv('shotType', data.shotType); sv('viewDirection', data.viewDirection);
-          sc('subjectUnaware', data.subjectUnaware); sv('environment', data.environment);
-          sv('lighting', data.lighting); sv('atmosphere', data.atmosphere); sv('mood', data.mood);
-          sv('customMood', data.customMood); sv('cameraBody', data.cameraBody); sv('focalLength', data.focalLength);
-          sv('lensType', data.lensType); sv('filmStock', data.filmStock); sv('aperture', data.aperture);
-          sv('shutterSpeed', data.shutterSpeed); sv('iso', data.iso); sv('lensFilter', data.lensFilter);
-          sv('filmGrain', data.filmGrain); sv('aspectRatio', data.aspectRatio);
-          sv('colorPalette', data.colorPalette); sv('colorGrading', data.colorGrading);
-          sv('photographer', data.photographer); sv('movieRef', data.movieRef);
-          sv('customRef', data.customRef); sv('resolution', data.resolution); sv('temperature', data.temperature);
-          buildPrompt();
-        }
-        if (data.tab === 'anime') {
-          sv('animeStyle', data.style); sv('animeSubject', data.subject); sv('animeCharacter', data.character);
-          sv('animeEnvironment', data.environment); sv('animeColorPalette', data.palette); sv('animeMood', data.mood);
-          sv('animeLighting', data.lighting); sv('animeShot', data.shot); sv('animeDirector', data.director);
-          sv('animeFilmRef', data.filmRef); sv('animeCustomRef', data.customRef);
-          sv('animeAspect', data.aspect); sv('animeResolution', data.resolution); sv('animeQuality', data.quality);
-          buildAnimePrompt();
-        }
-        if (data.tab === 'horror') {
-          sv('horrorSubgenre', data.subgenre); sv('horrorSubject', data.subject); sv('horrorEntity', data.entity);
-          sv('horrorEnvironment', data.environment); sv('horrorAtmosphere', data.atmosphere); sv('horrorMood', data.mood);
-          sv('horrorLighting', data.lighting); sv('horrorColor', data.color); sv('horrorCamera', data.camera);
-          sv('horrorLens', data.lens); sv('horrorShot', data.shot); sv('horrorFilm', data.film);
-          sc('horrorUnaware', data.unaware); sv('horrorAuthor', data.author); sv('horrorFilmRef', data.filmRef);
-          sv('horrorCustomRef', data.customRef); sv('horrorAspect', data.aspect); sv('horrorResolution', data.resolution);
-          buildHorrorPrompt();
-        }
-        if (data.tab === 'musica') {
-          sv('musicGenre', data.genre); sv('musicSubGenre', data.subGenre);
-          sv('musicLeadInst', data.leadInst); sv('musicSupportInst', data.supportInst);
-          sv('musicProduction', data.production); sv('musicVoiceType', data.voiceType);
-          sv('musicLanguage', data.language); sv('musicMood', data.mood);
-          sv('musicUse', data.use); sv('musicKey', data.key);
-          sv('musicTexture', data.texture); sv('musicEra', data.era);
-          sv('musicArtistRef', data.artistRef); sv('musicFilmRef', data.filmRef);
-          sv('musicCustomRef', data.customRef); sv('musicStructure', data.structure);
-          sv('musicDuration', data.duration); sv('musicQuality', data.quality);
-          var bpmEl = document.getElementById('musicBPM');
-          if (bpmEl) bpmEl.value = data.bpm || '90';
-          updateBPMLabel(); updateStructurePreview(); buildMusicPrompt();
-        }
-        if (data.tab === 'video') {
-          sv('videoSourcePrompt', data.source); sv('videoPlatform', data.platform);
-          sv('videoCameraMove', data.cameraMove);
-          var intEl = document.getElementById('videoCameraIntensity');
-          if (intEl) intEl.value = data.cameraIntensity || '3';
-          if (typeof updateIntensityLabel === 'function') updateIntensityLabel();
-          sv('videoSubjectAction', data.subjectAction); sv('videoEnvMotion', data.envMotion);
-          sv('videoDuration', data.duration); sv('videoFPS', data.fps);
-          sv('videoTransStart', data.transStart); sv('videoTransEnd', data.transEnd);
-          sv('videoEffects', data.effects); sv('videoAudio', data.audio);
-          sv('videoAspect', data.aspect); sv('videoQuality', data.quality);
-          buildVideoPrompt();
-        }
-        alert('Proyecto cargado desde: ' + file.name);
+        if (data.tab === 'sheet') { sv('sheetCharacter',data.character); sv('sheetClothing',data.clothing); sv('sheetCharCount',data.charCount); sv('sheetViews',data.views); sv('sheetCustomViews',data.customViews); sv('sheetCamera',data.camera); sv('sheetLens',data.lens); sv('sheetBackground',data.background); sv('sheetStyle',data.style); sv('sheetLighting',data.lighting); sv('sheetGrid',data.grid); sv('sheetResolution',data.resolution); buildSheetPrompt(); }
+        if (data.tab === 'cine') { sv('subject',data.subject); sv('shotType',data.shotType); sv('viewDirection',data.viewDirection); sc('subjectUnaware',data.subjectUnaware); sv('environment',data.environment); sv('lighting',data.lighting); sv('atmosphere',data.atmosphere); sv('mood',data.mood); sv('customMood',data.customMood); sv('cameraBody',data.cameraBody); sv('focalLength',data.focalLength); sv('lensType',data.lensType); sv('filmStock',data.filmStock); sv('aperture',data.aperture); sv('shutterSpeed',data.shutterSpeed); sv('iso',data.iso); sv('lensFilter',data.lensFilter); sv('filmGrain',data.filmGrain); sv('aspectRatio',data.aspectRatio); sv('colorPalette',data.colorPalette); sv('colorGrading',data.colorGrading); sv('photographer',data.photographer); sv('movieRef',data.movieRef); sv('customRef',data.customRef); sv('resolution',data.resolution); sv('temperature',data.temperature); buildPrompt(); }
+        if (data.tab === 'anime') { sv('animeStyle',data.style); sv('animeSubject',data.subject); sv('animeCharacter',data.character); sv('animeEnvironment',data.environment); sv('animeColorPalette',data.palette); sv('animeMood',data.mood); sv('animeLighting',data.lighting); sv('animeShot',data.shot); sv('animeDirector',data.director); sv('animeFilmRef',data.filmRef); sv('animeCustomRef',data.customRef); sv('animeAspect',data.aspect); sv('animeResolution',data.resolution); sv('animeQuality',data.quality); buildAnimePrompt(); }
+        if (data.tab === 'horror') { sv('horrorSubgenre',data.subgenre); sv('horrorSubject',data.subject); sv('horrorEntity',data.entity); sv('horrorEnvironment',data.environment); sv('horrorAtmosphere',data.atmosphere); sv('horrorMood',data.mood); sv('horrorLighting',data.lighting); sv('horrorColor',data.color); sv('horrorCamera',data.camera); sv('horrorLens',data.lens); sv('horrorShot',data.shot); sv('horrorFilm',data.film); sc('horrorUnaware',data.unaware); sv('horrorAuthor',data.author); sv('horrorFilmRef',data.filmRef); sv('horrorCustomRef',data.customRef); sv('horrorAspect',data.aspect); sv('horrorResolution',data.resolution); buildHorrorPrompt(); }
+        if (data.tab === 'musica') { sv('musicGenre',data.genre); sv('musicSubGenre',data.subGenre); sv('musicLeadInst',data.leadInst); sv('musicSupportInst',data.supportInst); sv('musicProduction',data.production); sv('musicVoiceType',data.voiceType); sv('musicLanguage',data.language); sv('musicMood',data.mood); sv('musicUse',data.use); sv('musicKey',data.key); sv('musicTexture',data.texture); sv('musicEra',data.era); sv('musicArtistRef',data.artistRef); sv('musicFilmRef',data.filmRef); sv('musicCustomRef',data.customRef); sv('musicStructure',data.structure); sv('musicDuration',data.duration); sv('musicQuality',data.quality); var bpmEl=document.getElementById('musicBPM'); if(bpmEl) bpmEl.value=data.bpm||'90'; updateBPMLabel(); updateStructurePreview(); }
+        if (data.tab === 'video') { sv('videoSourcePrompt',data.source); sv('videoPlatform',data.platform); sv('videoCameraMove',data.cameraMove); var intEl=document.getElementById('videoCameraIntensity'); if(intEl) intEl.value=data.cameraIntensity||'3'; if(typeof updateIntensityLabel==='function') updateIntensityLabel(); sv('videoSubjectAction',data.subjectAction); sv('videoEnvMotion',data.envMotion); sv('videoDuration',data.duration); sv('videoFPS',data.fps); sv('videoTransStart',data.transStart); sv('videoTransEnd',data.transEnd); sv('videoEffects',data.effects); sv('videoAudio',data.audio); sv('videoAspect',data.aspect); sv('videoQuality',data.quality); buildVideoPrompt(); }
+        alert('Proyecto cargado: ' + file.name);
       }, 300);
-    } catch(err) {
-      alert('Error al leer el archivo: ' + err.message);
-    }
+    } catch(err) { alert('Error: ' + err.message); }
   };
   reader.readAsText(file);
   input.value = '';
 }
 
-// ========== TRANSLATE ==========
-function openTranslate() {
-  const text = document.getElementById('promptBox').textContent;
-  if (text.includes('aparecerá aquí')) return;
-  const url = 'https://translate.google.com/?sl=es&tl=en&text=' + encodeURIComponent(text);
-  window.open(url, '_blank');
-}
-
-// ========== GRID SPLITTER ==========
-let gridImageData = null;
-let splitCanvases = [];
-
-function handleGridFile(file) {
-  if (!file || !file.type.startsWith('image/')) return;
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    const img = new Image();
-    img.onload = function() {
-      gridImageData = { img: img, width: img.width, height: img.height, name: file.name };
-      document.getElementById('splitOriginal').src = e.target.result;
-      document.getElementById('splitPreview').style.display = 'block';
-      document.getElementById('splitResults').style.display = 'none';
-      const st = document.getElementById('splitStructure').value;
-      const c = parseInt(st.split('x')[0]), r = parseInt(st.split('x')[1]);
-      const pw = Math.floor(img.width/c), ph = Math.floor(img.height/r);
-      document.getElementById('splitInfo').innerHTML =
-        'Original: <span>'+img.width+' × '+img.height+' px</span> | Cada panel: <span>'+pw+' × '+ph+' px</span> | Pérdida de calidad: <span style="color:#27ae60">CERO ✅</span>';
-    };
-    img.src = e.target.result;
-  };
-  reader.readAsDataURL(file);
-}
-
-function splitGrid() {
-  if (!gridImageData) return;
-  const st = document.getElementById('splitStructure').value;
-  const fmt = document.getElementById('splitFormat').value;
-  const c = parseInt(st.split('x')[0]), r = parseInt(st.split('x')[1]);
-  const pw = Math.floor(gridImageData.width/c), ph = Math.floor(gridImageData.height/r);
-  splitCanvases = [];
-  const gc2 = document.getElementById('splitGrid');
-  const dl = document.getElementById('individualDownloads');
-  gc2.innerHTML = ''; dl.innerHTML = '';
-  gc2.style.gridTemplateColumns = 'repeat('+c+', 1fr)';
-
-  for (let row=0; row<r; row++) {
-    for (let col=0; col<c; col++) {
-      const cv = document.createElement('canvas');
-      cv.width = pw; cv.height = ph;
-      cv.getContext('2d').drawImage(gridImageData.img, col*pw, row*ph, pw, ph, 0, 0, pw, ph);
-      splitCanvases.push(cv);
-      const n = row*c+col+1;
-      const w = document.createElement('div');
-      w.style.cssText = 'position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border)';
-      const p = document.createElement('img');
-      let mt = 'image/png', q = 1;
-      if (fmt==='jpeg'){mt='image/jpeg';} if(fmt==='webp'){mt='image/webp';q=0.95;}
-      p.src = cv.toDataURL(mt,q); p.style.cssText = 'width:100%;display:block';
-      const lb = document.createElement('div');
-      lb.style.cssText = 'position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.7);color:#fff;font-size:.7rem;padding:6px;text-align:center;font-weight:600';
-      lb.textContent = 'Panel '+n+' — '+pw+'×'+ph+'px';
-      w.appendChild(p); w.appendChild(lb); gc2.appendChild(w);
-      const b = document.createElement('button');
-      b.className = 'btn btn-secondary'; b.style.cssText = 'font-size:.7rem;padding:6px 10px';
-      b.textContent = '📥 #'+n;
-      b.onclick = (function(i,f){return function(){downloadSingleSplit(i,f);};})(n-1,fmt);
-      dl.appendChild(b);
-    }
-  }
-  document.getElementById('splitResults').style.display = 'block';
-}
-
-function downloadSingleSplit(i,fmt) {
-  if (!splitCanvases[i]) return;
-  let mt='image/png',ext='png',q=1;
-  if(fmt==='jpeg'){mt='image/jpeg';ext='jpg';}if(fmt==='webp'){mt='image/webp';ext='webp';q=0.95;}
-  const a = document.createElement('a');
-  a.href = splitCanvases[i].toDataURL(mt,q);
-  a.download = 'kuriana-panel-'+(i+1)+'.'+ext; a.click();
-}
-
-function downloadAllSplits() {
-  const fmt = document.getElementById('splitFormat').value;
-  splitCanvases.forEach(function(c,i){ setTimeout(function(){ downloadSingleSplit(i,fmt); }, i*300); });
-}
-// ========== BUILD SHEET PROMPT ==========
-function buildSheetPrompt() {
-  const parts = [];
-  const character = document.getElementById('sheetCharacter').value.trim();
-  const clothing = document.getElementById('sheetClothing').value.trim();
-  const charCount = document.getElementById('sheetCharCount').value;
-  const views = document.getElementById('sheetViews').value;
-  const customViews = document.getElementById('sheetCustomViews').value.trim();
-  const camera = document.getElementById('sheetCamera').value;
-  const lens = document.getElementById('sheetLens').value;
-  const bg = document.getElementById('sheetBackground').value;
-  const style = document.getElementById('sheetStyle').value;
-  const lighting = document.getElementById('sheetLighting').value;
-  const grid = document.getElementById('sheetGrid').value;
-  const resolution = document.getElementById('sheetResolution').value;
-
-  // Opening
-  parts.push('Character design reference sheet.');
-
-  // Style
-  if (style) parts.push(style + '.');
-
-  // Grid
-  const finalViews = customViews || views;
-  if (grid) {
-    parts.push(grid + '.');
-  } else if (finalViews) {
-    const viewCount = finalViews.split(',').length;
-    if (viewCount <= 3) parts.push('1x' + viewCount + ' grid, ' + viewCount + ' panels in a row.');
-    else if (viewCount === 4) parts.push('2x2 grid, 4 panels.');
-    else if (viewCount <= 6) parts.push('2x3 grid, ' + viewCount + ' panels.');
-    else parts.push('1x' + viewCount + ' grid, ' + viewCount + ' panels in a row.');
-  }
-
-  // Views
-  if (finalViews) {
-    const viewList = finalViews.split(',').map(v => v.trim());
-    parts.push('Showing: ' + viewList.join(', ') + '.');
-  }
-
-  // Character
-  if (charCount === 'duo') parts.push('Two characters shown side by side for comparison.');
-  if (charCount === 'group') parts.push('Multiple characters shown together.');
-
-  if (character) parts.push('Character: ' + character);
-  if (clothing) parts.push('Clothing/accessories: ' + clothing);
-
-  // Background
-  parts.push(bg + '.');
-
-  // Camera
-  if (camera || lens) {
-    let cp = [];
-    if (camera) cp.push('shot on ' + camera);
-    if (lens) cp.push(lens);
-    parts.push('Captured with ' + cp.join(', ') + '.');
-  }
-
-  // Lighting
-  if (lighting) parts.push(lighting + '.');
-
-  // Consistency
-  parts.push('Consistent character design, proportions, colors, and details across ALL views. Clean separation between panels. Professional quality.');
-  parts.push(resolution + ' resolution, highly detailed, sharp focus on character.');
-
-  updatePromptDisplay(parts, character);
-  updateJSONDisplay();
-}
-
-// ========== SHEET SPLITTER ==========
-let sheetImageData = null;
-let sheetSplitCanvases = [];
-
-function handleSheetFile(file) {
-  if (!file || !file.type.startsWith('image/')) return;
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    const img = new Image();
-    img.onload = function() {
-      sheetImageData = { img: img, width: img.width, height: img.height };
-      document.getElementById('sheetSplitOriginal').src = e.target.result;
-      document.getElementById('sheetSplitPreview').style.display = 'block';
-      document.getElementById('sheetSplitResults').style.display = 'none';
-      const st = document.getElementById('sheetSplitStructure').value;
-      const c = parseInt(st.split('x')[0]), r = parseInt(st.split('x')[1]);
-      const pw = Math.floor(img.width/c), ph = Math.floor(img.height/r);
-      document.getElementById('sheetSplitInfo').innerHTML =
-        'Original: <span>'+img.width+' × '+img.height+' px</span> | Cada panel: <span>'+pw+' × '+ph+' px</span> | Pérdida: <span style="color:#27ae60">CERO ✅</span>';
-    };
-    img.src = e.target.result;
-  };
-  reader.readAsDataURL(file);
-}
-
-function splitSheet() {
-  if (!sheetImageData) return;
-  const st = document.getElementById('sheetSplitStructure').value;
-  const fmt = document.getElementById('sheetSplitFormat').value;
-  const c = parseInt(st.split('x')[0]), r = parseInt(st.split('x')[1]);
-  const pw = Math.floor(sheetImageData.width/c), ph = Math.floor(sheetImageData.height/r);
-  sheetSplitCanvases = [];
-  const gc = document.getElementById('sheetSplitGrid');
-  const dl = document.getElementById('sheetIndividualDL');
-  gc.innerHTML = ''; dl.innerHTML = '';
-  gc.style.gridTemplateColumns = 'repeat('+c+', 1fr)';
-
-  for (let row=0; row<r; row++) {
-    for (let col=0; col<c; col++) {
-      const cv = document.createElement('canvas');
-      cv.width = pw; cv.height = ph;
-      cv.getContext('2d').drawImage(sheetImageData.img, col*pw, row*ph, pw, ph, 0, 0, pw, ph);
-      sheetSplitCanvases.push(cv);
-      const n = row*c+col+1;
-      const w = document.createElement('div');
-      w.style.cssText = 'position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border)';
-      const p = document.createElement('img');
-      let mt='image/png',q=1;
-      if(fmt==='jpeg'){mt='image/jpeg';}if(fmt==='webp'){mt='image/webp';q=0.95;}
-      p.src = cv.toDataURL(mt,q); p.style.cssText = 'width:100%;display:block';
-      const lb = document.createElement('div');
-      lb.style.cssText = 'position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,.7);color:#fff;font-size:.7rem;padding:6px;text-align:center;font-weight:600';
-      lb.textContent = 'Vista '+n+' — '+pw+'×'+ph+'px';
-      w.appendChild(p); w.appendChild(lb); gc.appendChild(w);
-      const b = document.createElement('button');
-      b.className = 'btn btn-secondary'; b.style.cssText = 'font-size:.7rem;padding:6px 10px';
-      b.textContent = '📥 #'+n;
-      b.onclick = (function(i,f){return function(){dlSheetSplit(i,f);};})(n-1,fmt);
-      dl.appendChild(b);
-    }
-  }
-  document.getElementById('sheetSplitResults').style.display = 'block';
-}
-
-function dlSheetSplit(i,fmt) {
-  if (!sheetSplitCanvases[i]) return;
-  let mt='image/png',ext='png',q=1;
-  if(fmt==='jpeg'){mt='image/jpeg';ext='jpg';}if(fmt==='webp'){mt='image/webp';ext='webp';q=0.95;}
-  const a = document.createElement('a');
-  a.href = sheetSplitCanvases[i].toDataURL(mt,q);
-  a.download = 'kuriana-sheet-vista-'+(i+1)+'.'+ext; a.click();
-}
-
-function downloadAllSheetSplits() {
-  const fmt = document.getElementById('sheetSplitFormat').value;
-  sheetSplitCanvases.forEach(function(c,i){ setTimeout(function(){ dlSheetSplit(i,fmt); }, i*300); });
-}
-
-// ========== BUILD MUSIC PROMPT ==========
-function updateBPMLabel() {
-  const bpm = document.getElementById('musicBPM').value;
-  let feel = '';
-  if (bpm <= 60) feel = 'Ambient / Muy lento';
-  else if (bpm <= 80) feel = 'Balada / Lento';
-  else if (bpm <= 100) feel = 'Moderado / Natural';
-  else if (bpm <= 120) feel = 'Pop / Activo';
-  else if (bpm <= 140) feel = 'Rock / Energético';
-  else if (bpm <= 160) feel = 'Dance / Rápido';
-  else if (bpm <= 180) feel = 'Drum & Bass / Muy rápido';
-  else feel = 'Extremo / Agresivo';
-  document.getElementById('bpmLabel').textContent = bpm + ' BPM — ' + feel;
-}
-
-function updateStructurePreview() {
-  const val = document.getElementById('musicStructure').value;
-  const preview = document.getElementById('structurePreview');
-  if (val) {
-    preview.textContent = val.replace(/\\n/g, '\n');
-  } else {
-    preview.textContent = 'Selecciona una estructura arriba...';
-  }
-  buildMusicPrompt();
-}
-
-function buildMusicPrompt() {
-  const genre = document.getElementById('musicGenre').value;
-  const subGenre = document.getElementById('musicSubGenre').value.trim();
-  const leadInst = document.getElementById('musicLeadInst').value;
-  const supportInst = document.getElementById('musicSupportInst').value.trim();
-  const production = document.getElementById('musicProduction').value;
-  const voiceType = document.getElementById('musicVoiceType').value;
-  const language = document.getElementById('musicLanguage').value;
-  const mood = document.getElementById('musicMood').value;
-  const use = document.getElementById('musicUse').value;
-  const bpm = document.getElementById('musicBPM').value;
-  const key = document.getElementById('musicKey').value;
-  const texture = document.getElementById('musicTexture').value;
-  const era = document.getElementById('musicEra').value;
-  const artistRef = document.getElementById('musicArtistRef').value;
-  const filmRef = document.getElementById('musicFilmRef').value.trim();
-  const customRef = document.getElementById('musicCustomRef').value.trim();
-  const structure = document.getElementById('musicStructure').value;
-  const duration = document.getElementById('musicDuration').value;
-  const quality = document.getElementById('musicQuality').value;
-
-  const styleParts = [];
-  if (genre) styleParts.push(genre.toLowerCase());
-  if (subGenre) styleParts.push(subGenre.toLowerCase());
-  if (leadInst) styleParts.push(leadInst.toLowerCase());
-  if (supportInst) styleParts.push(supportInst.toLowerCase());
-  if (production) styleParts.push(production.toLowerCase());
-  if (mood) styleParts.push(mood);
-  if (use) styleParts.push(use);
-  if (bpm) styleParts.push(bpm + ' BPM');
-  if (key) styleParts.push(key.split(' ')[0] + ' ' + (key.includes('minor') ? 'minor' : 'major'));
-  if (texture) styleParts.push(texture);
-  if (era) styleParts.push(era);
-  if (artistRef) styleParts.push(artistRef);
-  if (filmRef) styleParts.push('inspired by ' + filmRef);
-  if (customRef) styleParts.push(customRef);
-  if (voiceType) styleParts.push(voiceType);
-  if (language && language !== '') styleParts.push(language);
-  if (duration) styleParts.push(duration);
-  styleParts.push(quality);
-
-  const stylePrompt = styleParts.join(', ');
-
-  let structureText = '';
-  if (structure) {
-    structureText = structure.replace(/\\n/g, '\n');
-  }
-
-  let fullPrompt = '';
-
-  if (stylePrompt.trim()) {
-    fullPrompt += '══ STYLE PROMPT (pega en "Style of Music" de SUNO) ══\n\n';
-    fullPrompt += stylePrompt;
-  }
-
-  if (structureText) {
-    fullPrompt += '\n\n══ ESTRUCTURA (pega en "Lyrics" de SUNO) ══\n\n';
-    fullPrompt += structureText;
-  }
-
-  if (!fullPrompt) {
-    fullPrompt = 'Tu prompt de música para SUNO aparecerá aquí en tiempo real mientras configuras los módulos...';
-  }
-
-  const promptBox = document.getElementById('promptBox');
-  if (genre || leadInst || mood) {
-    promptBox.textContent = fullPrompt;
-    promptBox.classList.remove('empty');
-  } else {
-    promptBox.textContent = 'Tu prompt de música para SUNO aparecerá aquí en tiempo real mientras configuras los módulos...';
-    promptBox.classList.add('empty');
-  }
-
-  document.getElementById('charCount').textContent = stylePrompt.length;
-  document.getElementById('wordCount').textContent = stylePrompt.split(/\s+/).filter(w=>w).length;
-  updateJSONDisplay();
-}
-
 // ========== CLEAR ALL ==========
 function clearAll() {
-  document.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
-  document.querySelectorAll('textarea, input[type="text"]').forEach(i => i.value = '');
-  document.querySelectorAll('input[type="checkbox"]').forEach(c => {
-    if (c.id==='gridConsistentChar'||c.id==='gridConsistentLight'||c.id==='gridConsistentColor') c.checked = true;
+  document.querySelectorAll('select').forEach(function(s) { s.selectedIndex = 0; });
+  document.querySelectorAll('textarea, input[type="text"]').forEach(function(i) { i.value = ''; });
+  document.querySelectorAll('input[type="checkbox"]').forEach(function(c) {
+    if (c.id === 'gridConsistentChar' || c.id === 'gridConsistentLight' || c.id === 'gridConsistentColor') c.checked = true;
     else c.checked = false;
   });
-  const pb = document.getElementById('promptBox');
-  pb.textContent = 'Tu prompt cinematográfico aparecerá aquí en tiempo real mientras configuras los módulos...';
+  var pb = document.getElementById('promptBox');
+  pb.textContent = 'Tu prompt aparecerá aquí en tiempo real...';
   pb.classList.add('empty');
   document.getElementById('charCount').textContent = '0';
   document.getElementById('wordCount').textContent = '0';
-  const jb = document.getElementById('jsonBox'); if(jb) jb.textContent = '{ }';
-  const tp = document.getElementById('platformTip'); if(tp) tp.style.display = 'none';
+  var jb = document.getElementById('jsonBox'); if (jb) jb.textContent = '{ }';
+  var tp = document.getElementById('platformTip'); if (tp) tp.style.display = 'none';
 }
 </script>
 </body>
