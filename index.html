@@ -2637,68 +2637,73 @@ select option{background:var(--bg3);color:var(--text)}
         </div>
       </div>
 
-      <!-- VIDEO: CAMERA MOTION -->
+            <!-- VIDEO: CAMERA MOTION WITH COORDINATES -->
       <div class="module">
         <div class="module-header" onclick="toggleModule(this)">
           <span class="module-number">03</span>
-          <h3>Movimiento de Cámara</h3>
+          <h3>Movimiento de Cámara (Coordenadas)</h3>
         </div>
         <div class="module-body">
-          <div class="field-row">
-            <div class="field">
-              <div class="field-label">Movimiento Principal de Cámara</div>
-              <select id="videoCameraMove" onchange="buildVideoPrompt()">
-                <option value="">Seleccionar movimiento...</option>
-                <optgroup label="── ESTÁTICO ──">
-                  <option>Static / Locked Off (no movement)</option>
-                  <option>Subtle Handheld (slight shake)</option>
-                </optgroup>
-                <optgroup label="── ACERCAMIENTO / ALEJAMIENTO ──">
-                  <option>Slow Dolly In (approach subject)</option>
-                  <option>Slow Dolly Out (reveal environment)</option>
-                  <option>Fast Dolly In (dramatic rush)</option>
-                  <option>Slow Zoom In</option>
-                  <option>Slow Zoom Out</option>
-                  <option>Vertigo / Dolly Zoom</option>
-                </optgroup>
-                <optgroup label="── PANORÁMICA / INCLINACIÓN ──">
-                  <option>Slow Pan Left</option>
-                  <option>Slow Pan Right</option>
-                  <option>Slow Tilt Up (ground to sky)</option>
-                  <option>Slow Tilt Down (sky to ground)</option>
-                  <option>Whip Pan (fast swipe)</option>
-                </optgroup>
-                <optgroup label="── ÓRBITA / ROTACIÓN ──">
-                  <option>Orbit Around Subject (clockwise)</option>
-                  <option>Orbit Around Subject (counter-clockwise)</option>
-                  <option>Half Orbit (180° around)</option>
-                  <option>Dutch Angle Rotation</option>
-                </optgroup>
-                <optgroup label="── COMPLEJOS ──">
-                  <option>Tracking Shot (follow subject)</option>
-                  <option>Steadicam Follow (behind subject)</option>
-                  <option>Crane Up (ground to aerial)</option>
-                  <option>Crane Down (aerial to ground)</option>
-                  <option>Aerial / Drone Rise</option>
-                  <option>Aerial Flyover</option>
-                  <option>Through / Impossicam (pass through objects)</option>
-                  <option>First Person POV Walk</option>
-                </optgroup>
-              </select>
+
+          <div class="field">
+            <div class="field-label">Movimiento Principal</div>
+            <select id="videoCameraMove" onchange="buildVideoPrompt()">
+              <option value="">Seleccionar movimiento...</option>
+              <optgroup label="── TRASLACIÓN (Translation) ──">
+                <option value="[TRANSLATION MOTION]: Camera translates forward strictly on the Z-axis, {SPEED}, while X and Y axes remain locked. (Dolly In)">Dolly In — Acercamiento (eje Z)</option>
+                <option value="[TRANSLATION MOTION]: Camera translates backward strictly on the Z-axis, {SPEED}, while X and Y axes remain locked. (Dolly Out)">Dolly Out — Alejamiento (eje Z)</option>
+                <option value="[TRANSLATION MOTION]: Camera translates strictly on the X-axis from right to left, {SPEED}, while Y and Z axes remain locked. (Truck Left)">Truck Left — Desplazamiento izquierda (eje X)</option>
+                <option value="[TRANSLATION MOTION]: Camera translates strictly on the X-axis from left to right, {SPEED}, while Y and Z axes remain locked. (Truck Right)">Truck Right — Desplazamiento derecha (eje X)</option>
+                <option value="[TRANSLATION MOTION]: Camera translates strictly upward on the Y-axis, {SPEED}, while X and Z axes remain locked. (Pedestal Up)">Pedestal Up — Subida vertical (eje Y)</option>
+                <option value="[TRANSLATION MOTION]: Camera translates strictly downward on the Y-axis, {SPEED}, while X and Z axes remain locked. (Pedestal Down)">Pedestal Down — Bajada vertical (eje Y)</option>
+              </optgroup>
+              <optgroup label="── ROTACIÓN (Rotation) ──">
+                <option value="[ROTATION MOTION]: Camera rotates around the Y-axis (Yaw) from right to left, {SPEED}. Translation axes locked. Camera position remains static. (Pan Left)">Pan Left — Panorámica izquierda (Yaw)</option>
+                <option value="[ROTATION MOTION]: Camera rotates around the Y-axis (Yaw) from left to right, {SPEED}. Translation axes locked. Camera position remains static. (Pan Right)">Pan Right — Panorámica derecha (Yaw)</option>
+                <option value="[ROTATION MOTION]: Camera rotates around the X-axis (Pitch) from ground level upward toward sky, {SPEED}. Translation axes locked. (Tilt Up)">Tilt Up — Inclinación arriba (Pitch)</option>
+                <option value="[ROTATION MOTION]: Camera rotates around the X-axis (Pitch) from sky level downward toward ground, {SPEED}. Translation axes locked. (Tilt Down)">Tilt Down — Inclinación abajo (Pitch)</option>
+                <option value="[ROTATION MOTION]: Camera rotates around the Z-axis (Roll) counter-clockwise, {SPEED}. Translation locked. X and Y rotation locked. (Dutch Roll Left)">Dutch Roll Left — Giro antihorario (Roll)</option>
+                <option value="[ROTATION MOTION]: Camera rotates around the Z-axis (Roll) clockwise, {SPEED}. Translation locked. X and Y rotation locked. (Dutch Roll Right)">Dutch Roll Right — Giro horario (Roll)</option>
+              </optgroup>
+              <optgroup label="── COMPLEJOS (Translation + Rotation) ──">
+                <option value="[COMPLEX MOTION]: Camera translates on X-axis (right) while simultaneously rotating on Y-axis (Yaw left) to maintain subject in center frame, {SPEED}. Z maintains constant distance. Y-axis locked. (Orbit Right)">Orbit Right — Órbita derecha</option>
+                <option value="[COMPLEX MOTION]: Camera translates on X-axis (left) while simultaneously rotating on Y-axis (Yaw right) to maintain subject in center frame, {SPEED}. Z maintains constant distance. Y-axis locked. (Orbit Left)">Orbit Left — Órbita izquierda</option>
+                <option value="[COMPLEX MOTION]: Camera translates on X-axis performing a full 180-degree arc around the subject while Y-axis (Yaw) counter-rotates to maintain subject centered, {SPEED}. (Half Orbit 180°)">Half Orbit 180° — Media órbita</option>
+                <option value="[COMPLEX MOTION]: Camera translates upward on Y-axis while simultaneously tilting down (negative Pitch) to maintain subject framing, {SPEED}. X and Z locked. (Crane Up / Boom Up)">Crane Up — Grúa arriba (Y + Pitch)</option>
+                <option value="[COMPLEX MOTION]: Camera translates downward on Y-axis while simultaneously tilting up (positive Pitch) to maintain subject framing, {SPEED}. X and Z locked. (Crane Down / Boom Down)">Crane Down — Grúa abajo (Y + Pitch)</option>
+                <option value="[COMPLEX MOTION]: Camera translates upward on Y-axis at constant rate while rotating downward on X-axis (negative Pitch) to keep subject in frame as distance increases, {SPEED}. (Aerial Rise / Drone Up)">Aerial Rise — Ascenso aéreo (drone)</option>
+                <option value="[COMPLEX MOTION]: Camera translates forward on Z-axis following subject path. Slight natural oscillation on X and Y axes. Subtle Yaw adjustments to maintain subject in frame, {SPEED}. (Steadicam Follow)">Steadicam Follow — Seguimiento estable</option>
+                <option value="[COMPLEX MOTION]: Camera translates on Z-axis matching subject velocity. X-axis adjusts with slight Yaw to maintain framing, {SPEED}. Y locked. (Tracking Shot)">Tracking Shot — Seguimiento lateral</option>
+                <option value="[COMPLEX MOTION]: Camera translates forward on Z-axis while simultaneously rotating up on X-axis (Pitch up) to reveal environment above subject, {SPEED}. (Reveal Push + Tilt)">Reveal — Acercamiento + revelación</option>
+                <option value="[COMPLEX MOTION]: Camera translates backward on Z-axis while simultaneously increasing focal length (zoom in). Subject maintains same size while background compresses/expands, {SPEED}. X and Y locked. (Vertigo / Dolly Zoom)">Vertigo — Efecto vértigo (Dolly Zoom)</option>
+                <option value="[COMPLEX MOTION]: Camera translates continuously forward on Z-axis passing through solid objects. No rotation. Constant velocity, {SPEED}. X and Y locked. (Through / Impossicam)">Through — Atravesar objetos (Impossicam)</option>
+                <option value="[COMPLEX MOTION]: Camera translates forward on Z-axis simulating first-person walking perspective with natural Y-axis bobbing and slight X-axis sway, {SPEED}. (First Person POV Walk)">POV Walk — Caminata primera persona</option>
+              </optgroup>
+              <optgroup label="── RÁPIDOS / IMPACTO ──">
+                <option value="[ROTATION MOTION]: Camera rotates rapidly around Y-axis (Yaw) at maximum velocity creating heavy motion blur, with extremely fast and aggressive movement intensity. Translation locked. (Whip Pan)">Whip Pan — Barrido rápido</option>
+                <option value="[TRANSLATION MOTION]: Camera remains static. Lens focal length changes from wide to telephoto (or reverse), {SPEED}. All translation and rotation axes locked. (Zoom In/Out)">Zoom In/Out — Cambio de focal (sin mover cámara)</option>
+              </optgroup>
+              <optgroup label="── ESTÁTICO ──">
+                <option value="[STATIC]: Camera remains completely locked on all axes. No translation, no rotation. Fixed frame composition. (Static / Locked Off)">Estático — Sin movimiento (Locked Off)</option>
+                <option value="[STATIC WITH DRIFT]: Camera remains mostly static with extremely subtle and slow micro-movements on all axes (less than 1% drift), simulating handheld breathing, {SPEED}. (Subtle Handheld)">Handheld Sutil — Ligero temblor natural</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <div class="field">
+            <div class="field-label">Intensidad / Velocidad del Movimiento</div>
+            <div style="display:flex;align-items:center;gap:16px;padding:8px 0">
+              <span style="font-size:.75rem;color:var(--text2);white-space:nowrap">Muy Sutil</span>
+              <input type="range" id="videoCameraIntensity" min="1" max="5" value="3" 
+                style="flex:1;accent-color:var(--active);cursor:pointer;height:6px"
+                oninput="updateIntensityLabel();buildVideoPrompt()">
+              <span style="font-size:.75rem;color:var(--text2);white-space:nowrap">Muy Agresivo</span>
             </div>
-            <div class="field">
-              <div class="field-label">Velocidad de Cámara</div>
-              <select id="videoCameraSpeed" onchange="buildVideoPrompt()">
-                <option value="">Seleccionar velocidad...</option>
-                <option>Ultra Slow (dreamlike)</option>
-                <option>Slow (cinematic)</option>
-                <option>Medium (natural)</option>
-                <option>Fast (energetic)</option>
-                <option>Accelerating (slow to fast)</option>
-                <option>Decelerating (fast to slow)</option>
-              </select>
+            <div id="intensityLabel" style="text-align:center;font-size:.8rem;color:var(--active);font-weight:600;padding:4px 0">
+              Nivel 3 — Normal (moderate)
             </div>
           </div>
+
         </div>
       </div>
 
@@ -3210,15 +3215,39 @@ function buildGridPrompt() {
   updateJSONDisplay();
 }
 
-// ========== BUILD PROMPT — VIDEO ==========
+// ========== BUILD VIDEO PROMPT ==========
+function updateIntensityLabel() {
+  const val = document.getElementById('videoCameraIntensity').value;
+  const labels = {
+    '1': 'Nivel 1 — Muy Sutil (extremely slow and subtle)',
+    '2': 'Nivel 2 — Lento (slow and steady)',
+    '3': 'Nivel 3 — Normal (moderate)',
+    '4': 'Nivel 4 — Rápido (rapid and dynamic)',
+    '5': 'Nivel 5 — Muy Agresivo (extremely fast and aggressive)'
+  };
+  document.getElementById('intensityLabel').textContent = labels[val] || labels['3'];
+}
+
+function getSpeedText(level) {
+  const speeds = {
+    '1': 'with extremely slow and subtle movement intensity',
+    '2': 'with slow and steady movement intensity',
+    '3': 'with moderate movement intensity',
+    '4': 'with rapid and dynamic movement intensity',
+    '5': 'with extremely fast and aggressive movement intensity'
+  };
+  return speeds[level] || speeds['3'];
+}
+
 function buildVideoPrompt() {
   const parts = [];
+
   const source = document.getElementById('videoSourcePrompt').value.trim();
   const platform = document.getElementById('videoPlatform');
   const pVal = platform.value;
   const pText = platform.selectedIndex > 0 ? platform.options[platform.selectedIndex].text : '';
-  const camMove = document.getElementById('videoCameraMove').value;
-  const camSpeed = document.getElementById('videoCameraSpeed').value;
+  const camMoveRaw = document.getElementById('videoCameraMove').value;
+  const intensity = document.getElementById('videoCameraIntensity').value;
   const subAct = document.getElementById('videoSubjectAction').value.trim();
   const envMot = document.getElementById('videoEnvMotion').value.trim();
   const dur = document.getElementById('videoDuration').value;
@@ -3230,35 +3259,42 @@ function buildVideoPrompt() {
   const aspect = document.getElementById('videoAspect').value;
   const quality = document.getElementById('videoQuality').value;
 
+  // Platform tips
   const tipEl = document.getElementById('platformTip');
   const tips = {
-    'veo3':'💡 Veo 3: Usa lenguaje natural detallado. Menciona movimientos de cámara explícitamente.',
-    'kling':'💡 Kling: Excelente image-to-video. Sé específico con dirección y velocidad del movimiento.',
-    'runway':'💡 Runway Gen-4: Excelente control de movimiento. Usa descripciones claras y concisas.',
-    'pika':'💡 Pika: Bueno para clips cortos. Mantén el prompt simple y enfocado en una acción principal.',
-    'luma':'💡 Luma: Fuerte en looks cinematográficos. Describe el mood y movimiento de cámara claramente.',
-    'minimax':'💡 Minimax/Hailuo: Buena calidad. Describe el movimiento paso a paso.',
-    'wan':'💡 Wan 2.1: Open source. Usa prompts detallados en inglés con términos específicos de cámara.',
-    'seedance':'💡 Seedance: Modelo de ByteDance. Usa descripciones claras de movimiento. Soporta image-to-video.',
-    'grok':'💡 Grok: Usa lenguaje natural. Sé específico sobre qué cambia a lo largo del tiempo.',
-    'qwen':'💡 Qwen: Modelo de Alibaba. Los prompts detallados funcionan mejor. Especifica duración y movimiento.',
-    'generic':'💡 Genérico: Prompt universal que funciona en la mayoría de plataformas.'
+    'veo3':'💡 Veo 3: Usa lenguaje natural detallado. Las fórmulas de coordenadas mejoran la precisión del movimiento.',
+    'kling':'💡 Kling: Excelente con image-to-video. Las coordenadas de ejes ayudan a controlar la dirección exacta.',
+    'runway':'💡 Runway Gen-4: Excelente control de movimiento. Las fórmulas vectoriales mejoran la consistencia.',
+    'pika':'💡 Pika: Bueno para clips cortos. Usa las fórmulas para movimientos precisos.',
+    'luma':'💡 Luma: Fuerte en looks cinematográficos. Las coordenadas dan control profesional.',
+    'minimax':'💡 Minimax/Hailuo: Buena calidad. Las fórmulas de ejes mejoran la dirección del movimiento.',
+    'wan':'💡 Wan 2.1: Open source. Responde muy bien a instrucciones de coordenadas cartesianas.',
+    'seedance':'💡 Seedance: Las fórmulas de traslación/rotación dan resultados más predecibles.',
+    'grok':'💡 Grok: Usa las fórmulas para especificar exactamente qué ejes se mueven.',
+    'qwen':'💡 Qwen: Responde bien a instrucciones de ejes X, Y, Z y rotaciones Yaw/Pitch/Roll.',
+    'generic':'💡 Genérico: Las fórmulas de coordenadas funcionan en la mayoría de plataformas.'
   };
   if (pVal && tips[pVal]) { tipEl.textContent = tips[pVal]; tipEl.style.display = 'block'; }
   else { tipEl.style.display = 'none'; }
 
-  parts.push('VIDEO GENERATION PROMPT');
+  // Build prompt
   if (pText && pVal) parts.push('[Platform: ' + pText + ']');
+
   if (source) parts.push('Scene: ' + source);
-  if (camMove) {
-    let cs = 'Camera: ' + camMove;
-    if (camSpeed) cs += ', ' + camSpeed.toLowerCase() + ' speed';
-    parts.push(cs + '.');
+
+  // Camera motion with coordinates formula
+  if (camMoveRaw) {
+    const speedText = getSpeedText(intensity);
+    const camFormula = camMoveRaw.replace('{SPEED}', speedText);
+    parts.push(camFormula);
   }
+
   if (subAct) parts.push('Subject action: ' + subAct);
-  if (envMot) parts.push('Environment: ' + envMot);
+  if (envMot) parts.push('Environment motion: ' + envMot);
+
   if (tStart) parts.push('Opens with: ' + tStart.toLowerCase() + '.');
   if (tEnd) parts.push('Ends with: ' + tEnd.toLowerCase() + '.');
+
   if (dur) parts.push('Duration: ' + dur.split(' ')[0] + ' seconds.');
   if (fps) parts.push(fps + '.');
   if (fx) parts.push('Effect: ' + fx.toLowerCase() + '.');
@@ -3266,8 +3302,19 @@ function buildVideoPrompt() {
   if (aspect) parts.push(aspect + ' format.');
   parts.push(quality + ', smooth motion, cinematic video.');
 
-  updatePromptDisplay(parts, source || camMove || subAct);
-  updateJSONDisplay();
+  const promptBox = document.getElementById('promptBox');
+  const finalPrompt = parts.join(' ').replace(/  +/g,' ').trim();
+
+  if (source || camMoveRaw || subAct) {
+    promptBox.textContent = finalPrompt;
+    promptBox.classList.remove('empty');
+  } else {
+    promptBox.textContent = 'Tu prompt de video aparecerá aquí en tiempo real mientras configuras los módulos...';
+    promptBox.classList.add('empty');
+  }
+
+  document.getElementById('charCount').textContent = finalPrompt.length;
+  document.getElementById('wordCount').textContent = finalPrompt.split(/\s+/).filter(w=>w).length;
 }
 
 // ========== UPDATE PROMPT DISPLAY ==========
@@ -3333,7 +3380,7 @@ function collectAllData() {
     data.customRef = gv('horrorCustomRef'); data.aspect = gv('horrorAspect'); data.resolution = gv('horrorResolution');
   } else if (tab === 'video') {
     data.source = gv('videoSourcePrompt'); data.platform = gv('videoPlatform');
-    data.cameraMove = gv('videoCameraMove'); data.cameraSpeed = gv('videoCameraSpeed');
+    data.cameraMove = gv('videoCameraMove'); data.cameraIntensity = gv('videoCameraIntensity');
     data.subjectAction = gv('videoSubjectAction'); data.envMotion = gv('videoEnvMotion');
     data.duration = gv('videoDuration'); data.fps = gv('videoFPS');
     data.transStart = gv('videoTransStart'); data.transEnd = gv('videoTransEnd');
@@ -3433,8 +3480,8 @@ function loadJSON(input) {
           sv('horrorCustomRef', data.customRef); sv('horrorAspect', data.aspect); sv('horrorResolution', data.resolution);
           buildHorrorPrompt();
         } else if (data.tab === 'video') {
-          sv('videoSourcePrompt', data.source); sv('videoPlatform', data.platform);
-          sv('videoCameraMove', data.cameraMove); sv('videoCameraSpeed', data.cameraSpeed);
+          sv('videoCameraMove', data.cameraMove); sv('videoCameraIntensity', data.cameraIntensity || '3'); sv('videoPlatform', data.platform);
+          sv('videoCameraMove', data.cameraMove);
           sv('videoSubjectAction', data.subjectAction); sv('videoEnvMotion', data.envMotion);
           sv('videoDuration', data.duration); sv('videoFPS', data.fps);
           sv('videoTransStart', data.transStart); sv('videoTransEnd', data.transEnd);
