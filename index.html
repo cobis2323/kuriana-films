@@ -660,7 +660,7 @@ select option{background:var(--bg3);color:var(--text)}
           <div class="field">
             <div class="field-label">Fuente de Luz</div>
             <select id="lighting" onchange="buildPrompt()">
-              <option value="">Select style...</option>
+              <option value="">Seleccionar esquema de Luz...</option>
               <optgroup label="── RETRATO CLÁSICO ──">
                 <option>Rembrandt Lighting</option>
                 <option>Butterfly / Paramount Lighting</option>
@@ -722,7 +722,7 @@ select option{background:var(--bg3);color:var(--text)}
             <div class="field">
               <div class="field-label">Atmósfera</div>
               <select id="atmosphere" onchange="buildPrompt()">
-                <option value="">Select style...</option>
+                <option value="">Seleccionar Anclajes Atmosféricos...</option>
                 <optgroup label="── CLIMA ──">
                   <option>Clear & Crisp</option>
                   <option>Foggy & Misty</option>
@@ -760,7 +760,7 @@ select option{background:var(--bg3);color:var(--text)}
             <div class="field">
               <div class="field-label">Estado de Ánimo y Emoción</div>
               <select id="mood" onchange="buildPrompt()">
-                <option value="">Select style...</option>
+                <option value="">Seleccionar Emociones...</option>
                 <optgroup label="── OSCURO / DRAMÁTICO ──">
                   <option>Moody</option>
                   <option>Cinematic</option>
@@ -827,7 +827,7 @@ select option{background:var(--bg3);color:var(--text)}
             <div class="field">
               <div class="field-label">Tipo de Cámara</div>
               <select id="cameraBody" onchange="buildPrompt()">
-                <option value="">Select style...</option>
+                <option value="">Seleccionar Cámaras...</option>
                 <optgroup label="── CÁMARAS CINEMATOGRÁFICAS ──">
                   <option>ARRI Alexa Mini</option>
                   <option>ARRI Alexa Mini LF</option>
@@ -905,7 +905,7 @@ select option{background:var(--bg3);color:var(--text)}
             <div class="field">
               <div class="field-label">Distancia Focal</div>
               <select id="focalLength" onchange="buildPrompt()">
-                <option value="">Select style...</option>
+                <option value="">Seleccionar MM (Distancia Objetivo)...</option>
                 <optgroup label="── ULTRA WIDE ──">
                   <option>8mm Fisheye</option>
                   <option>14mm Ultra Wide</option>
@@ -945,7 +945,7 @@ select option{background:var(--bg3);color:var(--text)}
             <div class="field">
               <div class="field-label">Tipo de Lente</div>
               <select id="lensType" onchange="buildPrompt()">
-                <option value="">Select style...</option>
+                <option value="">Seleccionar Lentes / Objetivos...</option>
                 <optgroup label="── ANAMORPHIC CINEMA ──">
                   <option>Anamorphic Cinema Lens</option>
                   <option>Cooke Anamorphic /i</option>
@@ -984,7 +984,7 @@ select option{background:var(--bg3);color:var(--text)}
             <div class="field">
               <div class="field-label">Material de Película</div>
               <select id="filmStock" onchange="buildPrompt()">
-                <option value="">Select style...</option>
+                <option value="">Seleccionar Material Fílmico...</option>
                 <optgroup label="── CINEMA ──">
                   <option>Kodak Vision3 500T</option>
                   <option>Kodak Vision3 250D</option>
@@ -1036,7 +1036,7 @@ select option{background:var(--bg3);color:var(--text)}
             <div class="field">
               <div class="field-label">Apertura (f-stop)</div>
               <select id="aperture" onchange="buildPrompt()">
-                <option value="">Select aperture...</option>
+                <option value="">Seleccionar Punto de Desenfoque...</option>
                 <optgroup label="── EXTREME BOKEH ──">
                   <option>f/0.95 (extreme shallow DOF, dreamy)</option>
                   <option>f/1.2 (very shallow DOF, portrait)</option>
@@ -1062,7 +1062,7 @@ select option{background:var(--bg3);color:var(--text)}
             <div class="field">
               <div class="field-label">Velocidad de Obturación</div>
               <select id="shutterSpeed" onchange="buildPrompt()">
-                <option value="">Select shutter...</option>
+                <option value="">Seleccionar Punto de Enfoque...</option>
                 <optgroup label="── FREEZE MOTION ──">
                   <option>1/8000s (freeze ultra fast action)</option>
                   <option>1/4000s (freeze sports)</option>
@@ -1094,7 +1094,7 @@ select option{background:var(--bg3);color:var(--text)}
             <div class="field">
               <div class="field-label">ISO (Sensibilidad)</div>
               <select id="iso" onchange="buildPrompt()">
-                <option value="">Select ISO...</option>
+                <option value="">Seleccionar Sensiblidad del Lente...</option>
                 <optgroup label="── CLEAN / LOW NOISE ──">
                   <option>ISO 50 (ultra clean, studio)</option>
                   <option>ISO 100 (clean, bright conditions)</option>
@@ -1118,7 +1118,7 @@ select option{background:var(--bg3);color:var(--text)}
             <div class="field">
               <div class="field-label">Filtros de Lentes</div>
               <select id="lensFilter" onchange="buildPrompt()">
-                <option value="">No filter...</option>
+                <option value="">Seleccionar Filtros para Lentes...</option>
                 <optgroup label="── DIFFUSION / SOFT ──">
                   <option>Black Pro-Mist 1/4 (subtle glow)</option>
                   <option>Black Pro-Mist 1/2 (moderate glow)</option>
@@ -1164,7 +1164,7 @@ select option{background:var(--bg3);color:var(--text)}
           <div class="field">
             <div class="field-label">Grano y Emulsión</div>
             <select id="filmGrain" onchange="buildPrompt()">
-              <option value="">No grain/emulsion...</option>
+              <option value="">Grano/Ruido/Emulsiones...</option>
               <optgroup label="── CELLULOID GRAIN ──">
                 <option>8mm Film Grain (heavy, vintage, shaky)</option>
                 <option>Super 16mm Grain (indie, organic texture)</option>
@@ -1244,7 +1244,7 @@ select option{background:var(--bg3);color:var(--text)}
             <div class="field">
               <div class="field-label">Paleta de Colores</div>
               <select id="colorPalette" onchange="buildPrompt()">
-                <option value="">Select style...</option>
+                <option value="">Seleccionar tonos...</option>
                 <option>Warm Tones (amber, gold)</option>
                 <option>Cool Tones (blue, steel)</option>
                 <option>Neon / Cyberpunk (magenta, cyan)</option>
@@ -1265,7 +1265,7 @@ select option{background:var(--bg3);color:var(--text)}
             <div class="field">
               <div class="field-label">Gradación de Color / LUT</div>
               <select id="colorGrading" onchange="buildPrompt()">
-                <option value="">Select style...</option>
+                <option value="">Seleccionar Gradación...</option>
                 <option>Teal & Orange (Hollywood)</option>
                 <option>Bleach Bypass</option>
                 <option>Cross Process</option>
@@ -1297,7 +1297,7 @@ select option{background:var(--bg3);color:var(--text)}
             <div class="field">
               <div class="field-label">Estilo Fotográfico</div>
               <select id="photographer" onchange="buildPrompt()">
-                <option value="">Select photographer...</option>
+                <option value="">Seleccionar estilo fotográfico...</option>
                 <optgroup label="── RETRATO / MODA ──">
                   <option>Annie Leibovitz</option>
                   <option>Peter Lindbergh</option>
@@ -1342,7 +1342,7 @@ select option{background:var(--bg3);color:var(--text)}
             <div class="field">
               <div class="field-label">Estética Visual de Película</div>
               <select id="movieRef" onchange="buildPrompt()">
-                <option value="">Select movie...</option>
+                <option value="">Seleccionar estica...</option>
                 <optgroup label="── ESTÉTICAS CINEMATOGRÁFICAS ──">
                   <option>Blade Runner 2049 (Deakins)</option>
                   <option>Dune (Greig Fraser)</option>
@@ -1422,14 +1422,15 @@ select option{background:var(--bg3);color:var(--text)}
                 <option value="1K">1K (1024×1024)</option>
                 <option value="2K">2K (2048×2048)</option>
                 <option value="4K">4K (4096×4096)</option>
+                <option value="8K">8K (7680x4320)</option>
               </select>
             </div>
             <div class="field">
               <div class="field-label">Creatividad</div>
               <select id="temperature">
-                <option value="focused">🧊 Focused (exact)</option>
-                <option value="balanced" selected>⚖️ Balanced (recommended)</option>
-                <option value="creative">🔥 Creative (surprise me)</option>
+                <option value="focused">💯 Exacto a mi idea (Estricto)</option>
+                <option value="balanced" selected>⚖️ Balanceado (Recomendado)</option>
+                <option value="creative">🔥 AI Creativa (Inventa más la AI)</option>
               </select>
             </div>
           </div>
@@ -2708,7 +2709,7 @@ select option{background:var(--bg3);color:var(--text)}
         <div class="module-body">
           <div class="field">
             <div class="field-label">Acción / Movimiento del Sujeto</div>
-            <textarea id="videoSubjectAction" placeholder="¿Qué HACE el sujeto durante el video?&#10;Ej: Ella gira lentamente la cabeza hacia la cámara, el cabello se mueve con el viento, una lágrima corre por su mejilla..." oninput="buildVideoPrompt()" style="min-height:70px"></textarea>
+            <textarea id="videoSubjectAction" placeholder="¿Qué hace el sujeto durante el video?&#10;Ej: Ella gira lentamente la cabeza hacia la cámara, el cabello se mueve con el viento, una lágrima corre por su mejilla..." oninput="buildVideoPrompt()" style="min-height:70px"></textarea>
           </div>
           <div class="field">
             <div class="field-label">Movimiento del Entorno / Fondo</div>
