@@ -571,65 +571,11 @@ select option{background:var(--bg3);color:var(--text)}
           <div class="field-row">
             <div class="field">
               <div class="field-label">Tipo de Plano / Ángulo</div>
-              <select id="shotType" onchange="buildPrompt()">
-                <option value="">Seleccionar plano...</option>
-                <optgroup label="── PLANOS CERRADOS ──">
-                  <option>Extreme Close Up</option>
-                  <option>Close Up</option>
-                  <option>Medium Close Up</option>
-                  <option>Tight Headshot</option>
-                  <option>Headshot</option>
-                </optgroup>
-                <optgroup label="── PLANOS MEDIOS ──">
-                  <option>Medium Shot</option>
-                  <option>Medium Wide Shot</option>
-                  <option>Upper Body</option>
-                  <option>Three Quarter Body</option>
-                  <option>Cowboy Shot</option>
-                </optgroup>
-                <optgroup label="── PLANOS ABIERTOS ──">
-                  <option>Wide Shot</option>
-                  <option>Extreme Wide Shot</option>
-                  <option>Entire Body</option>
-                  <option>Establishing Shot</option>
-                </optgroup>
-                <optgroup label="── ÁNGULOS ──">
-                  <option>Low Angle Shot</option>
-                  <option>High Angle Shot</option>
-                  <option>Dutch Angle</option>
-                  <option>Bird's-Eye View</option>
-                  <option>Worm's-Eye View</option>
-                  <option>Overhead Shot</option>
-                </optgroup>
-                <optgroup label="── COMPOSICIÓN ──">
-                  <option>Over The Shoulder Shot</option>
-                  <option>Two Shot</option>
-                  <option>Group Shot</option>
-                  <option>Point of View Shot</option>
-                  <option>Reverse Shot</option>
-                  <option>Reaction Shot</option>
-                  <option>Insert Shot</option>
-                  <option>Cutaway Shot</option>
-                  <option>Silhouette Shot</option>
-                </optgroup>
-                <optgroup label="── MOVIMIENTO ──">
-                  <option>Tracking Shot</option>
-                  <option>Dolly Shot</option>
-                  <option>Steadicam Shot</option>
-                  <option>Crane Shot</option>
-                  <option>Aerial Shot</option>
-                  <option>Whip Pan</option>
-                  <option>Zoom Shot</option>
-                  <option>Rack Focus Shot</option>
-                </optgroup>
-                <optgroup label="── ESPECIALES ──">
-                  <option>Trunk Shot</option>
-                  <option>Mirror Shot</option>
-                  <option>Through Frame Shot</option>
-                  <option>Snorricam Shot</option>
-                  <option>Split Screen</option>
-                </optgroup>
-              </select>
+              <input type="hidden" id="shotType" value="">
+              <button type="button" class="modal-trigger" onclick="abrirModal('shotType')" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:12px;border-radius:8px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left">
+                <span id="shotType-display" style="opacity:.5">Seleccionar plano...</span>
+                <span style="font-size:.7rem;color:#888">🖼️ Elegir</span>
+              </button>
             </div>
 
             <div class="field">
@@ -3634,6 +3580,137 @@ select option{background:var(--bg3);color:var(--text)}
 </div><!-- end main -->
 
 <script>
+// ========== MODAL SHOTTYPE ==========
+var SHOT_DATA = [
+  { g: '── PLANOS CERRADOS ──', items: [
+    { v: 'Extreme Close Up', i: '👁️' },
+    { v: 'Close Up', i: '😐' },
+    { v: 'Medium Close Up', i: '👤' },
+    { v: 'Tight Headshot', i: '🎭' },
+    { v: 'Headshot', i: '📸' }
+  ]},
+  { g: '── PLANOS MEDIOS ──', items: [
+    { v: 'Medium Shot', i: '🧍' },
+    { v: 'Medium Wide Shot', i: '🚶' },
+    { v: 'Upper Body', i: '👕' },
+    { v: 'Three Quarter Body', i: '🧑' },
+    { v: 'Cowboy Shot', i: '🤠' }
+  ]},
+  { g: '── PLANOS ABIERTOS ──', items: [
+    { v: 'Wide Shot', i: '🏞️' },
+    { v: 'Extreme Wide Shot', i: '🌄' },
+    { v: 'Entire Body', i: '🧍‍♂️' },
+    { v: 'Establishing Shot', i: '🏙️' }
+  ]},
+  { g: '── ÁNGULOS ──', items: [
+    { v: 'Low Angle Shot', i: '⬆️' },
+    { v: 'High Angle Shot', i: '⬇️' },
+    { v: 'Dutch Angle', i: '📐' },
+    { v: "Bird's-Eye View", i: '🦅' },
+    { v: "Worm's-Eye View", i: '🐛' },
+    { v: 'Overhead Shot', i: '⭕' }
+  ]},
+  { g: '── COMPOSICIÓN ──', items: [
+    { v: 'Over The Shoulder Shot', i: '👥' },
+    { v: 'Two Shot', i: '👫' },
+    { v: 'Group Shot', i: '👨‍👩‍👧‍👦' },
+    { v: 'Point of View Shot', i: '👀' },
+    { v: 'Reverse Shot', i: '🔄' },
+    { v: 'Reaction Shot', i: '😲' },
+    { v: 'Insert Shot', i: '🔍' },
+    { v: 'Cutaway Shot', i: '✂️' },
+    { v: 'Silhouette Shot', i: '🌑' }
+  ]},
+  { g: '── MOVIMIENTO ──', items: [
+    { v: 'Tracking Shot', i: '🛤️' },
+    { v: 'Dolly Shot', i: '🎥' },
+    { v: 'Steadicam Shot', i: '📹' },
+    { v: 'Crane Shot', i: '🏗️' },
+    { v: 'Aerial Shot', i: '🚁' },
+    { v: 'Whip Pan', i: '💨' },
+    { v: 'Zoom Shot', i: '🔭' },
+    { v: 'Rack Focus Shot', i: '🎯' }
+  ]},
+  { g: '── ESPECIALES ──', items: [
+    { v: 'Trunk Shot', i: '🚗' },
+    { v: 'Mirror Shot', i: '🪞' },
+    { v: 'Through Frame Shot', i: '🖼️' },
+    { v: 'Snorricam Shot', i: '📷' },
+    { v: 'Split Screen', i: '⬛' }
+  ]}
+];
+
+function abrirModal(id) {
+  var modal = document.getElementById('kurimodal-' + id);
+  if (!modal) return;
+  var body = document.getElementById('kurimodal-' + id + '-body');
+  if (body && !body.dataset.built) {
+    var h = '';
+    var cur = document.getElementById(id) ? document.getElementById(id).value : '';
+    SHOT_DATA.forEach(function(group) {
+      h += '<div class="kurimodal-group">' + group.g + '</div>';
+      h += '<div class="kurimodal-grid">';
+      group.items.forEach(function(item) {
+        var sel = item.v === cur ? ' picked' : '';
+        h += '<div class="kurimodal-item' + sel + '" data-v="' + item.v + '" data-s="' + item.v.toLowerCase() + '" onclick="elegirModal(\'' + id + '\',this)">';
+        h += '<div class="kurimodal-ico">' + item.i + '</div>';
+        h += '<div class="kurimodal-name">' + item.v + '</div>';
+        h += '</div>';
+      });
+      h += '</div>';
+    });
+    body.innerHTML = h;
+    body.dataset.built = '1';
+  }
+  modal.classList.add('open');
+}
+
+function cerrarModal(id) {
+  var modal = document.getElementById('kurimodal-' + id);
+  if (modal) modal.classList.remove('open');
+}
+
+function elegirModal(id, el) {
+  var val = el.dataset.v;
+  var input = document.getElementById(id);
+  if (input) input.value = val;
+  var display = document.getElementById(id + '-display');
+  if (display) {
+    display.textContent = val;
+    display.style.opacity = '1';
+    display.style.color = 'var(--active)';
+    display.style.fontWeight = '600';
+  }
+  var body = document.getElementById('kurimodal-' + id + '-body');
+  if (body) {
+    body.querySelectorAll('.kurimodal-item').forEach(function(item) {
+      item.classList.remove('picked');
+    });
+    el.classList.add('picked');
+  }
+  cerrarModal(id);
+  buildPrompt();
+}
+
+function buscarModal(id, q) {
+  var body = document.getElementById('kurimodal-' + id + '-body');
+  if (!body) return;
+  q = q.toLowerCase().trim();
+  body.querySelectorAll('.kurimodal-item').forEach(function(item) {
+    if (!q || item.dataset.s.indexOf(q) !== -1) {
+      item.classList.remove('mhide');
+    } else {
+      item.classList.add('mhide');
+    }
+  });
+  body.querySelectorAll('.kurimodal-group').forEach(function(label) {
+    var grid = label.nextElementSibling;
+    if (!grid) return;
+    var vis = grid.querySelectorAll('.kurimodal-item:not(.mhide)');
+    label.style.display = vis.length ? '' : 'none';
+    grid.style.display = vis.length ? '' : 'none';
+  });
+}
 // ========== TAB SWITCHING ==========
 document.querySelectorAll('.tab').forEach(function(tab) {
   tab.addEventListener('click', function() {
@@ -4194,5 +4271,19 @@ function clearAll() {
   var tp = document.getElementById('platformTip'); if (tp) tp.style.display = 'none';
 }
 </script>
+
+<div class="kurimodal" id="kurimodal-shotType">
+<div class="kurimodal-box">
+<div class="kurimodal-top">
+<h3>🎬 Tipo de Plano / Ángulo</h3>
+<button type="button" class="kurimodal-x" onclick="cerrarModal('shotType')">✕</button>
+</div>
+<div class="kurimodal-search">
+<input type="text" placeholder="🔍 Buscar plano..." oninput="buscarModal('shotType',this.value)">
+</div>
+<div class="kurimodal-body" id="kurimodal-shotType-body"></div>
+</div>
+</div>
+
 </body>
 </html>
