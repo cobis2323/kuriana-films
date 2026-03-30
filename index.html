@@ -232,11 +232,11 @@ select option{background:var(--bg3);color:var(--text)}
         <div class="module-body">
           <div class="field">
             <div class="field-label">Personaje Principal</div>
-            <textarea id="sheetCharacter" placeholder="Describe tu personaje en detalle: género, edad, complexión, vestimenta, accesorios, rasgos faciales, cicatrices, tatuajes, color de piel, expresión...&#10;&#10;Ej: A cyberpunk female warrior, age 25, athletic build, short silver hair with neon blue tips, red cybernetic left eye, black tactical vest with glowing circuits, combat boots, katana on her back, confident smirk..." oninput="buildSheetPrompt()"></textarea>
+            <textarea id="sheetCharacter" placeholder="Describe tu personaje en detalle: género, edad, complexión, vestimenta, accesorios, rasgos faciales, cicatrices, tatuajes, color de piel, expresión...&#10;&#10;Ej: Una guerrera ciberpunk, de 25 años, complexión atlética, cabello corto plateado con puntas azul neón, ojo izquierdo cibernético rojo, chaleco táctico negro con circuitos brillantes, botas de combate, katana en la espalda, sonrisa confiada..." oninput="buildSheetPrompt()"></textarea>
           </div>
           <div class="field">
             <div class="field-label">Detalles de Vestimenta / Accesorios (opcional)</div>
-            <textarea id="sheetClothing" placeholder="Ej: Worn leather jacket with patches, silver rings on both hands, dog tags necklace, holster on right thigh, fingerless gloves..." oninput="buildSheetPrompt()" style="min-height:60px"></textarea>
+            <textarea id="sheetClothing" placeholder="Ej: Chaqueta de cuero desgastada con parches, anillos de plata en ambas manos, collar con placa militar, funda para pistola en el muslo derecho, guantes sin dedos..." oninput="buildSheetPrompt()" style="min-height:60px"></textarea>
           </div>
           <div class="field">
             <div class="field-label">Cantidad de Personajes</div>
@@ -285,7 +285,7 @@ select option{background:var(--bg3);color:var(--text)}
           </div>
           <div class="field">
             <div class="field-label">Vistas Personalizadas (opcional)</div>
-            <input type="text" class="text-input" id="sheetCustomViews" placeholder="Ej: front view, 3/4 view with weapon drawn, back view showing tattoo detail..." oninput="buildSheetPrompt()">
+            <input type="text" class="text-input" id="sheetCustomViews" placeholder="Ej: vista frontal, vista de tres cuartos con el arma desenfundada, vista posterior que muestra detalles del tatuaje..." oninput="buildSheetPrompt()">
           </div>
         </div>
       </div>
@@ -486,9 +486,9 @@ select option{background:var(--bg3);color:var(--text)}
             <div class="field">
               <div class="field-label">Formato de Exportación</div>
               <select id="sheetSplitFormat">
-                <option value="png">PNG (sin pérdida) ★ Recomendado</option>
-                <option value="webp">WEBP (alta calidad, menor peso)</option>
-                <option value="jpeg">JPEG 100% (máxima calidad)</option>
+                <option value="png">PNG (Sin Pérdida) ★ Recomendado</option>
+                <option value="webp">WEBP (Alta calidad, menor peso)</option>
+                <option value="jpeg">JPEG 100% (Máxima calidad)</option>
               </select>
             </div>
           </div>
@@ -2343,7 +2343,7 @@ select option{background:var(--bg3);color:var(--text)}
           <div class="field">
             <div class="field-label">Estructura de Grilla</div>
             <select id="gridStructure" onchange="updateGridPanels(); buildGridPrompt()">
-              <option value="2x2" selected>2×2 Grid (4 panels) — Recommended</option>
+              <option value="2x2" selected>2×2 Grid (4 panels) — Recomendado</option>
               <option value="1x2">1×2 Grid (2 panels in horizontal)</option>
               <option value="2x1">2×1 Grid (2 panels in vertical)</option>
               <option value="1x3">1×3 Grid (3 panels in horizontal)</option>
@@ -2524,7 +2524,7 @@ select option{background:var(--bg3);color:var(--text)}
             <div class="field">
               <div class="field-label">Estructura de Grilla</div>
               <select id="splitStructure">
-                <option value="2x2">2×2 Grid (4 paneles)</option>
+                <option value="2x2">2×2 Grid (4 panels)</option>
                 <option value="1x2">1×2 Grid (2 panels in horizontal)</option>
                 <option value="2x1">2×1 Grid (2 panels in vertical)</option>
                 <option value="1x3">1×3 Grid (3 panels in horizontal)</option>
@@ -2535,9 +2535,9 @@ select option{background:var(--bg3);color:var(--text)}
             <div class="field">
               <div class="field-label">Formato de Exportación</div>
               <select id="splitFormat">
-                <option value="png">PNG (Sin Pérdida de Calidad) ★ Recommended</option>
+                <option value="png">PNG (Sin Pérdida de Calidad) ★ Recomendado</option>
                 <option value="webp">WEBP (Alta calidad, archivo pequeño)</option>
-                <option value="jpeg">JPEG 100% (Máxima claidad)</option>
+                <option value="jpeg">JPEG 100% (Máxima calidad)</option>
               </select>
             </div>
           </div>
@@ -2850,7 +2850,7 @@ select option{background:var(--bg3);color:var(--text)}
             <div class="field">
               <div class="field-label">Aspect Ratio</div>
               <select id="videoAspect" onchange="buildVideoPrompt()">
-                <option value="">Select ratio...</option>
+                <option value="">Relación de Aspecto...</option>
                 <option>16:9 Landscape (standard)</option>
                 <option>9:16 Vertical (TikTok/Reels)</option>
                 <option>1:1 Square (Instagram)</option>
@@ -2862,7 +2862,7 @@ select option{background:var(--bg3);color:var(--text)}
             <div class="field">
               <div class="field-label">Calidad</div>
               <select id="videoQuality" onchange="buildVideoPrompt()">
-                <option value="high quality">High Quality</option>
+                <option value="high quality">Máxima Calidad</option>
                 <option value="cinematic quality, hyper-detailed">Cinematic Ultra Detailed</option>
                 <option value="raw, realistic">Raw Realistic</option>
                 <option value="stylized, artistic">Stylized Artistic</option>
@@ -2880,7 +2880,7 @@ select option{background:var(--bg3);color:var(--text)}
   <div class="panel-right">
 
     <!-- PROMPT NORMAL -->
-    <div class="prompt-title">🎬📽️💯 PROMPT GENERADO</div>
+    <div class="prompt-title">🎬⭐⭐⭐🎬 PROMPT GENERADO</div>
     <div class="prompt-box empty" id="promptBox">
       Tu prompt cinematográfico aparecerá aquí en tiempo real mientras configuras los módulos...
     </div>
