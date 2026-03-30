@@ -666,9 +666,12 @@ select option{background:var(--bg3);color:var(--text)}
           </div>
 
           <div class="field-row">
-            <div class="field">
-              <div class="field-label">Tipo de Plano / Ángulo</div>
-              <select id="shotType" onchange="buildPrompt()">
+            <div class="field"><div class="field-label">Tipo de Plano / Ángulo</div>
+            <input type="hidden" id="shotType">
+            <button type="button" class="modal-trigger" onclick="openThumbnailModal('shotType')">
+             <span id="shotType-display" class="trigger-label">Seleccionar plano...</span>
+             <span class="trigger-icon">🖼️ Elegir</span>
+            </button>
                 <option value="">Seleccionar plano...</option>
                 <optgroup label="── PLANOS CERRADOS ──">
                   <option>Extreme Close Up</option>
@@ -3730,7 +3733,203 @@ select option{background:var(--bg3);color:var(--text)}
 
 </div><!-- end main -->
 
+<!-- ========== THUMBNAIL MODAL SHOT TYPE ========== -->
+<div class="modal-overlay" id="modal-shotType" onclick="if(event.target===this)closeThumbnailModal('shotType')">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>🎬 Tipo de Plano / Ángulo</h3>
+      <button type="button" class="modal-close" onclick="closeThumbnailModal('shotType')">✕</button>
+    </div>
+    <div class="modal-search">
+      <input type="text" placeholder="🔍 Buscar plano..." oninput="filterModalItems('shotType',this.value)">
+    </div>
+    <div class="modal-body" id="modal-shotType-body"></div>
+  </div>
+</div>
+
 <script>
+// ========== THUMBNAIL MODAL SYSTEM ==========
+function syncModalTrigger(fieldId) {
+  var input = document.getElementById(fieldId);
+  var display = document.getElementById(fieldId + '-display');
+  if (!input || !display) return;
+
+  if (input.value) {
+    display.textContent = input.value;
+    display.classList.remove('trigger-label');
+    display.classList.add('trigger-value');
+  } else {
+    display.textContent = 'Seleccionar plano...';
+    display.classList.add('trigger-label');
+    display.classList.remove('trigger-value');
+  }
+}
+
+var MODAL_DATA = {
+  shotType: {
+    groups: [
+      { label: '── PLANOS CERRADOS ──', items: [
+        { value: "Extreme Close Up", icon: "👁️", desc: "Detalle extremo: ojo, boca, objeto" },
+        { value: "Close Up", icon: "😐", desc: "Rostro completo, emociones" },
+        { value: "Medium Close Up", icon: "👤", desc: "Cabeza y hombros" },
+        { value: "Tight Headshot", icon: "🎭", desc: "Retrato ajustado" },
+        { value: "Headshot", icon: "📸", desc: "Retrato clásico" }
+      ]},
+      { label: '── PLANOS MEDIOS ──', items: [
+        { value: "Medium Shot", icon: "🧍", desc: "De la cintura hacia arriba" },
+        { value: "Medium Wide Shot", icon: "🚶", desc: "De las rodillas hacia arriba" },
+        { value: "Upper Body", icon: "👕", desc: "Torso superior" },
+        { value: "Three Quarter Body", icon: "🧑", desc: "Tres cuartos del cuerpo" },
+        { value: "Cowboy Shot", icon: "🤠", desc: "A medio muslo" }
+      ]},
+      { label: '── PLANOS ABIERTOS ──', items: [
+        { value: "Wide Shot", icon: "🏞️", desc: "Cuerpo completo + entorno" },
+        { value: "Extreme Wide Shot", icon: "🌄", desc: "Paisaje domina, sujeto pequeño" },
+        { value: "Entire Body", icon: "🧍‍♂️", desc: "Cuerpo entero visible" },
+        { value: "Establishing Shot", icon: "🏙️", desc: "Establece locación/contexto" }
+      ]},
+      { label: '── ÁNGULOS ──', items: [
+        { value: "Low Angle Shot", icon: "⬆️", desc: "Cámara baja mirando arriba" },
+        { value: "High Angle Shot", icon: "⬇️", desc: "Cámara alta mirando abajo" },
+        { value: "Dutch Angle", icon: "📐", desc: "Cámara inclinada" },
+        { value: "Bird's-Eye View", icon: "🦅", desc: "Vista cenital" },
+        { value: "Worm's-Eye View", icon: "🐛", desc: "Desde el suelo mirando arriba" },
+        { value: "Overhead Shot", icon: "⭕", desc: "Directamente sobre el sujeto" }
+      ]},
+      { label: '── COMPOSICIÓN ──', items: [
+        { value: "Over The Shoulder Shot", icon: "👥", desc: "Por encima del hombro" },
+        { value: "Two Shot", icon: "👫", desc: "Dos personas en cuadro" },
+        { value: "Group Shot", icon: "👨‍👩‍👧‍👦", desc: "Grupo de personas" },
+        { value: "Point of View Shot", icon: "👀", desc: "Lo que ve el personaje" },
+        { value: "Reverse Shot", icon: "🔄", desc: "Contra-plano" },
+        { value: "Reaction Shot", icon: "😲", desc: "Reacción del personaje" },
+        { value: "Insert Shot", icon: "🔍", desc: "Detalle de objeto/acción" },
+        { value: "Cutaway Shot", icon: "✂️", desc: "Corte a algo fuera de escena" },
+        { value: "Silhouette Shot", icon: "🌑", desc: "Sujeto en silueta" }
+      ]},
+      { label: '── MOVIMIENTO ──', items: [
+        { value: "Tracking Shot", icon: "🛤️", desc: "La cámara sigue al sujeto" },
+        { value: "Dolly Shot", icon: "🎥", desc: "Acercamiento/alejamiento en rieles" },
+        { value: "Steadicam Shot", icon: "📹", desc: "Movimiento suave estabilizado" },
+        { value: "Crane Shot", icon: "🏗️", desc: "Movimiento vertical con grúa" },
+        { value: "Aerial Shot", icon: "🚁", desc: "Toma aérea/drone" },
+        { value: "Whip Pan", icon: "💨", desc: "Giro rápido horizontal" },
+        { value: "Zoom Shot", icon: "🔭", desc: "Zoom óptico in/out" },
+        { value: "Rack Focus Shot", icon: "🎯", desc: "Cambio de foco entre planos" }
+      ]},
+      { label: '── ESPECIALES ──', items: [
+        { value: "Trunk Shot", icon: "🚗", desc: "Desde dentro del maletero" },
+        { value: "Mirror Shot", icon: "🪞", desc: "A través de un espejo" },
+        { value: "Through Frame Shot", icon: "🖼️", desc: "A través de marco/ventana" },
+        { value: "Snorricam Shot", icon: "📷", desc: "Cámara fija al cuerpo del actor" },
+        { value: "Split Screen", icon: "⬛⬜", desc: "Pantalla dividida" }
+      ]}
+    ]
+  }
+};
+
+function openThumbnailModal(fieldId) {
+  var modal = document.getElementById('modal-' + fieldId);
+  var body = document.getElementById('modal-' + fieldId + '-body');
+  var data = MODAL_DATA[fieldId];
+  if (!modal || !body || !data) return;
+
+  if (!modal.dataset.built) {
+    var html = '';
+    var currentVal = document.getElementById(fieldId).value || '';
+
+    data.groups.forEach(function(group) {
+      html += '<div class="modal-group-label">' + group.label + '</div>';
+      html += '<div class="modal-grid">';
+      group.items.forEach(function(item) {
+        var sel = item.value === currentVal ? ' selected' : '';
+        html += '<div class="modal-item' + sel + '" data-value="' + item.value + '" data-search="' + (item.value + ' ' + (item.desc || '')).toLowerCase() + '" onclick="selectModalItem(\'' + fieldId + '\', this)">';
+        html += '<div class="modal-item-placeholder">' + (item.icon || '📷') + '</div>';
+        html += '<div class="modal-item-label">' + item.value + '</div>';
+        html += '</div>';
+      });
+      html += '</div>';
+    });
+
+    body.innerHTML = html;
+    modal.dataset.built = '1';
+  }
+
+  var currentVal = document.getElementById(fieldId).value || '';
+  body.querySelectorAll('.modal-item').forEach(function(el) {
+    el.classList.toggle('selected', el.dataset.value === currentVal);
+    el.classList.remove('hidden');
+  });
+  body.querySelectorAll('.modal-group-label').forEach(function(label) {
+    label.style.display = '';
+    if (label.nextElementSibling) label.nextElementSibling.style.display = '';
+  });
+
+  modal.style.display = 'flex';
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() {
+      modal.classList.add('visible', 'showing');
+    });
+  });
+
+  document.body.style.overflow = 'hidden';
+}
+
+function closeThumbnailModal(fieldId) {
+  var modal = document.getElementById('modal-' + fieldId);
+  if (!modal) return;
+
+  modal.classList.remove('showing');
+  setTimeout(function() {
+    modal.classList.remove('visible');
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }, 250);
+}
+
+function selectModalItem(fieldId, el) {
+  var value = el.dataset.value;
+  var input = document.getElementById(fieldId);
+  if (input) input.value = value;
+
+  syncModalTrigger(fieldId);
+
+  closeThumbnailModal(fieldId);
+
+  if (getCurrentTab() === 'cine') buildPrompt();
+  else if (getCurrentTab() === 'anime') buildAnimePrompt();
+  else if (getCurrentTab() === 'horror') buildHorrorPrompt();
+  else if (getCurrentTab() === 'sheet') buildSheetPrompt();
+}
+
+function filterModalItems(fieldId, query) {
+  var body = document.getElementById('modal-' + fieldId + '-body');
+  if (!body) return;
+
+  var q = (query || '').toLowerCase().trim();
+
+  body.querySelectorAll('.modal-item').forEach(function(item) {
+    var show = !q || item.dataset.search.indexOf(q) !== -1;
+    item.classList.toggle('hidden', !show);
+  });
+
+  body.querySelectorAll('.modal-group-label').forEach(function(label) {
+    var grid = label.nextElementSibling;
+    if (!grid) return;
+    var visible = grid.querySelectorAll('.modal-item:not(.hidden)');
+    label.style.display = visible.length ? '' : 'none';
+    grid.style.display = visible.length ? '' : 'none';
+  });
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.visible').forEach(function(m) {
+      var fieldId = m.id.replace('modal-', '');
+      closeThumbnailModal(fieldId);
+    });
+  }
+});
 // ========== TAB SWITCHING ==========
 document.querySelectorAll('.tab').forEach(function(tab) {
   tab.addEventListener('click', function() {
@@ -4261,7 +4460,7 @@ function loadJSON(input) {
       document.querySelectorAll('.tab').forEach(function(t) { if (t.dataset.tab === data.tab) t.click(); });
       setTimeout(function() {
         if (data.tab === 'sheet') { sv('sheetCharacter',data.character); sv('sheetClothing',data.clothing); sv('sheetCharCount',data.charCount); sv('sheetViews',data.views); sv('sheetCustomViews',data.customViews); sv('sheetCamera',data.camera); sv('sheetLens',data.lens); sv('sheetBackground',data.background); sv('sheetStyle',data.style); sv('sheetLighting',data.lighting); sv('sheetGrid',data.grid); sv('sheetResolution',data.resolution); buildSheetPrompt(); }
-        if (data.tab === 'cine') { sv('subject',data.subject); sv('shotType',data.shotType); sv('viewDirection',data.viewDirection); sc('subjectUnaware',data.subjectUnaware); sv('environment',data.environment); sv('lighting',data.lighting); sv('atmosphere',data.atmosphere); sv('mood',data.mood); sv('customMood',data.customMood); sv('cameraBody',data.cameraBody); sv('focalLength',data.focalLength); sv('lensType',data.lensType); sv('filmStock',data.filmStock); sv('aperture',data.aperture); sv('shutterSpeed',data.shutterSpeed); sv('iso',data.iso); sv('lensFilter',data.lensFilter); sv('filmGrain',data.filmGrain); sv('aspectRatio',data.aspectRatio); sv('colorPalette',data.colorPalette); sv('colorGrading',data.colorGrading); sv('photographer',data.photographer); sv('movieRef',data.movieRef); sv('customRef',data.customRef); sv('resolution',data.resolution); sv('temperature',data.temperature); buildPrompt(); }
+        if (data.tab === 'cine') { sv('subject',data.subject); sv('shotType',data.shotType); syncModalTrigger('shotType'); sv('viewDirection',data.viewDirection); sc('subjectUnaware',data.subjectUnaware); sv('environment',data.environment); sv('lighting',data.lighting); sv('atmosphere',data.atmosphere); sv('mood',data.mood); sv('customMood',data.customMood); sv('cameraBody',data.cameraBody); sv('focalLength',data.focalLength); sv('lensType',data.lensType); sv('filmStock',data.filmStock); sv('aperture',data.aperture); sv('shutterSpeed',data.shutterSpeed); sv('iso',data.iso); sv('lensFilter',data.lensFilter); sv('filmGrain',data.filmGrain); sv('aspectRatio',data.aspectRatio); sv('colorPalette',data.colorPalette); sv('colorGrading',data.colorGrading); sv('photographer',data.photographer); sv('movieRef',data.movieRef); sv('customRef',data.customRef); sv('resolution',data.resolution); sv('temperature',data.temperature); buildPrompt(); }
         if (data.tab === 'anime') { sv('animeStyle',data.style); sv('animeSubject',data.subject); sv('animeCharacter',data.character); sv('animeEnvironment',data.environment); sv('animeColorPalette',data.palette); sv('animeMood',data.mood); sv('animeLighting',data.lighting); sv('animeShot',data.shot); sv('animeDirector',data.director); sv('animeFilmRef',data.filmRef); sv('animeCustomRef',data.customRef); sv('animeAspect',data.aspect); sv('animeResolution',data.resolution); sv('animeQuality',data.quality); buildAnimePrompt(); }
         if (data.tab === 'horror') { sv('horrorSubgenre',data.subgenre); sv('horrorSubject',data.subject); sv('horrorEntity',data.entity); sv('horrorEnvironment',data.environment); sv('horrorAtmosphere',data.atmosphere); sv('horrorMood',data.mood); sv('horrorLighting',data.lighting); sv('horrorColor',data.color); sv('horrorCamera',data.camera); sv('horrorLens',data.lens); sv('horrorShot',data.shot); sv('horrorFilm',data.film); sc('horrorUnaware',data.unaware); sv('horrorAuthor',data.author); sv('horrorFilmRef',data.filmRef); sv('horrorCustomRef',data.customRef); sv('horrorAspect',data.aspect); sv('horrorResolution',data.resolution); buildHorrorPrompt(); }
         if (data.tab === 'musica') { sv('musicGenre',data.genre); sv('musicSubGenre',data.subGenre); sv('musicLeadInst',data.leadInst); sv('musicSupportInst',data.supportInst); sv('musicProduction',data.production); sv('musicVoiceType',data.voiceType); sv('musicLanguage',data.language); sv('musicMood',data.mood); sv('musicUse',data.use); sv('musicKey',data.key); sv('musicTexture',data.texture); sv('musicEra',data.era); sv('musicArtistRef',data.artistRef); sv('musicFilmRef',data.filmRef); sv('musicCustomRef',data.customRef); sv('musicStructure',data.structure); sv('musicDuration',data.duration); sv('musicQuality',data.quality); var bpmEl=document.getElementById('musicBPM'); if(bpmEl) bpmEl.value=data.bpm||'90'; updateBPMLabel(); updateStructurePreview(); }
@@ -4282,6 +4481,9 @@ function clearAll() {
     if (c.id === 'gridConsistentChar' || c.id === 'gridConsistentLight' || c.id === 'gridConsistentColor') c.checked = true;
     else c.checked = false;
   });
+  var st = document.getElementById('shotType');
+  if (st) st.value = '';
+  syncModalTrigger('shotType');
   var pb = document.getElementById('promptBox');
   pb.textContent = 'Tu prompt aparecerá aquí en tiempo real...';
   pb.classList.add('empty');
