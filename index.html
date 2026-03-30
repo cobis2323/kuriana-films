@@ -12,7 +12,7 @@
   --text:#e0e0e0;--text2:#888;--border:#333;
   --cine:#FFC425;--anime:#FF25CD;--horror:#25FF57;
   --grilla:#4ff6ff;--video:#25FFC4;
-  --sheet:#ab46d4;
+  --sheet:#ab46d4;--musica:#fd79a8;
   --active:var(--cine);
   --radius:8px;
 }
@@ -211,6 +211,9 @@ select option{background:var(--bg3);color:var(--text)}
   </div>
   <div class="tab" data-tab="video" data-color="var(--video)">
     <span class="tab-icon">🎥</span> VIDEO
+  </div>
+  <div class="tab" data-tab="musica" data-color="var(--musica)">
+    <span class="tab-icon">🎵</span> MÚSICA
   </div>
 </div>
 
@@ -2882,6 +2885,667 @@ select option{background:var(--bg3);color:var(--text)}
 
     </div><!-- end tab-video -->
 
+    <!-- ==================== TAB: MÚSICA ==================== -->
+    <div class="tab-content" id="tab-musica">
+
+      <!-- MÚSICA: GÉNERO -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">01</span>
+          <h3>Género Musical</h3>
+        </div>
+        <div class="module-body">
+
+          <div class="field">
+            <div class="field-label">Género Principal</div>
+            <select id="musicGenre" onchange="buildMusicPrompt()">
+              <option value="">Seleccionar género...</option>
+              <optgroup label="── CINEMATOGRÁFICO / ÉPICO ──">
+                <option>Cinematic Orchestral</option>
+                <option>Epic Orchestral</option>
+                <option>Dark Cinematic</option>
+                <option>Atmospheric Cinematic</option>
+                <option>Trailer Music</option>
+                <option>Horror Score</option>
+                <option>Adventure Score</option>
+                <option>War Score</option>
+                <option>Sci-Fi Score</option>
+                <option>Fantasy Score</option>
+                <option>Romantic Score</option>
+              </optgroup>
+              <optgroup label="── ELECTRÓNICA ──">
+                <option>Electronic</option>
+                <option>House</option>
+                <option>Deep House</option>
+                <option>Tech House</option>
+                <option>Techno</option>
+                <option>Trance</option>
+                <option>Ambient Electronic</option>
+                <option>EDM</option>
+                <option>Drum and Bass</option>
+                <option>Dubstep</option>
+                <option>Trap (Electronic)</option>
+                <option>Future Bass</option>
+                <option>Synthwave</option>
+                <option>Retrowave / Outrun</option>
+                <option>Vaporwave</option>
+                <option>Chillwave</option>
+                <option>Dark Electro</option>
+                <option>Industrial Electronic</option>
+              </optgroup>
+              <optgroup label="── POP / CONTEMPORÁNEO ──">
+                <option>Pop</option>
+                <option>Indie Pop</option>
+                <option>Dream Pop</option>
+                <option>Synth Pop</option>
+                <option>Electropop</option>
+                <option>Dark Pop</option>
+                <option>Bedroom Pop</option>
+                <option>Art Pop</option>
+                <option>K-Pop</option>
+              </optgroup>
+              <optgroup label="── HIP-HOP / URBANO ──">
+                <option>Hip-Hop</option>
+                <option>Trap</option>
+                <option>Lo-fi Hip-Hop</option>
+                <option>Boom Bap</option>
+                <option>East Coast Hip-Hop</option>
+                <option>West Coast Hip-Hop</option>
+                <option>Melodic Rap</option>
+                <option>Reggaeton</option>
+                <option>Afrobeats</option>
+                <option>Dancehall</option>
+              </optgroup>
+              <optgroup label="── ROCK / METAL ──">
+                <option>Rock</option>
+                <option>Indie Rock</option>
+                <option>Alternative Rock</option>
+                <option>Hard Rock</option>
+                <option>Psychedelic Rock</option>
+                <option>Progressive Rock</option>
+                <option>Classic Rock</option>
+                <option>Punk Rock</option>
+                <option>Grunge</option>
+                <option>Post-Rock</option>
+                <option>Metal</option>
+                <option>Heavy Metal</option>
+                <option>Death Metal</option>
+                <option>Black Metal</option>
+                <option>Doom Metal</option>
+                <option>Folk Metal</option>
+                <option>Symphonic Metal</option>
+              </optgroup>
+              <optgroup label="── JAZZ / BLUES / SOUL ──">
+                <option>Jazz</option>
+                <option>Smooth Jazz</option>
+                <option>Jazz Noir</option>
+                <option>Blues</option>
+                <option>Soul</option>
+                <option>R&B</option>
+                <option>Neo-Soul</option>
+                <option>Funk</option>
+                <option>Gospel</option>
+                <option>Swing</option>
+                <option>Bebop</option>
+              </optgroup>
+              <optgroup label="── CLÁSICA / INSTRUMENTAL ──">
+                <option>Classical</option>
+                <option>Baroque</option>
+                <option>Romantic Era Classical</option>
+                <option>Minimalist Classical</option>
+                <option>Contemporary Classical</option>
+                <option>Chamber Music</option>
+                <option>Piano Solo</option>
+                <option>String Quartet</option>
+                <option>Acoustic Instrumental</option>
+              </optgroup>
+              <optgroup label="── AMBIENT / EXPERIMENTAL ──">
+                <option>Ambient</option>
+                <option>Dark Ambient</option>
+                <option>Drone Ambient</option>
+                <option>Noise</option>
+                <option>Experimental</option>
+                <option>Avant-Garde</option>
+                <option>Post-Punk</option>
+                <option>Shoegaze</option>
+                <option>Ethereal Wave</option>
+                <option>Darkwave</option>
+                <option>Neoclassical Darkwave</option>
+              </optgroup>
+              <optgroup label="── FOLK / WORLD MUSIC ──">
+                <option>Folk</option>
+                <option>Indie Folk</option>
+                <option>Celtic</option>
+                <option>Viking Folk</option>
+                <option>Medieval</option>
+                <option>Flamenco</option>
+                <option>Latin Jazz</option>
+                <option>Bossa Nova</option>
+                <option>African Rhythms</option>
+                <option>Middle Eastern</option>
+                <option>Japanese Traditional</option>
+                <option>Native American</option>
+              </optgroup>
+              <optgroup label="── COUNTRY / AMERICANA ──">
+                <option>Country</option>
+                <option>Americana</option>
+                <option>Bluegrass</option>
+                <option>Western / Cowboy</option>
+                <option>Country Rock</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <div class="field">
+            <div class="field-label">Sub-géneros / Mezclas (opcional)</div>
+            <input type="text" class="text-input" id="musicSubGenre" placeholder="Ej: dark ambient, neoclassical, industrial... (mezclar géneros mejora los resultados en SUNO)" oninput="buildMusicPrompt()">
+          </div>
+
+        </div>
+      </div>
+
+      <!-- MÚSICA: INSTRUMENTOS -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">02</span>
+          <h3>Instrumentos</h3>
+        </div>
+        <div class="module-body">
+
+          <div class="field">
+            <div class="field-label">Instrumento Principal (Lead)</div>
+            <select id="musicLeadInst" onchange="buildMusicPrompt()">
+              <option value="">Sin instrumento lead específico...</option>
+              <optgroup label="── CUERDAS ──">
+                <option>Electric Guitar (lead)</option>
+                <option>Acoustic Guitar (fingerpicking)</option>
+                <option>Classical Guitar</option>
+                <option>Bass Guitar (prominent)</option>
+                <option>Violin (solo)</option>
+                <option>Cello (solo)</option>
+                <option>String Section (full)</option>
+              </optgroup>
+              <optgroup label="── TECLAS ──">
+                <option>Grand Piano (solo)</option>
+                <option>Upright Piano</option>
+                <option>Electric Piano / Rhodes</option>
+                <option>Organ (church)</option>
+                <option>Organ (Hammond)</option>
+                <option>Synthesizer Lead</option>
+                <option>Analog Synth</option>
+              </optgroup>
+              <optgroup label="── VIENTOS ──">
+                <option>Trumpet (solo)</option>
+                <option>Trombone</option>
+                <option>French Horn</option>
+                <option>Brass Section</option>
+                <option>Alto Saxophone</option>
+                <option>Tenor Saxophone</option>
+                <option>Flute (solo)</option>
+                <option>Clarinet</option>
+                <option>Oboe</option>
+              </optgroup>
+              <optgroup label="── PERCUSIÓN ──">
+                <option>Full Drum Kit</option>
+                <option>Electronic Drums / Drum Machine</option>
+                <option>Orchestral Timpani</option>
+                <option>Taiko Drums</option>
+                <option>Hand Percussion (congas, bongos)</option>
+                <option>808 Bass (prominent)</option>
+              </optgroup>
+              <optgroup label="── ESPECIALES ──">
+                <option>Choir / Vocal Ensemble</option>
+                <option>Theremin</option>
+                <option>Didgeridoo</option>
+                <option>Bagpipes</option>
+                <option>Harp</option>
+                <option>Banjo</option>
+                <option>Mandolin</option>
+                <option>Dulcimer</option>
+                <option>Duduk (Armenian flute)</option>
+                <option>Erhu (Chinese violin)</option>
+                <option>Koto (Japanese strings)</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <div class="field">
+            <div class="field-label">Instrumentos de Apoyo (hasta 3, escribe separados por coma)</div>
+            <input type="text" class="text-input" id="musicSupportInst" placeholder="Ej: cello undertones, distant war drums, subtle choir, ambient pads..." oninput="buildMusicPrompt()">
+          </div>
+
+          <div class="field">
+            <div class="field-label">Producción / Efectos Sonoros</div>
+            <select id="musicProduction" onchange="buildMusicPrompt()">
+              <option value="">Sin efecto específico...</option>
+              <optgroup label="── ESPACIO ──">
+                <option>Heavy reverb (large hall)</option>
+                <option>Cathedral reverb</option>
+                <option>Dry and close (no reverb)</option>
+                <option>Deep echo</option>
+                <option>Spatial stereo width</option>
+              </optgroup>
+              <optgroup label="── TEXTURA ──">
+                <option>Vinyl crackle and warmth</option>
+                <option>Tape saturation</option>
+                <option>Lo-fi degraded quality</option>
+                <option>Distortion and overdrive</option>
+                <option>Clean and pristine production</option>
+                <option>Compressed and punchy</option>
+              </optgroup>
+              <optgroup label="── ESPECIALES ──">
+                <option>Binaural audio (headphone effect)</option>
+                <option>ASMR-like close proximity</option>
+                <option>Radio filter effect</option>
+                <option>Underwater muffled effect</option>
+                <option>Phone speaker quality</option>
+                <option>Glitch and artifact effects</option>
+              </optgroup>
+            </select>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- MÚSICA: VOZ -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">03</span>
+          <h3>Voz</h3>
+        </div>
+        <div class="module-body">
+
+          <div class="field-row">
+            <div class="field">
+              <div class="field-label">Tipo de Voz</div>
+              <select id="musicVoiceType" onchange="buildMusicPrompt()">
+                <option value="no vocals, instrumental only">Sin voz (solo instrumental)</option>
+                <option value="">── CON VOZ ──</option>
+                <optgroup label="── MASCULINA ──">
+                  <option value="deep male vocals">Voz masculina grave (deep baritone)</option>
+                  <option value="male tenor vocals">Voz masculina tenor</option>
+                  <option value="raspy male vocals">Voz masculina áspera/rasgada</option>
+                  <option value="soft whispering male vocals">Voz masculina suave susurrada</option>
+                  <option value="operatic male tenor">Voz masculina operática</option>
+                </optgroup>
+                <optgroup label="── FEMENINA ──">
+                  <option value="ethereal female vocals">Voz femenina etérea</option>
+                  <option value="powerful female soprano vocals">Voz femenina soprano poderosa</option>
+                  <option value="soft breathy female vocals">Voz femenina suave y aérea</option>
+                  <option value="dark alto female vocals">Voz femenina oscura (alto)</option>
+                  <option value="whispering female vocals">Voz femenina susurrada</option>
+                </optgroup>
+                <optgroup label="── ESPECIAL ──">
+                  <option value="choir vocals (SATB)">Coro completo (SATB)</option>
+                  <option value="chanting vocals">Canto gregoriano / chanting</option>
+                  <option value="vocal harmonies">Armonías vocales</option>
+                  <option value="distorted vocoded vocals">Voz procesada / vocoderizada</option>
+                  <option value="spoken word narration">Narración hablada</option>
+                  <option value="rap vocals">Rap / spoken word rapeado</option>
+                </optgroup>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Idioma de la Letra</div>
+              <select id="musicLanguage" onchange="buildMusicPrompt()">
+                <option value="">Sin preferencia...</option>
+                <option>English lyrics</option>
+                <option>Spanish lyrics</option>
+                <option>French lyrics</option>
+                <option>Italian lyrics</option>
+                <option>German lyrics</option>
+                <option>Japanese lyrics</option>
+                <option>Latin lyrics (classical)</option>
+                <option>No lyrics (instrumental)</option>
+                <option>Phonetic / invented language</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- MÚSICA: MOOD Y EMOCIÓN -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">04</span>
+          <h3>Emoción y Atmósfera</h3>
+        </div>
+        <div class="module-body">
+
+          <div class="field-row">
+            <div class="field">
+              <div class="field-label">Emoción Principal</div>
+              <select id="musicMood" onchange="buildMusicPrompt()">
+                <option value="">Seleccionar emoción...</option>
+                <optgroup label="── OSCURO / DRAMÁTICO ──">
+                  <option>dark and brooding</option>
+                  <option>deeply melancholic</option>
+                  <option>haunting and eerie</option>
+                  <option>tense and threatening</option>
+                  <option>existential dread</option>
+                  <option>mournful and grieving</option>
+                  <option>ominous and foreboding</option>
+                  <option>tragic and sorrowful</option>
+                </optgroup>
+                <optgroup label="── ÉPICO / PODEROSO ──">
+                  <option>epic and triumphant</option>
+                  <option>heroic and bold</option>
+                  <option>powerful and dominant</option>
+                  <option>intense and overwhelming</option>
+                  <option>battle-ready and fierce</option>
+                  <option>mythic and legendary</option>
+                </optgroup>
+                <optgroup label="── TRANQUILO / ETÉREO ──">
+                  <option>peaceful and serene</option>
+                  <option>ethereal and dreamlike</option>
+                  <option>meditative and spiritual</option>
+                  <option>nostalgic and warm</option>
+                  <option>bittersweet longing</option>
+                  <option>hopeful and uplifting</option>
+                  <option>romantic and tender</option>
+                  <option>cozy and intimate</option>
+                </optgroup>
+                <optgroup label="── ENERGÍA / MOVIMIENTO ──">
+                  <option>energetic and driving</option>
+                  <option>aggressive and relentless</option>
+                  <option>playful and fun</option>
+                  <option>euphoric and ecstatic</option>
+                  <option>rebellious and defiant</option>
+                  <option>hypnotic and trance-like</option>
+                </optgroup>
+                <optgroup label="── MISTERIO / FANTASÍA ──">
+                  <option>mysterious and enigmatic</option>
+                  <option>surreal and otherworldly</option>
+                  <option>ancient and timeless</option>
+                  <option>cosmic and infinite</option>
+                  <option>sacred and divine</option>
+                  <option>psychedelic and mind-bending</option>
+                </optgroup>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Ambiente / Uso</div>
+              <select id="musicUse" onchange="buildMusicPrompt()">
+                <option value="">Seleccionar uso...</option>
+                <option>film score / soundtrack</option>
+                <option>opening title sequence</option>
+                <option>end credits</option>
+                <option>action sequence</option>
+                <option>chase scene</option>
+                <option>emotional montage</option>
+                <option>love scene</option>
+                <option>villain theme</option>
+                <option>hero theme</option>
+                <option>final battle</option>
+                <option>training montage</option>
+                <option>background study music</option>
+                <option>meditation / yoga</option>
+                <option>workout / gym</option>
+                <option>party / social event</option>
+                <option>horror scene</option>
+                <option>discovery / wonder moment</option>
+                <option>funeral / memorial</option>
+                <option>celebration / victory</option>
+                <option>video game background</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- MÚSICA: TEMPO Y TONALIDAD -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">05</span>
+          <h3>Tempo y Tonalidad</h3>
+        </div>
+        <div class="module-body">
+
+          <div class="field">
+            <div class="field-label">BPM (Velocidad) — Desliza para seleccionar</div>
+            <div style="display:flex;align-items:center;gap:16px;padding:8px 0">
+              <span style="font-size:.75rem;color:var(--text2);white-space:nowrap">Lento<br>40 BPM</span>
+              <input type="range" id="musicBPM" min="40" max="200" value="90"
+                style="flex:1;accent-color:var(--active);cursor:pointer;height:6px"
+                oninput="updateBPMLabel();buildMusicPrompt()">
+              <span style="font-size:.75rem;color:var(--text2);white-space:nowrap">Rápido<br>200 BPM</span>
+            </div>
+            <div id="bpmLabel" style="text-align:center;font-size:.85rem;color:var(--active);font-weight:600;padding:4px 0">
+              90 BPM — Moderado
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:.65rem;color:var(--text2);padding:0 0 8px 0">
+              <span>Ambient<br>40-60</span>
+              <span>Ballad<br>60-80</span>
+              <span>Moderado<br>80-100</span>
+              <span>Pop/Rock<br>100-130</span>
+              <span>Dance<br>130-160</span>
+              <span>Drum&Bass<br>160-180</span>
+              <span>Extremo<br>180+</span>
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <div class="field-label">Tonalidad</div>
+              <select id="musicKey" onchange="buildMusicPrompt()">
+                <option value="">Sin tonalidad específica...</option>
+                <optgroup label="── MENOR (oscuro, triste) ──">
+                  <option>A minor (La menor)</option>
+                  <option>D minor (Re menor)</option>
+                  <option>E minor (Mi menor)</option>
+                  <option>B minor (Si menor)</option>
+                  <option>G minor (Sol menor)</option>
+                  <option>C minor (Do menor)</option>
+                  <option>F minor (Fa menor)</option>
+                </optgroup>
+                <optgroup label="── MAYOR (alegre, luminoso) ──">
+                  <option>C major (Do mayor)</option>
+                  <option>G major (Sol mayor)</option>
+                  <option>D major (Re mayor)</option>
+                  <option>A major (La mayor)</option>
+                  <option>E major (Mi mayor)</option>
+                  <option>F major (Fa mayor)</option>
+                </optgroup>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Textura / Densidad</div>
+              <select id="musicTexture" onchange="buildMusicPrompt()">
+                <option value="">Sin preferencia...</option>
+                <option>sparse and minimal</option>
+                <option>gentle and delicate</option>
+                <option>rich and layered</option>
+                <option>dense and full orchestration</option>
+                <option>wall of sound</option>
+                <option>building gradually (crescendo)</option>
+                <option>dynamic contrast (quiet to loud)</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- MÚSICA: ERA Y REFERENCIAS -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">06</span>
+          <h3>Era y Referencias</h3>
+        </div>
+        <div class="module-body">
+
+          <div class="field-row">
+            <div class="field">
+              <div class="field-label">Época de Producción</div>
+              <select id="musicEra" onchange="buildMusicPrompt()">
+                <option value="">Sin época específica...</option>
+                <optgroup label="── CLÁSICA ──">
+                  <option>1920s jazz era</option>
+                  <option>1940s big band era</option>
+                  <option>1950s rock and roll era</option>
+                  <option>1960s psychedelic era</option>
+                  <option>1970s classic rock era</option>
+                  <option>1980s synth era production</option>
+                  <option>1990s grunge and alternative era</option>
+                  <option>2000s digital production era</option>
+                  <option>2010s modern pop production</option>
+                  <option>2020s hyperpop and future sounds</option>
+                </optgroup>
+                <optgroup label="── ATEMPORAL ──">
+                  <option>timeless classical feeling</option>
+                  <option>ancient and primal sounds</option>
+                  <option>medieval era</option>
+                  <option>renaissance era</option>
+                  <option>baroque era (Bach, Vivaldi style)</option>
+                </optgroup>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Referencia de Artista / Compositor</div>
+              <select id="musicArtistRef" onchange="buildMusicPrompt()">
+                <option value="">Sin referencia de artista...</option>
+                <optgroup label="── COMPOSITORES BSO ──">
+                  <option>Hans Zimmer style</option>
+                  <option>John Williams style</option>
+                  <option>Ennio Morricone style</option>
+                  <option>Bernard Herrmann style</option>
+                  <option>Ludovico Einaudi style</option>
+                  <option>Max Richter style</option>
+                  <option>Jóhann Jóhannsson style</option>
+                  <option>Ryuichi Sakamoto style</option>
+                  <option>Joe Hisaishi style</option>
+                  <option>Clint Mansell style</option>
+                  <option>Trent Reznor and Atticus Ross style</option>
+                  <option>Ólafur Arnalds style</option>
+                  <option>Nils Frahm style</option>
+                </optgroup>
+                <optgroup label="── ELECTRÓNICA / AMBIENT ──">
+                  <option>Brian Eno style</option>
+                  <option>Aphex Twin style</option>
+                  <option>Daft Punk style</option>
+                  <option>Boards of Canada style</option>
+                  <option>Vangelis style</option>
+                  <option>Tangerine Dream style</option>
+                  <option>Klaus Schulze style</option>
+                  <option>Burial style</option>
+                  <option>Massive Attack style</option>
+                </optgroup>
+                <optgroup label="── ROCK / METAL ──">
+                  <option>Pink Floyd style</option>
+                  <option>Led Zeppelin style</option>
+                  <option>Metallica style</option>
+                  <option>Black Sabbath style</option>
+                  <option>Tool style</option>
+                  <option>Radiohead style</option>
+                  <option>Nine Inch Nails style</option>
+                  <option>Queens of the Stone Age style</option>
+                </optgroup>
+                <optgroup label="── JAZZ / SOUL ──">
+                  <option>Miles Davis style</option>
+                  <option>John Coltrane style</option>
+                  <option>Bill Evans style</option>
+                  <option>Nina Simone style</option>
+                  <option>Chet Baker style</option>
+                </optgroup>
+                <optgroup label="── CLÁSICA ──">
+                  <option>Bach style</option>
+                  <option>Beethoven style</option>
+                  <option>Chopin style</option>
+                  <option>Debussy style</option>
+                  <option>Satie style</option>
+                  <option>Shostakovich style</option>
+                  <option>Arvo Pärt style</option>
+                </optgroup>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-label">Referencia de Película / Serie (opcional)</div>
+            <input type="text" class="text-input" id="musicFilmRef" placeholder="Ej: Interstellar soundtrack, Blade Runner 2049 score, Dune OST..." oninput="buildMusicPrompt()">
+          </div>
+
+          <div class="field">
+            <div class="field-label">Referencia Personalizada (opcional)</div>
+            <input type="text" class="text-input" id="musicCustomRef" placeholder="Cualquier otro artista, banda, álbum o referencia específica..." oninput="buildMusicPrompt()">
+          </div>
+
+        </div>
+      </div>
+
+      <!-- MÚSICA: ESTRUCTURA -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">07</span>
+          <h3>Estructura de la Canción</h3>
+        </div>
+        <div class="module-body">
+
+          <div class="field">
+            <div class="field-label">Estructura Predefinida</div>
+            <select id="musicStructure" onchange="updateStructurePreview();buildMusicPrompt()">
+              <option value="">Sin estructura específica...</option>
+              <optgroup label="── INSTRUMENTAL ──">
+                <option value="[Intro]\n[Theme A]\n[Development]\n[Theme B]\n[Climax]\n[Resolution]\n[Outro]">Instrumental Clásico (Intro-Tema-Climax-Outro)</option>
+                <option value="[Intro - Cinematic Build]\n[Rising Action]\n[Emotional Peak]\n[Descent]\n[Outro - Fade]">Cinematográfico (Build-Peak-Fade)</option>
+                <option value="[Intro]\n[Loop A]\n[Build Up]\n[Drop]\n[Break]\n[Drop 2]\n[Outro]">EDM / Electronic (Intro-Build-Drop)</option>
+                <option value="[Intro]\n[Theme]\n[Variation 1]\n[Variation 2]\n[Climax]\n[Coda]">Variaciones (Tema y Variaciones)</option>
+              </optgroup>
+              <optgroup label="── CON LETRA ──">
+                <option value="[Intro]\n[Verse 1]\n[Chorus]\n[Verse 2]\n[Chorus]\n[Bridge]\n[Chorus]\n[Outro]">Estándar Pop (Intro-Verso-Coro-Bridge)</option>
+                <option value="[Intro]\n[Verse 1]\n[Pre-Chorus]\n[Chorus]\n[Verse 2]\n[Pre-Chorus]\n[Chorus]\n[Bridge]\n[Chorus]\n[Outro]">Pop Completo (con Pre-Chorus)</option>
+                <option value="[Intro]\n[Verse 1]\n[Verse 2]\n[Chorus]\n[Verse 3]\n[Chorus]\n[Outro]">Folk / Balada (Sin Bridge)</option>
+                <option value="[Hook]\n[Verse 1]\n[Hook]\n[Verse 2]\n[Hook]\n[Bridge]\n[Hook]\n[Outro]">Hip-Hop (Hook Central)</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <div class="field">
+            <div class="field-label">Vista previa de la estructura</div>
+            <div id="structurePreview" style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:12px;font-size:.75rem;color:var(--text2);font-family:monospace;white-space:pre;min-height:60px">
+              Selecciona una estructura arriba...
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- MÚSICA: DURACIÓN -->
+      <div class="module">
+        <div class="module-header" onclick="toggleModule(this)">
+          <span class="module-number">08</span>
+          <h3>Duración y Configuración Final</h3>
+        </div>
+        <div class="module-body">
+          <div class="field-row">
+            <div class="field">
+              <div class="field-label">Duración Aproximada</div>
+              <select id="musicDuration" onchange="buildMusicPrompt()">
+                <option value="">Sin preferencia...</option>
+                <option>short (under 1 minute)</option>
+                <option>medium (1-2 minutes)</option>
+                <option>standard (2-4 minutes)</option>
+                <option>extended (4-6 minutes)</option>
+                <option>epic (over 6 minutes)</option>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Calidad de Producción</div>
+              <select id="musicQuality" onchange="buildMusicPrompt()">
+                <option value="professional studio quality">Estudio Profesional</option>
+                <option value="high production value, radio ready">Radio Ready</option>
+                <option value="raw and organic recording">Crudo y Orgánico</option>
+                <option value="lo-fi bedroom recording quality">Lo-fi / Bedroom</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end tab-musica -->
+
   </div><!-- end panel-left -->
 
     <!-- RIGHT PANEL: PROMPT OUTPUT -->
@@ -3378,6 +4042,17 @@ function collectAllData() {
     data.lens = gv('horrorLens'); data.shot = gv('horrorShot'); data.film = gv('horrorFilm');
     data.unaware = gc('horrorUnaware'); data.author = gv('horrorAuthor'); data.filmRef = gv('horrorFilmRef');
     data.customRef = gv('horrorCustomRef'); data.aspect = gv('horrorAspect'); data.resolution = gv('horrorResolution');
+  if (tab === 'musica') {
+    data.genre = gv('musicGenre'); data.subGenre = gv('musicSubGenre');
+    data.leadInst = gv('musicLeadInst'); data.supportInst = gv('musicSupportInst');
+    data.production = gv('musicProduction'); data.voiceType = gv('musicVoiceType');
+    data.language = gv('musicLanguage'); data.mood = gv('musicMood');
+    data.use = gv('musicUse'); data.bpm = gv('musicBPM'); data.key = gv('musicKey');
+    data.texture = gv('musicTexture'); data.era = gv('musicEra');
+    data.artistRef = gv('musicArtistRef'); data.filmRef = gv('musicFilmRef');
+    data.customRef = gv('musicCustomRef'); data.structure = gv('musicStructure');
+    data.duration = gv('musicDuration'); data.quality = gv('musicQuality');
+  } else
   } else if (tab === 'video') {
     data.source = gv('videoSourcePrompt'); data.platform = gv('videoPlatform');
     data.cameraMove = gv('videoCameraMove'); data.cameraIntensity = gv('videoCameraIntensity');
@@ -3479,6 +4154,18 @@ function loadJSON(input) {
           sc('horrorUnaware', data.unaware); sv('horrorAuthor', data.author); sv('horrorFilmRef', data.filmRef);
           sv('horrorCustomRef', data.customRef); sv('horrorAspect', data.aspect); sv('horrorResolution', data.resolution);
           buildHorrorPrompt();
+        if (data.tab === 'musica') {
+          sv('musicGenre', data.genre); sv('musicSubGenre', data.subGenre);
+          sv('musicLeadInst', data.leadInst); sv('musicSupportInst', data.supportInst);
+          sv('musicProduction', data.production); sv('musicVoiceType', data.voiceType);
+          sv('musicLanguage', data.language); sv('musicMood', data.mood);
+          sv('musicUse', data.use); sv('musicBPM', data.bpm || '90'); sv('musicKey', data.key);
+          sv('musicTexture', data.texture); sv('musicEra', data.era);
+          sv('musicArtistRef', data.artistRef); sv('musicFilmRef', data.filmRef);
+          sv('musicCustomRef', data.customRef); sv('musicStructure', data.structure);
+          sv('musicDuration', data.duration); sv('musicQuality', data.quality);
+          updateBPMLabel(); updateStructurePreview(); buildMusicPrompt();
+        } else
         } else if (data.tab === 'video') {
           sv('videoCameraMove', data.cameraMove); sv('videoCameraIntensity', data.cameraIntensity || '3'); sv('videoPlatform', data.platform);
           sv('videoCameraMove', data.cameraMove);
@@ -3729,6 +4416,113 @@ function dlSheetSplit(i,fmt) {
 function downloadAllSheetSplits() {
   const fmt = document.getElementById('sheetSplitFormat').value;
   sheetSplitCanvases.forEach(function(c,i){ setTimeout(function(){ dlSheetSplit(i,fmt); }, i*300); });
+}
+
+// ========== BUILD MUSIC PROMPT ==========
+function updateBPMLabel() {
+  const bpm = document.getElementById('musicBPM').value;
+  let feel = '';
+  if (bpm <= 60) feel = 'Ambient / Muy lento';
+  else if (bpm <= 80) feel = 'Balada / Lento';
+  else if (bpm <= 100) feel = 'Moderado / Natural';
+  else if (bpm <= 120) feel = 'Pop / Activo';
+  else if (bpm <= 140) feel = 'Rock / Energético';
+  else if (bpm <= 160) feel = 'Dance / Rápido';
+  else if (bpm <= 180) feel = 'Drum & Bass / Muy rápido';
+  else feel = 'Extremo / Agresivo';
+  document.getElementById('bpmLabel').textContent = bpm + ' BPM — ' + feel;
+}
+
+function updateStructurePreview() {
+  const val = document.getElementById('musicStructure').value;
+  const preview = document.getElementById('structurePreview');
+  if (val) {
+    preview.textContent = val.replace(/\\n/g, '\n');
+  } else {
+    preview.textContent = 'Selecciona una estructura arriba...';
+  }
+  buildMusicPrompt();
+}
+
+function buildMusicPrompt() {
+  const genre = document.getElementById('musicGenre').value;
+  const subGenre = document.getElementById('musicSubGenre').value.trim();
+  const leadInst = document.getElementById('musicLeadInst').value;
+  const supportInst = document.getElementById('musicSupportInst').value.trim();
+  const production = document.getElementById('musicProduction').value;
+  const voiceType = document.getElementById('musicVoiceType').value;
+  const language = document.getElementById('musicLanguage').value;
+  const mood = document.getElementById('musicMood').value;
+  const use = document.getElementById('musicUse').value;
+  const bpm = document.getElementById('musicBPM').value;
+  const key = document.getElementById('musicKey').value;
+  const texture = document.getElementById('musicTexture').value;
+  const era = document.getElementById('musicEra').value;
+  const artistRef = document.getElementById('musicArtistRef').value;
+  const filmRef = document.getElementById('musicFilmRef').value.trim();
+  const customRef = document.getElementById('musicCustomRef').value.trim();
+  const structure = document.getElementById('musicStructure').value;
+  const duration = document.getElementById('musicDuration').value;
+  const quality = document.getElementById('musicQuality').value;
+
+  // Build STYLE PROMPT (for Suno "Style of Music" field)
+  const styleParts = [];
+  if (genre) styleParts.push(genre.toLowerCase());
+  if (subGenre) styleParts.push(subGenre.toLowerCase());
+  if (leadInst) styleParts.push(leadInst.toLowerCase());
+  if (supportInst) styleParts.push(supportInst.toLowerCase());
+  if (production) styleParts.push(production.toLowerCase());
+  if (mood) styleParts.push(mood);
+  if (use) styleParts.push(use);
+  if (bpm) styleParts.push(bpm + ' BPM');
+  if (key) styleParts.push(key.split(' ')[0] + ' ' + (key.includes('minor') ? 'minor' : 'major'));
+  if (texture) styleParts.push(texture);
+  if (era) styleParts.push(era);
+  if (artistRef) styleParts.push(artistRef);
+  if (filmRef) styleParts.push('inspired by ' + filmRef);
+  if (customRef) styleParts.push(customRef);
+  if (voiceType) styleParts.push(voiceType);
+  if (language && language !== '') styleParts.push(language);
+  if (duration) styleParts.push(duration);
+  styleParts.push(quality);
+
+  const stylePrompt = styleParts.join(', ');
+
+  // Build STRUCTURE for Lyrics field
+  let structureText = '';
+  if (structure) {
+    structureText = structure.replace(/\\n/g, '\n');
+  }
+
+  // Build full output
+  let fullPrompt = '';
+
+  if (stylePrompt.trim()) {
+    fullPrompt += '══ STYLE PROMPT (pega en "Style of Music" de SUNO) ══\n\n';
+    fullPrompt += stylePrompt;
+  }
+
+  if (structureText) {
+    fullPrompt += '\n\n══ ESTRUCTURA (pega en "Lyrics" de SUNO) ══\n\n';
+    fullPrompt += structureText;
+  }
+
+  if (!fullPrompt) {
+    fullPrompt = 'Tu prompt de música aparecerá aquí en tiempo real...';
+  }
+
+  const promptBox = document.getElementById('promptBox');
+  if (genre || leadInst || mood) {
+    promptBox.textContent = fullPrompt;
+    promptBox.classList.remove('empty');
+  } else {
+    promptBox.textContent = 'Tu prompt de música para SUNO aparecerá aquí en tiempo real mientras configuras los módulos...';
+    promptBox.classList.add('empty');
+  }
+
+  document.getElementById('charCount').textContent = stylePrompt.length;
+  document.getElementById('wordCount').textContent = stylePrompt.split(/\s+/).filter(w=>w).length;
+  updateJSONDisplay();
 }
 
 // ========== CLEAR ALL ==========
