@@ -3662,12 +3662,12 @@ function abrirModal(id) {
     body.innerHTML = h;
     body.dataset.built = '1';
   }
-  modal.classList.add('open');
+  modal.style.cssText = 'display:flex;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px';
 }
 
 function cerrarModal(id) {
   var modal = document.getElementById('kurimodal-' + id);
-  if (modal) modal.classList.remove('open');
+  if (modal) modal.style.cssText = 'display:none';
 }
 
 function elegirModal(id, el) {
@@ -4272,7 +4272,7 @@ function clearAll() {
 }
 </script>
 
-<div class="kurimodal" id="kurimodal-shotType">
+<div class="kurimodal" id="kurimodal-shotType" onclick="if(event.target===this)cerrarModal('shotType')">
 <div class="kurimodal-box">
 <div class="kurimodal-top">
 <h3>🎬 Tipo de Plano / Ángulo</h3>
