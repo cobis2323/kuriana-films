@@ -4465,7 +4465,6 @@ function buildMusicPrompt() {
   const duration = document.getElementById('musicDuration').value;
   const quality = document.getElementById('musicQuality').value;
 
-  // Build STYLE PROMPT (for Suno "Style of Music" field)
   const styleParts = [];
   if (genre) styleParts.push(genre.toLowerCase());
   if (subGenre) styleParts.push(subGenre.toLowerCase());
@@ -4488,13 +4487,11 @@ function buildMusicPrompt() {
 
   const stylePrompt = styleParts.join(', ');
 
-  // Build STRUCTURE for Lyrics field
   let structureText = '';
   if (structure) {
     structureText = structure.replace(/\\n/g, '\n');
   }
 
-  // Build full output
   let fullPrompt = '';
 
   if (stylePrompt.trim()) {
@@ -4508,7 +4505,7 @@ function buildMusicPrompt() {
   }
 
   if (!fullPrompt) {
-    fullPrompt = 'Tu prompt de música aparecerá aquí en tiempo real...';
+    fullPrompt = 'Tu prompt de música para SUNO aparecerá aquí en tiempo real mientras configuras los módulos...';
   }
 
   const promptBox = document.getElementById('promptBox');
