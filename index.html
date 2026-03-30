@@ -4103,20 +4103,19 @@ function exportJSON() {
 
 // ========== LOAD JSON ==========
 function loadJSON(input) {
-  const file = input.files[0];
+  var file = input.files[0];
   if (!file) return;
-  const reader = new FileReader();
+  var reader = new FileReader();
   reader.onload = function(e) {
     try {
-      const data = JSON.parse(e.target.result);
-      if (!data.tab) { alert('❌ Archivo JSON no válido'); return; }
+      var data = JSON.parse(e.target.result);
+      if (!data.tab) { alert('Archivo JSON no válido'); return; }
 
-      // Switch to correct tab
-      document.querySelectorAll('.tab').forEach(t => {
+      document.querySelectorAll('.tab').forEach(function(t) {
         if (t.dataset.tab === data.tab) { t.click(); }
       });
 
-      setTimeout(() => {
+      setTimeout(function() {
         if (data.tab === 'sheet') {
           sv('sheetCharacter', data.character); sv('sheetClothing', data.clothing);
           sv('sheetCharCount', data.charCount); sv('sheetViews', data.views);
@@ -4125,7 +4124,7 @@ function loadJSON(input) {
           sv('sheetStyle', data.style); sv('sheetLighting', data.lighting);
           sv('sheetGrid', data.grid); sv('sheetResolution', data.resolution);
           buildSheetPrompt();
-        } else
+        }
         if (data.tab === 'cine') {
           sv('subject', data.subject); sv('shotType', data.shotType); sv('viewDirection', data.viewDirection);
           sc('subjectUnaware', data.subjectUnaware); sv('environment', data.environment);
@@ -4138,14 +4137,16 @@ function loadJSON(input) {
           sv('photographer', data.photographer); sv('movieRef', data.movieRef);
           sv('customRef', data.customRef); sv('resolution', data.resolution); sv('temperature', data.temperature);
           buildPrompt();
-        } else if (data.tab === 'anime') {
+        }
+        if (data.tab === 'anime') {
           sv('animeStyle', data.style); sv('animeSubject', data.subject); sv('animeCharacter', data.character);
           sv('animeEnvironment', data.environment); sv('animeColorPalette', data.palette); sv('animeMood', data.mood);
           sv('animeLighting', data.lighting); sv('animeShot', data.shot); sv('animeDirector', data.director);
           sv('animeFilmRef', data.filmRef); sv('animeCustomRef', data.customRef);
           sv('animeAspect', data.aspect); sv('animeResolution', data.resolution); sv('animeQuality', data.quality);
           buildAnimePrompt();
-        } else if (data.tab === 'horror') {
+        }
+        if (data.tab === 'horror') {
           sv('horrorSubgenre', data.subgenre); sv('horrorSubject', data.subject); sv('horrorEntity', data.entity);
           sv('horrorEnvironment', data.environment); sv('horrorAtmosphere', data.atmosphere); sv('horrorMood', data.mood);
           sv('horrorLighting', data.lighting); sv('horrorColor', data.color); sv('horrorCamera', data.camera);
@@ -4153,22 +4154,26 @@ function loadJSON(input) {
           sc('horrorUnaware', data.unaware); sv('horrorAuthor', data.author); sv('horrorFilmRef', data.filmRef);
           sv('horrorCustomRef', data.customRef); sv('horrorAspect', data.aspect); sv('horrorResolution', data.resolution);
           buildHorrorPrompt();
+        }
         if (data.tab === 'musica') {
           sv('musicGenre', data.genre); sv('musicSubGenre', data.subGenre);
           sv('musicLeadInst', data.leadInst); sv('musicSupportInst', data.supportInst);
           sv('musicProduction', data.production); sv('musicVoiceType', data.voiceType);
           sv('musicLanguage', data.language); sv('musicMood', data.mood);
-          sv('musicUse', data.use); sv('musicBPM', data.bpm || '90'); sv('musicKey', data.key);
+          sv('musicUse', data.use); sv('musicKey', data.key);
           sv('musicTexture', data.texture); sv('musicEra', data.era);
           sv('musicArtistRef', data.artistRef); sv('musicFilmRef', data.filmRef);
           sv('musicCustomRef', data.customRef); sv('musicStructure', data.structure);
           sv('musicDuration', data.duration); sv('musicQuality', data.quality);
+          var bpmEl = document.getElementById('musicBPM');
+          if (bpmEl) bpmEl.value = data.bpm || '90';
           updateBPMLabel(); updateStructurePreview(); buildMusicPrompt();
-        } else if (data.tab === 'video') {
+        }
+        if (data.tab === 'video') {
           sv('videoSourcePrompt', data.source); sv('videoPlatform', data.platform);
           sv('videoCameraMove', data.cameraMove);
-          var intensityEl = document.getElementById('videoCameraIntensity');
-          if (intensityEl) intensityEl.value = data.cameraIntensity || '3';
+          var intEl = document.getElementById('videoCameraIntensity');
+          if (intEl) intEl.value = data.cameraIntensity || '3';
           if (typeof updateIntensityLabel === 'function') updateIntensityLabel();
           sv('videoSubjectAction', data.subjectAction); sv('videoEnvMotion', data.envMotion);
           sv('videoDuration', data.duration); sv('videoFPS', data.fps);
@@ -4177,10 +4182,10 @@ function loadJSON(input) {
           sv('videoAspect', data.aspect); sv('videoQuality', data.quality);
           buildVideoPrompt();
         }
-        alert('✅ Proyecto cargado correctamente desde: ' + file.name);
+        alert('Proyecto cargado desde: ' + file.name);
       }, 300);
     } catch(err) {
-      alert('❌ Error al leer el archivo: ' + err.message);
+      alert('Error al leer el archivo: ' + err.message);
     }
   };
   reader.readAsText(file);
