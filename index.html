@@ -4052,7 +4052,6 @@ function collectAllData() {
     data.artistRef = gv('musicArtistRef'); data.filmRef = gv('musicFilmRef');
     data.customRef = gv('musicCustomRef'); data.structure = gv('musicStructure');
     data.duration = gv('musicDuration'); data.quality = gv('musicQuality');
-  } else
   } else if (tab === 'video') {
     data.source = gv('videoSourcePrompt'); data.platform = gv('videoPlatform');
     data.cameraMove = gv('videoCameraMove'); data.cameraIntensity = gv('videoCameraIntensity');
@@ -4165,7 +4164,6 @@ function loadJSON(input) {
           sv('musicCustomRef', data.customRef); sv('musicStructure', data.structure);
           sv('musicDuration', data.duration); sv('musicQuality', data.quality);
           updateBPMLabel(); updateStructurePreview(); buildMusicPrompt();
-        } else
         } else if (data.tab === 'video') {
           sv('videoCameraMove', data.cameraMove); sv('videoCameraIntensity', data.cameraIntensity || '3'); sv('videoPlatform', data.platform);
           sv('videoCameraMove', data.cameraMove);
