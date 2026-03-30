@@ -3675,20 +3675,6 @@ select option{background:var(--bg3);color:var(--text)}
 
 </div><!-- end main -->
 
-<!-- ========== THUMBNAIL MODAL SHOT TYPE ========== -->
-<div class="modal-overlay" id="modal-shotType" onclick="if(event.target===this)closeThumbnailModal('shotType')">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h3>🎬 Tipo de Plano / Ángulo</h3>
-      <button type="button" class="modal-close" onclick="closeThumbnailModal('shotType')">✕</button>
-    </div>
-    <div class="modal-search">
-      <input type="text" placeholder="🔍 Buscar plano..." oninput="filterModalItems('shotType',this.value)">
-    </div>
-    <div class="modal-body" id="modal-shotType-body"></div>
-  </div>
-</div>
-
 <script>
 // ========== THUMBNAIL MODAL SYSTEM ==========
 function syncModalTrigger(fieldId) {
@@ -3881,7 +3867,6 @@ document.querySelectorAll('.tab').forEach(function(tab) {
     document.documentElement.style.setProperty('--active', tab.dataset.color);
     document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
   });
-});
 
 // ========== MODULE TOGGLE ==========
 function toggleModule(header) { header.nextElementSibling.classList.toggle('collapsed'); }
@@ -4435,5 +4420,19 @@ function clearAll() {
   var tp = document.getElementById('platformTip'); if (tp) tp.style.display = 'none';
 }
 </script>
+<!-- ========== THUMBNAIL MODAL SHOT TYPE ========== -->
+<div class="modal-overlay" id="modal-shotType" onclick="if(event.target===this)closeThumbnailModal('shotType')">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>🎬 Tipo de Plano / Ángulo</h3>
+      <button type="button" class="modal-close" onclick="closeThumbnailModal('shotType')">✕</button>
+    </div>
+    <div class="modal-search">
+      <input type="text" placeholder="🔍 Buscar plano..." oninput="filterModalItems('shotType',this.value)">
+    </div>
+    <div class="modal-body" id="modal-shotType-body"></div>
+  </div>
+</div>
+
 </body>
 </html>
