@@ -864,85 +864,30 @@ select option{background:var(--bg3);color:var(--text)}
                    <div class="field-row">
             <div class="field">
               <div class="field-label">Apertura (f-stop)</div>
-              <select id="aperture" onchange="buildPrompt()">
-                <option value="">Seleccionar Punto de Desenfoque...</option>
-                <optgroup label="── EXTREME BOKEH ──">
-                  <option>f/0.95 (extreme shallow DOF, dreamy)</option>
-                  <option>f/1.2 (very shallow DOF, portrait)</option>
-                </optgroup>
-                <optgroup label="── PORTRAIT / BOKEH ──">
-                  <option>f/1.4 (beautiful bokeh, classic portrait)</option>
-                  <option>f/1.8 (soft bokeh, versatile)</option>
-                  <option>f/2.0 (gentle background blur)</option>
-                  <option>f/2.8 (moderate blur, balanced)</option>
-                </optgroup>
-                <optgroup label="── BALANCED ──">
-                  <option>f/4.0 (slight blur, sharp subject)</option>
-                  <option>f/5.6 (mostly sharp, landscape)</option>
-                </optgroup>
-                <optgroup label="── DEEP FOCUS ──">
-                  <option>f/8.0 (sharp throughout, optimal)</option>
-                  <option>f/11 (deep focus, landscape)</option>
-                  <option>f/16 (hyperfocal, everything sharp)</option>
-                  <option>f/22 (maximum DOF, diffraction)</option>
-                </optgroup>
-              </select>
+              <              <input type="hidden" id="aperture" value="">
+              <button type="button" onclick="abrirModal('aperture')" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:12px;border-radius:8px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left">
+                <span id="aperture-display" style="opacity:.5">Seleccionar Punto de Desenfoque...</span>
+                <span style="font-size:.7rem;color:#888">🖼️ Elegir</span>
+              </button>
             </div>
             <div class="field">
               <div class="field-label">Velocidad de Obturación</div>
-              <select id="shutterSpeed" onchange="buildPrompt()">
-                <option value="">Seleccionar Punto de Enfoque...</option>
-                <optgroup label="── FREEZE MOTION ──">
-                  <option>1/8000s (freeze ultra fast action)</option>
-                  <option>1/4000s (freeze sports)</option>
-                  <option>1/2000s (freeze fast motion)</option>
-                  <option>1/1000s (freeze movement)</option>
-                  <option>1/500s (freeze walking)</option>
-                </optgroup>
-                <optgroup label="── STANDARD ──">
-                  <option>1/250s (standard sharp)</option>
-                  <option>1/125s (standard cinema)</option>
-                  <option>1/48s (cinematic 24fps 180° shutter)</option>
-                </optgroup>
-                <optgroup label="── MOTION BLUR ──">
-                  <option>1/30s (visible motion blur)</option>
-                  <option>1/15s (creative motion blur)</option>
-                  <option>1/8s (artistic blur)</option>
-                </optgroup>
-                <optgroup label="── LONG EXPOSURE ──">
-                  <option>1 second (light trails begin)</option>
-                  <option>5 seconds (light trails, smooth water)</option>
-                  <option>30 seconds (star trails, night city)</option>
-                  <option>Bulb / infinite (extreme long exposure)</option>
-                </optgroup>
-              </select>
+                            <input type="hidden" id="shutterSpeed" value="">
+              <button type="button" onclick="abrirModal('shutterSpeed')" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:12px;border-radius:8px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left">
+                <span id="shutterSpeed-display" style="opacity:.5">Seleccionar Punto de Enfoque...</span>
+                <span style="font-size:.7rem;color:#888">🖼️ Elegir</span>
+              </button>
             </div>
           </div>
 
           <div class="field-row">
             <div class="field">
               <div class="field-label">ISO (Sensibilidad)</div>
-              <select id="iso" onchange="buildPrompt()">
-                <option value="">Seleccionar Sensiblidad del Lente...</option>
-                <optgroup label="── CLEAN / LOW NOISE ──">
-                  <option>ISO 50 (ultra clean, studio)</option>
-                  <option>ISO 100 (clean, bright conditions)</option>
-                  <option>ISO 200 (clean, standard daylight)</option>
-                </optgroup>
-                <optgroup label="── MODERATE ──">
-                  <option>ISO 400 (slight grain, versatile)</option>
-                  <option>ISO 800 (visible grain, indoor)</option>
-                </optgroup>
-                <optgroup label="── HIGH / GRAIN ──">
-                  <option>ISO 1600 (artistic grain, low light)</option>
-                  <option>ISO 3200 (strong grain, night)</option>
-                  <option>ISO 6400 (heavy grain, documentary)</option>
-                </optgroup>
-                <optgroup label="── EXTREME ──">
-                  <option>ISO 12800 (extreme grain, noir)</option>
-                  <option>ISO 25600 (maximum noise, raw look)</option>
-                </optgroup>
-              </select>
+                            <input type="hidden" id="iso" value="">
+              <button type="button" onclick="abrirModal('iso')" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:12px;border-radius:8px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left">
+                <span id="iso-display" style="opacity:.5">Seleccionar Sensibilidad del Lente...</span>
+                <span style="font-size:.7rem;color:#888">🖼️ Elegir</span>
+              </button>
             </div>
             <div class="field">
               <div class="field-label">Filtros de Lentes</div>
@@ -3506,6 +3451,76 @@ var LIGHT_DATA = [
   ]}
 ];
 
+var ISO_DATA = [
+  { g: '── CLEAN / LOW NOISE ──', items: [
+    { v: 'ISO 50 (ultra clean, studio)', i: '💎' },
+    { v: 'ISO 100 (clean, bright conditions)', i: '☀️' },
+    { v: 'ISO 200 (clean, standard daylight)', i: '🌤️' }
+  ]},
+  { g: '── MODERATE ──', items: [
+    { v: 'ISO 400 (slight grain, versatile)', i: '🌥️' },
+    { v: 'ISO 800 (visible grain, indoor)', i: '🏠' }
+  ]},
+  { g: '── HIGH / GRAIN ──', items: [
+    { v: 'ISO 1600 (artistic grain, low light)', i: '🌙' },
+    { v: 'ISO 3200 (strong grain, night)', i: '🌃' },
+    { v: 'ISO 6400 (heavy grain, documentary)', i: '📹' }
+  ]},
+  { g: '── EXTREME ──', items: [
+    { v: 'ISO 12800 (extreme grain, noir)', i: '⬛' },
+    { v: 'ISO 25600 (maximum noise, raw look)', i: '🖤' }
+  ]}
+];
+
+var SHUTTER_DATA = [
+  { g: '── FREEZE MOTION ──', items: [
+    { v: '1/8000s (freeze ultra fast action)', i: '⚡' },
+    { v: '1/4000s (freeze sports)', i: '🏃' },
+    { v: '1/2000s (freeze fast motion)', i: '🚀' },
+    { v: '1/1000s (freeze movement)', i: '✋' },
+    { v: '1/500s (freeze walking)', i: '🚶' }
+  ]},
+  { g: '── STANDARD ──', items: [
+    { v: '1/250s (standard sharp)', i: '📸' },
+    { v: '1/125s (standard cinema)', i: '🎬' },
+    { v: '1/48s (cinematic 24fps 180° shutter)', i: '🎥' }
+  ]},
+  { g: '── MOTION BLUR ──', items: [
+    { v: '1/30s (visible motion blur)', i: '💨' },
+    { v: '1/15s (creative motion blur)', i: '🌊' },
+    { v: '1/8s (artistic blur)', i: '🎨' }
+  ]},
+  { g: '── LONG EXPOSURE ──', items: [
+    { v: '1 second (light trails begin)', i: '✨' },
+    { v: '5 seconds (light trails, smooth water)', i: '🌃' },
+    { v: '30 seconds (star trails, night city)', i: '🌌' },
+    { v: 'Bulb / infinite (extreme long exposure)', i: '♾️' }
+  ]}
+];
+
+var APERTURE_DATA = [
+  { g: '── EXTREME BOKEH ──', items: [
+    { v: 'f/0.95 (extreme shallow DOF, dreamy)', i: '🌀' },
+    { v: 'f/1.2 (very shallow DOF, portrait)', i: '💫' }
+  ]},
+  { g: '── PORTRAIT / BOKEH ──', items: [
+    { v: 'f/1.4 (beautiful bokeh, classic portrait)', i: '🔵' },
+    { v: 'f/1.8 (soft bokeh, versatile)', i: '🟣' },
+    { v: 'f/2.0 (gentle background blur)', i: '🟡' },
+    { v: 'f/2.8 (moderate blur, balanced)', i: '🟠' }
+  ]},
+  { g: '── BALANCED ──', items: [
+    { v: 'f/4.0 (slight blur, sharp subject)', i: '🟢' },
+    { v: 'f/5.6 (mostly sharp, landscape)', i: '🌿' }
+  ]},
+  { g: '── DEEP FOCUS ──', items: [
+    { v: 'f/8.0 (sharp throughout, optimal)', i: '💎' },
+    { v: 'f/11 (deep focus, landscape)', i: '⛰️' },
+    { v: 'f/16 (hyperfocal, everything sharp)', i: '🏔️' },
+    { v: 'f/22 (maximum DOF, diffraction)', i: '🔷' }
+  ]}
+];
+
 var FOCAL_DATA = [
   { g: '── ULTRA WIDE ──', items: [
     { v: '8mm Fisheye', i: '🐟' },
@@ -3681,6 +3696,9 @@ function abrirModal(id) {
   if (id === 'viewDirection') datos = VIEWDIR_DATA;
   if (id === 'filmStock') datos = FILMSTOCK_DATA;
   if (id === 'focalLength') datos = FOCAL_DATA;
+  if (id === 'aperture') datos = APERTURE_DATA;
+  if (id === 'shutterSpeed') datos = SHUTTER_DATA;
+  if (id === 'iso') datos = ISO_DATA;
   if (id === 'photographer') datos = PHOTO_DATA;
   if (id === 'movieRef') datos = MOVIE_DATA;
   if (!datos) return;
@@ -3716,7 +3734,7 @@ function cerrarModal(id) {
 
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
-            var ids = ['shotType', 'lighting', 'photographer', 'movieRef', 'viewDirection', 'filmStock', 'focalLength'];
+            var ids = ['shotType', 'lighting', 'photographer', 'movieRef', 'viewDirection', 'filmStock', 'focalLength', 'aperture', 'shutterSpeed', 'iso'];
     ids.forEach(function(id) {
       var m = document.getElementById('kurimodal-' + id);
       if (m && m.style.display === 'flex') cerrarModal(id);
@@ -4414,6 +4432,45 @@ function clearAll() {
 <input type="text" placeholder="🔍 Buscar focal..." oninput="buscarModal('focalLength',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
 </div>
 <div id="kurimodal-focalLength-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
+</div>
+</div>
+
+<div id="kurimodal-aperture" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px" onclick="if(event.target===this)cerrarModal('aperture')">
+<div style="background:#111;border:1px solid #333;border-radius:12px;width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:16px 20px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center">
+<h3 style="color:var(--active);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin:0">📷 Apertura (f-stop)</h3>
+<button type="button" onclick="cerrarModal('aperture')" style="background:none;border:none;color:#888;font-size:1.5rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+<div style="padding:10px 20px;border-bottom:1px solid #333">
+<input type="text" placeholder="🔍 Buscar apertura..." oninput="buscarModal('aperture',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
+</div>
+<div id="kurimodal-aperture-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
+</div>
+</div>
+
+<div id="kurimodal-shutterSpeed" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px" onclick="if(event.target===this)cerrarModal('shutterSpeed')">
+<div style="background:#111;border:1px solid #333;border-radius:12px;width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:16px 20px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center">
+<h3 style="color:var(--active);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin:0">⏱️ Velocidad de Obturación</h3>
+<button type="button" onclick="cerrarModal('shutterSpeed')" style="background:none;border:none;color:#888;font-size:1.5rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+<div style="padding:10px 20px;border-bottom:1px solid #333">
+<input type="text" placeholder="🔍 Buscar velocidad..." oninput="buscarModal('shutterSpeed',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
+</div>
+<div id="kurimodal-shutterSpeed-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
+</div>
+</div>
+
+<div id="kurimodal-iso" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px" onclick="if(event.target===this)cerrarModal('iso')">
+<div style="background:#111;border:1px solid #333;border-radius:12px;width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:16px 20px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center">
+<h3 style="color:var(--active);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin:0">🔆 ISO (Sensibilidad)</h3>
+<button type="button" onclick="cerrarModal('iso')" style="background:none;border:none;color:#888;font-size:1.5rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+<div style="padding:10px 20px;border-bottom:1px solid #333">
+<input type="text" placeholder="🔍 Buscar ISO..." oninput="buscarModal('iso',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
+</div>
+<div id="kurimodal-iso-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
 </div>
 </div>
 
