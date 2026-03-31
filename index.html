@@ -1216,48 +1216,11 @@ select option{background:var(--bg3);color:var(--text)}
           <div class="field-row">
             <div class="field">
               <div class="field-label">Estilo Fotográfico</div>
-              <select id="photographer" onchange="buildPrompt()">
-                <option value="">Seleccionar estilo fotográfico...</option>
-                <optgroup label="── RETRATO / MODA ──">
-                  <option>Annie Leibovitz</option>
-                  <option>Peter Lindbergh</option>
-                  <option>Richard Avedon</option>
-                  <option>Helmut Newton</option>
-                  <option>Peter Coulson</option>
-                  <option>Irving Penn</option>
-                  <option>Herb Ritts</option>
-                  <option>Platon</option>
-                  <option>Brandon Woelfel</option>
-                </optgroup>
-                <optgroup label="── CALLEJERA y URBANA ──">
-                  <option>Daido Moriyama</option>
-                  <option>Alex Webb</option>
-                  <option>Saul Leiter</option>
-                  <option>Vivian Maier</option>
-                  <option>Fan Ho</option>
-                  <option>Henri Cartier-Bresson</option>
-                </optgroup>
-                <optgroup label="── PAISAJE ──">
-                  <option>Ansel Adams</option>
-                  <option>Michael Kenna</option>
-                  <option>Alex Strohl</option>
-                  <option>Benjamin Hardman</option>
-                </optgroup>
-                <optgroup label="── DOCUMENTAL ──">
-                  <option>Steve McCurry</option>
-                  <option>Sebastião Salgado</option>
-                  <option>James Nachtwey</option>
-                  <option>Robert Capa</option>
-                </optgroup>
-                <optgroup label="── ARTE CONCEPTUAL ──">
-                  <option>Gregory Crewdson</option>
-                  <option>Cindy Sherman</option>
-                  <option>Andreas Gursky</option>
-                  <option>Alec Soth</option>
-                  <option>Todd Hido</option>
-                  <option>William Eggleston</option>
-                </optgroup>
-              </select>
+                            <input type="hidden" id="photographer" value="">
+              <button type="button" onclick="abrirModal('photographer')" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:12px;border-radius:8px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left">
+                <span id="photographer-display" style="opacity:.5">Seleccionar estilo fotográfico...</span>
+                <span style="font-size:.7rem;color:#888">🖼️ Elegir</span>
+              </button>
             </div>
             <div class="field">
               <div class="field-label">Estética Visual de Película</div>
@@ -3530,6 +3493,48 @@ select option{background:var(--bg3);color:var(--text)}
 <script>
 // ========== MODAL SHOTTYPE ==========
 
+var PHOTO_DATA = [
+  { g: '── RETRATO / MODA ──', items: [
+    { v: 'Annie Leibovitz', i: '👩‍🎨' },
+    { v: 'Peter Lindbergh', i: '🖤' },
+    { v: 'Richard Avedon', i: '⬜' },
+    { v: 'Helmut Newton', i: '🖤' },
+    { v: 'Peter Coulson', i: '💄' },
+    { v: 'Irving Penn', i: '🎩' },
+    { v: 'Herb Ritts', i: '☀️' },
+    { v: 'Platon', i: '👤' },
+    { v: 'Brandon Woelfel', i: '✨' }
+  ]},
+  { g: '── CALLEJERA / URBANA ──', items: [
+    { v: 'Daido Moriyama', i: '🌃' },
+    { v: 'Alex Webb', i: '🌈' },
+    { v: 'Saul Leiter', i: '🌧️' },
+    { v: 'Vivian Maier', i: '📷' },
+    { v: 'Fan Ho', i: '🔲' },
+    { v: 'Henri Cartier-Bresson', i: '👁️' }
+  ]},
+  { g: '── PAISAJE ──', items: [
+    { v: 'Ansel Adams', i: '🏔️' },
+    { v: 'Michael Kenna', i: '🌫️' },
+    { v: 'Alex Strohl', i: '🏕️' },
+    { v: 'Benjamin Hardman', i: '🧊' }
+  ]},
+  { g: '── DOCUMENTAL ──', items: [
+    { v: 'Steve McCurry', i: '👧' },
+    { v: 'Sebastião Salgado', i: '🌍' },
+    { v: 'James Nachtwey', i: '⚔️' },
+    { v: 'Robert Capa', i: '🎖️' }
+  ]},
+  { g: '── ARTE CONCEPTUAL ──', items: [
+    { v: 'Gregory Crewdson', i: '🏚️' },
+    { v: 'Cindy Sherman', i: '🎭' },
+    { v: 'Andreas Gursky', i: '🏢' },
+    { v: 'Alec Soth', i: '🛣️' },
+    { v: 'Todd Hido', i: '🏠' },
+    { v: 'William Eggleston', i: '🚗' }
+  ]}
+];
+
 var LIGHT_DATA = [
   { g: '── RETRATO CLÁSICO ──', items: [
     { v: 'Rembrandt Lighting', i: '🎨' },
@@ -3653,6 +3658,7 @@ function abrirModal(id) {
   var datos = null;
   if (id === 'shotType') datos = SHOT_DATA;
   if (id === 'lighting') datos = LIGHT_DATA;
+  if (id === 'photographer') datos = PHOTO_DATA;
   if (!datos) return;
   if (body && !body.dataset.built) {
     var h = '';
@@ -3686,7 +3692,7 @@ function cerrarModal(id) {
 
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
-    var ids = ['shotType', 'lighting'];
+    var ids = ['shotType', 'lighting', 'photographer'];
     ids.forEach(function(id) {
       var m = document.getElementById('kurimodal-' + id);
       if (m && m.style.display === 'flex') cerrarModal(id);
@@ -4319,6 +4325,19 @@ function clearAll() {
 <input type="text" placeholder="🔍 Buscar iluminación..." oninput="buscarModal('lighting',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
 </div>
 <div id="kurimodal-lighting-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
+</div>
+</div>
+
+<div id="kurimodal-photographer" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px" onclick="if(event.target===this)cerrarModal('photographer')">
+<div style="background:#111;border:1px solid #333;border-radius:12px;width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:16px 20px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center">
+<h3 style="color:var(--active);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin:0">📸 Estilo Fotográfico</h3>
+<button type="button" onclick="cerrarModal('photographer')" style="background:none;border:none;color:#888;font-size:1.5rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+<div style="padding:10px 20px;border-bottom:1px solid #333">
+<input type="text" placeholder="🔍 Buscar fotógrafo..." oninput="buscarModal('photographer',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
+</div>
+<div id="kurimodal-photographer-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
 </div>
 </div>
 
