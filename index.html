@@ -891,117 +891,29 @@ select option{background:var(--bg3);color:var(--text)}
             </div>
             <div class="field">
               <div class="field-label">Filtros de Lentes</div>
-              <select id="lensFilter" onchange="buildPrompt()">
-                <option value="">Seleccionar Filtros para Lentes...</option>
-                <optgroup label="── DIFFUSION / SOFT ──">
-                  <option>Black Pro-Mist 1/4 (subtle glow)</option>
-                  <option>Black Pro-Mist 1/2 (moderate glow)</option>
-                  <option>Black Pro-Mist 1 (strong halation)</option>
-                  <option>Glimmerglass 1/4 (gentle shimmer)</option>
-                  <option>Glimmerglass 1/2 (sparkle highlights)</option>
-                  <option>Classic Soft FX (dreamy softness)</option>
-                  <option>Hollywood Black Magic (cinema soft)</option>
-                  <option>Tiffen Pearlescent (skin glow)</option>
-                  <option>Tiffen Satin (silk-like softness)</option>
-                  <option>Schneider Classic Soft (vintage soft)</option>
-                  <option>Cinebloom 10% (subtle bloom)</option>
-                  <option>Cinebloom 20% (visible bloom)</option>
-                </optgroup>
-                <optgroup label="── EFFECTS ──">
-                  <option>Streak Filter (anamorphic flares)</option>
-                  <option>Star Filter 4-point</option>
-                  <option>Star Filter 6-point</option>
-                  <option>Star Filter 8-point</option>
-                  <option>Fog Filter 1/4 (light fog)</option>
-                  <option>Fog Filter 1/2 (medium fog)</option>
-                  <option>Fog Filter 1 (heavy fog)</option>
-                  <option>Low Contrast Filter</option>
-                </optgroup>
-                <optgroup label="── TECHNICAL ──">
-                  <option>Polarizer (reduce reflections, deep sky)</option>
-                  <option>ND Filter (reduce light, wide aperture)</option>
-                  <option>Graduated ND (balance sky/ground)</option>
-                  <option>UV Haze Filter (cut haze)</option>
-                  <option>IR Cut Filter (infrared block)</option>
-                  <option>Warm Polarizer (warm tones + polarize)</option>
-                </optgroup>
-                <optgroup label="── CREATIVE / DIY ──">
-                  <option>Vaseline on UV (vintage dream)</option>
-                  <option>Crystal Prism (rainbow refraction)</option>
-                  <option>Broken Glass in front (distortion)</option>
-                  <option>Nylon Stocking (old Hollywood soft)</option>
-                </optgroup>
-              </select>
+                            <input type="hidden" id="lensFilter" value="">
+              <button type="button" onclick="abrirModal('lensFilter')" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:12px;border-radius:8px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left">
+                <span id="lensFilter-display" style="opacity:.5">Seleccionar Filtros para Lentes...</span>
+                <span style="font-size:.7rem;color:#888">🖼️ Elegir</span>
+              </button>
             </div>
           </div>
 
           <div class="field">
             <div class="field-label">Grano y Emulsión</div>
-            <select id="filmGrain" onchange="buildPrompt()">
-              <option value="">Grano/Ruido/Emulsiones...</option>
-              <optgroup label="── CELLULOID GRAIN ──">
-                <option>8mm Film Grain (heavy, vintage, shaky)</option>
-                <option>Super 16mm Grain (indie, organic texture)</option>
-                <option>35mm Fine Grain (classic cinema)</option>
-                <option>35mm Heavy Grain (pushed film, gritty)</option>
-                <option>65mm / 70mm Ultra Fine Grain (IMAX quality)</option>
-                <option>Double-X B&W Grain (Lighthouse, Schindler)</option>
-                <option>Tri-X 400 Grain (photojournalism, raw)</option>
-                <option>Kodachrome Fine Grain (warm, nostalgic)</option>
-                <option>CineStill Halation (red/orange halos on lights)</option>
-                <option>Expired Film Grain (unpredictable, degraded)</option>
-              </optgroup>
-              <optgroup label="── HISTORICAL EMULSIONS ──">
-                <option>Kodak Vision3 Emulsion (modern cinema)</option>
-                <option>Fujifilm Eterna Emulsion (soft Japanese)</option>
-                <option>Technicolor IB Print (saturated vintage)</option>
-                <option>Autochrome (1900s early color, mosaic)</option>
-                <option>Daguerreotype (1840s silver mirror)</option>
-                <option>Cyanotype (blue monochrome print)</option>
-                <option>Platinum Print (smooth, rich tones)</option>
-                <option>Tintype / Ferrotype (metal plate, dark)</option>
-                <option>Albumen Print (1860s sepia, delicate)</option>
-                <option>Wet Plate Collodion (sharp center, soft edges)</option>
-              </optgroup>
-              <optgroup label="── SPECIAL PROCESSES ──">
-                <option>ENR / Skip Bleach (desaturated, contrast)</option>
-                <option>Cross-Process E-6 in C-41 (shifted colors)</option>
-                <option>Push Process +1 stop (more grain, contrast)</option>
-                <option>Push Process +2 stops (heavy grain, gritty)</option>
-                <option>Pull Process -1 stop (less contrast, soft)</option>
-                <option>Bleach Bypass (silver retention, harsh)</option>
-                <option>Solarization (inverted tones, surreal)</option>
-                <option>Redscale (shot through base, red/orange)</option>
-              </optgroup>
-              <optgroup label="── DIGITAL ──">
-                <option>No Grain (clean digital)</option>
-                <option>Digital Noise ISO 3200+ (digital grain)</option>
-                <option>AI Film Grain Emulation (fake but pretty)</option>
-              </optgroup>
-            </select>
+                          <input type="hidden" id="filmGrain" value="">
+              <button type="button" onclick="abrirModal('filmGrain')" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:12px;border-radius:8px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left">
+                <span id="filmGrain-display" style="opacity:.5">Grano/Ruido/Emulsiones...</span>
+                <span style="font-size:.7rem;color:#888">🖼️ Elegir</span>
+              </button>
           </div>
           <div class="field">
             <div class="field-label">Relación de Aspecto</div>
-            <select id="aspectRatio" onchange="buildPrompt()">
-              <option value="">Select ratio...</option>
-              <optgroup label="── CINEMA ──">
-                <option>2.39:1 Anamorphic Scope</option>
-                <option>2.35:1 Panavision Scope</option>
-                <option>1.85:1 US Standard</option>
-                <option>1.66:1 European</option>
-                <option>1.43:1 IMAX</option>
-              </optgroup>
-              <optgroup label="── DIGITAL ──">
-                <option>16:9 HD/4K Standard</option>
-                <option>21:9 Ultra Wide</option>
-                <option>4:3 Classic TV</option>
-                <option>1:1 Square</option>
-              </optgroup>
-              <optgroup label="── VERTICAL ──">
-                <option>9:16 TikTok/Reels</option>
-                <option>4:5 Instagram Portrait</option>
-              </optgroup>
-            </select>
+                          <input type="hidden" id="aspectRatio" value="">
+              <button type="button" onclick="abrirModal('aspectRatio')" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:12px;border-radius:8px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left">
+                <span id="aspectRatio-display" style="opacity:.5">Select ratio...</span>
+                <span style="font-size:.7rem;color:#888">🖼️ Elegir</span>
+              </button>
           </div>
 
         </div>
@@ -3451,6 +3363,109 @@ var LIGHT_DATA = [
   ]}
 ];
 
+var ASPECT_DATA = [
+  { g: '── CINEMA ──', items: [
+    { v: '2.39:1 Anamorphic Scope', i: '🎬' },
+    { v: '2.35:1 Panavision Scope', i: '🎞️' },
+    { v: '1.85:1 US Standard', i: '🇺🇸' },
+    { v: '1.66:1 European', i: '🇪🇺' },
+    { v: '1.43:1 IMAX', i: '🖥️' }
+  ]},
+  { g: '── DIGITAL ──', items: [
+    { v: '16:9 HD/4K Standard', i: '📺' },
+    { v: '21:9 Ultra Wide', i: '🖥️' },
+    { v: '4:3 Classic TV', i: '📻' },
+    { v: '1:1 Square', i: '⬜' }
+  ]},
+  { g: '── VERTICAL ──', items: [
+    { v: '9:16 TikTok/Reels', i: '📱' },
+    { v: '4:5 Instagram Portrait', i: '📸' }
+  ]}
+];
+
+var FILMGRAIN_DATA = [
+  { g: '── CELLULOID GRAIN ──', items: [
+    { v: '8mm Film Grain (heavy, vintage, shaky)', i: '📽️' },
+    { v: 'Super 16mm Grain (indie, organic texture)', i: '🎞️' },
+    { v: '35mm Fine Grain (classic cinema)', i: '🎬' },
+    { v: '35mm Heavy Grain (pushed film, gritty)', i: '⬛' },
+    { v: '65mm / 70mm Ultra Fine Grain (IMAX quality)', i: '🖥️' },
+    { v: 'Double-X B&W Grain (Lighthouse, Schindler)', i: '⬜' },
+    { v: 'Tri-X 400 Grain (photojournalism, raw)', i: '📰' },
+    { v: 'Kodachrome Fine Grain (warm, nostalgic)', i: '🧡' },
+    { v: 'CineStill Halation (red/orange halos on lights)', i: '🔴' },
+    { v: 'Expired Film Grain (unpredictable, degraded)', i: '📜' }
+  ]},
+  { g: '── HISTORICAL EMULSIONS ──', items: [
+    { v: 'Kodak Vision3 Emulsion (modern cinema)', i: '🎥' },
+    { v: 'Fujifilm Eterna Emulsion (soft Japanese)', i: '🌸' },
+    { v: 'Technicolor IB Print (saturated vintage)', i: '🌈' },
+    { v: 'Autochrome (1900s early color, mosaic)', i: '🎨' },
+    { v: 'Daguerreotype (1840s silver mirror)', i: '🪞' },
+    { v: 'Cyanotype (blue monochrome print)', i: '🔵' },
+    { v: 'Platinum Print (smooth, rich tones)', i: '🥈' },
+    { v: 'Tintype / Ferrotype (metal plate, dark)', i: '🔲' },
+    { v: 'Albumen Print (1860s sepia, delicate)', i: '📃' },
+    { v: 'Wet Plate Collodion (sharp center, soft edges)', i: '💧' }
+  ]},
+  { g: '── SPECIAL PROCESSES ──', items: [
+    { v: 'ENR / Skip Bleach (desaturated, contrast)', i: '🖤' },
+    { v: 'Cross-Process E-6 in C-41 (shifted colors)', i: '🔀' },
+    { v: 'Push Process +1 stop (more grain, contrast)', i: '⬆️' },
+    { v: 'Push Process +2 stops (heavy grain, gritty)', i: '⏫' },
+    { v: 'Pull Process -1 stop (less contrast, soft)', i: '⬇️' },
+    { v: 'Bleach Bypass (silver retention, harsh)', i: '🫧' },
+    { v: 'Solarization (inverted tones, surreal)', i: '☀️' },
+    { v: 'Redscale (shot through base, red/orange)', i: '🟠' }
+  ]},
+  { g: '── DIGITAL ──', items: [
+    { v: 'No Grain (clean digital)', i: '💻' },
+    { v: 'Digital Noise ISO 3200+ (digital grain)', i: '📱' },
+    { v: 'AI Film Grain Emulation (fake but pretty)', i: '🤖' }
+  ]}
+];
+
+var LENSFILTER_DATA = [
+  { g: '── DIFFUSION / SOFT ──', items: [
+    { v: 'Black Pro-Mist 1/4 (subtle glow)', i: '🌫️' },
+    { v: 'Black Pro-Mist 1/2 (moderate glow)', i: '💫' },
+    { v: 'Black Pro-Mist 1 (strong halation)', i: '✨' },
+    { v: 'Glimmerglass 1/4 (gentle shimmer)', i: '💎' },
+    { v: 'Glimmerglass 1/2 (sparkle highlights)', i: '⭐' },
+    { v: 'Classic Soft FX (dreamy softness)', i: '🕊️' },
+    { v: 'Hollywood Black Magic (cinema soft)', i: '🎬' },
+    { v: 'Tiffen Pearlescent (skin glow)', i: '🌸' },
+    { v: 'Tiffen Satin (silk-like softness)', i: '🧣' },
+    { v: 'Schneider Classic Soft (vintage soft)', i: '📜' },
+    { v: 'Cinebloom 10% (subtle bloom)', i: '🌷' },
+    { v: 'Cinebloom 20% (visible bloom)', i: '🌺' }
+  ]},
+  { g: '── EFFECTS ──', items: [
+    { v: 'Streak Filter (anamorphic flares)', i: '✴️' },
+    { v: 'Star Filter 4-point', i: '✦' },
+    { v: 'Star Filter 6-point', i: '✶' },
+    { v: 'Star Filter 8-point', i: '✸' },
+    { v: 'Fog Filter 1/4 (light fog)', i: '🌁' },
+    { v: 'Fog Filter 1/2 (medium fog)', i: '🌫️' },
+    { v: 'Fog Filter 1 (heavy fog)', i: '☁️' },
+    { v: 'Low Contrast Filter', i: '🔳' }
+  ]},
+  { g: '── TECHNICAL ──', items: [
+    { v: 'Polarizer (reduce reflections, deep sky)', i: '🔵' },
+    { v: 'ND Filter (reduce light, wide aperture)', i: '⬛' },
+    { v: 'Graduated ND (balance sky/ground)', i: '◐' },
+    { v: 'UV Haze Filter (cut haze)', i: '☀️' },
+    { v: 'IR Cut Filter (infrared block)', i: '🔴' },
+    { v: 'Warm Polarizer (warm tones + polarize)', i: '🟠' }
+  ]},
+  { g: '── CREATIVE / DIY ──', items: [
+    { v: 'Vaseline on UV (vintage dream)', i: '🫧' },
+    { v: 'Crystal Prism (rainbow refraction)', i: '🌈' },
+    { v: 'Broken Glass in front (distortion)', i: '💔' },
+    { v: 'Nylon Stocking (old Hollywood soft)', i: '🩱' }
+  ]}
+];
+
 var ISO_DATA = [
   { g: '── CLEAN / LOW NOISE ──', items: [
     { v: 'ISO 50 (ultra clean, studio)', i: '💎' },
@@ -3699,6 +3714,9 @@ function abrirModal(id) {
   if (id === 'aperture') datos = APERTURE_DATA;
   if (id === 'shutterSpeed') datos = SHUTTER_DATA;
   if (id === 'iso') datos = ISO_DATA;
+  if (id === 'lensFilter') datos = LENSFILTER_DATA;
+  if (id === 'filmGrain') datos = FILMGRAIN_DATA;
+  if (id === 'aspectRatio') datos = ASPECT_DATA;
   if (id === 'photographer') datos = PHOTO_DATA;
   if (id === 'movieRef') datos = MOVIE_DATA;
   if (!datos) return;
@@ -3734,7 +3752,7 @@ function cerrarModal(id) {
 
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
-            var ids = ['shotType', 'lighting', 'photographer', 'movieRef', 'viewDirection', 'filmStock', 'focalLength', 'aperture', 'shutterSpeed', 'iso'];
+            var ids = ['shotType', 'lighting', 'photographer', 'movieRef', 'viewDirection', 'filmStock', 'focalLength', 'aperture', 'shutterSpeed', 'iso', 'lensFilter', 'filmGrain', 'aspectRatio'];
     ids.forEach(function(id) {
       var m = document.getElementById('kurimodal-' + id);
       if (m && m.style.display === 'flex') cerrarModal(id);
@@ -4471,6 +4489,45 @@ function clearAll() {
 <input type="text" placeholder="🔍 Buscar ISO..." oninput="buscarModal('iso',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
 </div>
 <div id="kurimodal-iso-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
+</div>
+</div>
+
+<div id="kurimodal-filmGrain" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px" onclick="if(event.target===this)cerrarModal('filmGrain')">
+<div style="background:#111;border:1px solid #333;border-radius:12px;width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:16px 20px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center">
+<h3 style="color:var(--active);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin:0">🎞️ Grano y Emulsión</h3>
+<button type="button" onclick="cerrarModal('filmGrain')" style="background:none;border:none;color:#888;font-size:1.5rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+<div style="padding:10px 20px;border-bottom:1px solid #333">
+<input type="text" placeholder="🔍 Buscar grano..." oninput="buscarModal('filmGrain',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
+</div>
+<div id="kurimodal-filmGrain-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
+</div>
+</div>
+
+<div id="kurimodal-lensFilter" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px" onclick="if(event.target===this)cerrarModal('lensFilter')">
+<div style="background:#111;border:1px solid #333;border-radius:12px;width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:16px 20px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center">
+<h3 style="color:var(--active);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin:0">🔮 Filtros de Lentes</h3>
+<button type="button" onclick="cerrarModal('lensFilter')" style="background:none;border:none;color:#888;font-size:1.5rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+<div style="padding:10px 20px;border-bottom:1px solid #333">
+<input type="text" placeholder="🔍 Buscar filtro..." oninput="buscarModal('lensFilter',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
+</div>
+<div id="kurimodal-lensFilter-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
+</div>
+</div>
+
+<div id="kurimodal-aspectRatio" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px" onclick="if(event.target===this)cerrarModal('aspectRatio')">
+<div style="background:#111;border:1px solid #333;border-radius:12px;width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:16px 20px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center">
+<h3 style="color:var(--active);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin:0">📐 Relación de Aspecto</h3>
+<button type="button" onclick="cerrarModal('aspectRatio')" style="background:none;border:none;color:#888;font-size:1.5rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+<div style="padding:10px 20px;border-bottom:1px solid #333">
+<input type="text" placeholder="🔍 Buscar ratio..." oninput="buscarModal('aspectRatio',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
+</div>
+<div id="kurimodal-aspectRatio-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
 </div>
 </div>
 
