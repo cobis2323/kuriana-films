@@ -953,107 +953,11 @@ select option{background:var(--bg3);color:var(--text)}
         <div class="module-body">
           <div class="field">
             <div class="field-label">Estilo / Estética</div>
-            <select id="animeStyle" onchange="buildAnimePrompt()">
-              <option value="">Seleccionar estilo de animación...</option>
-              <optgroup label="── ANIME CLÁSICO / RETRO ──">
-                <option>70s Anime (Mazinger, Heidi)</option>
-                <option>80s Anime (Akira, Dragon Ball, Macross)</option>
-                <option>80s OVA Style (Bubblegum Crisis)</option>
-                <option>90s Anime (Evangelion, Cowboy Bebop)</option>
-                <option>Early 2000s Anime (FLCL, Samurai Champloo)</option>
-                <option>Modern Anime (Demon Slayer, JJK)</option>
-                <option>Retro-Futuristic Anime (Cowboy Bebop, Trigun)</option>
-              </optgroup>
-              <optgroup label="── ANIME POR ESTUDIO ──">
-                <option>Studio Ghibli (Miyazaki)</option>
-                <option>Studio Ghibli Dark (Mononoke, Nausicaä)</option>
-                <option>Makoto Shinkai (Your Name)</option>
-                <option>Satoshi Kon (Perfect Blue, Paprika)</option>
-                <option>Masaaki Yuasa (Devilman Crybaby)</option>
-                <option>Ufotable (Demon Slayer)</option>
-                <option>MAPPA (Jujutsu Kaisen, AoT)</option>
-                <option>Madhouse (Death Note, One Punch Man)</option>
-                <option>Wit Studio (Attack on Titan S1-3)</option>
-                <option>Trigger (Kill la Kill, Promare)</option>
-                <option>Shaft (Monogatari, Madoka)</option>
-                <option>Kyoto Animation (Violet Evergarden)</option>
-                <option>Toei Classic (Dragon Ball, Sailor Moon)</option>
-              </optgroup>
-              <optgroup label="── ANIME POR GÉNERO ──">
-                <option>Shonen Style (action, power)</option>
-                <option>Shojo Style (romance, sparkles)</option>
-                <option>Seinen Style (mature, detailed)</option>
-                <option>Chibi / Super Deformed</option>
-                <option>Mecha Anime (giant robots)</option>
-                <option>Isekai Fantasy (another world, RPG)</option>
-                <option>Slice of Life (warm, daily)</option>
-                <option>Dark Anime / Gothic (Berserk)</option>
-                <option>Anime Watercolor</option>
-              </optgroup>
-              <optgroup label="── ANIMACIÓN OCCIDENTAL ──">
-                <option>Disney Renaissance 90s</option>
-                <option>Disney Classic (30s-60s)</option>
-                <option>Pixar Style (Toy Story, Up)</option>
-                <option>Pixar Stylized (Soul, Elemental)</option>
-                <option>DreamWorks (Shrek, Kung Fu Panda)</option>
-                <option>Laika (Coraline, Kubo)</option>
-                <option>Spider-Verse Style</option>
-                <option>Arcane Style (League of Legends)</option>
-                <option>Castlevania Style (Netflix)</option>
-                <option>Samurai Jack Style</option>
-                <option>Primal (Genndy Tartakovsky)</option>
-                <option>Love Death Robots Style</option>
-                <option>Cartoon Network (Adventure Time)</option>
-                <option>Adult Swim (Rick and Morty)</option>
-                <option>Aardman Claymation (Wallace & Gromit)</option>
-              </optgroup>
-              <optgroup label="── MOVIMIENTOS ARTÍSTICOS ──">
-                <option>Art Nouveau Animation</option>
-                <option>Art Deco Animation</option>
-                <option>Ukiyo-e Animation (Japanese woodblock)</option>
-                <option>Ink Wash / Sumi-e Animation</option>
-                <option>Oil Painting Animation (Loving Vincent)</option>
-                <option>Charcoal / Pencil Animation</option>
-                <option>Stained Glass Animation</option>
-                <option>Paper Cut Animation</option>
-                <option>Woodcut / Linocut Animation</option>
-              </optgroup>
-              <optgroup label="── GÉNEROS PUNK ──">
-                <option>Cyberpunk</option>
-                <option>Steampunk</option>
-                <option>Dieselpunk</option>
-                <option>Atompunk / Raygun Gothic</option>
-                <option>Solarpunk</option>
-                <option>Biopunk</option>
-                <option>Cassettepunk / Synthwave</option>
-                <option>Decopunk (Bioshock, Metropolis)</option>
-                <option>Lunarpunk (bioluminescent)</option>
-                <option>Salvagepunk / Trashpunk (Mad Max)</option>
-                <option>Silkpunk (Asian steampunk)</option>
-                <option>Mythpunk (reimagined mythology)</option>
-              </optgroup>
-              <optgroup label="── CÓMIC / SUPERHÉROE ──">
-                <option>Marvel Comic Classic</option>
-                <option>DC Comic Dark (Frank Miller)</option>
-                <option>Sin City Style (B&W + color)</option>
-                <option>Mike Mignola / Hellboy</option>
-                <option>Moebius / Jean Giraud</option>
-                <option>Manga Panel Style</option>
-                <option>Pop Art (Warhol, Lichtenstein)</option>
-                <option>Graphic Novel Realism</option>
-              </optgroup>
-              <optgroup label="── OTROS ESTILOS ──">
-                <option>LEGO Style</option>
-                <option>Voxel Art (3D pixel)</option>
-                <option>Pixel Art (16-bit, 32-bit)</option>
-                <option>Low Poly 3D</option>
-                <option>Isometric Art</option>
-                <option>Flat Design / Vector</option>
-                <option>Claymation / Stop Motion</option>
-                <option>Rotoscoping (A Scanner Darkly)</option>
-                <option>Silhouette Animation</option>
-              </optgroup>
-            </select>
+                        <input type="hidden" id="animeStyle" value="">
+              <button type="button" onclick="abrirModal('animeStyle')" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:12px;border-radius:8px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left">
+                <span id="animeStyle-display" style="opacity:.5">Seleccionar estilo de animación...</span>
+                <span style="font-size:.7rem;color:#888">🎨 Elegir</span>
+              </button>
           </div>
         </div>
       </div>
@@ -3269,6 +3173,107 @@ var LIGHT_DATA = [
   ]}
 ];
 
+var ANIMESTYLE_DATA = [
+  { g: '── ANIME CLÁSICO / RETRO ──', items: [
+    { v: '70s Anime (Mazinger, Heidi)', i: '📺' },
+    { v: '80s Anime (Akira, Dragon Ball, Macross)', i: '🤖' },
+    { v: '80s OVA Style (Bubblegum Crisis)', i: '📼' },
+    { v: '90s Anime (Evangelion, Cowboy Bebop)', i: '🚀' },
+    { v: 'Early 2000s Anime (FLCL, Samurai Champloo)', i: '⚡' },
+    { v: 'Modern Anime (Demon Slayer, JJK)', i: '🔥' },
+    { v: 'Retro-Futuristic Anime (Cowboy Bebop, Trigun)', i: '🌌' }
+  ]},
+  { g: '── ANIME POR ESTUDIO ──', items: [
+    { v: 'Studio Ghibli (Miyazaki)', i: '🌿' },
+    { v: 'Studio Ghibli Dark (Mononoke, Nausicaä)', i: '🐺' },
+    { v: 'Makoto Shinkai (Your Name)', i: '☄️' },
+    { v: 'Satoshi Kon (Perfect Blue, Paprika)', i: '🌀' },
+    { v: 'Masaaki Yuasa (Devilman Crybaby)', i: '😈' },
+    { v: 'Ufotable (Demon Slayer)', i: '⚔️' },
+    { v: 'MAPPA (Jujutsu Kaisen, AoT)', i: '💀' },
+    { v: 'Madhouse (Death Note, One Punch Man)', i: '👊' },
+    { v: 'Wit Studio (Attack on Titan S1-3)', i: '🏰' },
+    { v: 'Trigger (Kill la Kill, Promare)', i: '✂️' },
+    { v: 'Shaft (Monogatari, Madoka)', i: '💎' },
+    { v: 'Kyoto Animation (Violet Evergarden)', i: '💜' },
+    { v: 'Toei Classic (Dragon Ball, Sailor Moon)', i: '🌙' }
+  ]},
+  { g: '── ANIME POR GÉNERO ──', items: [
+    { v: 'Shonen Style (action, power)', i: '💪' },
+    { v: 'Shojo Style (romance, sparkles)', i: '💖' },
+    { v: 'Seinen Style (mature, detailed)', i: '🎭' },
+    { v: 'Chibi / Super Deformed', i: '🧸' },
+    { v: 'Mecha Anime (giant robots)', i: '🤖' },
+    { v: 'Isekai Fantasy (another world, RPG)', i: '⚔️' },
+    { v: 'Slice of Life (warm, daily)', i: '☕' },
+    { v: 'Dark Anime / Gothic (Berserk)', i: '⬛' },
+    { v: 'Anime Watercolor', i: '🎨' }
+  ]},
+  { g: '── ANIMACIÓN OCCIDENTAL ──', items: [
+    { v: 'Disney Renaissance 90s', i: '👸' },
+    { v: 'Disney Classic (30s-60s)', i: '🏰' },
+    { v: 'Pixar Style (Toy Story, Up)', i: '🎈' },
+    { v: 'Pixar Stylized (Soul, Elemental)', i: '🔮' },
+    { v: 'DreamWorks (Shrek, Kung Fu Panda)', i: '🐼' },
+    { v: 'Laika (Coraline, Kubo)', i: '🧵' },
+    { v: 'Spider-Verse Style', i: '🕷️' },
+    { v: 'Arcane Style (League of Legends)', i: '💥' },
+    { v: 'Castlevania Style (Netflix)', i: '🧛' },
+    { v: 'Samurai Jack Style', i: '⛩️' },
+    { v: 'Primal (Genndy Tartakovsky)', i: '🦖' },
+    { v: 'Love Death Robots Style', i: '❤️' },
+    { v: 'Cartoon Network (Adventure Time)', i: '🌈' },
+    { v: 'Adult Swim (Rick and Morty)', i: '🧪' },
+    { v: 'Aardman Claymation (Wallace & Gromit)', i: '🧀' }
+  ]},
+  { g: '── MOVIMIENTOS ARTÍSTICOS ──', items: [
+    { v: 'Art Nouveau Animation', i: '🌺' },
+    { v: 'Art Deco Animation', i: '🏛️' },
+    { v: 'Ukiyo-e Animation (Japanese woodblock)', i: '🗾' },
+    { v: 'Ink Wash / Sumi-e Animation', i: '🖌️' },
+    { v: 'Oil Painting Animation (Loving Vincent)', i: '🖼️' },
+    { v: 'Charcoal / Pencil Animation', i: '✏️' },
+    { v: 'Stained Glass Animation', i: '🪟' },
+    { v: 'Paper Cut Animation', i: '📄' },
+    { v: 'Woodcut / Linocut Animation', i: '🪵' }
+  ]},
+  { g: '── GÉNEROS PUNK ──', items: [
+    { v: 'Cyberpunk', i: '🌃' },
+    { v: 'Steampunk', i: '⚙️' },
+    { v: 'Dieselpunk', i: '🛢️' },
+    { v: 'Atompunk / Raygun Gothic', i: '☢️' },
+    { v: 'Solarpunk', i: '🌱' },
+    { v: 'Biopunk', i: '🧬' },
+    { v: 'Cassettepunk / Synthwave', i: '📼' },
+    { v: 'Decopunk (Bioshock, Metropolis)', i: '🏙️' },
+    { v: 'Lunarpunk (bioluminescent)', i: '🌙' },
+    { v: 'Salvagepunk / Trashpunk (Mad Max)', i: '🔧' },
+    { v: 'Silkpunk (Asian steampunk)', i: '🎋' },
+    { v: 'Mythpunk (reimagined mythology)', i: '🐉' }
+  ]},
+  { g: '── CÓMIC / SUPERHÉROE ──', items: [
+    { v: 'Marvel Comic Classic', i: '🦸' },
+    { v: 'DC Comic Dark (Frank Miller)', i: '🦇' },
+    { v: 'Sin City Style (B&W + color)', i: '🖤' },
+    { v: 'Mike Mignola / Hellboy', i: '👹' },
+    { v: 'Moebius / Jean Giraud', i: '🚀' },
+    { v: 'Manga Panel Style', i: '📖' },
+    { v: 'Pop Art (Warhol, Lichtenstein)', i: '🎨' },
+    { v: 'Graphic Novel Realism', i: '📕' }
+  ]},
+  { g: '── OTROS ESTILOS ──', items: [
+    { v: 'LEGO Style', i: '🧱' },
+    { v: 'Voxel Art (3D pixel)', i: '🟦' },
+    { v: 'Pixel Art (16-bit, 32-bit)', i: '👾' },
+    { v: 'Low Poly 3D', i: '🔺' },
+    { v: 'Isometric Art', i: '🔷' },
+    { v: 'Flat Design / Vector', i: '📐' },
+    { v: 'Claymation / Stop Motion', i: '🧸' },
+    { v: 'Rotoscoping (A Scanner Darkly)', i: '🎭' },
+    { v: 'Silhouette Animation', i: '🌑' }
+  ]}
+];
+
 var MOOD_DATA = [
   { g: '── OSCURO / DRAMÁTICO ──', items: [
     { v: 'Moody', i: '🌑' },
@@ -3745,6 +3750,7 @@ function abrirModal(id) {
   if (id === 'colorGrading') datos = GRADING_DATA;
   if (id === 'atmosphere') datos = ATMOS_DATA;
   if (id === 'mood') datos = MOOD_DATA;
+  if (id === 'animeStyle') datos = ANIMESTYLE_DATA;
   if (id === 'photographer') datos = PHOTO_DATA;
   if (id === 'movieRef') datos = MOVIE_DATA;
   if (!datos) return;
@@ -3780,7 +3786,7 @@ function cerrarModal(id) {
 
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
-            var ids = ['shotType', 'lighting', 'photographer', 'movieRef', 'viewDirection', 'filmStock', 'focalLength', 'aperture', 'shutterSpeed', 'iso', 'lensFilter', 'filmGrain', 'aspectRatio', 'colorPalette', 'colorGrading', 'atmosphere', 'mood'];
+            var ids = ['shotType', 'lighting', 'photographer', 'movieRef', 'viewDirection', 'filmStock', 'focalLength', 'aperture', 'shutterSpeed', 'iso', 'lensFilter', 'filmGrain', 'aspectRatio', 'colorPalette', 'colorGrading', 'atmosphere', 'mood', 'animeStyle'];
     ids.forEach(function(id) {
       var m = document.getElementById('kurimodal-' + id);
       if (m && m.style.display === 'flex') cerrarModal(id);
@@ -3807,7 +3813,14 @@ function elegirModal(id, el) {
     el.classList.add('picked');
   }
   cerrarModal(id);
-  buildPrompt();
+  var tab = getCurrentTab();
+  if (tab === 'cine') buildPrompt();
+  else if (tab === 'anime') buildAnimePrompt();
+  else if (tab === 'horror') buildHorrorPrompt();
+  else if (tab === 'sheet') buildSheetPrompt();
+  else if (tab === 'grilla') buildGridPrompt();
+  else if (tab === 'video') buildVideoPrompt();
+  else if (tab === 'musica') buildMusicPrompt();
 }
 
 function buscarModal(id, q) {
@@ -4608,6 +4621,19 @@ function clearAll() {
 <input type="text" placeholder="🔍 Buscar emoción..." oninput="buscarModal('mood',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
 </div>
 <div id="kurimodal-mood-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
+</div>
+</div>
+
+<div id="kurimodal-animeStyle" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px" onclick="if(event.target===this)cerrarModal('animeStyle')">
+<div style="background:#111;border:1px solid #333;border-radius:12px;width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:16px 20px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center">
+<h3 style="color:var(--active);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin:0">🎨 Estilo de Animación</h3>
+<button type="button" onclick="cerrarModal('animeStyle')" style="background:none;border:none;color:#888;font-size:1.5rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+<div style="padding:10px 20px;border-bottom:1px solid #333">
+<input type="text" placeholder="🔍 Buscar estilo..." oninput="buscarModal('animeStyle',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
+</div>
+<div id="kurimodal-animeStyle-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
 </div>
 </div>
 
