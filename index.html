@@ -804,40 +804,11 @@ select option{background:var(--bg3);color:var(--text)}
             </div>
             <div class="field">
               <div class="field-label">Distancia Focal</div>
-              <select id="focalLength" onchange="buildPrompt()">
-                <option value="">Seleccionar MM (Distancia Objetivo)...</option>
-                <optgroup label="── ULTRA WIDE ──">
-                  <option>8mm Fisheye</option>
-                  <option>14mm Ultra Wide</option>
-                  <option>16mm Ultra Wide</option>
-                  <option>18mm Wide</option>
-                  <option>20mm Wide</option>
-                </optgroup>
-                <optgroup label="── WIDE ──">
-                  <option>24mm Wide Angle</option>
-                  <option>28mm Wide</option>
-                  <option>32mm Cinematic Wide</option>
-                  <option>35mm Wide</option>
-                </optgroup>
-                <optgroup label="── STANDARD ──">
-                  <option>40mm Mild Wide</option>
-                  <option>50mm Standard</option>
-                  <option>58mm Classic</option>
-                </optgroup>
-                <optgroup label="── PORTRAIT ──">
-                  <option>85mm Portrait</option>
-                  <option>105mm Portrait</option>
-                  <option>135mm Telephoto</option>
-                </optgroup>
-                <optgroup label="── TELEPHOTO ──">
-                  <option>200mm Super Telephoto</option>
-                  <option>300mm Extreme Telephoto</option>
-                  <option>400mm Extreme</option>
-                </optgroup>
-                <optgroup label="── MACRO ──">
-                  <option>100mm Macro</option>
-                </optgroup>
-              </select>
+                            <input type="hidden" id="focalLength" value="">
+              <button type="button" onclick="abrirModal('focalLength')" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:12px;border-radius:8px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left">
+                <span id="focalLength-display" style="opacity:.5">Seleccionar MM (Distancia Objetivo)...</span>
+                <span style="font-size:.7rem;color:#888">🖼️ Elegir</span>
+              </button>
             </div>
           </div>
 
@@ -3535,6 +3506,40 @@ var LIGHT_DATA = [
   ]}
 ];
 
+var FOCAL_DATA = [
+  { g: '── ULTRA WIDE ──', items: [
+    { v: '8mm Fisheye', i: '🐟' },
+    { v: '14mm Ultra Wide', i: '🌐' },
+    { v: '16mm Ultra Wide', i: '🏔️' },
+    { v: '18mm Wide', i: '🌄' },
+    { v: '20mm Wide', i: '🏞️' }
+  ]},
+  { g: '── WIDE ──', items: [
+    { v: '24mm Wide Angle', i: '🏙️' },
+    { v: '28mm Wide', i: '🌆' },
+    { v: '32mm Cinematic Wide', i: '🎬' },
+    { v: '35mm Wide', i: '📸' }
+  ]},
+  { g: '── STANDARD ──', items: [
+    { v: '40mm Mild Wide', i: '👁️' },
+    { v: '50mm Standard', i: '👤' },
+    { v: '58mm Classic', i: '📷' }
+  ]},
+  { g: '── PORTRAIT ──', items: [
+    { v: '85mm Portrait', i: '🧑' },
+    { v: '105mm Portrait', i: '😐' },
+    { v: '135mm Telephoto', i: '🔭' }
+  ]},
+  { g: '── TELEPHOTO ──', items: [
+    { v: '200mm Super Telephoto', i: '🦅' },
+    { v: '300mm Extreme Telephoto', i: '🔬' },
+    { v: '400mm Extreme', i: '🛰️' }
+  ]},
+  { g: '── MACRO ──', items: [
+    { v: '100mm Macro', i: '🐜' }
+  ]}
+];
+
 var FILMSTOCK_DATA = [
   { g: '── CINEMA ──', items: [
     { v: 'Kodak Vision3 500T', i: '🎬' },
@@ -3675,6 +3680,7 @@ function abrirModal(id) {
   if (id === 'lighting') datos = LIGHT_DATA;
   if (id === 'viewDirection') datos = VIEWDIR_DATA;
   if (id === 'filmStock') datos = FILMSTOCK_DATA;
+  if (id === 'focalLength') datos = FOCAL_DATA;
   if (id === 'photographer') datos = PHOTO_DATA;
   if (id === 'movieRef') datos = MOVIE_DATA;
   if (!datos) return;
@@ -3710,7 +3716,7 @@ function cerrarModal(id) {
 
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
-            var ids = ['shotType', 'lighting', 'photographer', 'movieRef', 'viewDirection', 'filmStock'];
+            var ids = ['shotType', 'lighting', 'photographer', 'movieRef', 'viewDirection', 'filmStock', 'focalLength'];
     ids.forEach(function(id) {
       var m = document.getElementById('kurimodal-' + id);
       if (m && m.style.display === 'flex') cerrarModal(id);
@@ -4395,6 +4401,19 @@ function clearAll() {
 <input type="text" placeholder="🔍 Buscar film stock..." oninput="buscarModal('filmStock',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
 </div>
 <div id="kurimodal-filmStock-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
+</div>
+</div>
+
+<div id="kurimodal-focalLength" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px" onclick="if(event.target===this)cerrarModal('focalLength')">
+<div style="background:#111;border:1px solid #333;border-radius:12px;width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:16px 20px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center">
+<h3 style="color:var(--active);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin:0">🔭 Distancia Focal</h3>
+<button type="button" onclick="cerrarModal('focalLength')" style="background:none;border:none;color:#888;font-size:1.5rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+<div style="padding:10px 20px;border-bottom:1px solid #333">
+<input type="text" placeholder="🔍 Buscar focal..." oninput="buscarModal('focalLength',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
+</div>
+<div id="kurimodal-focalLength-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
 </div>
 </div>
 
