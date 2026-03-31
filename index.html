@@ -621,89 +621,20 @@ select option{background:var(--bg3);color:var(--text)}
           <div class="field-row">
             <div class="field">
               <div class="field-label">Atmósfera</div>
-              <select id="atmosphere" onchange="buildPrompt()">
-                <option value="">Seleccionar Anclajes Atmosféricos...</option>
-                <optgroup label="── CLIMA ──">
-                  <option>Clear & Crisp</option>
-                  <option>Foggy & Misty</option>
-                  <option>Light Haze</option>
-                  <option>Heavy Rain</option>
-                  <option>Light Drizzle</option>
-                  <option>Snowfall</option>
-                  <option>Sandstorm</option>
-                  <option>Dusty</option>
-                  <option>Stormy & Dramatic Clouds</option>
-                  <option>Wind-Swept</option>
-                </optgroup>
-                <optgroup label="── HUMO Y PARTÍCULAS ──">
-                  <option>Smoky / Hazy</option>
-                  <option>Fire & Embers</option>
-                  <option>Dust Particles in Light</option>
-                  <option>Sparks Flying</option>
-                  <option>Ash Falling</option>
-                </optgroup>
-                <optgroup label="── AGUA Y REFLEJOS ──">
-                  <option>Wet Streets / Puddles</option>
-                  <option>Steam / Hot Springs</option>
-                  <option>Dewy Morning</option>
-                  <option>Frozen / Icy</option>
-                </optgroup>
-                <optgroup label="── EFECTOS DE LUZ ──">
-                  <option>God Rays / Light Shafts</option>
-                  <option>Bokeh Lights</option>
-                  <option>Neon Glow</option>
-                  <option>Lens Flare Heavy</option>
-                </optgroup>
-              </select>
+                            <input type="hidden" id="atmosphere" value="">
+              <button type="button" onclick="abrirModal('atmosphere')" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:12px;border-radius:8px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left">
+                <span id="atmosphere-display" style="opacity:.5">Seleccionar Anclajes Atmosféricos...</span>
+                <span style="font-size:.7rem;color:#888">🎨 Elegir</span>
+              </button>
             </div>
 
             <div class="field">
               <div class="field-label">Estado de Ánimo y Emoción</div>
-              <select id="mood" onchange="buildPrompt()">
-                <option value="">Seleccionar Emociones...</option>
-                <optgroup label="── OSCURO / DRAMÁTICO ──">
-                  <option>Moody</option>
-                  <option>Cinematic</option>
-                  <option>Gritty</option>
-                  <option>Dark & Brooding</option>
-                  <option>Noir</option>
-                  <option>Tense & Suspenseful</option>
-                  <option>Ominous & Threatening</option>
-                  <option>Eerie & Unsettling</option>
-                  <option>Apocalyptic</option>
-                </optgroup>
-                <optgroup label="── REFLEXIVO ──">
-                  <option>Melancholic</option>
-                  <option>Lonely & Isolated</option>
-                  <option>Contemplative</option>
-                  <option>Nostalgic</option>
-                  <option>Bittersweet</option>
-                  <option>Vulnerable</option>
-                </optgroup>
-                <optgroup label="── CÁLIDO / POSITIVO ──">
-                  <option>Romantic</option>
-                  <option>Dreamy & Ethereal</option>
-                  <option>Hopeful & Uplifting</option>
-                  <option>Warm & Intimate</option>
-                  <option>Joyful & Vibrant</option>
-                  <option>Peaceful & Serene</option>
-                  <option>Magical & Enchanting</option>
-                </optgroup>
-                <optgroup label="── ACCIÓN / ENERGÍA ──">
-                  <option>Epic & Grand</option>
-                  <option>Heroic</option>
-                  <option>Intense & Raw</option>
-                  <option>Chaotic & Frantic</option>
-                  <option>Powerful & Dominant</option>
-                </optgroup>
-                <optgroup label="── MISTERIO / FANTASÍA ──">
-                  <option>Mysterious</option>
-                  <option>Surreal & Otherworldly</option>
-                  <option>Futuristic</option>
-                  <option>Ancient & Mythical</option>
-                  <option>Psychedelic</option>
-                </optgroup>
-              </select>
+                            <input type="hidden" id="mood" value="">
+              <button type="button" onclick="abrirModal('mood')" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:12px;border-radius:8px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left">
+                <span id="mood-display" style="opacity:.5">Seleccionar Emociones...</span>
+                <span style="font-size:.7rem;color:#888">🎨 Elegir</span>
+              </button>
             </div>
           </div>
 
@@ -937,23 +868,11 @@ select option{background:var(--bg3);color:var(--text)}
             </div>
             <div class="field">
               <div class="field-label">Gradación de Color / LUT</div>
-              <select id="colorGrading" onchange="buildPrompt()">
-                <option value="">Seleccionar Gradación...</option>
-                <option>Teal & Orange (Hollywood)</option>
-                <option>Bleach Bypass</option>
-                <option>Cross Process</option>
-                <option>Kodachrome Look</option>
-                <option>Portra 400 Look</option>
-                <option>CineStill 800T Look</option>
-                <option>Fujifilm Pro 400H Look</option>
-                <option>Technicolor</option>
-                <option>Film Noir Grade</option>
-                <option>ENR / Skip Bleach</option>
-                <option>Vintage 70s Grade</option>
-                <option>Vintage 80s Grade</option>
-                <option>K-Drama Soft Grade</option>
-                <option>LOG / Flat (no grading)</option>
-              </select>
+                            <input type="hidden" id="colorGrading" value="">
+              <button type="button" onclick="abrirModal('colorGrading')" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:12px;border-radius:8px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left">
+                <span id="colorGrading-display" style="opacity:.5">Seleccionar Gradación...</span>
+                <span style="font-size:.7rem;color:#888">🎨 Elegir</span>
+              </button>
             </div>
           </div>
         </div>
@@ -3350,6 +3269,104 @@ var LIGHT_DATA = [
   ]}
 ];
 
+var MOOD_DATA = [
+  { g: '── OSCURO / DRAMÁTICO ──', items: [
+    { v: 'Moody', i: '🌑' },
+    { v: 'Cinematic', i: '🎬' },
+    { v: 'Gritty', i: '🪨' },
+    { v: 'Dark & Brooding', i: '⬛' },
+    { v: 'Noir', i: '🖤' },
+    { v: 'Tense & Suspenseful', i: '😰' },
+    { v: 'Ominous & Threatening', i: '⚠️' },
+    { v: 'Eerie & Unsettling', i: '👁️' },
+    { v: 'Apocalyptic', i: '💀' }
+  ]},
+  { g: '── REFLEXIVO ──', items: [
+    { v: 'Melancholic', i: '😢' },
+    { v: 'Lonely & Isolated', i: '🏚️' },
+    { v: 'Contemplative', i: '🤔' },
+    { v: 'Nostalgic', i: '📸' },
+    { v: 'Bittersweet', i: '🥀' },
+    { v: 'Vulnerable', i: '💔' }
+  ]},
+  { g: '── CÁLIDO / POSITIVO ──', items: [
+    { v: 'Romantic', i: '❤️' },
+    { v: 'Dreamy & Ethereal', i: '☁️' },
+    { v: 'Hopeful & Uplifting', i: '🌅' },
+    { v: 'Warm & Intimate', i: '🕯️' },
+    { v: 'Joyful & Vibrant', i: '🎉' },
+    { v: 'Peaceful & Serene', i: '🕊️' },
+    { v: 'Magical & Enchanting', i: '✨' }
+  ]},
+  { g: '── ACCIÓN / ENERGÍA ──', items: [
+    { v: 'Epic & Grand', i: '⚔️' },
+    { v: 'Heroic', i: '🦸' },
+    { v: 'Intense & Raw', i: '🔥' },
+    { v: 'Chaotic & Frantic', i: '🌪️' },
+    { v: 'Powerful & Dominant', i: '👑' }
+  ]},
+  { g: '── MISTERIO / FANTASÍA ──', items: [
+    { v: 'Mysterious', i: '🔮' },
+    { v: 'Surreal & Otherworldly', i: '🌀' },
+    { v: 'Futuristic', i: '🚀' },
+    { v: 'Ancient & Mythical', i: '🏛️' },
+    { v: 'Psychedelic', i: '🍄' }
+  ]}
+];
+
+var ATMOS_DATA = [
+  { g: '── CLIMA ──', items: [
+    { v: 'Clear & Crisp', i: '☀️' },
+    { v: 'Foggy & Misty', i: '🌫️' },
+    { v: 'Light Haze', i: '🌤️' },
+    { v: 'Heavy Rain', i: '🌧️' },
+    { v: 'Light Drizzle', i: '🌦️' },
+    { v: 'Snowfall', i: '❄️' },
+    { v: 'Sandstorm', i: '🏜️' },
+    { v: 'Dusty', i: '💨' },
+    { v: 'Stormy & Dramatic Clouds', i: '⛈️' },
+    { v: 'Wind-Swept', i: '🌬️' }
+  ]},
+  { g: '── HUMO Y PARTÍCULAS ──', items: [
+    { v: 'Smoky / Hazy', i: '🌁' },
+    { v: 'Fire & Embers', i: '🔥' },
+    { v: 'Dust Particles in Light', i: '✨' },
+    { v: 'Sparks Flying', i: '⚡' },
+    { v: 'Ash Falling', i: '🌋' }
+  ]},
+  { g: '── AGUA Y REFLEJOS ──', items: [
+    { v: 'Wet Streets / Puddles', i: '🌊' },
+    { v: 'Steam / Hot Springs', i: '♨️' },
+    { v: 'Dewy Morning', i: '💧' },
+    { v: 'Frozen / Icy', i: '🧊' }
+  ]},
+  { g: '── EFECTOS DE LUZ ──', items: [
+    { v: 'God Rays / Light Shafts', i: '🌅' },
+    { v: 'Bokeh Lights', i: '💫' },
+    { v: 'Neon Glow', i: '💜' },
+    { v: 'Lens Flare Heavy', i: '🔆' }
+  ]}
+];
+
+var GRADING_DATA = [
+  { g: '── GRADACIÓN DE COLOR / LUT ──', items: [
+    { v: 'Teal & Orange (Hollywood)', i: '🟢' },
+    { v: 'Bleach Bypass', i: '🫧' },
+    { v: 'Cross Process', i: '🔀' },
+    { v: 'Kodachrome Look', i: '🧡' },
+    { v: 'Portra 400 Look', i: '👤' },
+    { v: 'CineStill 800T Look', i: '🌃' },
+    { v: 'Fujifilm Pro 400H Look', i: '🌿' },
+    { v: 'Technicolor', i: '🌈' },
+    { v: 'Film Noir Grade', i: '⬛' },
+    { v: 'ENR / Skip Bleach', i: '🖤' },
+    { v: 'Vintage 70s Grade', i: '🕰️' },
+    { v: 'Vintage 80s Grade', i: '📼' },
+    { v: 'K-Drama Soft Grade', i: '🌸' },
+    { v: 'LOG / Flat (no grading)', i: '📊' }
+  ]}
+];
+
 var PALETTE_DATA = [
   { g: '── PALETAS DE COLOR ──', items: [
     { v: 'Warm Tones (amber, gold)', i: '🟠' },
@@ -3725,6 +3742,9 @@ function abrirModal(id) {
   if (id === 'filmGrain') datos = FILMGRAIN_DATA;
   if (id === 'aspectRatio') datos = ASPECT_DATA;
   if (id === 'colorPalette') datos = PALETTE_DATA;
+  if (id === 'colorGrading') datos = GRADING_DATA;
+  if (id === 'atmosphere') datos = ATMOS_DATA;
+  if (id === 'mood') datos = MOOD_DATA;
   if (id === 'photographer') datos = PHOTO_DATA;
   if (id === 'movieRef') datos = MOVIE_DATA;
   if (!datos) return;
@@ -3760,7 +3780,7 @@ function cerrarModal(id) {
 
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
-            var ids = ['shotType', 'lighting', 'photographer', 'movieRef', 'viewDirection', 'filmStock', 'focalLength', 'aperture', 'shutterSpeed', 'iso', 'lensFilter', 'filmGrain', 'aspectRatio', 'colorPalette'];
+            var ids = ['shotType', 'lighting', 'photographer', 'movieRef', 'viewDirection', 'filmStock', 'focalLength', 'aperture', 'shutterSpeed', 'iso', 'lensFilter', 'filmGrain', 'aspectRatio', 'colorPalette', 'colorGrading', 'atmosphere', 'mood'];
     ids.forEach(function(id) {
       var m = document.getElementById('kurimodal-' + id);
       if (m && m.style.display === 'flex') cerrarModal(id);
@@ -4549,6 +4569,45 @@ function clearAll() {
 <input type="text" placeholder="🔍 Buscar paleta..." oninput="buscarModal('colorPalette',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
 </div>
 <div id="kurimodal-colorPalette-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
+</div>
+</div>
+
+<div id="kurimodal-colorGrading" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px" onclick="if(event.target===this)cerrarModal('colorGrading')">
+<div style="background:#111;border:1px solid #333;border-radius:12px;width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:16px 20px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center">
+<h3 style="color:var(--active);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin:0">🎭 Gradación de Color / LUT</h3>
+<button type="button" onclick="cerrarModal('colorGrading')" style="background:none;border:none;color:#888;font-size:1.5rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+<div style="padding:10px 20px;border-bottom:1px solid #333">
+<input type="text" placeholder="🔍 Buscar gradación..." oninput="buscarModal('colorGrading',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
+</div>
+<div id="kurimodal-colorGrading-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
+</div>
+</div>
+
+<div id="kurimodal-atmosphere" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px" onclick="if(event.target===this)cerrarModal('atmosphere')">
+<div style="background:#111;border:1px solid #333;border-radius:12px;width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:16px 20px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center">
+<h3 style="color:var(--active);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin:0">🌫️ Atmósfera</h3>
+<button type="button" onclick="cerrarModal('atmosphere')" style="background:none;border:none;color:#888;font-size:1.5rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+<div style="padding:10px 20px;border-bottom:1px solid #333">
+<input type="text" placeholder="🔍 Buscar atmósfera..." oninput="buscarModal('atmosphere',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
+</div>
+<div id="kurimodal-atmosphere-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
+</div>
+</div>
+
+<div id="kurimodal-mood" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px" onclick="if(event.target===this)cerrarModal('mood')">
+<div style="background:#111;border:1px solid #333;border-radius:12px;width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:16px 20px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center">
+<h3 style="color:var(--active);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin:0">💭 Estado de Ánimo y Emoción</h3>
+<button type="button" onclick="cerrarModal('mood')" style="background:none;border:none;color:#888;font-size:1.5rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+<div style="padding:10px 20px;border-bottom:1px solid #333">
+<input type="text" placeholder="🔍 Buscar emoción..." oninput="buscarModal('mood',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
+</div>
+<div id="kurimodal-mood-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
 </div>
 </div>
 
