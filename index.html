@@ -1224,64 +1224,11 @@ select option{background:var(--bg3);color:var(--text)}
             </div>
             <div class="field">
               <div class="field-label">Estética Visual de Película</div>
-              <select id="movieRef" onchange="buildPrompt()">
-                <option value="">Seleccionar estética...</option>
-                <optgroup label="── ESTÉTICAS CINEMATOGRÁFICAS ──">
-                  <option>Blade Runner 2049 (Deakins)</option>
-                  <option>Dune (Greig Fraser)</option>
-                  <option>Vesper (Feliksas Abrukauskas)</option>
-                  <option>Prometheus (Dariusz Wolski)</option>
-                  <option>1917 (Deakins)</option>
-                  <option>The Revenant (Lubezki)</option>
-                  <option>Children of Men (Lubezki)</option>
-                  <option>Interstellar (Hoytema)</option>
-                  <option>Oppenheimer (Hoytema)</option>
-                  <option>No Country for Old Men (Deakins)</option>
-                </optgroup>
-                <optgroup label="── ARTIFICIAL Y ONÍRICO ──">
-                  <option>Amélie (Delbonnel)</option>
-                  <option>In the Mood for Love (Doyle)</option>
-                  <option>The Grand Budapest Hotel</option>
-                  <option>Drive (Refn)</option>
-                  <option>Enter the Void (Noé)</option>
-                  <option>Neon Demon (Refn)</option>
-                  <option>Spider-Verse</option>
-                </optgroup>
-                <optgroup label="── OSCURAS / NOIR ──">
-                  <option>Se7en (Fincher)</option>
-                  <option>Fight Club (Fincher)</option>
-                  <option>The Batman (Fraser)</option>
-                  <option>Sicario (Deakins)</option>
-                  <option>Collateral (Mann)</option>
-                  <option>Nightcrawler</option>
-                  <option>Joker</option>
-                </optgroup>
-                <optgroup label="── HORROR Y TERROR ──">
-                  <option>Hereditary (Aster)</option>
-                  <option>Midsommar (Aster)</option>
-                  <option>The Lighthouse (Eggers)</option>
-                  <option>Nosferatu 2024 (Eggers)</option>
-                  <option>Annihilation</option>
-                  <option>The Shining (Kubrick)</option>
-                  <option>Suspiria (Argento)</option>
-                </optgroup>
-                <optgroup label="── CIENCIA FICCIÓN ──">
-                  <option>2001: A Space Odyssey</option>
-                  <option>Blade Runner (1982)</option>
-                  <option>Alien (Ridley Scott)</option>
-                  <option>Arrival (Villeneuve)</option>
-                  <option>The Matrix</option>
-                  <option>Ex Machina</option>
-                </optgroup>
-                <optgroup label="── CLÁSICAS ──">
-                  <option>The Godfather (Willis)</option>
-                  <option>Apocalypse Now (Storaro)</option>
-                  <option>Barry Lyndon (Kubrick)</option>
-                  <option>Days of Heaven (Almendros)</option>
-                  <option>Lawrence of Arabia</option>
-                  <option>Casablanca</option>
-                </optgroup>
-              </select>
+                            <input type="hidden" id="movieRef" value="">
+              <button type="button" onclick="abrirModal('movieRef')" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:12px;border-radius:8px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left">
+                <span id="movieRef-display" style="opacity:.5">Seleccionar estética...</span>
+                <span style="font-size:.7rem;color:#888">🖼️ Elegir</span>
+              </button>
             </div>
           </div>
           <div class="field">
@@ -3493,6 +3440,64 @@ select option{background:var(--bg3);color:var(--text)}
 <script>
 // ========== MODAL SHOTTYPE ==========
 
+var MOVIE_DATA = [
+  { g: '── ESTÉTICAS CINEMATOGRÁFICAS ──', items: [
+    { v: 'Blade Runner 2049 (Deakins)', i: '🌆' },
+    { v: 'Dune (Greig Fraser)', i: '🏜️' },
+    { v: 'Vesper (Feliksas Abrukauskas)', i: '🌿' },
+    { v: 'Prometheus (Dariusz Wolski)', i: '👽' },
+    { v: '1917 (Deakins)', i: '💣' },
+    { v: 'The Revenant (Lubezki)', i: '🐻' },
+    { v: 'Children of Men (Lubezki)', i: '🌍' },
+    { v: 'Interstellar (Hoytema)', i: '🕳️' },
+    { v: 'Oppenheimer (Hoytema)', i: '☢️' },
+    { v: 'No Country for Old Men (Deakins)', i: '🤠' }
+  ]},
+  { g: '── ARTIFICIAL Y ONÍRICO ──', items: [
+    { v: 'Amélie (Delbonnel)', i: '🎨' },
+    { v: 'In the Mood for Love (Doyle)', i: '❤️' },
+    { v: 'The Grand Budapest Hotel', i: '🏨' },
+    { v: 'Drive (Refn)', i: '🚗' },
+    { v: 'Enter the Void (Noé)', i: '🌀' },
+    { v: 'Neon Demon (Refn)', i: '💅' },
+    { v: 'Spider-Verse', i: '🕷️' }
+  ]},
+  { g: '── OSCURAS / NOIR ──', items: [
+    { v: 'Se7en (Fincher)', i: '📦' },
+    { v: 'Fight Club (Fincher)', i: '🧼' },
+    { v: 'The Batman (Fraser)', i: '🦇' },
+    { v: 'Sicario (Deakins)', i: '🔫' },
+    { v: 'Collateral (Mann)', i: '🚕' },
+    { v: 'Nightcrawler', i: '📹' },
+    { v: 'Joker', i: '🃏' }
+  ]},
+  { g: '── HORROR Y TERROR ──', items: [
+    { v: 'Hereditary (Aster)', i: '👑' },
+    { v: 'Midsommar (Aster)', i: '🌸' },
+    { v: 'The Lighthouse (Eggers)', i: '🗼' },
+    { v: 'Nosferatu 2024 (Eggers)', i: '🧛' },
+    { v: 'Annihilation', i: '🫧' },
+    { v: 'The Shining (Kubrick)', i: '🪓' },
+    { v: 'Suspiria (Argento)', i: '💃' }
+  ]},
+  { g: '── CIENCIA FICCIÓN ──', items: [
+    { v: '2001: A Space Odyssey', i: '🛸' },
+    { v: 'Blade Runner (1982)', i: '🌧️' },
+    { v: 'Alien (Ridley Scott)', i: '🥚' },
+    { v: 'Arrival (Villeneuve)', i: '⭕' },
+    { v: 'The Matrix', i: '💊' },
+    { v: 'Ex Machina', i: '🤖' }
+  ]},
+  { g: '── CLÁSICAS ──', items: [
+    { v: 'The Godfather (Willis)', i: '🫒' },
+    { v: 'Apocalypse Now (Storaro)', i: '🚁' },
+    { v: 'Barry Lyndon (Kubrick)', i: '🕯️' },
+    { v: 'Days of Heaven (Almendros)', i: '🌾' },
+    { v: 'Lawrence of Arabia', i: '🐫' },
+    { v: 'Casablanca', i: '🎩' }
+  ]}
+];
+
 var PHOTO_DATA = [
   { g: '── RETRATO / MODA ──', items: [
     { v: 'Annie Leibovitz', i: '👩‍🎨' },
@@ -3659,6 +3664,7 @@ function abrirModal(id) {
   if (id === 'shotType') datos = SHOT_DATA;
   if (id === 'lighting') datos = LIGHT_DATA;
   if (id === 'photographer') datos = PHOTO_DATA;
+  if (id === 'movieRef') datos = MOVIE_DATA;
   if (!datos) return;
   if (body && !body.dataset.built) {
     var h = '';
@@ -3692,7 +3698,7 @@ function cerrarModal(id) {
 
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
-    var ids = ['shotType', 'lighting', 'photographer'];
+        var ids = ['shotType', 'lighting', 'photographer', 'movieRef'];
     ids.forEach(function(id) {
       var m = document.getElementById('kurimodal-' + id);
       if (m && m.style.display === 'flex') cerrarModal(id);
@@ -4338,6 +4344,19 @@ function clearAll() {
 <input type="text" placeholder="🔍 Buscar fotógrafo..." oninput="buscarModal('photographer',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
 </div>
 <div id="kurimodal-photographer-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
+</div>
+</div>
+
+<div id="kurimodal-movieRef" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px" onclick="if(event.target===this)cerrarModal('movieRef')">
+<div style="background:#111;border:1px solid #333;border-radius:12px;width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:16px 20px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center">
+<h3 style="color:var(--active);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin:0">🎬 Estética Visual de Película</h3>
+<button type="button" onclick="cerrarModal('movieRef')" style="background:none;border:none;color:#888;font-size:1.5rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+<div style="padding:10px 20px;border-bottom:1px solid #333">
+<input type="text" placeholder="🔍 Buscar película..." oninput="buscarModal('movieRef',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
+</div>
+<div id="kurimodal-movieRef-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
 </div>
 </div>
 
