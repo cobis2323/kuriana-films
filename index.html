@@ -631,63 +631,11 @@ select option{background:var(--bg3);color:var(--text)}
 
           <div class="field">
             <div class="field-label">Fuente de Luz</div>
-            <select id="lighting" onchange="buildPrompt()">
-              <option value="">Seleccionar esquema de Luz...</option>
-              <optgroup label="── RETRATO CLÁSICO ──">
-                <option>Rembrandt Lighting</option>
-                <option>Butterfly / Paramount Lighting</option>
-                <option>Split Lighting</option>
-                <option>Loop Lighting</option>
-                <option>Broad Lighting</option>
-                <option>Short Lighting</option>
-              </optgroup>
-              <optgroup label="── ESTUDIO ──">
-                <option>High Key Lighting</option>
-                <option>Low Key Lighting</option>
-                <option>Soft Lighting</option>
-                <option>Hard Lighting</option>
-                <option>Three Point Lighting</option>
-                <option>Backlighting / Rim Light</option>
-                <option>Softbox Key Lighting</option>
-                <option>Top Lighting</option>
-                <option>Underlighting</option>
-                <option>Cross Lighting</option>
-                <option>Silhouette Lighting</option>
-                <option>Negative Fill</option>
-              </optgroup>
-              <optgroup label="── NATURAL / AMBIENTAL ──">
-                <option>Golden Hour</option>
-                <option>Blue Hour</option>
-                <option>Magic Hour</option>
-                <option>Midday Sun</option>
-                <option>Moonlight</option>
-                <option>Overcast Lighting</option>
-                <option>Open Shade</option>
-                <option>Window Spill</option>
-                <option>Fog Diffusion</option>
-                <option>Volumetric Lighting</option>
-              </optgroup>
-              <optgroup label="── PRÁCTICA / URBANA ──">
-                <option>Neon Lighting</option>
-                <option>Candlelight Lighting</option>
-                <option>LED Streetlights</option>
-                <option>Sodium Streetlamps</option>
-                <option>Firelight / Campfire</option>
-                <option>Gobo Lighting</option>
-                <option>Color Gels</option>
-                <option>Direct Flash</option>
-                <option>Phone Flashlight</option>
-                <option>Chiaroscuro Lighting</option>
-                <option>Teal and Orange</option>
-                <option>Disco / Party Strobe</option>
-                <option>Fluorescent Flicker</option>
-              </optgroup>
-              <optgroup label="── ESPECIAL ──">
-                <option>Product Side Key</option>
-                <option>Top-Down Flat Lay</option>
-                <option>Bioluminescent Glow</option>
-              </optgroup>
-            </select>
+                          <input type="hidden" id="lighting" value="">
+              <button type="button" onclick="abrirModal('lighting')" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:12px;border-radius:8px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left">
+                <span id="lighting-display" style="opacity:.5">Seleccionar esquema de Luz...</span>
+                <span style="font-size:.7rem;color:#888">🖼️ Elegir</span>
+              </button>
           </div>
 
           <div class="field-row">
@@ -3581,6 +3529,64 @@ select option{background:var(--bg3);color:var(--text)}
 
 <script>
 // ========== MODAL SHOTTYPE ==========
+
+var LIGHT_DATA = [
+  { g: '── RETRATO CLÁSICO ──', items: [
+    { v: 'Rembrandt Lighting', i: '🎨' },
+    { v: 'Butterfly / Paramount Lighting', i: '🦋' },
+    { v: 'Split Lighting', i: '◐' },
+    { v: 'Loop Lighting', i: '🔄' },
+    { v: 'Broad Lighting', i: '☀️' },
+    { v: 'Short Lighting', i: '🌘' }
+  ]},
+  { g: '── ESTUDIO ──', items: [
+    { v: 'High Key Lighting', i: '⬜' },
+    { v: 'Low Key Lighting', i: '⬛' },
+    { v: 'Soft Lighting', i: '🕊️' },
+    { v: 'Hard Lighting', i: '💎' },
+    { v: 'Three Point Lighting', i: '🔺' },
+    { v: 'Backlighting / Rim Light', i: '🌅' },
+    { v: 'Softbox Key Lighting', i: '📦' },
+    { v: 'Top Lighting', i: '⬇️' },
+    { v: 'Underlighting', i: '⬆️' },
+    { v: 'Cross Lighting', i: '✖️' },
+    { v: 'Silhouette Lighting', i: '🌑' },
+    { v: 'Negative Fill', i: '🖤' }
+  ]},
+  { g: '── NATURAL / AMBIENTAL ──', items: [
+    { v: 'Golden Hour', i: '🌇' },
+    { v: 'Blue Hour', i: '🌆' },
+    { v: 'Magic Hour', i: '✨' },
+    { v: 'Midday Sun', i: '☀️' },
+    { v: 'Moonlight', i: '🌙' },
+    { v: 'Overcast Lighting', i: '☁️' },
+    { v: 'Open Shade', i: '🌳' },
+    { v: 'Window Spill', i: '🪟' },
+    { v: 'Fog Diffusion', i: '🌫️' },
+    { v: 'Volumetric Lighting', i: '🌤️' }
+  ]},
+  { g: '── PRÁCTICA / URBANA ──', items: [
+    { v: 'Neon Lighting', i: '💜' },
+    { v: 'Candlelight Lighting', i: '🕯️' },
+    { v: 'LED Streetlights', i: '🏙️' },
+    { v: 'Sodium Streetlamps', i: '🟠' },
+    { v: 'Firelight / Campfire', i: '🔥' },
+    { v: 'Gobo Lighting', i: '🔲' },
+    { v: 'Color Gels', i: '🟣' },
+    { v: 'Direct Flash', i: '📸' },
+    { v: 'Phone Flashlight', i: '📱' },
+    { v: 'Chiaroscuro Lighting', i: '🎭' },
+    { v: 'Teal and Orange', i: '🟢' },
+    { v: 'Disco / Party Strobe', i: '🪩' },
+    { v: 'Fluorescent Flicker', i: '💡' }
+  ]},
+  { g: '── ESPECIAL ──', items: [
+    { v: 'Product Side Key', i: '🛍️' },
+    { v: 'Top-Down Flat Lay', i: '⏬' },
+    { v: 'Bioluminescent Glow', i: '🧬' }
+  ]}
+];
+
 var SHOT_DATA = [
   { g: '── PLANOS CERRADOS ──', items: [
     { v: 'Extreme Close Up', i: '👁️' },
@@ -3644,10 +3650,14 @@ function abrirModal(id) {
   var modal = document.getElementById('kurimodal-' + id);
   if (!modal) return;
   var body = document.getElementById('kurimodal-' + id + '-body');
+  var datos = null;
+  if (id === 'shotType') datos = SHOT_DATA;
+  if (id === 'lighting') datos = LIGHT_DATA;
+  if (!datos) return;
   if (body && !body.dataset.built) {
     var h = '';
     var cur = document.getElementById(id) ? document.getElementById(id).value : '';
-    SHOT_DATA.forEach(function(group) {
+    datos.forEach(function(group) {
       h += '<div style="font-size:.7rem;letter-spacing:2px;color:var(--active);font-weight:700;margin:14px 0 8px;padding-bottom:6px;border-bottom:1px solid #333;text-transform:uppercase">' + group.g + '</div>';
       h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-bottom:8px">';
       group.items.forEach(function(item) {
@@ -3676,8 +3686,11 @@ function cerrarModal(id) {
 
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
-    var m = document.getElementById('kurimodal-shotType');
-    if (m && m.style.display === 'flex') cerrarModal('shotType');
+    var ids = ['shotType', 'lighting'];
+    ids.forEach(function(id) {
+      var m = document.getElementById('kurimodal-' + id);
+      if (m && m.style.display === 'flex') cerrarModal(id);
+    });
   }
 });
 
@@ -4293,6 +4306,19 @@ function clearAll() {
 <input type="text" placeholder="🔍 Buscar plano..." oninput="buscarModal('shotType',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
 </div>
 <div id="kurimodal-shotType-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
+</div>
+</div>
+
+<div id="kurimodal-lighting" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px" onclick="if(event.target===this)cerrarModal('lighting')">
+<div style="background:#111;border:1px solid #333;border-radius:12px;width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:16px 20px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center">
+<h3 style="color:var(--active);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin:0">💡 Fuente de Luz</h3>
+<button type="button" onclick="cerrarModal('lighting')" style="background:none;border:none;color:#888;font-size:1.5rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+<div style="padding:10px 20px;border-bottom:1px solid #333">
+<input type="text" placeholder="🔍 Buscar iluminación..." oninput="buscarModal('lighting',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
+</div>
+<div id="kurimodal-lighting-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
 </div>
 </div>
 
