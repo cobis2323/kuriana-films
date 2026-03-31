@@ -883,53 +883,11 @@ select option{background:var(--bg3);color:var(--text)}
             </div>
             <div class="field">
               <div class="field-label">Material de Película</div>
-              <select id="filmStock" onchange="buildPrompt()">
-                <option value="">Seleccionar Material Fílmico...</option>
-                <optgroup label="── CINEMA ──">
-                  <option>Kodak Vision3 500T</option>
-                  <option>Kodak Vision3 250D</option>
-                  <option>Kodak Vision3 50D</option>
-                  <option>CineStill 800T</option>
-                  <option>CineStill 50D</option>
-                  <option>Kodak 5222 Double-X</option>
-                </optgroup>
-                <optgroup label="── COLOR PROFESSIONAL ──">
-                  <option>Kodak Portra 400</option>
-                  <option>Kodak Portra 160</option>
-                  <option>Kodak Portra 800</option>
-                  <option>Kodak Ektar 100</option>
-                  <option>Fuji Pro 400H</option>
-                </optgroup>
-                <optgroup label="── COLOR CONSUMER ──">
-                  <option>Kodak Gold 200</option>
-                  <option>Kodak Ultramax 400</option>
-                  <option>Fuji Superia 400</option>
-                </optgroup>
-                <optgroup label="── SLIDE / REVERSAL ──">
-                  <option>Kodachrome 64</option>
-                  <option>Ektachrome E100</option>
-                  <option>Fuji Velvia 50</option>
-                  <option>Fuji Provia 100F</option>
-                </optgroup>
-                <optgroup label="── BLACK & WHITE ──">
-                  <option>Kodak Tri-X 400</option>
-                  <option>Ilford HP5 Plus</option>
-                  <option>Ilford Delta</option>
-                  <option>Fuji Acros 100</option>
-                  <option>Kodak T-Max 400</option>
-                </optgroup>
-                <optgroup label="── EXPERIMENTAL ──">
-                  <option>Kodak Aerochrome (Infrared)</option>
-                  <option>Lomochrome Turquoise</option>
-                  <option>Lomography Purple</option>
-                  <option>Cross-Processed</option>
-                  <option>Bleach Bypass</option>
-                  <option>Expired Film Look</option>
-                </optgroup>
-                <optgroup label="── DIGITAL ──">
-                  <option>No Film Stock (Digital Clean)</option>
-                </optgroup>
-              </select>
+                            <input type="hidden" id="filmStock" value="">
+              <button type="button" onclick="abrirModal('filmStock')" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:12px;border-radius:8px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left">
+                <span id="filmStock-display" style="opacity:.5">Seleccionar Material Fílmico...</span>
+                <span style="font-size:.7rem;color:#888">🖼️ Elegir</span>
+              </button>
             </div>
           </div>
                    <div class="field-row">
@@ -3577,6 +3535,53 @@ var LIGHT_DATA = [
   ]}
 ];
 
+var FILMSTOCK_DATA = [
+  { g: '── CINEMA ──', items: [
+    { v: 'Kodak Vision3 500T', i: '🎬' },
+    { v: 'Kodak Vision3 250D', i: '☀️' },
+    { v: 'Kodak Vision3 50D', i: '🌅' },
+    { v: 'CineStill 800T', i: '🌃' },
+    { v: 'CineStill 50D', i: '🌄' },
+    { v: 'Kodak 5222 Double-X', i: '⬛' }
+  ]},
+  { g: '── COLOR PROFESSIONAL ──', items: [
+    { v: 'Kodak Portra 400', i: '👤' },
+    { v: 'Kodak Portra 160', i: '🌸' },
+    { v: 'Kodak Portra 800', i: '🌙' },
+    { v: 'Kodak Ektar 100', i: '🔴' },
+    { v: 'Fuji Pro 400H', i: '🟢' }
+  ]},
+  { g: '── COLOR CONSUMER ──', items: [
+    { v: 'Kodak Gold 200', i: '🟡' },
+    { v: 'Kodak Ultramax 400', i: '🟠' },
+    { v: 'Fuji Superia 400', i: '🟩' }
+  ]},
+  { g: '── SLIDE / REVERSAL ──', items: [
+    { v: 'Kodachrome 64', i: '🧡' },
+    { v: 'Ektachrome E100', i: '💙' },
+    { v: 'Fuji Velvia 50', i: '💚' },
+    { v: 'Fuji Provia 100F', i: '💜' }
+  ]},
+  { g: '── BLACK & WHITE ──', items: [
+    { v: 'Kodak Tri-X 400', i: '⬜' },
+    { v: 'Ilford HP5 Plus', i: '◻️' },
+    { v: 'Ilford Delta', i: '🔲' },
+    { v: 'Fuji Acros 100', i: '◼️' },
+    { v: 'Kodak T-Max 400', i: '▪️' }
+  ]},
+  { g: '── EXPERIMENTAL ──', items: [
+    { v: 'Kodak Aerochrome (Infrared)', i: '🔴' },
+    { v: 'Lomochrome Turquoise', i: '🩵' },
+    { v: 'Lomography Purple', i: '🟣' },
+    { v: 'Cross-Processed', i: '🔀' },
+    { v: 'Bleach Bypass', i: '🫧' },
+    { v: 'Expired Film Look', i: '📜' }
+  ]},
+  { g: '── DIGITAL ──', items: [
+    { v: 'No Film Stock (Digital Clean)', i: '💻' }
+  ]}
+];
+
 var VIEWDIR_DATA = [
   { g: '── FRONTAL ──', items: [
     { v: 'From The Front', i: '⬆️' },
@@ -3669,6 +3674,7 @@ function abrirModal(id) {
   if (id === 'shotType') datos = SHOT_DATA;
   if (id === 'lighting') datos = LIGHT_DATA;
   if (id === 'viewDirection') datos = VIEWDIR_DATA;
+  if (id === 'filmStock') datos = FILMSTOCK_DATA;
   if (id === 'photographer') datos = PHOTO_DATA;
   if (id === 'movieRef') datos = MOVIE_DATA;
   if (!datos) return;
@@ -3704,7 +3710,7 @@ function cerrarModal(id) {
 
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
-            var ids = ['shotType', 'lighting', 'photographer', 'movieRef', 'viewDirection'];
+            var ids = ['shotType', 'lighting', 'photographer', 'movieRef', 'viewDirection', 'filmStock'];
     ids.forEach(function(id) {
       var m = document.getElementById('kurimodal-' + id);
       if (m && m.style.display === 'flex') cerrarModal(id);
@@ -4376,6 +4382,19 @@ function clearAll() {
 <input type="text" placeholder="🔍 Buscar dirección..." oninput="buscarModal('viewDirection',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
 </div>
 <div id="kurimodal-viewDirection-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
+</div>
+</div>
+
+<div id="kurimodal-filmStock" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px" onclick="if(event.target===this)cerrarModal('filmStock')">
+<div style="background:#111;border:1px solid #333;border-radius:12px;width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:16px 20px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center">
+<h3 style="color:var(--active);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin:0">🎞️ Material de Película</h3>
+<button type="button" onclick="cerrarModal('filmStock')" style="background:none;border:none;color:#888;font-size:1.5rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+<div style="padding:10px 20px;border-bottom:1px solid #333">
+<input type="text" placeholder="🔍 Buscar film stock..." oninput="buscarModal('filmStock',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
+</div>
+<div id="kurimodal-filmStock-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
 </div>
 </div>
 
