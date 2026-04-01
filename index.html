@@ -598,6 +598,54 @@ select option{background:var(--bg3);color:var(--text)}
             <textarea id="environment" placeholder="Ej: Una parada de bus en Londres de noche, calles mojadas reflejando luces neón..." oninput="buildPrompt()" style="min-height:60px"></textarea>
           </div>
 
+          <div class="field">
+            <div class="field-label">Composición Fotográfica</div>
+            <select id="composition" onchange="buildPrompt()">
+              <option value="">Sin composición específica...</option>
+              <optgroup label="── FUNDAMENTALES ──">
+                <option value="rule of thirds composition, subject placed at intersection points">Regla de Tercios (Rule of Thirds)</option>
+                <option value="golden ratio composition, fibonacci spiral guiding the eye">Proporción Áurea / Fibonacci</option>
+                <option value="centered composition, subject intentionally placed dead center for impact">Composición Centrada (Intencional)</option>
+                <option value="perfectly symmetrical composition, mirror-like balance">Simetría Perfecta</option>
+              </optgroup>
+              <optgroup label="── LÍNEAS Y DIRECCIÓN ──">
+                <option value="leading lines composition, environmental lines guide the viewer's eye toward the subject">Líneas Guía (Leading Lines)</option>
+                <option value="diagonal composition, strong diagonal lines creating dynamic tension">Composición Diagonal</option>
+                <option value="horizontal line composition, calm and stable horizontal emphasis">Líneas Horizontales</option>
+                <option value="vertical line composition, strong vertical elements creating power">Líneas Verticales</option>
+                <option value="converging lines composition, multiple lines meeting at a focal point">Líneas Convergentes</option>
+                <option value="vanishing point composition, deep perspective with single vanishing point">Punto de Fuga (Vanishing Point)</option>
+              </optgroup>
+              <optgroup label="── FORMAS GEOMÉTRICAS ──">
+                <option value="triangular pyramid composition, subjects arranged in triangle formation">Composición Triangular / Pirámide</option>
+                <option value="circular composition, elements arranged in circular flow guiding the eye">Composición Circular</option>
+                <option value="S-curve composition, flowing S-shaped line through the frame">Composición en S</option>
+                <option value="L-shape composition, elements forming an L within the frame">Composición en L</option>
+                <option value="inverted Y composition, elements forming inverted Y shape">Composición Y Invertida</option>
+              </optgroup>
+              <optgroup label="── AVANZADAS ──">
+                <option value="frame within a frame composition, natural framing elements surrounding the subject">Marco dentro del Marco (Frame in Frame)</option>
+                <option value="negative space composition, vast empty space emphasizing the subject's isolation">Espacio Negativo</option>
+                <option value="fill the frame composition, subject fills the entire frame with no empty space">Llenar el Encuadre (Fill the Frame)</option>
+                <option value="cross composition, intersecting lines creating X pattern">Composición en Cruz</option>
+                <option value="radiating lines composition, lines emanating from central point">Líneas Radiantes</option>
+                <option value="golden triangle composition, diagonal line with perpendicular from corners">Triángulo Áureo</option>
+                <option value="split screen composition, frame divided into distinct visual halves">Pantalla Dividida</option>
+              </optgroup>
+              <optgroup label="── PERSPECTIVA ──">
+                <option value="one-point perspective composition, single vanishing point creating deep depth">Perspectiva 1 Punto</option>
+                <option value="two-point perspective composition, two vanishing points on horizon">Perspectiva 2 Puntos</option>
+                <option value="three-point perspective composition, extreme dramatic perspective">Perspectiva 3 Puntos</option>
+                <option value="forced perspective composition, optical illusion playing with scale">Perspectiva Forzada</option>
+                <option value="depth layering composition with distinct foreground, midground, and background elements">Capas de Profundidad (Depth Layering)</option>
+              </optgroup>
+              <optgroup label="── BALANCE ──">
+                <option value="asymmetrical balance composition, visual weight distributed unevenly but harmoniously">Balance Asimétrico</option>
+                <option value="visual weight balance composition, heavy and light elements in equilibrium">Balance de Peso Visual</option>
+              </optgroup>
+            </select>
+          </div>
+
         </div>
       </div>
 
@@ -4046,6 +4094,8 @@ function buildPrompt() {
   if (unaware) op += ', where the subject is unaware they are on camera';
   parts.push(op + '.');
   if (subject) parts.push(subject + '.');
+  var composition = gv('composition');
+  if (composition) parts.push(composition + '.');
   if (env) parts.push('Set in ' + env + '.');
   if (lighting || atmosphere || mood || customMood) {
     var lp = [];
@@ -4441,7 +4491,7 @@ function collectAllData() {
     data.filmGrain = gv('filmGrain'); data.aspectRatio = gv('aspectRatio');
     data.colorPalette = gv('colorPalette'); data.colorGrading = gv('colorGrading');
     data.photographer = gv('photographer'); data.movieRef = gv('movieRef');
-    data.customRef = gv('customRef'); data.resolution = gv('resolution'); data.temperature = gv('temperature');
+    data.customRef = gv('customRef'); data.composition = gv('composition'); data.resolution = gv('resolution'); data.temperature = gv('temperature');
   }
   if (tab === 'anime') {
     data.style = gv('animeStyle'); data.subject = gv('animeSubject'); data.character = gv('animeCharacter');
@@ -4515,7 +4565,7 @@ function loadJSON(input) {
       document.querySelectorAll('.tab').forEach(function(t) { if (t.dataset.tab === data.tab) t.click(); });
       setTimeout(function() {
         if (data.tab === 'sheet') { sv('sheetCharacter',data.character); sv('sheetClothing',data.clothing); sv('sheetCharCount',data.charCount); sv('sheetViews',data.views); sv('sheetCustomViews',data.customViews); sv('sheetCamera',data.camera); sv('sheetLens',data.lens); sv('sheetBackground',data.background); sv('sheetStyle',data.style); sv('sheetLighting',data.lighting); sv('sheetGrid',data.grid); sv('sheetResolution',data.resolution); buildSheetPrompt(); }
-        if (data.tab === 'cine') { sv('subject',data.subject); sv('shotType',data.shotType); sv('viewDirection',data.viewDirection); sc('subjectUnaware',data.subjectUnaware); sv('environment',data.environment); sv('lighting',data.lighting); sv('atmosphere',data.atmosphere); sv('mood',data.mood); sv('customMood',data.customMood); sv('cameraBody',data.cameraBody); sv('focalLength',data.focalLength); sv('lensType',data.lensType); sv('filmStock',data.filmStock); sv('aperture',data.aperture); sv('shutterSpeed',data.shutterSpeed); sv('iso',data.iso); sv('lensFilter',data.lensFilter); sv('filmGrain',data.filmGrain); sv('aspectRatio',data.aspectRatio); sv('colorPalette',data.colorPalette); sv('colorGrading',data.colorGrading); sv('photographer',data.photographer); sv('movieRef',data.movieRef); sv('customRef',data.customRef); sv('resolution',data.resolution); sv('temperature',data.temperature); buildPrompt(); }
+        if (data.tab === 'cine') { sv('subject',data.subject); sv('shotType',data.shotType); sv('viewDirection',data.viewDirection); sc('subjectUnaware',data.subjectUnaware); sv('environment',data.environment); sv('lighting',data.lighting); sv('atmosphere',data.atmosphere); sv('mood',data.mood); sv('customMood',data.customMood); sv('cameraBody',data.cameraBody); sv('focalLength',data.focalLength); sv('lensType',data.lensType); sv('filmStock',data.filmStock); sv('aperture',data.aperture); sv('shutterSpeed',data.shutterSpeed); sv('iso',data.iso); sv('lensFilter',data.lensFilter); sv('filmGrain',data.filmGrain); sv('aspectRatio',data.aspectRatio); sv('colorPalette',data.colorPalette); sv('colorGrading',data.colorGrading); sv('photographer',data.photographer); sv('movieRef',data.movieRef); sv('customRef',data.customRef); sv('composition', data.composition); sv('resolution',data.resolution); sv('temperature',data.temperature); buildPrompt(); }
         if (data.tab === 'anime') { sv('animeStyle',data.style); sv('animeSubject',data.subject); sv('animeCharacter',data.character); sv('animeEnvironment',data.environment); sv('animeColorPalette',data.palette); sv('animeMood',data.mood); sv('animeLighting',data.lighting); sv('animeShot',data.shot); sv('animeDirector',data.director); sv('animeFilmRef',data.filmRef); sv('animeCustomRef',data.customRef); sv('animeAspect',data.aspect); sv('animeResolution',data.resolution); sv('animeQuality',data.quality); buildAnimePrompt(); }
         if (data.tab === 'horror') { sv('horrorSubgenre',data.subgenre); sv('horrorSubject',data.subject); sv('horrorEntity',data.entity); sv('horrorEnvironment',data.environment); sv('horrorAtmosphere',data.atmosphere); sv('horrorMood',data.mood); sv('horrorLighting',data.lighting); sv('horrorColor',data.color); sv('horrorCamera',data.camera); sv('horrorLens',data.lens); sv('horrorShot',data.shot); sv('horrorFilm',data.film); sc('horrorUnaware',data.unaware); sv('horrorAuthor',data.author); sv('horrorFilmRef',data.filmRef); sv('horrorCustomRef',data.customRef); sv('horrorAspect',data.aspect); sv('horrorResolution',data.resolution); buildHorrorPrompt(); }
         if (data.tab === 'musica') { sv('musicGenre',data.genre); sv('musicSubGenre',data.subGenre); sv('musicLeadInst',data.leadInst); sv('musicSupportInst',data.supportInst); sv('musicProduction',data.production); sv('musicVoiceType',data.voiceType); sv('musicLanguage',data.language); sv('musicMood',data.mood); sv('musicUse',data.use); sv('musicKey',data.key); sv('musicTexture',data.texture); sv('musicEra',data.era); sv('musicArtistRef',data.artistRef); sv('musicFilmRef',data.filmRef); sv('musicCustomRef',data.customRef); sv('musicStructure',data.structure); sv('musicDuration',data.duration); sv('musicQuality',data.quality); var bpmEl=document.getElementById('musicBPM'); if(bpmEl) bpmEl.value=data.bpm||'90'; updateBPMLabel(); updateStructurePreview(); }
