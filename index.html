@@ -1021,23 +1021,11 @@ select option{background:var(--bg3);color:var(--text)}
             </div>
             <div class="field">
               <div class="field-label">Composición / Plano</div>
-              <select id="animeShot" onchange="buildAnimePrompt()">
-                <option value="">Seleccionar plano...</option>
-                <option>Close Up (face detail)</option>
-                <option>Medium Shot (waist up)</option>
-                <option>Full Body Shot</option>
-                <option>Wide Establishing Shot</option>
-                <option>Extreme Close Up (eyes)</option>
-                <option>Bird's Eye View</option>
-                <option>Low Angle (heroic)</option>
-                <option>Dutch Angle (dynamic)</option>
-                <option>Over The Shoulder</option>
-                <option>Dynamic Action Pose</option>
-                <option>Panoramic Landscape</option>
-                <option>Isometric View</option>
-                <option>Split Screen</option>
-                <option>Manga Panel Layout</option>
-              </select>
+                            <input type="hidden" id="animeShot" value="">
+              <button type="button" onclick="abrirModal('animeShot')" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:12px;border-radius:8px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left">
+                <span id="animeShot-display" style="opacity:.5">Seleccionar plano...</span>
+                <span style="font-size:.7rem;color:#888">🎨 Elegir</span>
+              </button>
             </div>
           </div>
         </div>
@@ -1053,100 +1041,19 @@ select option{background:var(--bg3);color:var(--text)}
           <div class="field-row">
             <div class="field">
               <div class="field-label">Director / Artista</div>
-              <select id="animeDirector" onchange="buildAnimePrompt()">
-                <option value="">Seleccionar director...</option>
-                <optgroup label="── JAPONESES ──">
-                  <option>Hayao Miyazaki</option>
-                  <option>Makoto Shinkai</option>
-                  <option>Satoshi Kon</option>
-                  <option>Mamoru Hosoda</option>
-                  <option>Masaaki Yuasa</option>
-                  <option>Katsuhiro Otomo</option>
-                  <option>Mamoru Oshii</option>
-                  <option>Hideaki Anno</option>
-                  <option>Shinichiro Watanabe</option>
-                  <option>Naoko Yamada</option>
-                  <option>Yoshiaki Kawajiri</option>
-                  <option>Isao Takahata</option>
-                  <option>Osamu Tezuka</option>
-                  <option>Kunihiko Ikuhara</option>
-                  <option>Takeshi Koike</option>
-                </optgroup>
-                <optgroup label="── OCCIDENTALES ──">
-                  <option>Walt Disney</option>
-                  <option>Pete Docter (Pixar)</option>
-                  <option>Brad Bird (Pixar)</option>
-                  <option>Genndy Tartakovsky</option>
-                  <option>Don Bluth</option>
-                  <option>Henry Selick</option>
-                  <option>Wes Anderson (animation)</option>
-                  <option>Guillermo del Toro (animation)</option>
-                  <option>Phil Lord & Chris Miller</option>
-                  <option>Tomm Moore (Cartoon Saloon)</option>
-                  <option>René Laloux</option>
-                  <option>Glen Keane</option>
-                </optgroup>
-                <optgroup label="── ARTISTAS / ILUSTRADORES ──">
-                  <option>Moebius / Jean Giraud</option>
-                  <option>Yoshitaka Amano</option>
-                  <option>Kentaro Miura (Berserk)</option>
-                  <option>Junji Ito</option>
-                  <option>Akira Toriyama</option>
-                  <option>Takehiko Inoue</option>
-                  <option>Pascal Campion</option>
-                </optgroup>
-              </select>
+                            <input type="hidden" id="animeDirector" value="">
+              <button type="button" onclick="abrirModal('animeDirector')" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:12px;border-radius:8px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left">
+                <span id="animeDirector-display" style="opacity:.5">Seleccionar director...</span>
+                <span style="font-size:.7rem;color:#888">🎨 Elegir</span>
+              </button>
             </div>
             <div class="field">
               <div class="field-label">Referencia de Película / Serie</div>
-              <select id="animeFilmRef" onchange="buildAnimePrompt()">
-                <option value="">Seleccionar referencia...</option>
-                <optgroup label="── PELÍCULAS ANIME ──">
-                  <option>Spirited Away</option>
-                  <option>Princess Mononoke</option>
-                  <option>Your Name (Kimi no Na wa)</option>
-                  <option>Akira</option>
-                  <option>Ghost in the Shell (1995)</option>
-                  <option>Perfect Blue</option>
-                  <option>Paprika</option>
-                  <option>Redline</option>
-                  <option>Weathering With You</option>
-                  <option>Howl's Moving Castle</option>
-                  <option>Nausicaä</option>
-                  <option>Grave of the Fireflies</option>
-                  <option>A Silent Voice</option>
-                  <option>Vampire Hunter D: Bloodlust</option>
-                  <option>Ninja Scroll</option>
-                </optgroup>
-                <optgroup label="── SERIES ANIME ──">
-                  <option>Cowboy Bebop</option>
-                  <option>Neon Genesis Evangelion</option>
-                  <option>Attack on Titan</option>
-                  <option>Demon Slayer</option>
-                  <option>Jujutsu Kaisen</option>
-                  <option>Violet Evergarden</option>
-                  <option>Mob Psycho 100</option>
-                  <option>Devilman Crybaby</option>
-                  <option>Samurai Champloo</option>
-                  <option>FLCL</option>
-                  <option>Kill la Kill</option>
-                  <option>Monogatari Series</option>
-                  <option>Berserk (1997)</option>
-                  <option>Serial Experiments Lain</option>
-                </optgroup>
-                <optgroup label="── ANIMACIÓN OCCIDENTAL ──">
-                  <option>Spider-Man: Into the Spider-Verse</option>
-                  <option>Arcane</option>
-                  <option>Coraline</option>
-                  <option>The Iron Giant</option>
-                  <option>Fantastic Planet (1973)</option>
-                  <option>Wolfwalkers</option>
-                  <option>Primal</option>
-                  <option>Isle of Dogs</option>
-                  <option>WALL-E</option>
-                  <option>Soul (Pixar)</option>
-                </optgroup>
-              </select>
+                            <input type="hidden" id="animeFilmRef" value="">
+              <button type="button" onclick="abrirModal('animeFilmRef')" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:12px;border-radius:8px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left">
+                <span id="animeFilmRef-display" style="opacity:.5">Seleccionar referencia...</span>
+                <span style="font-size:.7rem;color:#888">🎨 Elegir</span>
+              </button>
             </div>
           </div>
           <div class="field">
@@ -3135,6 +3042,116 @@ var LIGHT_DATA = [
   ]}
 ];
 
+var ANIMEFILMREF_DATA = [
+  { g: '── PELÍCULAS ANIME ──', items: [
+    { v: 'Spirited Away', i: '🐉' },
+    { v: 'Princess Mononoke', i: '🐺' },
+    { v: 'Your Name (Kimi no Na wa)', i: '☄️' },
+    { v: 'Akira', i: '🏍️' },
+    { v: 'Ghost in the Shell (1995)', i: '🤖' },
+    { v: 'Perfect Blue', i: '🌀' },
+    { v: 'Paprika', i: '🦋' },
+    { v: 'Redline', i: '🏎️' },
+    { v: 'Weathering With You', i: '🌧️' },
+    { v: "Howl's Moving Castle", i: '🏰' },
+    { v: 'Nausicaä', i: '🌿' },
+    { v: 'Grave of the Fireflies', i: '🕯️' },
+    { v: 'A Silent Voice', i: '🤟' },
+    { v: 'Vampire Hunter D: Bloodlust', i: '🧛' },
+    { v: 'Ninja Scroll', i: '⚔️' }
+  ]},
+  { g: '── SERIES ANIME ──', items: [
+    { v: 'Cowboy Bebop', i: '🚀' },
+    { v: 'Neon Genesis Evangelion', i: '🔺' },
+    { v: 'Attack on Titan', i: '🏰' },
+    { v: 'Demon Slayer', i: '🔥' },
+    { v: 'Jujutsu Kaisen', i: '💀' },
+    { v: 'Violet Evergarden', i: '💜' },
+    { v: 'Mob Psycho 100', i: '💯' },
+    { v: 'Devilman Crybaby', i: '😈' },
+    { v: 'Samurai Champloo', i: '🎷' },
+    { v: 'FLCL', i: '🎸' },
+    { v: 'Kill la Kill', i: '✂️' },
+    { v: 'Monogatari Series', i: '💎' },
+    { v: 'Berserk (1997)', i: '⚔️' },
+    { v: 'Serial Experiments Lain', i: '💻' }
+  ]},
+  { g: '── ANIMACIÓN OCCIDENTAL ──', items: [
+    { v: 'Spider-Man: Into the Spider-Verse', i: '🕷️' },
+    { v: 'Arcane', i: '💥' },
+    { v: 'Coraline', i: '🧵' },
+    { v: 'The Iron Giant', i: '🤖' },
+    { v: 'Fantastic Planet (1973)', i: '🛸' },
+    { v: 'Wolfwalkers', i: '🐺' },
+    { v: 'Primal', i: '🦖' },
+    { v: 'Isle of Dogs', i: '🐕' },
+    { v: 'WALL-E', i: '🤖' },
+    { v: 'Soul (Pixar)', i: '🎹' }
+  ]}
+];
+
+var ANIMEDIRECTOR_DATA = [
+  { g: '── JAPONESES ──', items: [
+    { v: 'Hayao Miyazaki', i: '🌿' },
+    { v: 'Makoto Shinkai', i: '☄️' },
+    { v: 'Satoshi Kon', i: '🌀' },
+    { v: 'Mamoru Hosoda', i: '🐺' },
+    { v: 'Masaaki Yuasa', i: '😈' },
+    { v: 'Katsuhiro Otomo', i: '💣' },
+    { v: 'Mamoru Oshii', i: '🤖' },
+    { v: 'Hideaki Anno', i: '🔺' },
+    { v: 'Shinichiro Watanabe', i: '🎷' },
+    { v: 'Naoko Yamada', i: '🌸' },
+    { v: 'Yoshiaki Kawajiri', i: '⚔️' },
+    { v: 'Isao Takahata', i: '🍃' },
+    { v: 'Osamu Tezuka', i: '🦁' },
+    { v: 'Kunihiko Ikuhara', i: '🌹' },
+    { v: 'Takeshi Koike', i: '🏎️' }
+  ]},
+  { g: '── OCCIDENTALES ──', items: [
+    { v: 'Walt Disney', i: '🏰' },
+    { v: 'Pete Docter (Pixar)', i: '🎈' },
+    { v: 'Brad Bird (Pixar)', i: '🦸' },
+    { v: 'Genndy Tartakovsky', i: '⚡' },
+    { v: 'Don Bluth', i: '🐉' },
+    { v: 'Henry Selick', i: '🎃' },
+    { v: 'Wes Anderson (animation)', i: '🟡' },
+    { v: 'Guillermo del Toro (animation)', i: '👹' },
+    { v: 'Phil Lord & Chris Miller', i: '🕷️' },
+    { v: 'Tomm Moore (Cartoon Saloon)', i: '🍀' },
+    { v: 'René Laloux', i: '🛸' },
+    { v: 'Glen Keane', i: '✏️' }
+  ]},
+  { g: '── ARTISTAS / ILUSTRADORES ──', items: [
+    { v: 'Moebius / Jean Giraud', i: '🚀' },
+    { v: 'Yoshitaka Amano', i: '🦋' },
+    { v: 'Kentaro Miura (Berserk)', i: '⚔️' },
+    { v: 'Junji Ito', i: '😱' },
+    { v: 'Akira Toriyama', i: '🐲' },
+    { v: 'Takehiko Inoue', i: '🏀' },
+    { v: 'Pascal Campion', i: '🌅' }
+  ]}
+];
+
+var ANIMESHOT_DATA = [
+  { g: '── PLANOS DE ANIMACIÓN ──', items: [
+    { v: 'Close Up (face detail)', i: '😐' },
+    { v: 'Medium Shot (waist up)', i: '🧍' },
+    { v: 'Full Body Shot', i: '🧍‍♂️' },
+    { v: 'Wide Establishing Shot', i: '🏞️' },
+    { v: 'Extreme Close Up (eyes)', i: '👁️' },
+    { v: "Bird's Eye View", i: '🦅' },
+    { v: 'Low Angle (heroic)', i: '⬆️' },
+    { v: 'Dutch Angle (dynamic)', i: '📐' },
+    { v: 'Over The Shoulder', i: '👥' },
+    { v: 'Dynamic Action Pose', i: '💥' },
+    { v: 'Panoramic Landscape', i: '🌄' },
+    { v: 'Isometric View', i: '🔷' },
+    { v: 'Split Screen', i: '⬛' },
+    { v: 'Manga Panel Layout', i: '📖' }
+  ]}
+];
+
 var ANIMELIGHT_DATA = [
   { g: '── ILUMINACIÓN ANIMACIÓN ──', items: [
     { v: 'Dramatic Backlight', i: '🌅' },
@@ -3775,6 +3792,9 @@ function abrirModal(id) {
   if (id === 'animeColorPalette') datos = ANIMEPALETTE_DATA;
   if (id === 'animeMood') datos = ANIMEMOOD_DATA;
   if (id === 'animeLighting') datos = ANIMELIGHT_DATA;
+  if (id === 'animeShot') datos = ANIMESHOT_DATA;
+  if (id === 'animeDirector') datos = ANIMEDIRECTOR_DATA;
+  if (id === 'animeFilmRef') datos = ANIMEFILMREF_DATA;
   if (id === 'photographer') datos = PHOTO_DATA;
   if (id === 'movieRef') datos = MOVIE_DATA;
   if (!datos) return;
@@ -3810,7 +3830,7 @@ function cerrarModal(id) {
 
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
-            var ids = ['shotType', 'lighting', 'photographer', 'movieRef', 'viewDirection', 'filmStock', 'focalLength', 'aperture', 'shutterSpeed', 'iso', 'lensFilter', 'filmGrain', 'aspectRatio', 'colorPalette', 'colorGrading', 'atmosphere', 'mood', 'animeStyle', 'animeColorPalette', 'animeMood', 'animeLighting'];
+            var ids = ['shotType', 'lighting', 'photographer', 'movieRef', 'viewDirection', 'filmStock', 'focalLength', 'aperture', 'shutterSpeed', 'iso', 'lensFilter', 'filmGrain', 'aspectRatio', 'colorPalette', 'colorGrading', 'atmosphere', 'mood', 'animeStyle', 'animeColorPalette', 'animeMood', 'animeLighting', 'animeShot', 'animeDirector', 'animeFilmRef'];
     ids.forEach(function(id) {
       var m = document.getElementById('kurimodal-' + id);
       if (m && m.style.display === 'flex') cerrarModal(id);
@@ -4697,6 +4717,45 @@ function clearAll() {
 <input type="text" placeholder="🔍 Buscar iluminación..." oninput="buscarModal('animeLighting',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
 </div>
 <div id="kurimodal-animeLighting-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
+</div>
+</div>
+
+<div id="kurimodal-animeShot" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px" onclick="if(event.target===this)cerrarModal('animeShot')">
+<div style="background:#111;border:1px solid #333;border-radius:12px;width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:16px 20px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center">
+<h3 style="color:var(--active);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin:0">🎯 Composición / Plano</h3>
+<button type="button" onclick="cerrarModal('animeShot')" style="background:none;border:none;color:#888;font-size:1.5rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+<div style="padding:10px 20px;border-bottom:1px solid #333">
+<input type="text" placeholder="🔍 Buscar plano..." oninput="buscarModal('animeShot',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
+</div>
+<div id="kurimodal-animeShot-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
+</div>
+</div>
+
+<div id="kurimodal-animeDirector" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px" onclick="if(event.target===this)cerrarModal('animeDirector')">
+<div style="background:#111;border:1px solid #333;border-radius:12px;width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:16px 20px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center">
+<h3 style="color:var(--active);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin:0">🎬 Director / Artista</h3>
+<button type="button" onclick="cerrarModal('animeDirector')" style="background:none;border:none;color:#888;font-size:1.5rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+<div style="padding:10px 20px;border-bottom:1px solid #333">
+<input type="text" placeholder="🔍 Buscar director..." oninput="buscarModal('animeDirector',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
+</div>
+<div id="kurimodal-animeDirector-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
+</div>
+</div>
+
+<div id="kurimodal-animeFilmRef" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px" onclick="if(event.target===this)cerrarModal('animeFilmRef')">
+<div style="background:#111;border:1px solid #333;border-radius:12px;width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:16px 20px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center">
+<h3 style="color:var(--active);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin:0">🎥 Referencia de Película / Serie</h3>
+<button type="button" onclick="cerrarModal('animeFilmRef')" style="background:none;border:none;color:#888;font-size:1.5rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+<div style="padding:10px 20px;border-bottom:1px solid #333">
+<input type="text" placeholder="🔍 Buscar referencia..." oninput="buscarModal('animeFilmRef',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
+</div>
+<div id="kurimodal-animeFilmRef-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
 </div>
 </div>
 
