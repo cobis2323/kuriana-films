@@ -1265,20 +1265,11 @@ select option{background:var(--bg3);color:var(--text)}
             </div>
             <div class="field">
               <div class="field-label">Tipo de Lente</div>
-              <select id="horrorLens" onchange="buildHorrorPrompt()">
-                <option value="">Seleccionar lente...</option>
-                <option>Wide Angle 24mm (distortion, dread)</option>
-                <option>Ultra Wide 14mm (claustrophobia)</option>
-                <option>Standard 50mm (voyeuristic)</option>
-                <option>Telephoto 135mm (stalker, compressed)</option>
-                <option>Macro (disturbing detail)</option>
-                <option>Fisheye (security cam, paranoia)</option>
-                <option>Anamorphic (cinematic horror)</option>
-                <option>Vintage Soft Focus (ghostly)</option>
-                <option>Tilt-Shift (uncanny miniature)</option>
-                <option>Broken / Cracked Lens</option>
-                <option>Pinhole (ethereal, soft)</option>
-              </select>
+              <input type="hidden" id="horrorLens" value="">
+            <button type="button" onclick="abrirModal('horrorLens')" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:12px;border-radius:8px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left">
+                <span id="horrorLens-display" style="opacity:.5">Seleccionar lente...</span>
+                <span style="font-size:.7rem;color:#888">💀 Elegir</span>
+             </button>
             </div>
           </div>
           <div class="field-row">
@@ -3950,6 +3941,22 @@ var HORRORCAMERA_DATA = [
   { v: 'Polaroid SX-70', i: '📸' },
   { v: 'Kodak Brownie', i: '📦' },
   { v: 'Large Format 4x5', i: '🖼' }
+ ]}
+];
+
+var HORRORLENS_DATA = [
+ { g: '── LENTES DE HORROR ──', items: [
+  { v: 'Wide Angle 24mm (distortion, dread)', i: '🌐' },
+  { v: 'Ultra Wide 14mm (claustrophobia)', i: '🏔' },
+  { v: 'Standard 50mm (voyeuristic)', i: '👤' },
+  { v: 'Telephoto 135mm (stalker, compressed)', i: '🔭' },
+  { v: 'Macro (disturbing detail)', i: '🐜' },
+  { v: 'Fisheye (security cam, paranoia)', i: '🐟' },
+  { v: 'Anamorphic (cinematic horror)', i: '🎬' },
+  { v: 'Vintage Soft Focus (ghostly)', i: '👻' },
+  { v: 'Tilt-Shift (uncanny miniature)', i: '📐' },
+  { v: 'Broken / Cracked Lens', i: '💔' },
+  { v: 'Pinhole (ethereal, soft)', i: '⭕' }
  ]}
 ];
 
