@@ -1218,25 +1218,11 @@ select option{background:var(--bg3);color:var(--text)}
             </div>
             <div class="field">
               <div class="field-label">Nivel de Miedo / Angustia</div>
-              <select id="horrorMood" onchange="buildHorrorPrompt()">
-                <option value="">Seleccionar Emoción...</option>
-                <option>Creeping Dread</option>
-                <option>Pure Terror</option>
-                <option>Existential Despair</option>
-                <option>Paranoid Anxiety</option>
-                <option>Cosmic Insignificance</option>
-                <option>Quiet Unease</option>
-                <option>Maddening Revelation</option>
-                <option>Oppressive Claustrophobia</option>
-                <option>Helpless Vulnerability</option>
-                <option>Uncanny Wrongness</option>
-                <option>Primal Fear</option>
-                <option>Melancholic Horror</option>
-                <option>Nihilistic Void</option>
-                <option>Religious Awe / Terror</option>
-                <option>Fever Dream Delirium</option>
-                <option>Body Revulsion / Disgust</option>
-              </select>
+              <input type="hidden" id="horrorMood" value="">
+              <button type="button" onclick="abrirModal('horrorMood')" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:12px;border-radius:8px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left">
+                  <span id="horrorMood-display" style="opacity:.5">Seleccionar Emoción...</span>
+                  <span style="font-size:.7rem;color:#888">💀 Elegir</span>
+              </button>
             </div>
           </div>
 
@@ -3927,6 +3913,27 @@ var HORRORATMOSPHERE_DATA = [
  ]}
 ];
 
+var HORRORMOOD_DATA = [
+ { g: '── NIVELES DE MIEDO ──', items: [
+  { v: 'Creeping Dread', i: '😨' },
+  { v: 'Pure Terror', i: '😱' },
+  { v: 'Existential Despair', i: '🕳' },
+  { v: 'Paranoid Anxiety', i: '👁' },
+  { v: 'Cosmic Insignificance', i: '🌌' },
+  { v: 'Quiet Unease', i: '🤫' },
+  { v: 'Maddening Revelation', i: '🧠' },
+  { v: 'Oppressive Claustrophobia', i: '📦' },
+  { v: 'Helpless Vulnerability', i: '😰' },
+  { v: 'Uncanny Wrongness', i: '🪞' },
+  { v: 'Primal Fear', i: '🐺' },
+  { v: 'Melancholic Horror', i: '🥀' },
+  { v: 'Nihilistic Void', i: '⬛' },
+  { v: 'Religious Awe / Terror', i: '⛪' },
+  { v: 'Fever Dream Delirium', i: '🌀' },
+  { v: 'Body Revulsion / Disgust', i: '🤢' }
+ ]}
+];
+
 function abrirModal(id) {
   var modal = document.getElementById('kurimodal-' + id);
   if (!modal) return;
@@ -3956,6 +3963,7 @@ function abrirModal(id) {
   if (id === 'animeFilmRef') datos = ANIMEFILMREF_DATA;
   if (id === 'horrorSubgenre') datos = HORRORSUBGENRE_DATA;
   if (id === 'horrorAtmosphere') datos = HORRORATMOSPHERE_DATA;
+  if (id === 'horrorMood') datos = HORRORMOOD_DATA;
   if (id === 'photographer') datos = PHOTO_DATA;
   if (id === 'movieRef') datos = MOVIE_DATA;
   if (!datos) return;
@@ -3991,7 +3999,7 @@ function cerrarModal(id) {
 
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
-            var ids = ['shotType', 'lighting', 'photographer', 'movieRef', 'viewDirection', 'filmStock', 'focalLength', 'aperture', 'shutterSpeed', 'iso', 'lensFilter', 'filmGrain', 'aspectRatio', 'colorPalette', 'colorGrading', 'atmosphere', 'mood', 'animeStyle', 'animeColorPalette', 'animeMood', 'animeLighting', 'animeShot', 'animeDirector', 'animeFilmRef', 'horrorSubgenre', 'horrorAtmosphere'];
+            var ids = ['shotType', 'lighting', 'photographer', 'movieRef', 'viewDirection', 'filmStock', 'focalLength', 'aperture', 'shutterSpeed', 'iso', 'lensFilter', 'filmGrain', 'aspectRatio', 'colorPalette', 'colorGrading', 'atmosphere', 'mood', 'animeStyle', 'animeColorPalette', 'animeMood', 'animeLighting', 'animeShot', 'animeDirector', 'animeFilmRef', 'horrorSubgenre', 'horrorAtmosphere', 'horrorMood'];
     ids.forEach(function(id) {
       var m = document.getElementById('kurimodal-' + id);
       if (m && m.style.display === 'flex') cerrarModal(id);
@@ -4945,6 +4953,19 @@ function clearAll() {
 <input type="text" placeholder="🔍 Buscar atmósfera..." oninput="buscarModal('horrorAtmosphere',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
 </div>
 <div id="kurimodal-horrorAtmosphere-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
+</div>
+</div>
+
+<div id="kurimodal-horrorMood" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px" onclick="if(event.target===this)cerrarModal('horrorMood')">
+<div style="background:#111;border:1px solid #333;border-radius:12px;width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:16px 20px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center">
+<h3 style="color:var(--active);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin:0">😱 Nivel de Miedo / Angustia</h3>
+<button type="button" onclick="cerrarModal('horrorMood')" style="background:none;border:none;color:#888;font-size:1.5rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+<div style="padding:10px 20px;border-bottom:1px solid #333">
+<input type="text" placeholder="🔍 Buscar emoción..." oninput="buscarModal('horrorMood',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
+</div>
+<div id="kurimodal-horrorMood-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
 </div>
 </div>
 
