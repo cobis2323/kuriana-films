@@ -1366,13 +1366,25 @@ select option{background:var(--bg3);color:var(--text)}
               </select>
             </div>
             <div class="field">
-              <div class="field">
-  <div class="field-label">Tratamiento de Color</div>
-  <input type="hidden" id="horrorColor" value="">
-  <button type="button" onclick="abrirModal('horrorColor')" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:12px;border-radius:8px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left">
-    <span id="horrorColor-display" style="opacity:.5">Seleccionar color...</span>
-    <span style="font-size:.7rem;color:#888">🎨 Elegir</span>
-  </button>
+              <div class="field-label">Tratamiento de Color</div>
+              <select id="horrorColor" onchange="buildHorrorPrompt()">
+                <option value="">Seleccionar color...</option>
+                <option>Desaturated Cold (blue-gray)</option>
+                <option>Sickly Green / Yellow</option>
+                <option>Deep Crimson / Blood Red</option>
+                <option>Black & White High Contrast</option>
+                <option>Sepia / Aged Brown</option>
+                <option>Teal & Orange (horror grade)</option>
+                <option>Bleach Bypass (washed out)</option>
+                <option>Monochrome Blue</option>
+                <option>VHS Distortion Colors</option>
+                <option>Infrared Red</option>
+                <option>Night Vision Green</option>
+                <option>Cross-Processed (unnatural)</option>
+                <option>Dark Purple / Violet</option>
+                <option>Muted Earth Tones / Decay</option>
+                <option>Neon Against Darkness</option>
+              </select>
             </div>
           </div>
         </div>
@@ -3844,30 +3856,6 @@ var VIEWDIR_DATA = [
   ]}
 ];
 
-var HORRORCOLOR_DATA = [
-  { g: '── TONOS FRÍOS Y OSCUROS ──', items: [
-    { v: "Desaturated Cold", i: "🥶" },
-    { v: "Sickly Green / Yellow", i: "🤢" },
-    { v: "Bleach Bypass", i: "💿" },
-    { v: "Monochrome Blue", i: "🌙" }
-  ]},
-  { g: '── TONOS CÁLIDOS Y SANGRE ──', items: [
-    { v: "Deep Crimson / Blood Red", i: "🩸" },
-    { v: "Teal & Orange", i: "🎃" },
-    { v: "Infrared Red", i: "🔴" }
-  ]},
-  { g: '── ESTILOS ESPECIALES ──', items: [
-    { v: "Black & White High Contrast", i: "🌓" },
-    { v: "Sepia / Aged Brown", i: "📜" },
-    { v: "VHS Distortion Colors", i: "📼" },
-    { v: "Night Vision Green", i: "📟" },
-    { v: "Cross-Processed", i: "🧪" },
-    { v: "Dark Purple / Violet", i: "🔮" },
-    { v: "Muted Earth Tones", i: "🍂" },
-    { v: "Neon Against Darkness", i: "🌌" }
-  ]}
-];
-
 var SHOT_DATA = [
   { g: '── PLANOS CERRADOS ──', items: [
     { v: 'Extreme Close Up', i: '👁️' },
@@ -3947,7 +3935,6 @@ function abrirModal(id) {
   if (id === 'colorGrading') datos = GRADING_DATA;
   if (id === 'atmosphere') datos = ATMOS_DATA;
   if (id === 'mood') datos = MOOD_DATA;
-  if (id === 'horrorColor') datos = HORRORCOLOR_DATA;
   if (id === 'animeStyle') datos = ANIMESTYLE_DATA;
   if (id === 'animeColorPalette') datos = ANIMEPALETTE_DATA;
   if (id === 'animeMood') datos = ANIMEMOOD_DATA;
@@ -4919,16 +4906,6 @@ function clearAll() {
 </div>
 <div id="kurimodal-animeFilmRef-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
 </div>
-</div>
-
-<div id="kurimodal-horrorColor" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px" onclick="if(event.target===this)cerrarModal('horrorColor')">
-  <div style="background:#111;border:1px solid #333;border-radius:12px;width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
-    <div style="padding:16px 20px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center">
-      <h3 style="color:var(--active);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin:0">🎨 Tratamiento de Color</h3>
-      <button type="button" onclick="cerrarModal('horrorColor')" style="background:none;border:none;color:#888;cursor:pointer;font-size:1.5rem">&times;</button>
-    </div>
-    <div id="kurimodal-horrorColor-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
-  </div>
 </div>
 
 </body>
