@@ -1275,24 +1275,11 @@ select option{background:var(--bg3);color:var(--text)}
           <div class="field-row">
             <div class="field">
               <div class="field-label">Tipo de Plano</div>
-              <select id="horrorShot" onchange="buildHorrorPrompt()">
-                <option value="">Seleccionar plano...</option>
-                <option>Extreme Close Up (eye, detail)</option>
-                <option>Close Up (face, terror)</option>
-                <option>Medium Shot (reveal)</option>
-                <option>Wide Shot (isolation, scale)</option>
-                <option>Extreme Wide (cosmic scale)</option>
-                <option>Dutch Angle (disorientation)</option>
-                <option>Low Angle (entity looming)</option>
-                <option>High Angle (vulnerability)</option>
-                <option>Bird's Eye (surveillance)</option>
-                <option>Over The Shoulder (something behind)</option>
-                <option>POV (first person terror)</option>
-                <option>Trunk Shot (trapped)</option>
-                <option>Through Doorway / Frame</option>
-                <option>Reflection (mirror, water)</option>
-                <option>Silhouette (unknown shape)</option>
-              </select>
+              <input type="hidden" id="horrorShot" value="">
+           <button type="button" onclick="abrirModal('horrorShot')" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:12px;border-radius:8px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left">
+               <span id="horrorShot-display" style="opacity:.5">Seleccionar plano...</span>
+               <span style="font-size:.7rem;color:#888">💀 Elegir</span>
+             </button>
             </div>
             <div class="field">
               <div class="field-label">Material de Película</div>
@@ -3960,6 +3947,26 @@ var HORRORLENS_DATA = [
  ]}
 ];
 
+var HORRORSHOT_DATA = [
+ { g: '── PLANOS DE HORROR ──', items: [
+  { v: 'Extreme Close Up (eye, detail)', i: '👁' },
+  { v: 'Close Up (face, terror)', i: '😱' },
+  { v: 'Medium Shot (reveal)', i: '👤' },
+  { v: 'Wide Shot (isolation, scale)', i: '🏞' },
+  { v: 'Extreme Wide (cosmic scale)', i: '🌌' },
+  { v: 'Dutch Angle (disorientation)', i: '📐' },
+  { v: 'Low Angle (entity looming)', i: '⬆️' },
+  { v: 'High Angle (vulnerability)', i: '⬇️' },
+  { v: "Bird's Eye (surveillance)", i: '🦅' },
+  { v: 'Over The Shoulder (something behind)', i: '👥' },
+  { v: 'POV (first person terror)', i: '👀' },
+  { v: 'Trunk Shot (trapped)', i: '🚗' },
+  { v: 'Through Doorway / Frame', i: '🚪' },
+  { v: 'Reflection (mirror, water)', i: '🪞' },
+  { v: 'Silhouette (unknown shape)', i: '🌑' }
+ ]}
+];
+
 function abrirModal(id) {
   var modal = document.getElementById('kurimodal-' + id);
   if (!modal) return;
@@ -3994,6 +4001,7 @@ function abrirModal(id) {
   if (id === 'horrorColor') datos = HORRORCOLOR_DATA;
   if (id === 'horrorCamera') datos = HORRORCAMERA_DATA;
   if (id === 'horrorLens') datos = HORRORLENS_DATA;
+  if (id === 'horrorShot') datos = HORRORSHOT_DATA;
   if (id === 'photographer') datos = PHOTO_DATA;
   if (id === 'movieRef') datos = MOVIE_DATA;
   if (!datos) return;
@@ -4029,7 +4037,7 @@ function cerrarModal(id) {
 
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
-            var ids = ['shotType', 'lighting', 'photographer', 'movieRef', 'viewDirection', 'filmStock', 'focalLength', 'aperture', 'shutterSpeed', 'iso', 'lensFilter', 'filmGrain', 'aspectRatio', 'colorPalette', 'colorGrading', 'atmosphere', 'mood', 'animeStyle', 'animeColorPalette', 'animeMood', 'animeLighting', 'animeShot', 'animeDirector', 'animeFilmRef', 'horrorSubgenre', 'horrorAtmosphere', 'horrorMood', 'horrorLighting', 'horrorColor', 'horrorCamera', 'horrorLens'];
+            var ids = ['shotType', 'lighting', 'photographer', 'movieRef', 'viewDirection', 'filmStock', 'focalLength', 'aperture', 'shutterSpeed', 'iso', 'lensFilter', 'filmGrain', 'aspectRatio', 'colorPalette', 'colorGrading', 'atmosphere', 'mood', 'animeStyle', 'animeColorPalette', 'animeMood', 'animeLighting', 'animeShot', 'animeDirector', 'animeFilmRef', 'horrorSubgenre', 'horrorAtmosphere', 'horrorMood', 'horrorLighting', 'horrorColor', 'horrorCamera', 'horrorLens', 'horrorShot'];
     ids.forEach(function(id) {
       var m = document.getElementById('kurimodal-' + id);
       if (m && m.style.display === 'flex') cerrarModal(id);
@@ -5048,6 +5056,19 @@ function clearAll() {
 <input type="text" placeholder="🔍 Buscar lente..." oninput="buscarModal('horrorLens',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
 </div>
 <div id="kurimodal-horrorLens-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
+</div>
+</div>
+
+<div id="kurimodal-horrorShot" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px" onclick="if(event.target===this)cerrarModal('horrorShot')">
+<div style="background:#111;border:1px solid #333;border-radius:12px;width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:16px 20px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center">
+<h3 style="color:var(--active);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin:0">🎯 Tipo de Plano</h3>
+<button type="button" onclick="cerrarModal('horrorShot')" style="background:none;border:none;color:#888;font-size:1.5rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+<div style="padding:10px 20px;border-bottom:1px solid #333">
+<input type="text" placeholder="🔍 Buscar plano..." oninput="buscarModal('horrorShot',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
+</div>
+<div id="kurimodal-horrorShot-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
 </div>
 </div>
 
