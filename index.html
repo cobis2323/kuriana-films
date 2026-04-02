@@ -1315,111 +1315,11 @@ select option{background:var(--bg3);color:var(--text)}
             </div>
             <div class="field">
               <div class="field-label">Referencia de Película de Horror y Terror</div>
-              <select id="horrorFilmRef" onchange="buildHorrorPrompt()">
-                <option value="">Seleccionar Estética...</option>
-                <optgroup label="── HORROR CÓSMICO / EXISTENCIAL ──">
-                  <option>Annihilation (2018)</option>
-                  <option>Color Out of Space (2019)</option>
-                  <option>Event Horizon (1997)</option>
-                  <option>The Void (2016)</option>
-                  <option>In the Mouth of Madness (1994)</option>
-                  <option>The Mist (2007)</option>
-                  <option>Nope (2022)</option>
-                  <option>Under the Skin (2013)</option>
-                  <option>Coherence (2013)</option>
-                  <option>Stalker (1979)</option>
-                </optgroup>
-                <optgroup label="── HORROR CORPORAL ──">
-                  <option>The Thing (1982)</option>
-                  <option>The Fly (1986)</option>
-                  <option>Videodrome (1983)</option>
-                  <option>Tetsuo: The Iron Man (1989)</option>
-                  <option>Possessor (2020)</option>
-                  <option>Titane (2021)</option>
-                  <option>Society (1989)</option>
-                </optgroup>
-                <optgroup label="── HORROR ELEVADO / A24 ──">
-                  <option>Hereditary (2018)</option>
-                  <option>Midsommar (2019)</option>
-                  <option>The Witch (2015)</option>
-                  <option>The Lighthouse (2019)</option>
-                  <option>Nosferatu (2024)</option>
-                  <option>It Follows (2014)</option>
-                  <option>The Babadook (2014)</option>
-                  <option>Saint Maud (2019)</option>
-                  <option>mother! (2017)</option>
-                </optgroup>
-                <optgroup label="── HORROR CLÁSICO ──">
-                  <option>The Shining (1980)</option>
-                  <option>The Exorcist (1973)</option>
-                  <option>Alien (1979)</option>
-                  <option>Suspiria (1977)</option>
-                  <option>Suspiria (2018)</option>
-                  <option>Rosemary's Baby (1968)</option>
-                  <option>The Omen (1976)</option>
-                  <option>A Clockwork Orange (1971)</option>
-                </optgroup>
-                <optgroup label="── HORROR JAPONÉS ──">
-                  <option>Ringu (1998)</option>
-                  <option>Ju-On: The Grudge (2002)</option>
-                  <option>Pulse / Kairo (2001)</option>
-                  <option>Audition (1999)</option>
-                  <option>Dark Water (2002)</option>
-                  <option>Noroi: The Curse (2005)</option>
-                </optgroup>
-                <optgroup label="── HORROR DE METRAJE ENCONTRADO / ANÁLOGO ──">
-                  <option>The Blair Witch Project (1999)</option>
-                  <option>REC (2007)</option>
-                  <option>V/H/S (2012)</option>
-                  <option>Skinamarink (2022)</option>
-                  <option>Incantation (2022)</option>
-                  <option>The Poughkeepsie Tapes (2007)</option>
-                </optgroup>
-                <optgroup label="── HORROR CIENCIA FICCIÓN / SCI-FI ──">
-                  <option>Alien (1979)</option>
-                  <option>Aliens (1986)</option>
-                  <option>Event Horizon (1997)</option>
-                  <option>Sunshine (2007)</option>
-                  <option>Pandorum (2009)</option>
-                  <option>Life (2017)</option>
-                </optgroup>
-            <optgroup label="── HORROR ZOMBIE ──">
-              <option>Night of the Living Dead (1968)</option>
-              <option>Dawn of the Dead (1978)</option>
-              <option>Dawn of the Dead (2004)</option>
-              <option>Day of the Dead (1985)</option>
-              <option>28 Days Later (2002)</option>
-              <option>28 Weeks Later (2007)</option>
-              <option>Train to Busan (2016)</option>
-              <option>World War Z (2013)</option>
-              <option>Shaun of the Dead (2004)</option>
-              <option>Zombieland (2009)</option>
-              <option>Return of the Living Dead (1985)</option>
-              <option>Braindead / Dead Alive (1992)</option>
-              <option>Cargo (2017)</option>
-              <option>The Girl with All the Gifts (2016)</option>
-              <option>#Alive (2020)</option>
-              <option>Rec (2007)</option>
-              <option>I Am Legend (2007)</option>
-              <option>Overlord (2018)</option>
-            </optgroup>
-            <optgroup label="── HORROR BIOHAZARD / TÓXICO ──">
-              <option>Resident Evil (2002)</option>
-              <option>Contagion (2011)</option>
-              <option>The Crazies (1973)</option>
-              <option>The Crazies (2010)</option>
-              <option>Re-Animator (1985)</option>
-              <option>Toxic Avenger (1984)</option>
-              <option>The Host (2006)</option>
-              <option>Cabin Fever (2002)</option>
-              <option>Splinter (2008)</option>
-              <option>Slither (2006)</option>
-              <option>Street Trash (1987)</option>
-              <option>Class of Nuke 'Em High (1986)</option>
-              <option>The Bay (2012)</option>
-              <option>Contracted (2013)</option>
-              <option>Mayhem (2017)</option>
-              </select>
+              <input type="hidden" id="horrorFilmRef" value="">
+          <button type="button" onclick="abrirModal('horrorFilmRef')" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:12px;border-radius:8px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left">
+              <span id="horrorFilmRef-display" style="opacity:.5">Seleccionar Estética...</span>
+              <span style="font-size:.7rem;color:#888">💀 Elegir</span>
+             </button>
             </div>
           </div>
           <div class="field">
@@ -3979,6 +3879,112 @@ var HORRORAUTHOR_DATA = [
  ]}
 ];
 
+var HORRORFILMREF_DATA = [
+ { g: '── HORROR CÓSMICO / EXISTENCIAL ──', items: [
+  { v: 'Annihilation (2018)', i: '🌈' },
+  { v: 'Color Out of Space (2019)', i: '🟣' },
+  { v: 'Event Horizon (1997)', i: '🕳' },
+  { v: 'The Void (2016)', i: '⬛' },
+  { v: 'In the Mouth of Madness (1994)', i: '🧠' },
+  { v: 'The Mist (2007)', i: '🌫' },
+  { v: 'Nope (2022)', i: '🛸' },
+  { v: 'Under the Skin (2013)', i: '👽' },
+  { v: 'Coherence (2013)', i: '🌀' },
+  { v: 'Stalker (1979)', i: '🚶' }
+ ]},
+ { g: '── HORROR CORPORAL ──', items: [
+  { v: 'The Thing (1982)', i: '❄️' },
+  { v: 'The Fly (1986)', i: '🪰' },
+  { v: 'Videodrome (1983)', i: '📺' },
+  { v: 'Tetsuo: The Iron Man (1989)', i: '⚙️' },
+  { v: 'Possessor (2020)', i: '🧠' },
+  { v: 'Titane (2021)', i: '🚗' },
+  { v: 'Society (1989)', i: '🎭' }
+ ]},
+ { g: '── HORROR ELEVADO / A24 ──', items: [
+  { v: 'Hereditary (2018)', i: '👑' },
+  { v: 'Midsommar (2019)', i: '🌸' },
+  { v: 'The Witch (2015)', i: '🐐' },
+  { v: 'The Lighthouse (2019)', i: '🗼' },
+  { v: 'Nosferatu (2024)', i: '🧛' },
+  { v: 'It Follows (2014)', i: '🚶' },
+  { v: 'The Babadook (2014)', i: '📖' },
+  { v: 'Saint Maud (2019)', i: '⛪' },
+  { v: 'mother! (2017)', i: '🏠' }
+ ]},
+ { g: '── HORROR CLÁSICO ──', items: [
+  { v: 'The Shining (1980)', i: '🪓' },
+  { v: 'The Exorcist (1973)', i: '😈' },
+  { v: 'Alien (1979)', i: '🥚' },
+  { v: 'Suspiria (1977)', i: '💃' },
+  { v: 'Suspiria (2018)', i: '🩰' },
+  { v: "Rosemary's Baby (1968)", i: '👶' },
+  { v: 'The Omen (1976)', i: '😈' },
+  { v: 'A Clockwork Orange (1971)', i: '👁' }
+ ]},
+ { g: '── HORROR JAPONÉS ──', items: [
+  { v: 'Ringu (1998)', i: '📺' },
+  { v: 'Ju-On: The Grudge (2002)', i: '😨' },
+  { v: 'Pulse / Kairo (2001)', i: '💻' },
+  { v: 'Audition (1999)', i: '🎹' },
+  { v: 'Dark Water (2002)', i: '💧' },
+  { v: 'Noroi: The Curse (2005)', i: '📹' }
+ ]},
+ { g: '── METRAJE ENCONTRADO / ANÁLOGO ──', items: [
+  { v: 'The Blair Witch Project (1999)', i: '🌲' },
+  { v: 'REC (2007)', i: '📹' },
+  { v: 'V/H/S (2012)', i: '📼' },
+  { v: 'Skinamarink (2022)', i: '🏠' },
+  { v: 'Incantation (2022)', i: '🔮' },
+  { v: 'The Poughkeepsie Tapes (2007)', i: '📦' }
+ ]},
+ { g: '── HORROR SCI-FI ──', items: [
+  { v: 'Alien (1979)', i: '🥚' },
+  { v: 'Aliens (1986)', i: '👽' },
+  { v: 'Event Horizon (1997)', i: '🕳' },
+  { v: 'Sunshine (2007)', i: '☀️' },
+  { v: 'Pandorum (2009)', i: '🛸' },
+  { v: 'Life (2017)', i: '🧬' }
+ ]},
+ { g: '── HORROR ZOMBIE ──', items: [
+  { v: 'Night of the Living Dead (1968)', i: '🧟' },
+  { v: 'Dawn of the Dead (1978)', i: '🏬' },
+  { v: 'Dawn of the Dead (2004)', i: '🏃' },
+  { v: 'Day of the Dead (1985)', i: '🪖' },
+  { v: '28 Days Later (2002)', i: '🏃' },
+  { v: '28 Weeks Later (2007)', i: '🏙' },
+  { v: 'Train to Busan (2016)', i: '🚂' },
+  { v: 'World War Z (2013)', i: '🌍' },
+  { v: 'Shaun of the Dead (2004)', i: '😂' },
+  { v: 'Zombieland (2009)', i: '🎢' },
+  { v: 'Return of the Living Dead (1985)', i: '☢️' },
+  { v: 'Braindead / Dead Alive (1992)', i: '🪓' },
+  { v: 'Cargo (2017)', i: '👶' },
+  { v: 'The Girl with All the Gifts (2016)', i: '🌺' },
+  { v: '#Alive (2020)', i: '📱' },
+  { v: 'Rec (2007)', i: '📹' },
+  { v: 'I Am Legend (2007)', i: '🐕' },
+  { v: 'Overlord (2018)', i: '🪖' }
+ ]},
+ { g: '── HORROR BIOHAZARD / TÓXICO ──', items: [
+  { v: 'Resident Evil (2002)', i: '☣️' },
+  { v: 'Contagion (2011)', i: '😷' },
+  { v: 'The Crazies (1973)', i: '😵' },
+  { v: 'The Crazies (2010)', i: '🔪' },
+  { v: 'Re-Animator (1985)', i: '💉' },
+  { v: 'Toxic Avenger (1984)', i: '🛢' },
+  { v: 'The Host (2006)', i: '🦎' },
+  { v: 'Cabin Fever (2002)', i: '🏕' },
+  { v: 'Splinter (2008)', i: '🪵' },
+  { v: 'Slither (2006)', i: '🪱' },
+  { v: 'Street Trash (1987)', i: '🗑' },
+  { v: "Class of Nuke 'Em High (1986)", i: '☢️' },
+  { v: 'The Bay (2012)', i: '🦐' },
+  { v: 'Contracted (2013)', i: '🦠' },
+  { v: 'Mayhem (2017)', i: '😡' }
+ ]}
+];
+
 function abrirModal(id) {
   var modal = document.getElementById('kurimodal-' + id);
   if (!modal) return;
@@ -4016,6 +4022,7 @@ function abrirModal(id) {
   if (id === 'horrorShot') datos = HORRORSHOT_DATA;
   if (id === 'horrorFilm') datos = HORRORFILM_DATA;
   if (id === 'horrorAuthor') datos = HORRORAUTHOR_DATA;
+  if (id === 'horrorFilmRef') datos = HORRORFILMREF_DATA;
   if (id === 'photographer') datos = PHOTO_DATA;
   if (id === 'movieRef') datos = MOVIE_DATA;
   if (!datos) return;
@@ -4051,7 +4058,7 @@ function cerrarModal(id) {
 
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
-            var ids = ['shotType', 'lighting', 'photographer', 'movieRef', 'viewDirection', 'filmStock', 'focalLength', 'aperture', 'shutterSpeed', 'iso', 'lensFilter', 'filmGrain', 'aspectRatio', 'colorPalette', 'colorGrading', 'atmosphere', 'mood', 'animeStyle', 'animeColorPalette', 'animeMood', 'animeLighting', 'animeShot', 'animeDirector', 'animeFilmRef', 'horrorSubgenre', 'horrorAtmosphere', 'horrorMood', 'horrorLighting', 'horrorColor', 'horrorCamera', 'horrorLens', 'horrorShot', 'horrorFilm', 'horrorAuthor'];
+            var ids = ['shotType', 'lighting', 'photographer', 'movieRef', 'viewDirection', 'filmStock', 'focalLength', 'aperture', 'shutterSpeed', 'iso', 'lensFilter', 'filmGrain', 'aspectRatio', 'colorPalette', 'colorGrading', 'atmosphere', 'mood', 'animeStyle', 'animeColorPalette', 'animeMood', 'animeLighting', 'animeShot', 'animeDirector', 'animeFilmRef', 'horrorSubgenre', 'horrorAtmosphere', 'horrorMood', 'horrorLighting', 'horrorColor', 'horrorCamera', 'horrorLens', 'horrorShot', 'horrorFilm', 'horrorAuthor', 'horrorFilmRef'];
     ids.forEach(function(id) {
       var m = document.getElementById('kurimodal-' + id);
       if (m && m.style.display === 'flex') cerrarModal(id);
@@ -5109,6 +5116,19 @@ function clearAll() {
 <input type="text" placeholder="🔍 Buscar autor..." oninput="buscarModal('horrorAuthor',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
 </div>
 <div id="kurimodal-horrorAuthor-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
+</div>
+</div>
+
+<div id="kurimodal-horrorFilmRef" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px" onclick="if(event.target===this)cerrarModal('horrorFilmRef')">
+<div style="background:#111;border:1px solid #333;border-radius:12px;width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:16px 20px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center">
+<h3 style="color:var(--active);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin:0">🎬 Referencia de Película</h3>
+<button type="button" onclick="cerrarModal('horrorFilmRef')" style="background:none;border:none;color:#888;font-size:1.5rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+<div style="padding:10px 20px;border-bottom:1px solid #333">
+<input type="text" placeholder="🔍 Buscar película..." oninput="buscarModal('horrorFilmRef',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
+</div>
+<div id="kurimodal-horrorFilmRef-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
 </div>
 </div>
 
