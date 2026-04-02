@@ -4022,7 +4022,7 @@ function cerrarModal(id) {
 
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
-            var ids = ['shotType', 'lighting', 'photographer', 'movieRef', 'viewDirection', 'filmStock', 'focalLength', 'aperture', 'shutterSpeed', 'iso', 'lensFilter', 'filmGrain', 'aspectRatio', 'colorPalette', 'colorGrading', 'atmosphere', 'mood', 'animeStyle', 'animeColorPalette', 'animeMood', 'animeLighting', 'animeShot', 'animeDirector', 'animeFilmRef', 'horrorSubgenre', 'horrorAtmosphere', 'horrorMood', 'horrorLighting', 'horrorColor', 'horrorLens'];
+            var ids = ['shotType', 'lighting', 'photographer', 'movieRef', 'viewDirection', 'filmStock', 'focalLength', 'aperture', 'shutterSpeed', 'iso', 'lensFilter', 'filmGrain', 'aspectRatio', 'colorPalette', 'colorGrading', 'atmosphere', 'mood', 'animeStyle', 'animeColorPalette', 'animeMood', 'animeLighting', 'animeShot', 'animeDirector', 'animeFilmRef', 'horrorSubgenre', 'horrorAtmosphere', 'horrorMood', 'horrorLighting', 'horrorColor', 'horrorCamera', 'horrorLens'];
     ids.forEach(function(id) {
       var m = document.getElementById('kurimodal-' + id);
       if (m && m.style.display === 'flex') cerrarModal(id);
@@ -5015,6 +5015,19 @@ function clearAll() {
 <input type="text" placeholder="🔍 Buscar color..." oninput="buscarModal('horrorColor',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
 </div>
 <div id="kurimodal-horrorColor-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
+</div>
+</div>
+
+<div id="kurimodal-horrorCamera" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px" onclick="if(event.target===this)cerrarModal('horrorCamera')">
+<div style="background:#111;border:1px solid #333;border-radius:12px;width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:16px 20px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center">
+<h3 style="color:var(--active);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin:0">📷 Cuerpo de Cámara</h3>
+<button type="button" onclick="cerrarModal('horrorCamera')" style="background:none;border:none;color:#888;font-size:1.5rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+<div style="padding:10px 20px;border-bottom:1px solid #333">
+<input type="text" placeholder="🔍 Buscar cámara..." oninput="buscarModal('horrorCamera',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
+</div>
+<div id="kurimodal-horrorCamera-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
 </div>
 </div>
 
