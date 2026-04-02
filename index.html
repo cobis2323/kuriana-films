@@ -1307,76 +1307,11 @@ select option{background:var(--bg3);color:var(--text)}
           <div class="field-row">
             <div class="field">
               <div class="field-label"> Autor / Artista Visual de Horror y Terror</div>
-              <select id="horrorAuthor" onchange="buildHorrorPrompt()">
-                <option value="">Seleccionar autor/artista...</option>
-                <optgroup label="── PRECURSORES LITERARIOS ──">
-                  <option>H.P. Lovecraft</option>
-                  <option>Edgar Allan Poe</option>
-                  <option>Arthur Machen</option>
-                  <option>Algernon Blackwood</option>
-                  <option>William Hope Hodgson</option>
-                  <option>Robert W. Chambers</option>
-                  <option>Clark Ashton Smith</option>
-                  <option>M.R. James</option>
-                </optgroup>
-                <optgroup label="── AUTORES MODERNOS ──">
-                  <option>Stephen King</option>
-                  <option>Clive Barker</option>
-                  <option>Thomas Ligotti</option>
-                  <option>Shirley Jackson</option>
-                  <option>Junji Ito</option>
-                </optgroup>
-                <optgroup label="── CONTEMPORÁNEOS ──">
-                  <option>Caitlín R. Kiernan</option>
-                  <option>John Langan</option>
-                  <option>Laird Barron</option>
-                  <option>Todd Keisling</option>
-                  <option>Philip Fracassi</option>
-                  <option>Hailey Piper</option>
-                  <option>Paul Tremblay</option>
-                  <option>Nathan Ballingrud</option>
-                  <option>Brian Evenson</option>
-                  <option>Carmen Maria Machado</option>
-                </optgroup>
-                <optgroup label="── ARTISTAS VISUALES ──">
-                  <option>H.R. Giger (biomechanical)</option>
-                  <option>Zdzisław Beksiński (surreal terror)</option>
-                  <option>Wayne Barlowe (hellscapes)</option>
-                  <option>Trevor Henderson (Siren Head)</option>
-                  <option>Simon Stålenhag (sci-fi horror)</option>
-                  <option>Junji Ito (manga horror)</option>
-                  <option>Bernie Wrightson (Frankenstein)</option>
-                  <option>Mike Mignola (Hellboy)</option>
-                  <option>Kentaro Miura (Berserk)</option>
-                  <option>Gustave Doré (Dante's Inferno)</option>
-                  <option>Francisco Goya (Black Paintings)</option>
-                  <option>Francis Bacon (distorted figures)</option>
-                  <option>Hieronymus Bosch (Garden of Delights)</option>
-                  <option>John Kenn Mortensen (post-it monsters)</option>
-                   <option>Yoshitaka Amano (dark fantasy)</option>
-                </optgroup>
-                <optgroup label="── MAESTROS DEL ZOMBIE ──">
-                 <option>George A. Romero (Living Dead)</option>
-                 <option>Lucio Fulci (Zombie Flesh Eaters)</option>
-                 <option>Tom Savini (practical FX master)</option>
-                 <option>Greg Nicotero (Walking Dead FX)</option>
-                 <option>Danny Boyle (28 Days Later)</option>
-                 <option>Yeon Sang-ho (Train to Busan)</option>
-                 <option>Zack Snyder (Dawn of the Dead 2004)</option>
-                 <option>Edgar Wright (Shaun of the Dead)</option>
-                 <option>Peter Jackson (Braindead/Dead Alive)</option>
-                 </optgroup>
-               <optgroup label="── MAESTROS BIOHAZARD / TÓXICO ──">
-                 <option>Shinji Mikami (Resident Evil creator)</option>
-                 <option>David Cronenberg (biological horror)</option>
-                 <option>Lloyd Kaufman (Troma / Toxic Avenger)</option>
-                 <option>Alex Garland (28 Days Later writer)</option>
-                 <option>Steven Soderbergh (Contagion)</option>
-                 <option>Stuart Gordon (Re-Animator)</option>
-                 <option>Brian Yuzna (Society, Return of Living Dead 3)</option>
-                 <option>Dan O'Bannon (Return of the Living Dead)</option>
-                </optgroup>
-                </select>
+              <input type="hidden" id="horrorAuthor" value="">
+          <button type="button" onclick="abrirModal('horrorAuthor')" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:12px;border-radius:8px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left">
+              <span id="horrorAuthor-display" style="opacity:.5">Seleccionar autor/artista...</span>
+              <span style="font-size:.7rem;color:#888">💀 Elegir</span>
+             </button>
             </div>
             <div class="field">
               <div class="field-label">Referencia de Película de Horror y Terror</div>
@@ -3974,6 +3909,76 @@ var HORRORFILM_DATA = [
  ]}
 ];
 
+var HORRORAUTHOR_DATA = [
+ { g: '── PRECURSORES LITERARIOS ──', items: [
+  { v: 'H.P. Lovecraft', i: '🐙' },
+  { v: 'Edgar Allan Poe', i: '🐦‍⬛' },
+  { v: 'Arthur Machen', i: '🌿' },
+  { v: 'Algernon Blackwood', i: '🌲' },
+  { v: 'William Hope Hodgson', i: '🌊' },
+  { v: 'Robert W. Chambers', i: '👑' },
+  { v: 'Clark Ashton Smith', i: '🔮' },
+  { v: 'M.R. James', i: '📖' }
+ ]},
+ { g: '── AUTORES MODERNOS ──', items: [
+  { v: 'Stephen King', i: '📕' },
+  { v: 'Clive Barker', i: '🧩' },
+  { v: 'Thomas Ligotti', i: '🎭' },
+  { v: 'Shirley Jackson', i: '🏠' },
+  { v: 'Junji Ito', i: '🌀' }
+ ]},
+ { g: '── CONTEMPORÁNEOS ──', items: [
+  { v: 'Caitlín R. Kiernan', i: '🦷' },
+  { v: 'John Langan', i: '📖' },
+  { v: 'Laird Barron', i: '🏔' },
+  { v: 'Todd Keisling', i: '⬛' },
+  { v: 'Philip Fracassi', i: '🧠' },
+  { v: 'Hailey Piper', i: '🩸' },
+  { v: 'Paul Tremblay', i: '🏚' },
+  { v: 'Nathan Ballingrud', i: '🔥' },
+  { v: 'Brian Evenson', i: '🪓' },
+  { v: 'Carmen Maria Machado', i: '🪡' }
+ ]},
+ { g: '── ARTISTAS VISUALES ──', items: [
+  { v: 'H.R. Giger (biomechanical)', i: '🤖' },
+  { v: 'Zdzisław Beksiński (surreal terror)', i: '💀' },
+  { v: 'Wayne Barlowe (hellscapes)', i: '🔥' },
+  { v: 'Trevor Henderson (Siren Head)', i: '📡' },
+  { v: 'Simon Stålenhag (sci-fi horror)', i: '🛸' },
+  { v: 'Junji Ito (manga horror)', i: '🌀' },
+  { v: 'Bernie Wrightson (Frankenstein)', i: '⚡' },
+  { v: 'Mike Mignola (Hellboy)', i: '👹' },
+  { v: 'Kentaro Miura (Berserk)', i: '⚔️' },
+  { v: 'Gustave Doré (Dante\'s Inferno)', i: '🏛' },
+  { v: 'Francisco Goya (Black Paintings)', i: '🎨' },
+  { v: 'Francis Bacon (distorted figures)', i: '🖼' },
+  { v: 'Hieronymus Bosch (Garden of Delights)', i: '😈' },
+  { v: 'John Kenn Mortensen (post-it monsters)', i: '📝' },
+  { v: 'Yoshitaka Amano (dark fantasy)', i: '🦋' }
+ ]},
+ { g: '── MAESTROS DEL ZOMBIE ──', items: [
+  { v: 'George A. Romero (Living Dead)', i: '🧟' },
+  { v: 'Lucio Fulci (Zombie Flesh Eaters)', i: '🇮🇹' },
+  { v: 'Tom Savini (practical FX master)', i: '🎭' },
+  { v: 'Greg Nicotero (Walking Dead FX)', i: '🩸' },
+  { v: 'Danny Boyle (28 Days Later)', i: '🏃' },
+  { v: 'Yeon Sang-ho (Train to Busan)', i: '🚂' },
+  { v: 'Zack Snyder (Dawn of the Dead 2004)', i: '🎬' },
+  { v: 'Edgar Wright (Shaun of the Dead)', i: '😂' },
+  { v: 'Peter Jackson (Braindead/Dead Alive)', i: '🪓' }
+ ]},
+ { g: '── MAESTROS BIOHAZARD / TÓXICO ──', items: [
+  { v: 'Shinji Mikami (Resident Evil creator)', i: '☣️' },
+  { v: 'David Cronenberg (biological horror)', i: '🫀' },
+  { v: 'Lloyd Kaufman (Troma / Toxic Avenger)', i: '🛢' },
+  { v: 'Alex Garland (28 Days Later writer)', i: '🦠' },
+  { v: 'Steven Soderbergh (Contagion)', i: '😷' },
+  { v: 'Stuart Gordon (Re-Animator)', i: '💉' },
+  { v: 'Brian Yuzna (Society, Return of Living Dead 3)', i: '🧪' },
+  { v: 'Dan O\'Bannon (Return of the Living Dead)', i: '☢️' }
+ ]}
+];
+
 function abrirModal(id) {
   var modal = document.getElementById('kurimodal-' + id);
   if (!modal) return;
@@ -4010,6 +4015,7 @@ function abrirModal(id) {
   if (id === 'horrorLens') datos = HORRORLENS_DATA;
   if (id === 'horrorShot') datos = HORRORSHOT_DATA;
   if (id === 'horrorFilm') datos = HORRORFILM_DATA;
+  if (id === 'horrorAuthor') datos = HORRORAUTHOR_DATA;
   if (id === 'photographer') datos = PHOTO_DATA;
   if (id === 'movieRef') datos = MOVIE_DATA;
   if (!datos) return;
@@ -4045,7 +4051,7 @@ function cerrarModal(id) {
 
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
-            var ids = ['shotType', 'lighting', 'photographer', 'movieRef', 'viewDirection', 'filmStock', 'focalLength', 'aperture', 'shutterSpeed', 'iso', 'lensFilter', 'filmGrain', 'aspectRatio', 'colorPalette', 'colorGrading', 'atmosphere', 'mood', 'animeStyle', 'animeColorPalette', 'animeMood', 'animeLighting', 'animeShot', 'animeDirector', 'animeFilmRef', 'horrorSubgenre', 'horrorAtmosphere', 'horrorMood', 'horrorLighting', 'horrorColor', 'horrorCamera', 'horrorLens', 'horrorShot', 'horrorFilm'];
+            var ids = ['shotType', 'lighting', 'photographer', 'movieRef', 'viewDirection', 'filmStock', 'focalLength', 'aperture', 'shutterSpeed', 'iso', 'lensFilter', 'filmGrain', 'aspectRatio', 'colorPalette', 'colorGrading', 'atmosphere', 'mood', 'animeStyle', 'animeColorPalette', 'animeMood', 'animeLighting', 'animeShot', 'animeDirector', 'animeFilmRef', 'horrorSubgenre', 'horrorAtmosphere', 'horrorMood', 'horrorLighting', 'horrorColor', 'horrorCamera', 'horrorLens', 'horrorShot', 'horrorFilm', 'horrorAuthor'];
     ids.forEach(function(id) {
       var m = document.getElementById('kurimodal-' + id);
       if (m && m.style.display === 'flex') cerrarModal(id);
@@ -5090,6 +5096,19 @@ function clearAll() {
 <input type="text" placeholder="🔍 Buscar film stock..." oninput="buscarModal('horrorFilm',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
 </div>
 <div id="kurimodal-horrorFilm-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
+</div>
+</div>
+
+<div id="kurimodal-horrorAuthor" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px" onclick="if(event.target===this)cerrarModal('horrorAuthor')">
+<div style="background:#111;border:1px solid #333;border-radius:12px;width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:16px 20px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center">
+<h3 style="color:var(--active);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin:0">✍️ Autor / Artista Visual</h3>
+<button type="button" onclick="cerrarModal('horrorAuthor')" style="background:none;border:none;color:#888;font-size:1.5rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+<div style="padding:10px 20px;border-bottom:1px solid #333">
+<input type="text" placeholder="🔍 Buscar autor..." oninput="buscarModal('horrorAuthor',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
+</div>
+<div id="kurimodal-horrorAuthor-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
 </div>
 </div>
 
