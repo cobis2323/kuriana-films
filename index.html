@@ -1210,25 +1210,11 @@ select option{background:var(--bg3);color:var(--text)}
           <div class="field-row">
             <div class="field">
               <div class="field-label">Atmósfera</div>
-              <select id="horrorAtmosphere" onchange="buildHorrorPrompt()">
-                <option value="">Seleccionar atmósfera...</option>
-                <option>Thick Fog / Impenetrable Mist</option>
-                <option>Heavy Rain / Storm</option>
-                <option>Complete Darkness</option>
-                <option>Underwater Pressure</option>
-                <option>Ash Falling / Post-Destruction</option>
-                <option>Frozen / Sub-Zero</option>
-                <option>Humid / Suffocating Heat</option>
-                <option>Decay / Rot / Organic Growth</option>
-                <option>Static / Glitch / Reality Distortion</option>
-                <option>Vacuum of Space</option>
-                <option>Bioluminescent Deep Sea</option>
-                <option>Smoke / Industrial Pollution</option>
-                <option>Dust Particles / Abandoned</option>
-                <option>Blood Rain / Unnatural Weather</option>
-                <option>Eclipse / Unnatural Sky</option>
-                <option>Spores / Fungal Infection</option>
-              </select>
+              <input type="hidden" id="horrorAtmosphere" value="">
+              <button type="button" onclick="abrirModal('horrorAtmosphere')" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:12px;border-radius:8px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left">
+                  <span id="horrorAtmosphere-display" style="opacity:.5">Seleccionar atmósfera...</span>
+                  <span style="font-size:.7rem;color:#888">💀 Elegir</span>
+              </button>
             </div>
             <div class="field">
               <div class="field-label">Nivel de Miedo / Angustia</div>
@@ -3920,6 +3906,27 @@ var HORRORSUBGENRE_DATA = [
  ]}
 ];
 
+var HORRORATMOSPHERE_DATA = [
+ { g: '── ATMÓSFERAS DE TERROR ──', items: [
+  { v: 'Thick Fog / Impenetrable Mist', i: '🌫' },
+  { v: 'Heavy Rain / Storm', i: '⛈️' },
+  { v: 'Complete Darkness', i: '⬛' },
+  { v: 'Underwater Pressure', i: '🫧' },
+  { v: 'Ash Falling / Post-Destruction', i: '🌋' },
+  { v: 'Frozen / Sub-Zero', i: '❄️' },
+  { v: 'Humid / Suffocating Heat', i: '🥵' },
+  { v: 'Decay / Rot / Organic Growth', i: '🍄' },
+  { v: 'Static / Glitch / Reality Distortion', i: '📺' },
+  { v: 'Vacuum of Space', i: '🛸' },
+  { v: 'Bioluminescent Deep Sea', i: '🧬' },
+  { v: 'Smoke / Industrial Pollution', i: '🏭' },
+  { v: 'Dust Particles / Abandoned', i: '💨' },
+  { v: 'Blood Rain / Unnatural Weather', i: '🩸' },
+  { v: 'Eclipse / Unnatural Sky', i: '🌑' },
+  { v: 'Spores / Fungal Infection', i: '🍄' }
+ ]}
+];
+
 function abrirModal(id) {
   var modal = document.getElementById('kurimodal-' + id);
   if (!modal) return;
@@ -3948,6 +3955,7 @@ function abrirModal(id) {
   if (id === 'animeDirector') datos = ANIMEDIRECTOR_DATA;
   if (id === 'animeFilmRef') datos = ANIMEFILMREF_DATA;
   if (id === 'horrorSubgenre') datos = HORRORSUBGENRE_DATA;
+  if (id === 'horrorAtmosphere') datos = HORRORATMOSPHERE_DATA;
   if (id === 'photographer') datos = PHOTO_DATA;
   if (id === 'movieRef') datos = MOVIE_DATA;
   if (!datos) return;
@@ -3983,7 +3991,7 @@ function cerrarModal(id) {
 
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
-            var ids = ['shotType', 'lighting', 'photographer', 'movieRef', 'viewDirection', 'filmStock', 'focalLength', 'aperture', 'shutterSpeed', 'iso', 'lensFilter', 'filmGrain', 'aspectRatio', 'colorPalette', 'colorGrading', 'atmosphere', 'mood', 'animeStyle', 'animeColorPalette', 'animeMood', 'animeLighting', 'animeShot', 'animeDirector', 'animeFilmRef', 'horrorSubgenre'];
+            var ids = ['shotType', 'lighting', 'photographer', 'movieRef', 'viewDirection', 'filmStock', 'focalLength', 'aperture', 'shutterSpeed', 'iso', 'lensFilter', 'filmGrain', 'aspectRatio', 'colorPalette', 'colorGrading', 'atmosphere', 'mood', 'animeStyle', 'animeColorPalette', 'animeMood', 'animeLighting', 'animeShot', 'animeDirector', 'animeFilmRef', 'horrorSubgenre', 'horrorAtmosphere'];
     ids.forEach(function(id) {
       var m = document.getElementById('kurimodal-' + id);
       if (m && m.style.display === 'flex') cerrarModal(id);
@@ -4924,6 +4932,19 @@ function clearAll() {
 <input type="text" placeholder="🔍 Buscar subgénero..." oninput="buscarModal('horrorSubgenre',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
 </div>
 <div id="kurimodal-horrorSubgenre-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
+</div>
+</div>
+
+<div id="kurimodal-horrorAtmosphere" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px" onclick="if(event.target===this)cerrarModal('horrorAtmosphere')">
+<div style="background:#111;border:1px solid #333;border-radius:12px;width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:16px 20px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center">
+<h3 style="color:var(--active);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin:0">🌫 Atmósfera</h3>
+<button type="button" onclick="cerrarModal('horrorAtmosphere')" style="background:none;border:none;color:#888;font-size:1.5rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+<div style="padding:10px 20px;border-bottom:1px solid #333">
+<input type="text" placeholder="🔍 Buscar atmósfera..." oninput="buscarModal('horrorAtmosphere',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
+</div>
+<div id="kurimodal-horrorAtmosphere-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
 </div>
 </div>
 
