@@ -1229,27 +1229,11 @@ select option{background:var(--bg3);color:var(--text)}
           <div class="field-row">
             <div class="field">
               <div class="field-label">Iluminación de Terror</div>
-              <select id="horrorLighting" onchange="buildHorrorPrompt()">
-                <option value="">Seleccionar Esquema de Luz...</option>
-                <option>Single Candle / Dying Flame</option>
-                <option>Flickering Fluorescent</option>
-                <option>Moonlight Through Clouds</option>
-                <option>Complete Darkness + Flash</option>
-                <option>Underlighting (face from below)</option>
-                <option>Red Emergency Lighting</option>
-                <option>Bioluminescent Glow</option>
-                <option>Lightning Strikes</option>
-                <option>TV Static / Screen Glow</option>
-                <option>Flashlight Beam Only</option>
-                <option>Fire / Burning</option>
-                <option>Sickly Green Light</option>
-                <option>Volumetric Fog + Backlight</option>
-                <option>Chiaroscuro (extreme contrast)</option>
-                <option>Pale Overcast / No Shadows</option>
-                <option>Sodium Streetlamp (orange isolation)</option>
-                <option>UV / Blacklight</option>
-                <option>Phone Screen in Darkness</option>
-              </select>
+              <input type="hidden" id="horrorLighting" value="">
+              <button type="button" onclick="abrirModal('horrorLighting')" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:12px;border-radius:8px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left">
+                  <span id="horrorLighting-display" style="opacity:.5">Seleccionar Esquema de Luz...</span>
+                  <span style="font-size:.7rem;color:#888">💀 Elegir</span>
+             </button>
             </div>
             <div class="field">
               <div class="field-label">Tratamiento de Color</div>
@@ -3934,6 +3918,29 @@ var HORRORMOOD_DATA = [
  ]}
 ];
 
+var HORRORLIGHTING_DATA = [
+ { g: '── ILUMINACIÓN DE TERROR ──', items: [
+  { v: 'Single Candle / Dying Flame', i: '🕯' },
+  { v: 'Flickering Fluorescent', i: '💡' },
+  { v: 'Moonlight Through Clouds', i: '🌙' },
+  { v: 'Complete Darkness + Flash', i: '⚡' },
+  { v: 'Underlighting (face from below)', i: '⬆️' },
+  { v: 'Red Emergency Lighting', i: '🔴' },
+  { v: 'Bioluminescent Glow', i: '🧬' },
+  { v: 'Lightning Strikes', i: '⛈️' },
+  { v: 'TV Static / Screen Glow', i: '📺' },
+  { v: 'Flashlight Beam Only', i: '🔦' },
+  { v: 'Fire / Burning', i: '🔥' },
+  { v: 'Sickly Green Light', i: '🟢' },
+  { v: 'Volumetric Fog + Backlight', i: '🌫' },
+  { v: 'Chiaroscuro (extreme contrast)', i: '◐' },
+  { v: 'Pale Overcast / No Shadows', i: '☁️' },
+  { v: 'Sodium Streetlamp (orange isolation)', i: '🟠' },
+  { v: 'UV / Blacklight', i: '🟣' },
+  { v: 'Phone Screen in Darkness', i: '📱' }
+ ]}
+];
+
 function abrirModal(id) {
   var modal = document.getElementById('kurimodal-' + id);
   if (!modal) return;
@@ -3964,6 +3971,7 @@ function abrirModal(id) {
   if (id === 'horrorSubgenre') datos = HORRORSUBGENRE_DATA;
   if (id === 'horrorAtmosphere') datos = HORRORATMOSPHERE_DATA;
   if (id === 'horrorMood') datos = HORRORMOOD_DATA;
+  if (id === 'horrorLighting') datos = HORRORLIGHTING_DATA;
   if (id === 'photographer') datos = PHOTO_DATA;
   if (id === 'movieRef') datos = MOVIE_DATA;
   if (!datos) return;
@@ -3999,7 +4007,7 @@ function cerrarModal(id) {
 
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
-            var ids = ['shotType', 'lighting', 'photographer', 'movieRef', 'viewDirection', 'filmStock', 'focalLength', 'aperture', 'shutterSpeed', 'iso', 'lensFilter', 'filmGrain', 'aspectRatio', 'colorPalette', 'colorGrading', 'atmosphere', 'mood', 'animeStyle', 'animeColorPalette', 'animeMood', 'animeLighting', 'animeShot', 'animeDirector', 'animeFilmRef', 'horrorSubgenre', 'horrorAtmosphere', 'horrorMood'];
+            var ids = ['shotType', 'lighting', 'photographer', 'movieRef', 'viewDirection', 'filmStock', 'focalLength', 'aperture', 'shutterSpeed', 'iso', 'lensFilter', 'filmGrain', 'aspectRatio', 'colorPalette', 'colorGrading', 'atmosphere', 'mood', 'animeStyle', 'animeColorPalette', 'animeMood', 'animeLighting', 'animeShot', 'animeDirector', 'animeFilmRef', 'horrorSubgenre', 'horrorAtmosphere', 'horrorMood', 'horrorLighting'];
     ids.forEach(function(id) {
       var m = document.getElementById('kurimodal-' + id);
       if (m && m.style.display === 'flex') cerrarModal(id);
@@ -4966,6 +4974,19 @@ function clearAll() {
 <input type="text" placeholder="🔍 Buscar emoción..." oninput="buscarModal('horrorMood',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
 </div>
 <div id="kurimodal-horrorMood-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
+</div>
+</div>
+
+<div id="kurimodal-horrorLighting" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px" onclick="if(event.target===this)cerrarModal('horrorLighting')">
+<div style="background:#111;border:1px solid #333;border-radius:12px;width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:16px 20px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center">
+<h3 style="color:var(--active);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin:0">🕯 Iluminación de Terror</h3>
+<button type="button" onclick="cerrarModal('horrorLighting')" style="background:none;border:none;color:#888;font-size:1.5rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+<div style="padding:10px 20px;border-bottom:1px solid #333">
+<input type="text" placeholder="🔍 Buscar iluminación..." oninput="buscarModal('horrorLighting',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
+</div>
+<div id="kurimodal-horrorLighting-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
 </div>
 </div>
 
