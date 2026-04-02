@@ -1257,38 +1257,11 @@ select option{background:var(--bg3);color:var(--text)}
           <div class="field-row">
             <div class="field">
               <div class="field-label">Cuerpo de Cámara</div>
-              <select id="horrorCamera" onchange="buildHorrorPrompt()">
-                <option value="">Seleccionar cámara...</option>
-                <optgroup label="── CINE ──">
-                  <option>ARRI Alexa Mini LF</option>
-                  <option>ARRI Alexa 65</option>
-                  <option>RED V-Raptor</option>
-                  <option>Sony Venice</option>
-                  <option>Canon C500 Mark II</option>
-                  <option>Blackmagic Pocket 6K</option>
-                  <option>IMAX Film Camera</option>
-                  <option>16mm Film Camera</option>
-                  <option>35mm Film Camera</option>
-                </optgroup>
-                <optgroup label="── METRAJE ENCONTRADO ──">
-                  <option>VHS Camera (analog horror)</option>
-                  <option>Handycam / DV Camera</option>
-                  <option>Security Camera / CCTV</option>
-                  <option>Webcam</option>
-                  <option>Ring Doorbell Camera</option>
-                  <option>iPhone / Phone Camera</option>
-                  <option>Trail Camera / Wildlife Cam</option>
-                  <option>Body Cam</option>
-                  <option>Dashcam</option>
-                </optgroup>
-                <optgroup label="── VINTAGE ──">
-                  <option>Bolex H16 (16mm vintage)</option>
-                  <option>Leica M3</option>
-                  <option>Polaroid SX-70</option>
-                  <option>Kodak Brownie</option>
-                  <option>Large Format 4x5</option>
-                </optgroup>
-              </select>
+              <input type="hidden" id="horrorCamera" value="">
+            <button type="button" onclick="abrirModal('horrorCamera')" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:12px;border-radius:8px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left">
+                <span id="horrorCamera-display" style="opacity:.5">Seleccionar cámara...</span>
+                <span style="font-size:.7rem;color:#888">💀 Elegir</span>
+             </button>
             </div>
             <div class="field">
               <div class="field-label">Tipo de Lente</div>
@@ -3948,6 +3921,38 @@ var HORRORCOLOR_DATA = [
  ]}
 ];
 
+var HORRORCAMERA_DATA = [
+ { g: '── CINE ──', items: [
+  { v: 'ARRI Alexa Mini LF', i: '🎬' },
+  { v: 'ARRI Alexa 65', i: '🎥' },
+  { v: 'RED V-Raptor', i: '🔴' },
+  { v: 'Sony Venice', i: '📹' },
+  { v: 'Canon C500 Mark II', i: '📷' },
+  { v: 'Blackmagic Pocket 6K', i: '⬛' },
+  { v: 'IMAX Film Camera', i: '🖥' },
+  { v: '16mm Film Camera', i: '🎞' },
+  { v: '35mm Film Camera', i: '📽' }
+ ]},
+ { g: '── METRAJE ENCONTRADO ──', items: [
+  { v: 'VHS Camera (analog horror)', i: '📼' },
+  { v: 'Handycam / DV Camera', i: '📹' },
+  { v: 'Security Camera / CCTV', i: '📡' },
+  { v: 'Webcam', i: '💻' },
+  { v: 'Ring Doorbell Camera', i: '🚪' },
+  { v: 'iPhone / Phone Camera', i: '📱' },
+  { v: 'Trail Camera / Wildlife Cam', i: '🦌' },
+  { v: 'Body Cam', i: '👮' },
+  { v: 'Dashcam', i: '🚗' }
+ ]},
+ { g: '── VINTAGE ──', items: [
+  { v: 'Bolex H16 (16mm vintage)', i: '🎞' },
+  { v: 'Leica M3', i: '📷' },
+  { v: 'Polaroid SX-70', i: '📸' },
+  { v: 'Kodak Brownie', i: '📦' },
+  { v: 'Large Format 4x5', i: '🖼' }
+ ]}
+];
+
 function abrirModal(id) {
   var modal = document.getElementById('kurimodal-' + id);
   if (!modal) return;
@@ -3980,6 +3985,7 @@ function abrirModal(id) {
   if (id === 'horrorMood') datos = HORRORMOOD_DATA;
   if (id === 'horrorLighting') datos = HORRORLIGHTING_DATA;
   if (id === 'horrorColor') datos = HORRORCOLOR_DATA;
+  if (id === 'horrorLens') datos = HORRORLENS_DATA;
   if (id === 'photographer') datos = PHOTO_DATA;
   if (id === 'movieRef') datos = MOVIE_DATA;
   if (!datos) return;
@@ -4015,7 +4021,7 @@ function cerrarModal(id) {
 
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
-            var ids = ['shotType', 'lighting', 'photographer', 'movieRef', 'viewDirection', 'filmStock', 'focalLength', 'aperture', 'shutterSpeed', 'iso', 'lensFilter', 'filmGrain', 'aspectRatio', 'colorPalette', 'colorGrading', 'atmosphere', 'mood', 'animeStyle', 'animeColorPalette', 'animeMood', 'animeLighting', 'animeShot', 'animeDirector', 'animeFilmRef', 'horrorSubgenre', 'horrorAtmosphere', 'horrorMood', 'horrorLighting', 'horrorColor'];
+            var ids = ['shotType', 'lighting', 'photographer', 'movieRef', 'viewDirection', 'filmStock', 'focalLength', 'aperture', 'shutterSpeed', 'iso', 'lensFilter', 'filmGrain', 'aspectRatio', 'colorPalette', 'colorGrading', 'atmosphere', 'mood', 'animeStyle', 'animeColorPalette', 'animeMood', 'animeLighting', 'animeShot', 'animeDirector', 'animeFilmRef', 'horrorSubgenre', 'horrorAtmosphere', 'horrorMood', 'horrorLighting', 'horrorColor', 'horrorLens'];
     ids.forEach(function(id) {
       var m = document.getElementById('kurimodal-' + id);
       if (m && m.style.display === 'flex') cerrarModal(id);
@@ -5008,6 +5014,19 @@ function clearAll() {
 <input type="text" placeholder="🔍 Buscar color..." oninput="buscarModal('horrorColor',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
 </div>
 <div id="kurimodal-horrorColor-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
+</div>
+</div>
+
+<div id="kurimodal-horrorLens" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px" onclick="if(event.target===this)cerrarModal('horrorLens')">
+<div style="background:#111;border:1px solid #333;border-radius:12px;width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:16px 20px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center">
+<h3 style="color:var(--active);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin:0">🔭 Tipo de Lente</h3>
+<button type="button" onclick="cerrarModal('horrorLens')" style="background:none;border:none;color:#888;font-size:1.5rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+<div style="padding:10px 20px;border-bottom:1px solid #333">
+<input type="text" placeholder="🔍 Buscar lente..." oninput="buscarModal('horrorLens',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
+</div>
+<div id="kurimodal-horrorLens-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
 </div>
 </div>
 
