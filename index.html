@@ -13,7 +13,7 @@
   --cine:#FFC425;--anime:#FF25CD;--horror:#25FF57;
   --grilla:#4ff6ff;--video:#25FFC4;
   --sheet:#ab46d4;--musica:#fd79a8;
-  --active:var(--cine);
+  --active:var(--grilla);
   --radius:8px;
 }
 body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
@@ -217,10 +217,10 @@ select option{background:var(--bg3);color:var(--text)}
 
 <!-- TABS -->
 <div class="tabs">
-  <div class="tab" data-tab="sheet" data-color="var(--sheet)">
-    <span class="tab-icon">🧑</span> SHEET
+  <div class="tab active" data-tab="grilla" data-color="var(--grilla)">
+    <span class="tab-icon">🎭</span> TURNAROUND SHEET
   </div>
-  <div class="tab active" data-tab="cine" data-color="var(--cine)">
+  <div class="tab" data-tab="cine" data-color="var(--cine)">
     <span class="tab-icon">🎬</span> CINE
   </div>
   <div class="tab" data-tab="anime" data-color="var(--anime)">
@@ -228,9 +228,6 @@ select option{background:var(--bg3);color:var(--text)}
   </div>
   <div class="tab" data-tab="horror" data-color="var(--horror)">
     <span class="tab-icon">💀</span> HORROR
-  </div>
-  <div class="tab" data-tab="grilla" data-color="var(--grilla)">
-    <span class="tab-icon">🔲</span> GRILLA
   </div>
   <div class="tab" data-tab="video" data-color="var(--video)">
     <span class="tab-icon">🎥</span> VIDEO
@@ -246,314 +243,8 @@ select option{background:var(--bg3);color:var(--text)}
   <!-- LEFT PANEL -->
   <div class="panel-left">
 
-    <!-- ==================== TAB: SHEET ==================== -->
-    <div class="tab-content" id="tab-sheet">
-
-      <!-- SHEET: CHARACTER -->
-      <div class="module">
-        <div class="module-header" onclick="toggleModule(this)">
-          <span class="module-number">01</span>
-          <h3>Descripción del Personaje</h3>
-        </div>
-        <div class="module-body">
-          <div class="field">
-            <div class="field-label">Personaje Principal</div>
-            <textarea id="sheetCharacter" placeholder="Describe tu personaje en detalle: género, edad, complexión, vestimenta, accesorios, rasgos faciales, cicatrices, tatuajes, color de piel, expresión...&#10;&#10;Ej: Una guerrera ciberpunk, de 25 años, complexión atlética, cabello corto plateado con puntas azul neón, ojo izquierdo cibernético rojo, chaleco táctico negro con circuitos brillantes, botas de combate, katana en la espalda, sonrisa confiada..." oninput="buildSheetPrompt()"></textarea>
-          </div>
-          <div class="field">
-            <div class="field-label">Detalles de Vestimenta / Accesorios (opcional)</div>
-            <textarea id="sheetClothing" placeholder="Ej: Chaqueta de cuero desgastada con parches, anillos de plata en ambas manos, collar con placa militar, funda para pistola en el muslo derecho, guantes sin dedos..." oninput="buildSheetPrompt()" style="min-height:60px"></textarea>
-          </div>
-          <div class="field">
-            <div class="field-label">Cantidad de Personajes</div>
-            <select id="sheetCharCount" onchange="buildSheetPrompt()">
-              <option value="single">1 Personaje (individual)</option>
-              <option value="duo">2 Personajes (comparativa)</option>
-              <option value="group">3+ Personajes (grupo)</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <!-- SHEET: VIEWS -->
-      <div class="module">
-        <div class="module-header" onclick="toggleModule(this)">
-          <span class="module-number">02</span>
-          <h3>Vistas del Personaje</h3>
-        </div>
-        <div class="module-body">
-          <div class="field">
-            <div class="field-label">Selección de Vistas</div>
-            <select id="sheetViews" onchange="buildSheetPrompt()">
-              <option value="">Seleccionar vistas...</option>
-              <optgroup label="── TURNAROUND ESTÁNDAR ──">
-                <option value="front, 3/4 front, side profile, 3/4 back, back view">5 Vistas Completo (Front, 3/4, Side, 3/4 Back, Back)</option>
-                <option value="front, side profile, back view">3 Vistas Básico (Front, Side, Back)</option>
-                <option value="front, 3/4 front right, side profile right, back view">4 Vistas (Front, 3/4, Side, Back)</option>
-              </optgroup>
-              <optgroup label="── RETRATO / ROSTRO ──">
-                <option value="front face close-up, 3/4 face left, profile left, 3/4 face right, profile right">5 Vistas Rostro (close-up faces)</option>
-                <option value="front face, 3/4 face, profile">3 Vistas Rostro</option>
-              </optgroup>
-              <optgroup label="── CUERPO COMPLETO + DETALLES ──">
-                <option value="front full body, side full body, back full body, face close-up, hand detail, feet detail">6 Vistas Full Body + Detalles</option>
-                <option value="front full body, 3/4 front, side, back, face close-up, upper body, weapon/accessory detail">7 Vistas Completo + Detalles</option>
-              </optgroup>
-              <optgroup label="── POSES DE ACCIÓN ──">
-                <option value="front standing, action pose, combat stance, running pose">4 Vistas con Poses</option>
-                <option value="neutral standing front, neutral standing side, action pose front, action pose side">4 Vistas Neutral + Acción</option>
-              </optgroup>
-              <optgroup label="── EXPRESIONES ──">
-                <option value="neutral expression, happy, angry, sad, surprised, determined">6 Expresiones Faciales</option>
-                <option value="neutral, battle cry, smirk, pain, fear">5 Expresiones de Combate</option>
-              </optgroup>
-            </select>
-          </div>
-          <div class="field">
-            <div class="field-label">Vistas Personalizadas (opcional)</div>
-            <input type="text" class="text-input" id="sheetCustomViews" placeholder="Ej: vista frontal, vista de tres cuartos con el arma desenfundada, vista posterior que muestra detalles del tatuaje..." oninput="buildSheetPrompt()">
-          </div>
-        </div>
-      </div>
-
-      <!-- SHEET: CAMERA & STUDIO -->
-      <div class="module">
-        <div class="module-header" onclick="toggleModule(this)">
-          <span class="module-number">03</span>
-          <h3>Cámara de Estudio</h3>
-        </div>
-        <div class="module-body">
-          <div class="field-row">
-            <div class="field">
-              <div class="field-label">Cámara</div>
-              <select id="sheetCamera" onchange="buildSheetPrompt()">
-                <option value="">Seleccionar cámara...</option>
-                <optgroup label="── MEDIO FORMATO (Máxima Calidad) ──">
-                  <option>Hasselblad X2D 100C</option>
-                  <option>Hasselblad H6D-400c</option>
-                  <option>Hasselblad 503CW</option>
-                  <option>Hasselblad 500CM</option>
-                  <option>Phase One IQ4 150MP</option>
-                  <option>Phase One XF IQ4</option>
-                  <option>Fujifilm GFX 100 II</option>
-                  <option>Fujifilm GFX 100S</option>
-                  <option>Mamiya RZ67</option>
-                  <option>Pentax 645Z</option>
-                  <option>Pentax 67</option>
-                  <option>Rolleiflex 2.8F</option>
-                </optgroup>
-                <optgroup label="── FULL FRAME PRO ──">
-                  <option>Canon EOS R5 Mark II</option>
-                  <option>Canon EOS R5</option>
-                  <option>Nikon Z9</option>
-                  <option>Nikon Z8</option>
-                  <option>Sony A1</option>
-                  <option>Sony A7R V</option>
-                  <option>Leica SL3</option>
-                  <option>Leica S3</option>
-                </optgroup>
-                <optgroup label="── GRAN FORMATO ──">
-                  <option>Large Format 4x5</option>
-                  <option>Large Format 8x10</option>
-                  <option>Graflex Speed Graphic</option>
-                </optgroup>
-              </select>
-            </div>
-            <div class="field">
-              <div class="field-label">Lente de Estudio</div>
-              <select id="sheetLens" onchange="buildSheetPrompt()">
-                <option value="">Seleccionar lente...</option>
-                <optgroup label="── RETRATO ESTUDIO ──">
-                  <option>80mm f/2.8 Medium Format</option>
-                  <option>100mm f/2.2 Studio Portrait</option>
-                  <option>110mm f/2.0 Medium Format</option>
-                  <option>120mm f/4.0 Macro Studio</option>
-                  <option>150mm f/3.5 Compressed Portrait</option>
-                </optgroup>
-                <optgroup label="── 35mm EQUIVALENTE ──">
-                  <option>85mm f/1.2 (extreme bokeh)</option>
-                  <option>85mm f/1.4 (classic portrait)</option>
-                  <option>105mm f/1.4 (compression + bokeh)</option>
-                  <option>70-200mm f/2.8 (versatile zoom)</option>
-                  <option>135mm f/1.8 (beautiful compression)</option>
-                </optgroup>
-                <optgroup label="── ESPECIALES ──">
-                  <option>Zeiss Otus 85mm (maximum sharpness)</option>
-                  <option>Leica Noctilux 50mm f/0.95</option>
-                  <option>Sigma Art 105mm f/1.4</option>
-                  <option>Canon RF 85mm f/1.2L</option>
-                </optgroup>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- SHEET: BACKGROUND & STYLE -->
-      <div class="module">
-        <div class="module-header" onclick="toggleModule(this)">
-          <span class="module-number">04</span>
-          <h3>Fondo y Estilo</h3>
-        </div>
-        <div class="module-body">
-          <div class="field-row">
-            <div class="field">
-              <div class="field-label">Fondo</div>
-              <select id="sheetBackground" onchange="buildSheetPrompt()">
-                <option value="pure white background (#FFFFFF)">Blanco Puro ⬜</option>
-                <option value="neutral gray background (18% gray)">Gris Neutro (18%) ⬛</option>
-                <option value="light gray background">Gris Claro</option>
-                <option value="pure black background (#000000)">Negro Puro ⬛</option>
-                <option value="soft gradient white to light gray">Gradiente Blanco-Gris</option>
-                <option value="studio seamless paper backdrop">Fondo Seamless de Estudio</option>
-              </select>
-            </div>
-            <div class="field">
-              <div class="field-label">Estilo de Sheet</div>
-              <select id="sheetStyle" onchange="buildSheetPrompt()">
-                <option value="">Seleccionar estilo...</option>
-                <option value="concept art character sheet">Concept Art</option>
-                <option value="fashion lookbook style">Fashion Lookbook</option>
-                <option value="3D model reference sheet">Referencia para Modelo 3D</option>
-                <option value="animation character turnaround">Turnaround de Animación</option>
-                <option value="costume design reference sheet">Diseño de Vestuario</option>
-                <option value="orthographic blueprint character reference">Blueprint Ortográfico</option>
-                <option value="video game character design sheet">Diseño de Videojuego</option>
-                <option value="comic book character model sheet">Model Sheet de Cómic</option>
-                <option value="realistic photographic character study">Estudio Fotográfico Realista</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="field">
-            <div class="field-label">Iluminación de Estudio</div>
-            <select id="sheetLighting" onchange="buildSheetPrompt()">
-              <option value="">Seleccionar iluminación...</option>
-              <optgroup label="── ESTUDIO PROFESIONAL ──">
-                <option>Flat studio lighting (even, no shadows)</option>
-                <option>Soft diffused studio lighting</option>
-                <option>Beauty dish lighting (glamour)</option>
-                <option>Softbox key + fill (standard studio)</option>
-                <option>Rim light + soft fill (defined edges)</option>
-                <option>High key lighting (bright, clean)</option>
-              </optgroup>
-              <optgroup label="── CON CARÁCTER ──">
-                <option>Dramatic side key (one light)</option>
-                <option>Rembrandt studio lighting</option>
-                <option>Split lighting (half shadow)</option>
-                <option>Butterfly lighting (glamour portrait)</option>
-                <option>Clamshell lighting (fashion)</option>
-                <option>Cross lighting (two opposing lights)</option>
-              </optgroup>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <!-- SHEET: GRID STRUCTURE -->
-      <div class="module">
-        <div class="module-header" onclick="toggleModule(this)">
-          <span class="module-number">05</span>
-          <h3>Estructura de Grilla</h3>
-        </div>
-        <div class="module-body">
-          <div class="field-row">
-            <div class="field">
-              <div class="field-label">Layout de la Grilla</div>
-              <select id="sheetGrid" onchange="buildSheetPrompt()">
-                <option value="">Automático según vistas</option>
-                <option value="2x2 grid, 4 panels">2×2 (4 paneles)</option>
-                <option value="1x3 grid, 3 panels in a row">1×3 (3 paneles en fila)</option>
-                <option value="1x4 grid, 4 panels in a row">1×4 (4 en fila)</option>
-                <option value="1x5 grid, 5 panels in a row">1×5 (5 en fila)</option>
-                <option value="2x3 grid, 6 panels">2×3 (6 paneles)</option>
-                <option value="1x6 grid, 6 panels in a row">1×6 (6 en fila)</option>
-                <option value="1x7 grid, 7 panels in a row">1×7 (7 en fila)</option>
-              </select>
-            </div>
-            <div class="field">
-              <div class="field-label">Resolución</div>
-              <select id="sheetResolution" onchange="buildSheetPrompt()">
-                <option value="1K">1K</option>
-                <option value="2K">2K</option>
-                <option value="4K" selected>4K (recomendado para sheets)</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- SHEET: SPLITTER -->
-      <div class="module">
-        <div class="module-header" onclick="toggleModule(this)">
-          <span class="module-number">✂️</span>
-          <h3>Cortador de Sheet — Sin Pérdida de Calidad</h3>
-        </div>
-        <div class="module-body">
-          <div class="field-row">
-            <div class="field">
-              <div class="field-label">Estructura para Cortar</div>
-              <select id="sheetSplitStructure">
-                <option value="2x2">2×2 (4 paneles)</option>
-                <option value="1x2">1×2 (2 horizontal)</option>
-                <option value="2x1">2×1 (2 vertical)</option>
-                <option value="1x3">1×3 (3 horizontal)</option>
-                <option value="3x1">3×1 (3 vertical)</option>
-                <option value="1x4">1×4 (4 horizontal)</option>
-                <option value="4x1">4×1 (4 vertical)</option>
-                <option value="1x5">1×5 (5 horizontal)</option>
-                <option value="5x1">5×1 (5 vertical)</option>
-                <option value="2x3">2×3 (6 paneles)</option>
-                <option value="3x2">3×2 (6 paneles)</option>
-                <option value="1x6">1×6 (6 horizontal)</option>
-                <option value="1x7">1×7 (7 horizontal)</option>
-              </select>
-            </div>
-            <div class="field">
-              <div class="field-label">Formato de Exportación</div>
-              <select id="sheetSplitFormat">
-                <option value="png">PNG (Sin Pérdida) ★ Recomendado</option>
-                <option value="webp">WEBP (Alta calidad, menor peso)</option>
-                <option value="jpeg">JPEG 100% (Máxima calidad)</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="field">
-            <div class="field-label">Subir Imagen de Sheet</div>
-            <div style="border:2px dashed var(--border);border-radius:var(--radius);padding:40px 20px;text-align:center;cursor:pointer;transition:all .3s" onclick="document.getElementById('sheetFileInput').click()" ondragover="event.preventDefault();this.style.borderColor='var(--active)'" ondragleave="this.style.borderColor='var(--border)'" ondrop="event.preventDefault();this.style.borderColor='var(--border)';handleSheetFile(event.dataTransfer.files[0])">
-              <div style="font-size:2.5rem;margin-bottom:10px;opacity:.4">🧑</div>
-              <div style="color:var(--text);font-size:.9rem;margin-bottom:6px">Arrastra tu imagen de sheet aquí</div>
-              <div style="color:var(--text2);font-size:.75rem">o haz click para seleccionar</div>
-              <input type="file" id="sheetFileInput" accept="image/*" style="display:none" onchange="handleSheetFile(this.files[0])">
-            </div>
-          </div>
-
-          <div id="sheetSplitPreview" style="display:none">
-            <div class="field-label" style="margin-bottom:12px">📸 Imagen Original</div>
-            <div style="margin-bottom:16px;text-align:center">
-              <img id="sheetSplitOriginal" style="max-width:100%;max-height:300px;border-radius:var(--radius);border:1px solid var(--border)">
-            </div>
-            <div id="sheetSplitInfo" style="font-size:.75rem;color:var(--text2);margin-bottom:16px;padding:10px;background:var(--bg3);border-radius:var(--radius)"></div>
-            <button class="btn btn-primary" onclick="splitSheet()" style="width:100%;justify-content:center;padding:14px;font-size:.9rem;margin-bottom:16px">
-              ✂️ CORTAR SHEET
-            </button>
-            <div id="sheetSplitResults" style="display:none">
-              <div class="field-label" style="margin-bottom:12px">✅ Resultados — Sin Pérdida de Calidad</div>
-              <div id="sheetSplitGrid" style="display:grid;gap:8px;margin-bottom:16px"></div>
-              <button class="btn btn-primary" onclick="downloadAllSheetSplits()" style="width:100%;justify-content:center;margin-bottom:8px">
-                📥 DESCARGAR TODAS
-              </button>
-              <div id="sheetIndividualDL" style="display:flex;gap:6px;flex-wrap:wrap"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div><!-- end tab-sheet -->
-
     <!-- ==================== TAB: CINE ==================== -->
-    <div class="tab-content active" id="tab-cine">
+    <div class="tab-content" id="tab-cine">
 
       <!-- MODULE 01: SUBJECT & ACTION -->
       <div class="module">
@@ -1366,7 +1057,174 @@ select option{background:var(--bg3);color:var(--text)}
     </div><!-- end tab-horror -->
 
     <!-- ==================== TAB: GRILLA ==================== -->
-    <div class="tab-content" id="tab-grilla">
+    <div class="tab-content active" id="tab-grilla">
+
+  <!-- TURNAROUND: PERSONAJE -->
+  <div class="module">
+    <div class="module-header" onclick="toggleModule(this)">
+      <span class="module-number">A</span>
+      <h3>Descripción del Personaje</h3>
+    </div>
+    <div class="module-body">
+      <div class="field">
+        <div class="field-label">Personaje Principal</div>
+        <textarea id="tsCharacter" placeholder="Describe tu personaje en detalle: género, edad, complexión, vestimenta, accesorios, rasgos faciales, cicatrices, tatuajes, color de piel, expresión...&#10;&#10;Ej: Una guerrera ciberpunk, de 25 años, complexión atlética, cabello corto plateado con puntas azul neón, ojo izquierdo cibernético rojo, chaleco táctico negro con circuitos brillantes, botas de combate, katana en la espalda, sonrisa confiada..." oninput="buildGridPrompt()"></textarea>
+      </div>
+      <div class="field">
+        <div class="field-label">Detalles de Vestimenta / Accesorios</div>
+        <textarea id="tsClothing" placeholder="Ej: Chaqueta de cuero desgastada con parches, anillos de plata en ambas manos, collar con placa militar, funda para pistola en el muslo derecho, guantes sin dedos..." oninput="buildGridPrompt()" style="min-height:60px"></textarea>
+      </div>
+      <div class="field">
+        <div class="field-label">Cantidad de Personajes</div>
+        <select id="tsCharCount" onchange="buildGridPrompt()">
+          <option value="single">1 Personaje (individual)</option>
+          <option value="duo">2 Personajes (comparativa)</option>
+          <option value="group">3+ Personajes (grupo)</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- TURNAROUND: CÁMARA Y LENTE -->
+  <div class="module">
+    <div class="module-header" onclick="toggleModule(this)">
+      <span class="module-number">B</span>
+      <h3>Cámara y Lente de Estudio</h3>
+    </div>
+    <div class="module-body">
+      <div class="field-row">
+        <div class="field">
+          <div class="field-label">Cámara</div>
+          <select id="tsCamera" onchange="buildGridPrompt()">
+            <option value="">Seleccionar cámara...</option>
+            <optgroup label="── MEDIO FORMATO (Máxima Calidad) ──">
+              <option>Hasselblad X2D 100C</option>
+              <option>Hasselblad H6D-400c</option>
+              <option>Hasselblad 503CW</option>
+              <option>Hasselblad 500CM</option>
+              <option>Phase One IQ4 150MP</option>
+              <option>Phase One XF IQ4</option>
+              <option>Fujifilm GFX 100 II</option>
+              <option>Fujifilm GFX 100S</option>
+              <option>Mamiya RZ67</option>
+              <option>Pentax 645Z</option>
+              <option>Pentax 67</option>
+              <option>Rolleiflex 2.8F</option>
+            </optgroup>
+            <optgroup label="── FULL FRAME PRO ──">
+              <option>Canon EOS R5 Mark II</option>
+              <option>Canon EOS R5</option>
+              <option>Nikon Z9</option>
+              <option>Nikon Z8</option>
+              <option>Sony A1</option>
+              <option>Sony A7R V</option>
+              <option>Leica SL3</option>
+              <option>Leica S3</option>
+            </optgroup>
+            <optgroup label="── GRAN FORMATO ──">
+              <option>Large Format 4x5</option>
+              <option>Large Format 8x10</option>
+              <option>Graflex Speed Graphic</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="field">
+          <div class="field-label">Lente de Estudio</div>
+          <select id="tsLens" onchange="buildGridPrompt()">
+            <option value="">Seleccionar lente...</option>
+            <optgroup label="── RETRATO ESTUDIO ──">
+              <option>80mm f/2.8 Medium Format</option>
+              <option>100mm f/2.2 Studio Portrait</option>
+              <option>110mm f/2.0 Medium Format</option>
+              <option>120mm f/4.0 Macro Studio</option>
+              <option>150mm f/3.5 Compressed Portrait</option>
+            </optgroup>
+            <optgroup label="── 35mm EQUIVALENTE ──">
+              <option>85mm f/1.2 (extreme bokeh)</option>
+              <option>85mm f/1.4 (classic portrait)</option>
+              <option>105mm f/1.4 (compression + bokeh)</option>
+              <option>70-200mm f/2.8 (versatile zoom)</option>
+              <option>135mm f/1.8 (beautiful compression)</option>
+            </optgroup>
+            <optgroup label="── ESPECIALES ──">
+              <option>Zeiss Otus 85mm (maximum sharpness)</option>
+              <option>Leica Noctilux 50mm f/0.95</option>
+              <option>Sigma Art 105mm f/1.4</option>
+              <option>Canon RF 85mm f/1.2L</option>
+            </optgroup>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TURNAROUND: FONDO Y ESTILO -->
+  <div class="module">
+    <div class="module-header" onclick="toggleModule(this)">
+      <span class="module-number">C</span>
+      <h3>Fondo, Estilo e Iluminación</h3>
+    </div>
+    <div class="module-body">
+      <div class="field-row">
+        <div class="field">
+          <div class="field-label">Fondo</div>
+          <select id="tsBackground" onchange="buildGridPrompt()">
+            <option value="pure white background (#FFFFFF)">Blanco Puro ⬜</option>
+            <option value="neutral gray background (18% gray)">Gris Neutro (18%)</option>
+            <option value="light gray background">Gris Claro</option>
+            <option value="pure black background (#000000)">Negro Puro ⬛</option>
+            <option value="soft gradient white to light gray">Gradiente Blanco-Gris</option>
+            <option value="studio seamless paper backdrop">Fondo Seamless de Estudio</option>
+          </select>
+        </div>
+        <div class="field">
+          <div class="field-label">Estilo de Sheet</div>
+          <select id="tsStyle" onchange="buildGridPrompt()">
+            <option value="">Seleccionar estilo...</option>
+            <option value="concept art character sheet">Concept Art</option>
+            <option value="fashion lookbook style">Fashion Lookbook</option>
+            <option value="3D model reference sheet">Referencia para Modelo 3D</option>
+            <option value="animation character turnaround">Turnaround de Animación</option>
+            <option value="costume design reference sheet">Diseño de Vestuario</option>
+            <option value="orthographic blueprint character reference">Blueprint Ortográfico</option>
+            <option value="video game character design sheet">Diseño de Videojuego</option>
+            <option value="comic book character model sheet">Model Sheet de Cómic</option>
+            <option value="realistic photographic character study">Estudio Fotográfico Realista</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <div class="field-label">Iluminación de Estudio</div>
+        <select id="tsLighting" onchange="buildGridPrompt()">
+          <option value="">Seleccionar iluminación...</option>
+          <optgroup label="── ESTUDIO PROFESIONAL ──">
+            <option>Flat studio lighting (even, no shadows)</option>
+            <option>Soft diffused studio lighting</option>
+            <option>Beauty dish lighting (glamour)</option>
+            <option>Softbox key + fill (standard studio)</option>
+            <option>Rim light + soft fill (defined edges)</option>
+            <option>High key lighting (bright, clean)</option>
+          </optgroup>
+          <optgroup label="── CON CARÁCTER ──">
+            <option>Dramatic side key (one light)</option>
+            <option>Rembrandt studio lighting</option>
+            <option>Split lighting (half shadow)</option>
+            <option>Butterfly lighting (glamour portrait)</option>
+            <option>Clamshell lighting (fashion)</option>
+            <option>Cross lighting (two opposing lights)</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="field">
+        <div class="field-label">Resolución</div>
+        <select id="tsResolution" onchange="buildGridPrompt()">
+          <option value="1K">1K</option>
+          <option value="2K">2K</option>
+          <option value="4K" selected>4K (recomendado para sheets)</option>
+        </select>
+      </div>
+    </div>
+  </div>
 
       <!-- GRILLA: PROMPT GENERATOR -->
       <div class="module">
@@ -1544,12 +1402,6 @@ select option{background:var(--bg3);color:var(--text)}
               <span class="checkbox-label">Mantener misma gradación de color en todos los paneles</span>
             </div>
           </div>
-
-          <div class="field">
-            <div class="field-label">Estilo Adicional (opcional)</div>
-            <input type="text" class="text-input" id="gridStyle" placeholder="Ej: cinematográfico, shot on ARRI Alexa Mini LF, estética Blade Runner 2049..." oninput="buildGridPrompt()">
-          </div>
-
         </div>
       </div>
 
@@ -1570,7 +1422,6 @@ select option{background:var(--bg3);color:var(--text)}
                 <option value="2x1">2×1 Grid (2 panels in vertical)</option>
                 <option value="1x3">1×3 Grid (3 panels in horizontal)</option>
                 <option value="1x4">1×4 Grid (4 panels in row)</option>
-                <option value="3x1">3×1 Grid (3 panels in vertical)</option>
               </select>
             </div>
             <div class="field">
@@ -4137,7 +3988,7 @@ function toggleJsonPanel() {
 }
 
 // ========== HELPERS ==========
-function getCurrentTab() { var a = document.querySelector('.tab.active'); return a ? a.dataset.tab : 'cine'; }
+function getCurrentTab() { var a = document.querySelector('.tab.active'); return a ? a.dataset.tab : 'grilla'; }
 function gv(id) { var e = document.getElementById(id); return e ? e.value : ''; }
 function gc(id) { var e = document.getElementById(id); return e ? e.checked : false; }
 function sv(id, val) { var e = document.getElementById(id); if (!e || !val) return; if (e.tagName === 'SELECT') { for (var i = 0; i < e.options.length; i++) { if (e.options[i].value === val || e.options[i].text === val) { e.selectedIndex = i; break; } } } else { e.value = val; } }
@@ -4293,24 +4144,77 @@ function updateGridPanels() {
 }
 function buildGridPrompt() {
   var parts = [];
-  var structure = gv('gridStructure'), subject = gv('gridSubject'), style = gv('gridStyle');
+  var structure = gv('gridStructure'), subject = gv('gridSubject');
   var cc = gc('gridConsistentChar'), cl = gc('gridConsistentLight'), ccl = gc('gridConsistentColor');
+
+  // Nuevos campos de Turnaround Sheet
+  var tsCharacter = gv('tsCharacter'), tsClothing = gv('tsClothing'), tsCharCount = gv('tsCharCount');
+  var tsCamera = gv('tsCamera'), tsLens = gv('tsLens');
+  var tsBackground = gv('tsBackground'), tsStyle = gv('tsStyle');
+  var tsLighting = gv('tsLighting'), tsResolution = gv('tsResolution');
+
   var cols = parseInt(structure.split('x')[0]), rows = parseInt(structure.split('x')[1]);
   var total = cols * rows;
-  var lb = { '2x2':['top-left','top-right','bottom-left','bottom-right'], '1x2':['left','right'], '2x1':['top','bottom'], '1x3':['left','center','right'], '1x4':['panel 1','panel 2','panel 3','panel 4'] };
+  var lb = {
+    '2x2':['top-left','top-right','bottom-left','bottom-right'],
+    '1x2':['left','right'],
+    '2x1':['top','bottom'],
+    '1x3':['left','center','right'],
+    '1x4':['panel 1','panel 2','panel 3','panel 4']
+  };
   var labels = lb[structure] || lb['2x2'];
-  parts.push('A ' + structure.replace('x','x') + ' grid image, ' + total + ' panels showing the same scene from different angles.');
+
+  // Encabezado del prompt
+  if (tsStyle) parts.push(tsStyle + '.');
+  parts.push('A ' + structure.replace('x','x') + ' grid image, ' + total + ' panels showing the same character from different angles.');
+
+  // Paneles con ángulos
   for (var i = 1; i <= Math.min(total, 4); i++) {
     var v = gv('gridPanel' + i + 'View'), s = gv('gridPanel' + i + 'Shot');
-    if (v || s) { var p = labels[i-1] + ': '; if (v) p += v.toLowerCase(); if (v && s) p += ', '; if (s) p += s.toLowerCase(); parts.push(p + '.'); }
+    if (v || s) {
+      var p = labels[i-1] + ': ';
+      if (v) p += v.toLowerCase();
+      if (v && s) p += ', ';
+      if (s) p += s.toLowerCase();
+      parts.push(p + '.');
+    }
   }
-  if (subject) parts.push('Scene: ' + subject);
+
+  // Personaje
+  if (tsCharacter) parts.push('Character: ' + tsCharacter);
+  if (tsClothing) parts.push('Clothing details: ' + tsClothing);
+  if (tsCharCount === 'duo') parts.push('Two characters side by side for comparison.');
+  if (tsCharCount === 'group') parts.push('Multiple characters shown together.');
+
+  // Escena adicional
+  if (subject) parts.push('Additional scene notes: ' + subject);
+
+  // Consistencia
   var con = [];
-  if (cc) con.push('character'); if (cl) con.push('lighting'); if (ccl) con.push('color grading');
+  if (cc) con.push('character');
+  if (cl) con.push('lighting');
+  if (ccl) con.push('color grading');
   if (con.length) parts.push('Maintain consistent ' + con.join(', ') + ' across ALL panels.');
-  if (style) parts.push(style + '.');
-  parts.push('1:1 square format. 4K resolution, highly detailed, cinematic quality.');
-  updatePromptDisplay(parts, subject);
+
+  // Fondo
+  if (tsBackground) parts.push(tsBackground + '.');
+
+  // Cámara y lente
+  if (tsCamera || tsLens) {
+    var cp = [];
+    if (tsCamera) cp.push('shot on ' + tsCamera);
+    if (tsLens) cp.push(tsLens);
+    parts.push('Captured with ' + cp.join(', ') + '.');
+  }
+
+  // Iluminación
+  if (tsLighting) parts.push(tsLighting + '.');
+
+  // Resolución y calidad
+  var res = tsResolution || '4K';
+  parts.push('Consistent design across ALL views. ' + res + ' resolution, highly detailed, professional character reference sheet.');
+
+  updatePromptDisplay(parts, tsCharacter || subject);
   updateJSONDisplay();
 }
 
@@ -4606,6 +4510,21 @@ function collectAllData() {
     data.transStart = gv('videoTransStart'); data.transEnd = gv('videoTransEnd');
     data.effects = gv('videoEffects'); data.audio = gv('videoAudio');
     data.aspect = gv('videoAspect'); data.quality = gv('videoQuality');
+  }
+  if (tab === 'grilla') {
+    data.tsCharacter = gv('tsCharacter'); data.tsClothing = gv('tsClothing');
+    data.tsCharCount = gv('tsCharCount'); data.tsCamera = gv('tsCamera');
+    data.tsLens = gv('tsLens'); data.tsBackground = gv('tsBackground');
+    data.tsStyle = gv('tsStyle'); data.tsLighting = gv('tsLighting');
+    data.tsResolution = gv('tsResolution');
+    data.gridStructure = gv('gridStructure'); data.gridSubject = gv('gridSubject');
+    data.gridConsistentChar = gc('gridConsistentChar');
+    data.gridConsistentLight = gc('gridConsistentLight');
+    data.gridConsistentColor = gc('gridConsistentColor');
+    data.panel1View = gv('gridPanel1View'); data.panel1Shot = gv('gridPanel1Shot');
+    data.panel2View = gv('gridPanel2View'); data.panel2Shot = gv('gridPanel2Shot');
+    data.panel3View = gv('gridPanel3View'); data.panel3Shot = gv('gridPanel3Shot');
+    data.panel4View = gv('gridPanel4View'); data.panel4Shot = gv('gridPanel4Shot');
   }
   data.prompt = document.getElementById('promptBox').textContent;
   return data;
