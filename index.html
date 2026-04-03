@@ -252,6 +252,171 @@ select option{background:var(--bg3);color:var(--text)}
 .module-green-border {
   border: 2px solid #4ff6ff !important;
 }
+
+/* ========== MUSIC INSTRUMENT CHECKBOXES ========== */
+.music-inst-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.music-inst-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 8px;
+  transition: border-color .2s;
+}
+.music-inst-item:has(input[type="checkbox"]:checked) {
+  border-color: var(--active);
+}
+.music-inst-item input[type="checkbox"] {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border);
+  border-radius: 3px;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  transition: all .2s;
+}
+.music-inst-item input[type="checkbox"]:checked {
+  background: var(--active);
+  border-color: var(--active);
+}
+.music-inst-item input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute;
+  top: -2px;
+  left: 2px;
+  font-size: 10px;
+  color: #000;
+  font-weight: bold;
+}
+.music-inst-label {
+  font-size: .78rem;
+  color: var(--text);
+  flex: 1;
+  cursor: pointer;
+}
+.music-inst-qty {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s;
+}
+.music-inst-item:has(input[type="checkbox"]:checked) .music-inst-qty {
+  opacity: 1;
+  pointer-events: all;
+}
+.music-qty-btn {
+  background: var(--bg4);
+  border: 1px solid var(--border);
+  color: var(--text);
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: .75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  font-family: inherit;
+}
+.music-qty-btn:hover { background: var(--active); color: #000; border-color: var(--active); }
+.music-qty-num {
+  font-size: .75rem;
+  color: var(--active);
+  font-weight: 700;
+  min-width: 14px;
+  text-align: center;
+}
+.music-section-label {
+  font-size: .65rem;
+  letter-spacing: 2px;
+  color: var(--text2);
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 8px 0 4px 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 6px;
+}
+.music-voice-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.music-voice-check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: border-color .2s;
+  flex: 1;
+  min-width: 120px;
+}
+.music-voice-check:has(input:checked) {
+  border-color: var(--active);
+}
+.music-voice-check input[type="checkbox"] {
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border: 2px solid var(--border);
+  border-radius: 3px;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  transition: all .2s;
+}
+.music-voice-check input[type="checkbox"]:checked {
+  background: var(--active);
+  border-color: var(--active);
+}
+.music-voice-check input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute;
+  top: -2px;
+  left: 1px;
+  font-size: 9px;
+  color: #000;
+  font-weight: bold;
+}
+.music-voice-text {
+  font-size: .78rem;
+  color: var(--text);
+}
+.music-subgenre-select {
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  font-family: inherit;
+  font-size: .9rem;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23888' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  transition: border-color .3s;
+  margin-bottom: 12px;
+}
+.music-subgenre-select:focus { outline: none; border-color: var(--active); }
 </style>
 </head>
 <body>
@@ -1988,25 +2153,6 @@ select option{background:var(--bg3);color:var(--text)}
                 <option>Afrobeats</option>
                 <option>Dancehall</option>
               </optgroup>
-              <optgroup label="── ROCK / METAL ──">
-                <option>Rock</option>
-                <option>Indie Rock</option>
-                <option>Alternative Rock</option>
-                <option>Hard Rock</option>
-                <option>Psychedelic Rock</option>
-                <option>Progressive Rock</option>
-                <option>Classic Rock</option>
-                <option>Punk Rock</option>
-                <option>Grunge</option>
-                <option>Post-Rock</option>
-                <option>Metal</option>
-                <option>Heavy Metal</option>
-                <option>Death Metal</option>
-                <option>Black Metal</option>
-                <option>Doom Metal</option>
-                <option>Folk Metal</option>
-                <option>Symphonic Metal</option>
-              </optgroup>
               <optgroup label="── JAZZ / BLUES / SOUL ──">
                 <option>Jazz</option>
                 <option>Smooth Jazz</option>
@@ -2050,9 +2196,6 @@ select option{background:var(--bg3);color:var(--text)}
                 <option>Celtic</option>
                 <option>Viking Folk</option>
                 <option>Medieval</option>
-                <option>Flamenco</option>
-                <option>Latin Jazz</option>
-                <option>Bossa Nova</option>
                 <option>African Rhythms</option>
                 <option>Middle Eastern</option>
                 <option>Japanese Traditional</option>
@@ -2506,6 +2649,470 @@ select option{background:var(--bg3);color:var(--text)}
 
         </div>
       </div>
+
+<!-- MÚSICA: ROCK / METAL MODULE -->
+<div class="module">
+  <div class="module-header" onclick="toggleModule(this)">
+    <span class="module-number">09</span>
+    <h3>Rock / Rock Alternativo / Metal</h3>
+  </div>
+  <div class="module-body">
+
+    <div class="field">
+      <div class="field-label">Subgenero de Rock / Metal</div>
+      <select id="musicRockSubgenre" class="music-subgenre-select" onchange="buildMusicPrompt()">
+        <option value="">Sin subgenero especifico...</option>
+        <optgroup label="── ROCK CLASICO ──">
+          <option value="classic rock, arena rock sound">Classic Rock</option>
+          <option value="hard rock, heavy riffs and powerful vocals">Hard Rock</option>
+          <option value="psychedelic rock, trippy and hypnotic soundscapes">Psychedelic Rock</option>
+          <option value="progressive rock, complex arrangements and time signatures">Progressive Rock</option>
+          <option value="blues rock, raw and emotional guitar-driven">Blues Rock</option>
+          <option value="southern rock, country-influenced rock guitar">Southern Rock</option>
+        </optgroup>
+        <optgroup label="── ROCK ALTERNATIVO ──">
+          <option value="alternative rock, unconventional song structures and textures">Alternative Rock</option>
+          <option value="indie rock, lo-fi DIY aesthetic and jangly guitars">Indie Rock</option>
+          <option value="grunge, heavy distorted guitars with raw emotional vocals">Grunge</option>
+          <option value="post-rock, instrumental cinematic walls of sound">Post-Rock</option>
+          <option value="shoegaze, dreamy washed-out guitars with heavy reverb and delay">Shoegaze</option>
+          <option value="dream pop, ethereal atmospheric guitars with lush production">Dream Pop</option>
+          <option value="punk rock, fast aggressive raw and rebellious">Punk Rock</option>
+          <option value="post-punk, dark angular guitars with cold electronic undertones">Post-Punk</option>
+          <option value="noise rock, abrasive dissonant and chaotic guitar textures">Noise Rock</option>
+          <option value="math rock, intricate odd time signatures and technical guitar work">Math Rock</option>
+        </optgroup>
+        <optgroup label="── METAL ──">
+          <option value="heavy metal, powerful double bass drums and distorted riffs">Heavy Metal</option>
+          <option value="thrash metal, fast aggressive riffs and rapid drumming">Thrash Metal</option>
+          <option value="death metal, extreme low-tuned guitars with guttural vocals">Death Metal</option>
+          <option value="black metal, tremolo picking with cold atmospheric production">Black Metal</option>
+          <option value="doom metal, slow crushing heavy riffs with funeral atmosphere">Doom Metal</option>
+          <option value="sludge metal, slow heavy riffs with raw abrasive vocals">Sludge Metal</option>
+          <option value="stoner metal, fuzz-heavy riffs with psychedelic grooves">Stoner Metal / Stoner Rock</option>
+          <option value="folk metal, traditional folk instruments combined with heavy metal">Folk Metal</option>
+          <option value="symphonic metal, orchestral arrangements combined with metal">Symphonic Metal</option>
+          <option value="power metal, epic fast melodic metal with soaring vocals">Power Metal</option>
+          <option value="groove metal, heavy syncopated rhythms with thick riffs">Groove Metal</option>
+          <option value="nu metal, heavy riffs blended with hip-hop and alternative elements">Nu Metal</option>
+          <option value="djent, polyrhythmic palm-muted 8-string guitar with modern production">Djent</option>
+          <option value="metalcore, melodic guitar leads combined with aggressive breakdowns">Metalcore</option>
+          <option value="progressive metal, complex technical compositions with dynamic shifts">Progressive Metal</option>
+        </optgroup>
+        <optgroup label="── ALTERNATIVO OSCURO ──">
+          <option value="alternative metal, heavy alternative rock with experimental elements">Alternative Metal</option>
+          <option value="heavy alternative metal with ethereal shoegaze textures, down-tuned 8-string guitars mixed with dreamy reverb-soaked clean passages, dynamic shifts between aggressive distorted sections and atmospheric ambient bridges">Deftones Sound</option>
+          <option value="darkwave rock, cold gothic atmosphere with electronic undertones">Darkwave Rock</option>
+          <option value="art rock, experimental avant-garde approach to rock composition">Art Rock</option>
+        </optgroup>
+      </select>
+    </div>
+
+    <div class="field">
+      <div class="music-section-label">Instrumentos — selecciona los que usara la cancion</div>
+      <div class="music-inst-grid" id="rockInstGrid">
+
+        <div class="music-inst-item">
+          <input type="checkbox" id="ri_elguit" onchange="buildMusicPrompt()">
+          <label class="music-inst-label" for="ri_elguit">Guitarra Electrica (Lead)</label>
+          <div class="music-inst-qty">
+            <button type="button" class="music-qty-btn" onclick="changeQty('ri_elguit_qty',-1)">-</button>
+            <span class="music-qty-num" id="ri_elguit_qty">1</span>
+            <button type="button" class="music-qty-btn" onclick="changeQty('ri_elguit_qty',1)">+</button>
+          </div>
+        </div>
+
+        <div class="music-inst-item">
+          <input type="checkbox" id="ri_rhguit" onchange="buildMusicPrompt()">
+          <label class="music-inst-label" for="ri_rhguit">Guitarra Electrica (Ritmo)</label>
+          <div class="music-inst-qty">
+            <button type="button" class="music-qty-btn" onclick="changeQty('ri_rhguit_qty',-1)">-</button>
+            <span class="music-qty-num" id="ri_rhguit_qty">1</span>
+            <button type="button" class="music-qty-btn" onclick="changeQty('ri_rhguit_qty',1)">+</button>
+          </div>
+        </div>
+
+        <div class="music-inst-item">
+          <input type="checkbox" id="ri_acguit" onchange="buildMusicPrompt()">
+          <label class="music-inst-label" for="ri_acguit">Guitarra Acustica</label>
+          <div class="music-inst-qty">
+            <button type="button" class="music-qty-btn" onclick="changeQty('ri_acguit_qty',-1)">-</button>
+            <span class="music-qty-num" id="ri_acguit_qty">1</span>
+            <button type="button" class="music-qty-btn" onclick="changeQty('ri_acguit_qty',1)">+</button>
+          </div>
+        </div>
+
+        <div class="music-inst-item">
+          <input type="checkbox" id="ri_bass" onchange="buildMusicPrompt()">
+          <label class="music-inst-label" for="ri_bass">Bajo Electrico</label>
+          <div class="music-inst-qty">
+            <button type="button" class="music-qty-btn" onclick="changeQty('ri_bass_qty',-1)">-</button>
+            <span class="music-qty-num" id="ri_bass_qty">1</span>
+            <button type="button" class="music-qty-btn" onclick="changeQty('ri_bass_qty',1)">+</button>
+          </div>
+        </div>
+
+        <div class="music-inst-item">
+          <input type="checkbox" id="ri_drums" onchange="buildMusicPrompt()">
+          <label class="music-inst-label" for="ri_drums">Bateria Completa</label>
+          <div class="music-inst-qty">
+            <button type="button" class="music-qty-btn" onclick="changeQty('ri_drums_qty',-1)">-</button>
+            <span class="music-qty-num" id="ri_drums_qty">1</span>
+            <button type="button" class="music-qty-btn" onclick="changeQty('ri_drums_qty',1)">+</button>
+          </div>
+        </div>
+
+        <div class="music-inst-item">
+          <input type="checkbox" id="ri_piano" onchange="buildMusicPrompt()">
+          <label class="music-inst-label" for="ri_piano">Piano / Teclado</label>
+          <div class="music-inst-qty">
+            <button type="button" class="music-qty-btn" onclick="changeQty('ri_piano_qty',-1)">-</button>
+            <span class="music-qty-num" id="ri_piano_qty">1</span>
+            <button type="button" class="music-qty-btn" onclick="changeQty('ri_piano_qty',1)">+</button>
+          </div>
+        </div>
+
+        <div class="music-inst-item">
+          <input type="checkbox" id="ri_synth" onchange="buildMusicPrompt()">
+          <label class="music-inst-label" for="ri_synth">Sintetizador</label>
+          <div class="music-inst-qty">
+            <button type="button" class="music-qty-btn" onclick="changeQty('ri_synth_qty',-1)">-</button>
+            <span class="music-qty-num" id="ri_synth_qty">1</span>
+            <button type="button" class="music-qty-btn" onclick="changeQty('ri_synth_qty',1)">+</button>
+          </div>
+        </div>
+
+        <div class="music-inst-item">
+          <input type="checkbox" id="ri_organ" onchange="buildMusicPrompt()">
+          <label class="music-inst-label" for="ri_organ">Organo Hammond</label>
+          <div class="music-inst-qty">
+            <button type="button" class="music-qty-btn" onclick="changeQty('ri_organ_qty',-1)">-</button>
+            <span class="music-qty-num" id="ri_organ_qty">1</span>
+            <button type="button" class="music-qty-btn" onclick="changeQty('ri_organ_qty',1)">+</button>
+          </div>
+        </div>
+
+        <div class="music-inst-item">
+          <input type="checkbox" id="ri_strings" onchange="buildMusicPrompt()">
+          <label class="music-inst-label" for="ri_strings">Cuerdas Orquestales</label>
+          <div class="music-inst-qty">
+            <button type="button" class="music-qty-btn" onclick="changeQty('ri_strings_qty',-1)">-</button>
+            <span class="music-qty-num" id="ri_strings_qty">1</span>
+            <button type="button" class="music-qty-btn" onclick="changeQty('ri_strings_qty',1)">+</button>
+          </div>
+        </div>
+
+        <div class="music-inst-item">
+          <input type="checkbox" id="ri_choir" onchange="buildMusicPrompt()">
+          <label class="music-inst-label" for="ri_choir">Coro / Voces</label>
+          <div class="music-inst-qty">
+            <button type="button" class="music-qty-btn" onclick="changeQty('ri_choir_qty',-1)">-</button>
+            <span class="music-qty-num" id="ri_choir_qty">1</span>
+            <button type="button" class="music-qty-btn" onclick="changeQty('ri_choir_qty',1)">+</button>
+          </div>
+        </div>
+
+        <div class="music-inst-item">
+          <input type="checkbox" id="ri_sampler" onchange="buildMusicPrompt()">
+          <label class="music-inst-label" for="ri_sampler">Sampler / Texturas</label>
+          <div class="music-inst-qty">
+            <button type="button" class="music-qty-btn" onclick="changeQty('ri_sampler_qty',-1)">-</button>
+            <span class="music-qty-num" id="ri_sampler_qty">1</span>
+            <button type="button" class="music-qty-btn" onclick="changeQty('ri_sampler_qty',1)">+</button>
+          </div>
+        </div>
+
+        <div class="music-inst-item">
+          <input type="checkbox" id="ri_violin" onchange="buildMusicPrompt()">
+          <label class="music-inst-label" for="ri_violin">Violin</label>
+          <div class="music-inst-qty">
+            <button type="button" class="music-qty-btn" onclick="changeQty('ri_violin_qty',-1)">-</button>
+            <span class="music-qty-num" id="ri_violin_qty">1</span>
+            <button type="button" class="music-qty-btn" onclick="changeQty('ri_violin_qty',1)">+</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="music-section-label">Voz</div>
+      <div class="music-voice-row">
+        <label class="music-voice-check">
+          <input type="checkbox" id="rv_instrumental" onchange="buildMusicPrompt()">
+          <span class="music-voice-text">Solo Instrumental</span>
+        </label>
+        <label class="music-voice-check">
+          <input type="checkbox" id="rv_male" onchange="buildMusicPrompt()">
+          <span class="music-voice-text">Voz Masculina</span>
+        </label>
+        <label class="music-voice-check">
+          <input type="checkbox" id="rv_female" onchange="buildMusicPrompt()">
+          <span class="music-voice-text">Voz Femenina</span>
+        </label>
+        <label class="music-voice-check">
+          <input type="checkbox" id="rv_both" onchange="buildMusicPrompt()">
+          <span class="music-voice-text">Ambas voces (duo)</span>
+        </label>
+        <label class="music-voice-check">
+          <input type="checkbox" id="rv_scream" onchange="buildMusicPrompt()">
+          <span class="music-voice-text">Gritos / Screaming</span>
+        </label>
+        <label class="music-voice-check">
+          <input type="checkbox" id="rv_whisper" onchange="buildMusicPrompt()">
+          <span class="music-voice-text">Susurros</span>
+        </label>
+        <label class="music-voice-check">
+          <input type="checkbox" id="rv_harmonies" onchange="buildMusicPrompt()">
+          <span class="music-voice-text">Armonias vocales</span>
+        </label>
+        <label class="music-voice-check">
+          <input type="checkbox" id="rv_rap" onchange="buildMusicPrompt()">
+          <span class="music-voice-text">Rap / Spoken word</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="field-label">Caracteristicas de Sonido (descripcion para SUNO)</div>
+      <textarea id="musicRockDescriptor" placeholder="Describe el sonido: Ej: down-tuned 8-string guitars, shoegaze reverb clean sections, atmospheric delay layers, quiet-to-loud dynamic shifts..." oninput="buildMusicPrompt()" style="min-height:70px"></textarea>
+    </div>
+
+  </div>
+</div>
+
+<!-- MÚSICA: SALSA MODULE -->
+<div class="module">
+  <div class="module-header" onclick="toggleModule(this)">
+    <span class="module-number">10</span>
+    <h3>Salsa</h3>
+  </div>
+  <div class="module-body">
+
+    <div class="field">
+      <div class="field-label">Subgenero de Salsa</div>
+      <select id="musicSalsaSubgenre" class="music-subgenre-select" onchange="buildMusicPrompt()">
+        <option value="">Sin subgenero especifico...</option>
+        <optgroup label="── SALSA CLASICA ──">
+          <option value="salsa dura, hard salsa with heavy brass section and strong percussion, urban street themes">Salsa Dura (Salsa Brava)</option>
+          <option value="salsa romantica, smooth romantic salsa with soft melodies focused on love themes">Salsa Romantica</option>
+          <option value="salsa de los 70s, classic 70s New York salsa with raw street energy">Salsa de los 70s (New York)</option>
+          <option value="salsa de los 80s, polished 80s salsa sound with clean production">Salsa de los 80s</option>
+        </optgroup>
+        <optgroup label="── SALSA CUBANA ──">
+          <option value="timba, Cuban timba with aggressive rhythms, funk influences and afrocuban percussion">Timba (Salsa Cubana)</option>
+          <option value="son cubano, traditional Cuban son as the root of salsa">Son Cubano</option>
+          <option value="charanga, Cuban charanga style with flute and violin leading the melody">Charanga</option>
+          <option value="guaracha, upbeat festive Cuban guaracha rhythm">Guaracha</option>
+        </optgroup>
+        <optgroup label="── SALSA COLOMBIANA ──">
+          <option value="salsa choke, Colombian urban salsa from Cali with hip and modern rhythms">Salsa Choke</option>
+          <option value="salsa caleña, Cali-style salsa focused on footwork and fast percussion">Salsa Caleña</option>
+        </optgroup>
+        <optgroup label="── FUSION ──">
+          <option value="salsaton, direct fusion of salsa and reggaeton rhythms">Salsaton</option>
+          <option value="latin jazz salsa, salsa with heavy jazz improvisation and complex harmonies">Latin Jazz (Salsa Jazz)</option>
+          <option value="salsa sinfonica, symphonic salsa arrangements with full orchestra">Salsa Sinfonica / Concierto</option>
+          <option value="tropical salsa, light tropical salsa with merengue and cumbia influences">Salsa Tropical</option>
+        </optgroup>
+      </select>
+    </div>
+
+    <div class="field">
+      <div class="music-section-label">Instrumentos — selecciona los que usara la cancion</div>
+      <div class="music-inst-grid" id="salsaInstGrid">
+
+        <div class="music-inst-item">
+          <input type="checkbox" id="si_piano" onchange="buildMusicPrompt()">
+          <label class="music-inst-label" for="si_piano">Piano</label>
+          <div class="music-inst-qty">
+            <button type="button" class="music-qty-btn" onclick="changeQty('si_piano_qty',-1)">-</button>
+            <span class="music-qty-num" id="si_piano_qty">1</span>
+            <button type="button" class="music-qty-btn" onclick="changeQty('si_piano_qty',1)">+</button>
+          </div>
+        </div>
+
+        <div class="music-inst-item">
+          <input type="checkbox" id="si_bajo" onchange="buildMusicPrompt()">
+          <label class="music-inst-label" for="si_bajo">Bajo (Baby Bass / Electrico)</label>
+          <div class="music-inst-qty">
+            <button type="button" class="music-qty-btn" onclick="changeQty('si_bajo_qty',-1)">-</button>
+            <span class="music-qty-num" id="si_bajo_qty">1</span>
+            <button type="button" class="music-qty-btn" onclick="changeQty('si_bajo_qty',1)">+</button>
+          </div>
+        </div>
+
+        <div class="music-inst-item">
+          <input type="checkbox" id="si_timbales" onchange="buildMusicPrompt()">
+          <label class="music-inst-label" for="si_timbales">Timbales</label>
+          <div class="music-inst-qty">
+            <button type="button" class="music-qty-btn" onclick="changeQty('si_timbales_qty',-1)">-</button>
+            <span class="music-qty-num" id="si_timbales_qty">1</span>
+            <button type="button" class="music-qty-btn" onclick="changeQty('si_timbales_qty',1)">+</button>
+          </div>
+        </div>
+
+        <div class="music-inst-item">
+          <input type="checkbox" id="si_congas" onchange="buildMusicPrompt()">
+          <label class="music-inst-label" for="si_congas">Congas (Tumbadoras)</label>
+          <div class="music-inst-qty">
+            <button type="button" class="music-qty-btn" onclick="changeQty('si_congas_qty',-1)">-</button>
+            <span class="music-qty-num" id="si_congas_qty">1</span>
+            <button type="button" class="music-qty-btn" onclick="changeQty('si_congas_qty',1)">+</button>
+          </div>
+        </div>
+
+        <div class="music-inst-item">
+          <input type="checkbox" id="si_bongo" onchange="buildMusicPrompt()">
+          <label class="music-inst-label" for="si_bongo">Bongo</label>
+          <div class="music-inst-qty">
+            <button type="button" class="music-qty-btn" onclick="changeQty('si_bongo_qty',-1)">-</button>
+            <span class="music-qty-num" id="si_bongo_qty">1</span>
+            <button type="button" class="music-qty-btn" onclick="changeQty('si_bongo_qty',1)">+</button>
+          </div>
+        </div>
+
+        <div class="music-inst-item">
+          <input type="checkbox" id="si_campana" onchange="buildMusicPrompt()">
+          <label class="music-inst-label" for="si_campana">Campana / Cencerro</label>
+          <div class="music-inst-qty">
+            <button type="button" class="music-qty-btn" onclick="changeQty('si_campana_qty',-1)">-</button>
+            <span class="music-qty-num" id="si_campana_qty">1</span>
+            <button type="button" class="music-qty-btn" onclick="changeQty('si_campana_qty',1)">+</button>
+          </div>
+        </div>
+
+        <div class="music-inst-item">
+          <input type="checkbox" id="si_guiro" onchange="buildMusicPrompt()">
+          <label class="music-inst-label" for="si_guiro">Guiro</label>
+          <div class="music-inst-qty">
+            <button type="button" class="music-qty-btn" onclick="changeQty('si_guiro_qty',-1)">-</button>
+            <span class="music-qty-num" id="si_guiro_qty">1</span>
+            <button type="button" class="music-qty-btn" onclick="changeQty('si_guiro_qty',1)">+</button>
+          </div>
+        </div>
+
+        <div class="music-inst-item">
+          <input type="checkbox" id="si_claves" onchange="buildMusicPrompt()">
+          <label class="music-inst-label" for="si_claves">Claves</label>
+          <div class="music-inst-qty">
+            <button type="button" class="music-qty-btn" onclick="changeQty('si_claves_qty',-1)">-</button>
+            <span class="music-qty-num" id="si_claves_qty">1</span>
+            <button type="button" class="music-qty-btn" onclick="changeQty('si_claves_qty',1)">+</button>
+          </div>
+        </div>
+
+        <div class="music-inst-item">
+          <input type="checkbox" id="si_maracas" onchange="buildMusicPrompt()">
+          <label class="music-inst-label" for="si_maracas">Maracas</label>
+          <div class="music-inst-qty">
+            <button type="button" class="music-qty-btn" onclick="changeQty('si_maracas_qty',-1)">-</button>
+            <span class="music-qty-num" id="si_maracas_qty">1</span>
+            <button type="button" class="music-qty-btn" onclick="changeQty('si_maracas_qty',1)">+</button>
+          </div>
+        </div>
+
+        <div class="music-inst-item">
+          <input type="checkbox" id="si_trompeta" onchange="buildMusicPrompt()">
+          <label class="music-inst-label" for="si_trompeta">Trompeta</label>
+          <div class="music-inst-qty">
+            <button type="button" class="music-qty-btn" onclick="changeQty('si_trompeta_qty',-1)">-</button>
+            <span class="music-qty-num" id="si_trompeta_qty">2</span>
+            <button type="button" class="music-qty-btn" onclick="changeQty('si_trompeta_qty',1)">+</button>
+          </div>
+        </div>
+
+        <div class="music-inst-item">
+          <input type="checkbox" id="si_trombon" onchange="buildMusicPrompt()">
+          <label class="music-inst-label" for="si_trombon">Trombon</label>
+          <div class="music-inst-qty">
+            <button type="button" class="music-qty-btn" onclick="changeQty('si_trombon_qty',-1)">-</button>
+            <span class="music-qty-num" id="si_trombon_qty">2</span>
+            <button type="button" class="music-qty-btn" onclick="changeQty('si_trombon_qty',1)">+</button>
+          </div>
+        </div>
+
+        <div class="music-inst-item">
+          <input type="checkbox" id="si_saxo" onchange="buildMusicPrompt()">
+          <label class="music-inst-label" for="si_saxo">Saxofon</label>
+          <div class="music-inst-qty">
+            <button type="button" class="music-qty-btn" onclick="changeQty('si_saxo_qty',-1)">-</button>
+            <span class="music-qty-num" id="si_saxo_qty">1</span>
+            <button type="button" class="music-qty-btn" onclick="changeQty('si_saxo_qty',1)">+</button>
+          </div>
+        </div>
+
+        <div class="music-inst-item">
+          <input type="checkbox" id="si_violin" onchange="buildMusicPrompt()">
+          <label class="music-inst-label" for="si_violin">Violin (Charanga)</label>
+          <div class="music-inst-qty">
+            <button type="button" class="music-qty-btn" onclick="changeQty('si_violin_qty',-1)">-</button>
+            <span class="music-qty-num" id="si_violin_qty">2</span>
+            <button type="button" class="music-qty-btn" onclick="changeQty('si_violin_qty',1)">+</button>
+          </div>
+        </div>
+
+        <div class="music-inst-item">
+          <input type="checkbox" id="si_flauta" onchange="buildMusicPrompt()">
+          <label class="music-inst-label" for="si_flauta">Flauta Traversa</label>
+          <div class="music-inst-qty">
+            <button type="button" class="music-qty-btn" onclick="changeQty('si_flauta_qty',-1)">-</button>
+            <span class="music-qty-num" id="si_flauta_qty">1</span>
+            <button type="button" class="music-qty-btn" onclick="changeQty('si_flauta_qty',1)">+</button>
+          </div>
+        </div>
+
+        <div class="music-inst-item">
+          <input type="checkbox" id="si_tresCubano" onchange="buildMusicPrompt()">
+          <label class="music-inst-label" for="si_tresCubano">Tres Cubano</label>
+          <div class="music-inst-qty">
+            <button type="button" class="music-qty-btn" onclick="changeQty('si_tresCubano_qty',-1)">-</button>
+            <span class="music-qty-num" id="si_tresCubano_qty">1</span>
+            <button type="button" class="music-qty-btn" onclick="changeQty('si_tresCubano_qty',1)">+</button>
+          </div>
+        </div>
+
+        <div class="music-inst-item">
+          <input type="checkbox" id="si_cajon" onchange="buildMusicPrompt()">
+          <label class="music-inst-label" for="si_cajon">Cajon Peruano</label>
+          <div class="music-inst-qty">
+            <button type="button" class="music-qty-btn" onclick="changeQty('si_cajon_qty',-1)">-</button>
+            <span class="music-qty-num" id="si_cajon_qty">1</span>
+            <button type="button" class="music-qty-btn" onclick="changeQty('si_cajon_qty',1)">+</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="music-section-label">Voz</div>
+      <div class="music-voice-row">
+        <label class="music-voice-check">
+          <input type="checkbox" id="sv_instrumental" onchange="buildMusicPrompt()">
+          <span class="music-voice-text">Solo Instrumental</span>
+        </label>
+        <label class="music-voice-check">
+          <input type="checkbox" id="sv_male" onchange="buildMusicPrompt()">
+          <span class="music-voice-text">Cantante Masculino</span>
+        </label>
+        <label class="music-voice-check">
+          <input type="checkbox" id="sv_female" onchange="buildMusicPrompt()">
+          <span class="music-voice-text">Cantante Femenina</span>
+        </label>
+        <label class="music-voice-check">
+          <input type="checkbox" id="sv_coro" onchange="buildMusicPrompt()">
+          <span class="music-voice-text">Coro / Coros</span>
+        </label>
+        <label class="music-voice-check">
+          <input type="checkbox" id="sv_sonero" onchange="buildMusicPrompt()">
+          <span class="music-voice-text">Sonero (improvisation)</span>
+        </label>
+      </div>
+    </div>
+
+  </div>
+</div>
 
       <!-- MÚSICA: ESTRUCTURA -->
       <div class="module">
@@ -4577,6 +5184,103 @@ function buildSheetPrompt() {
   updateJSONDisplay();
 }
 
+// ========== MUSIC INSTRUMENT QUANTITY HELPER ==========
+function changeQty(qtyId, delta) {
+  var el = document.getElementById(qtyId);
+  if (!el) return;
+  var current = parseInt(el.textContent) || 1;
+  var next = Math.max(1, Math.min(8, current + delta));
+  el.textContent = next;
+  buildMusicPrompt();
+}
+
+function getRockInstruments() {
+  var list = [];
+  var map = [
+    { id: 'ri_elguit', label: 'electric guitar (lead)', qty: 'ri_elguit_qty' },
+    { id: 'ri_rhguit', label: 'electric guitar (rhythm)', qty: 'ri_rhguit_qty' },
+    { id: 'ri_acguit', label: 'acoustic guitar', qty: 'ri_acguit_qty' },
+    { id: 'ri_bass',   label: 'bass guitar', qty: 'ri_bass_qty' },
+    { id: 'ri_drums',  label: 'full drum kit', qty: 'ri_drums_qty' },
+    { id: 'ri_piano',  label: 'piano/keyboards', qty: 'ri_piano_qty' },
+    { id: 'ri_synth',  label: 'synthesizer', qty: 'ri_synth_qty' },
+    { id: 'ri_organ',  label: 'Hammond organ', qty: 'ri_organ_qty' },
+    { id: 'ri_strings',label: 'orchestral strings', qty: 'ri_strings_qty' },
+    { id: 'ri_choir',  label: 'choir/backing vocals', qty: 'ri_choir_qty' },
+    { id: 'ri_sampler',label: 'sampler/textures', qty: 'ri_sampler_qty' },
+    { id: 'ri_violin', label: 'violin', qty: 'ri_violin_qty' }
+  ];
+  map.forEach(function(item) {
+    var cb = document.getElementById(item.id);
+    if (cb && cb.checked) {
+      var qty = parseInt(document.getElementById(item.qty).textContent) || 1;
+      if (qty === 1) {
+        list.push(item.label);
+      } else {
+        list.push(qty + 'x ' + item.label);
+      }
+    }
+  });
+  return list;
+}
+
+function getRockVoices() {
+  var voices = [];
+  if (document.getElementById('rv_instrumental') && document.getElementById('rv_instrumental').checked) voices.push('instrumental only, no vocals');
+  if (document.getElementById('rv_male') && document.getElementById('rv_male').checked) voices.push('male vocals');
+  if (document.getElementById('rv_female') && document.getElementById('rv_female').checked) voices.push('female vocals');
+  if (document.getElementById('rv_both') && document.getElementById('rv_both').checked) voices.push('male and female vocal duo');
+  if (document.getElementById('rv_scream') && document.getElementById('rv_scream').checked) voices.push('screaming/harsh vocals');
+  if (document.getElementById('rv_whisper') && document.getElementById('rv_whisper').checked) voices.push('whispered soft passages');
+  if (document.getElementById('rv_harmonies') && document.getElementById('rv_harmonies').checked) voices.push('vocal harmonies');
+  if (document.getElementById('rv_rap') && document.getElementById('rv_rap').checked) voices.push('rap/spoken word sections');
+  return voices;
+}
+
+function getSalsaInstruments() {
+  var list = [];
+  var map = [
+    { id: 'si_piano',      label: 'piano', qty: 'si_piano_qty' },
+    { id: 'si_bajo',       label: 'bass (baby bass)', qty: 'si_bajo_qty' },
+    { id: 'si_timbales',   label: 'timbales', qty: 'si_timbales_qty' },
+    { id: 'si_congas',     label: 'congas (tumbadoras)', qty: 'si_congas_qty' },
+    { id: 'si_bongo',      label: 'bongo', qty: 'si_bongo_qty' },
+    { id: 'si_campana',    label: 'cowbell (cencerro)', qty: 'si_campana_qty' },
+    { id: 'si_guiro',      label: 'guiro', qty: 'si_guiro_qty' },
+    { id: 'si_claves',     label: 'claves', qty: 'si_claves_qty' },
+    { id: 'si_maracas',    label: 'maracas', qty: 'si_maracas_qty' },
+    { id: 'si_trompeta',   label: 'trumpet', qty: 'si_trompeta_qty' },
+    { id: 'si_trombon',    label: 'trombone', qty: 'si_trombon_qty' },
+    { id: 'si_saxo',       label: 'saxophone', qty: 'si_saxo_qty' },
+    { id: 'si_violin',     label: 'violin (charanga)', qty: 'si_violin_qty' },
+    { id: 'si_flauta',     label: 'flute', qty: 'si_flauta_qty' },
+    { id: 'si_tresCubano', label: 'tres cubano', qty: 'si_tresCubano_qty' },
+    { id: 'si_cajon',      label: 'cajon', qty: 'si_cajon_qty' }
+  ];
+  map.forEach(function(item) {
+    var cb = document.getElementById(item.id);
+    if (cb && cb.checked) {
+      var qty = parseInt(document.getElementById(item.qty).textContent) || 1;
+      if (qty === 1) {
+        list.push(item.label);
+      } else {
+        list.push(qty + 'x ' + item.label);
+      }
+    }
+  });
+  return list;
+}
+
+function getSalsaVoices() {
+  var voices = [];
+  if (document.getElementById('sv_instrumental') && document.getElementById('sv_instrumental').checked) voices.push('instrumental only');
+  if (document.getElementById('sv_male') && document.getElementById('sv_male').checked) voices.push('male lead vocalist');
+  if (document.getElementById('sv_female') && document.getElementById('sv_female').checked) voices.push('female lead vocalist');
+  if (document.getElementById('sv_coro') && document.getElementById('sv_coro').checked) voices.push('chorus/backing choir');
+  if (document.getElementById('sv_sonero') && document.getElementById('sv_sonero').checked) voices.push('sonero improvisation');
+  return voices;
+}
+
 // ========== BUILD MUSIC ==========
 function updateBPMLabel() {
   var bpm = gv('musicBPM');
@@ -4600,33 +5304,81 @@ function buildMusicPrompt() {
   var key = gv('musicKey'), texture = gv('musicTexture'), era = gv('musicEra');
   var artistRef = gv('musicArtistRef'), filmRef = gv('musicFilmRef'), customRef = gv('musicCustomRef');
   var structure = gv('musicStructure'), duration = gv('musicDuration'), quality = gv('musicQuality');
+
+  // ROCK module
+  var rockSubgenre = gv('musicRockSubgenre');
+  var rockInstruments = getRockInstruments();
+  var rockVoices = getRockVoices();
+  var rockDescriptor = gv('musicRockDescriptor');
+
+  // SALSA module
+  var salsaSubgenre = gv('musicSalsaSubgenre');
+  var salsaInstruments = getSalsaInstruments();
+  var salsaVoices = getSalsaVoices();
+
   var sp = [];
+
+  // Genre / subgenre base
   if (genre) sp.push(genre.toLowerCase());
   if (subGenre) sp.push(subGenre.toLowerCase());
+
+  // Rock module data
+  if (rockSubgenre) sp.push(rockSubgenre);
+  if (rockInstruments.length > 0) sp.push('instruments: ' + rockInstruments.join(', '));
+  if (rockVoices.length > 0) sp.push(rockVoices.join(', '));
+  if (rockDescriptor) sp.push(rockDescriptor);
+
+  // Salsa module data
+  if (salsaSubgenre) sp.push(salsaSubgenre);
+  if (salsaInstruments.length > 0) sp.push('instruments: ' + salsaInstruments.join(', '));
+  if (salsaVoices.length > 0) sp.push(salsaVoices.join(', '));
+
+  // Standard instruments (modules 01-02)
   if (leadInst) sp.push(leadInst.toLowerCase());
   if (supportInst) sp.push(supportInst.toLowerCase());
   if (production) sp.push(production);
+
+  // Mood and usage
   if (mood) sp.push(mood);
   if (use) sp.push(use);
+
+  // Tempo
   if (bpm) sp.push(bpm + ' BPM');
+
+  // Key and texture
   if (key) sp.push(key.split(' ')[0] + ' ' + (key.includes('minor') ? 'minor' : 'major'));
   if (texture) sp.push(texture);
+
+  // Era and references
   if (era) sp.push(era);
   if (artistRef) sp.push(artistRef);
   if (filmRef) sp.push('inspired by ' + filmRef);
   if (customRef) sp.push(customRef);
+
+  // Voice and language
   if (voiceType) sp.push(voiceType);
   if (language) sp.push(language);
+
+  // Duration and quality
   if (duration) sp.push(duration);
   sp.push(quality);
+
   var stylePrompt = sp.join(', ');
   var structureText = structure ? structure.replace(/\\n/g, '\n') : '';
+
   var fullPrompt = '';
   if (stylePrompt.trim()) { fullPrompt += 'STYLE PROMPT: ' + stylePrompt; }
   if (structureText) { fullPrompt += '\n\nESTRUCTURA:\n' + structureText; }
+
   var pb = document.getElementById('promptBox');
-  if (genre || leadInst || mood) { pb.textContent = fullPrompt; pb.classList.remove('empty'); }
-  else { pb.textContent = 'Tu prompt de música aparecerá aquí...'; pb.classList.add('empty'); }
+  var hasContent = !!(genre || leadInst || mood || rockSubgenre || salsaSubgenre || rockInstruments.length || salsaInstruments.length);
+  if (hasContent) {
+    pb.textContent = fullPrompt;
+    pb.classList.remove('empty');
+  } else {
+    pb.textContent = 'Tu prompt de musica aparecera aqui...';
+    pb.classList.add('empty');
+  }
   document.getElementById('charCount').textContent = stylePrompt.length;
   document.getElementById('wordCount').textContent = stylePrompt.split(/\s+/).filter(function(w) { return w; }).length;
   updateJSONDisplay();
@@ -4886,6 +5638,19 @@ function clearAll() {
   pb.classList.add('empty');
   document.getElementById('charCount').textContent = '0';
   document.getElementById('wordCount').textContent = '0';
+// Reset rock instrument checkboxes
+['ri_elguit','ri_rhguit','ri_acguit','ri_bass','ri_drums','ri_piano','ri_synth','ri_organ','ri_strings','ri_choir','ri_sampler','ri_violin'].forEach(function(id){ var e=document.getElementById(id); if(e) e.checked=false; });
+// Reset rock voice checkboxes
+['rv_instrumental','rv_male','rv_female','rv_both','rv_scream','rv_whisper','rv_harmonies','rv_rap'].forEach(function(id){ var e=document.getElementById(id); if(e) e.checked=false; });
+// Reset rock qty
+['ri_elguit_qty','ri_rhguit_qty','ri_acguit_qty','ri_bass_qty','ri_drums_qty','ri_piano_qty','ri_synth_qty','ri_organ_qty','ri_strings_qty','ri_choir_qty','ri_sampler_qty','ri_violin_qty'].forEach(function(id){ var e=document.getElementById(id); if(e) e.textContent='1'; });
+// Reset salsa instrument checkboxes
+['si_piano','si_bajo','si_timbales','si_congas','si_bongo','si_campana','si_guiro','si_claves','si_maracas','si_trompeta','si_trombon','si_saxo','si_violin','si_flauta','si_tresCubano','si_cajon'].forEach(function(id){ var e=document.getElementById(id); if(e) e.checked=false; });
+// Reset salsa voice checkboxes
+['sv_instrumental','sv_male','sv_female','sv_coro','sv_sonero'].forEach(function(id){ var e=document.getElementById(id); if(e) e.checked=false; });
+// Reset salsa qty - trompeta and trombon default 2, rest 1
+['si_piano_qty','si_bajo_qty','si_timbales_qty','si_congas_qty','si_bongo_qty','si_campana_qty','si_guiro_qty','si_claves_qty','si_maracas_qty','si_saxo_qty','si_flauta_qty','si_tresCubano_qty','si_cajon_qty'].forEach(function(id){ var e=document.getElementById(id); if(e) e.textContent='1'; });
+['si_trompeta_qty','si_trombon_qty','si_violin_qty'].forEach(function(id){ var e=document.getElementById(id); if(e) e.textContent='2'; });
   var jb = document.getElementById('jsonBox'); if (jb) jb.textContent = '{ }';
   var tp = document.getElementById('platformTip'); if (tp) tp.style.display = 'none';
 }
