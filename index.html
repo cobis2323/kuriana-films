@@ -772,11 +772,74 @@ select option{background:var(--bg3);color:var(--text)}
         </div>
       </div>
 
+ <!-- ANIME: CAMARAS Y EQUIPOS -->
+ <div class="module">
+ <div class="module-header" onclick="toggleModule(this)">
+ <span class="module-number">03</span>
+ <h3>Cámaras y Equipos</h3>
+ </div>
+ <div class="module-body">
+
+ <div class="field-row">
+ <div class="field">
+ <div class="field-label">Tipo de Cámara</div>
+ <input type="hidden" id="animeCameraType" value="">
+ <button type="button" onclick="abrirModal('animeCameraType')" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:12px;border-radius:8px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left">
+ <span id="animeCameraType-display" style="opacity:.5">Seleccionar tipo de cámara...</span>
+ <span style="font-size:.7rem;color:#888">🎨 Elegir</span>
+ </button>
+ </div>
+ <div class="field">
+ <div class="field-label">Tipo de Lente</div>
+ <input type="hidden" id="animeLensType" value="">
+ <button type="button" onclick="abrirModal('animeLensType')" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:12px;border-radius:8px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left">
+ <span id="animeLensType-display" style="opacity:.5">Seleccionar tipo de lente...</span>
+ <span style="font-size:.7rem;color:#888">🎨 Elegir</span>
+ </button>
+ </div>
+ </div>
+
+ <div class="field-row">
+ <div class="field">
+ <div class="field-label">Material de Película / Render</div>
+ <input type="hidden" id="animeFilmStock" value="">
+ <button type="button" onclick="abrirModal('animeFilmStock')" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:12px;border-radius:8px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left">
+ <span id="animeFilmStock-display" style="opacity:.5">Seleccionar material / render...</span>
+ <span style="font-size:.7rem;color:#888">🎨 Elegir</span>
+ </button>
+ </div>
+ <div class="field">
+ <div class="field-label">Filtros de Lentes / Efectos Visuales</div>
+ <input type="hidden" id="animeLensFilter" value="">
+ <button type="button" onclick="abrirModal('animeLensFilter')" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:12px;border-radius:8px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left">
+ <span id="animeLensFilter-display" style="opacity:.5">Seleccionar filtro / efecto...</span>
+ <span style="font-size:.7rem;color:#888">🎨 Elegir</span>
+ </button>
+ </div>
+ </div>
+
+ <div class="field">
+ <div class="field-label">Grano y Textura Visual</div>
+ <input type="hidden" id="animeGrain" value="">
+ <button type="button" onclick="abrirModal('animeGrain')" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:12px;border-radius:8px;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;text-align:left">
+ <span id="animeGrain-display" style="opacity:.5">Seleccionar textura / grano visual...</span>
+ <span style="font-size:.7rem;color:#888">🎨 Elegir</span>
+ </button>
+ </div>
+
+ <div class="checkbox-field" onclick="this.querySelector('input').click()">
+ <input type="checkbox" id="animeSubjectUnaware" onchange="buildAnimePrompt()" onclick="event.stopPropagation()">
+ <span class="checkbox-label">Sujeto no mira a cámara</span>
+ </div>
+
+ </div>
+ </div>
+
       <!-- ANIME: VISUAL SETTINGS -->
       <div class="module">
         <div class="module-header" onclick="toggleModule(this)">
-          <span class="module-number">03</span>
-          <h3>Configuración Visual</h3>
+           <span class="module-number">04</span>
+           <h3>Configuración Visual</h3>
         </div>
         <div class="module-body">
           <div class="field-row">
@@ -822,8 +885,8 @@ select option{background:var(--bg3);color:var(--text)}
       <!-- ANIME: REFERENCES -->
       <div class="module">
         <div class="module-header" onclick="toggleModule(this)">
-          <span class="module-number">04</span>
-          <h3>Referencias</h3>
+           <span class="module-number">05</span>
+           <h3>Referencias</h3>
         </div>
         <div class="module-body">
           <div class="field-row">
@@ -2926,6 +2989,151 @@ var ANIMEPALETTE_DATA = [
   ]}
 ];
 
+var ANIMECAMERATYPE_DATA = [
+ { g: '── SOFTWARE 3D / CGI ──', items: [
+ { v: 'Pixar RenderMan Camera (CGI Cinema)', i: '🎬' },
+ { v: 'Arnold Renderer Camera (Maya/3ds Max)', i: '🔆' },
+ { v: 'V-Ray Camera (Chaos Group)', i: '💡' },
+ { v: 'Blender EEVEE Camera (real-time)', i: '🟠' },
+ { v: 'Blender Cycles Camera (path tracing)', i: '🔵' },
+ { v: 'Cinema 4D Physical Camera', i: '🎥' },
+ { v: 'Unreal Engine Cinecamera (game engine)', i: '🟢' },
+ { v: 'Octane Render Camera', i: '⚪' }
+ ]},
+ { g: '── ANIMACIÓN 2D / TRADICIONAL ──', items: [
+ { v: 'Multiplane Camera (Disney classic)', i: '🏰' },
+ { v: 'Rostrum Camera (traditional cel)', i: '📽' },
+ { v: 'Digital 2D Compositing Camera', i: '🖥' },
+ { v: 'Digital Hand-drawn (TVPaint style)', i: '✏️' },
+ { v: 'Anime Style Camera (Japanese production)', i: '📺' }
+ ]},
+ { g: '── STOP MOTION / PUPPET ──', items: [
+ { v: 'Stop Motion Macro Camera (Laika style)', i: '🧸' },
+ { v: 'Claymation Camera (Aardman style)', i: '🧀' },
+ { v: 'Puppet Camera (LAIKA)', i: '🎭' }
+ ]},
+ { g: '── MOTION CAPTURE ──', items: [
+ { v: 'Performance Capture Camera (Gollum style)', i: '🤖' },
+ { v: 'Vicon Motion Capture System', i: '⚡' }
+ ]},
+ { g: '── CÁMARA VIRTUAL CINEMATOGRÁFICA ──', items: [
+ { v: 'Virtual Anamorphic Camera (Spider-Verse)', i: '🕷' },
+ { v: 'Virtual 35mm Equivalent Camera', i: '📷' },
+ { v: 'Virtual Wide Angle Camera', i: '🌐' },
+ { v: 'Virtual Drone / Aerial Camera', i: '🚁' },
+ { v: 'Virtual Macro Camera (extreme detail)', i: '🐜' }
+ ]}
+];
+
+var ANIMELENSTYPE_DATA = [
+ { g: '── LENTES VIRTUALES 3D/CGI ──', items: [
+ { v: 'Virtual Anamorphic Lens (widescreen cinematic)', i: '🎬' },
+ { v: 'Virtual Spherical Prime Lens (sharp)', i: '💎' },
+ { v: 'Virtual Wide Angle 24mm (establishing shots)', i: '🌐' },
+ { v: 'Virtual Portrait 85mm (character close-ups)', i: '😐' },
+ { v: 'Virtual Telephoto 135mm (compressed)', i: '🔭' },
+ { v: 'Virtual Fisheye (distorted, dynamic)', i: '🐟' },
+ { v: 'Virtual Tilt-Shift (miniature effect)', i: '📐' },
+ { v: 'Virtual Macro (extreme detail insert)', i: '🐜' }
+ ]},
+ { g: '── LENTES ESTILO ANIME 2D ──', items: [
+ { v: 'Anime Standard Lens (flat, no distortion)', i: '📺' },
+ { v: 'Anime Wide Establishing (background focus)', i: '🏞' },
+ { v: 'Anime Close-Up Lens (face/eye detail)', i: '👁' },
+ { v: 'Anime Dynamic Dutch Angle Lens', i: '📐' }
+ ]},
+ { g: '── EFECTOS DE LENTE ANIMACIÓN ──', items: [
+ { v: 'Spider-Verse Across-Frame Lens (panel blur)', i: '🕷' },
+ { v: 'Soft Focus / Dreamy Lens (Ghibli feel)', i: '🌿' },
+ { v: 'Heavy Bokeh Background Lens', i: '💫' },
+ { v: 'Lens Flare Anamorphic Style', i: '✴️' },
+ { v: 'No Lens Distortion (flat 2D animation)', i: '⬜' }
+ ]}
+];
+
+var ANIMEFILMSTOCK_DATA = [
+ { g: '── RENDER / PIPELINE CGI ──', items: [
+ { v: 'Pixar RenderMan (smooth, clean CGI)', i: '🎈' },
+ { v: 'Arnold Render (photorealistic CGI)', i: '🔆' },
+ { v: 'V-Ray (hyper-realistic render)', i: '💡' },
+ { v: 'Blender EEVEE (real-time stylized)', i: '🟠' },
+ { v: 'Blender Cycles (cinematic path trace)', i: '🔵' },
+ { v: 'Toon Shading / NPR Render (cel look)', i: '🎨' },
+ { v: 'Unreal Engine Lumen (game cinematic)', i: '🟢' }
+ ]},
+ { g: '── ESTILOS DE ANIMACIÓN 2D ──', items: [
+ { v: 'Clean Digital Ink (modern anime)', i: '✏️' },
+ { v: 'Watercolor Wash (Ghibli / Cartoon Saloon)', i: '🎨' },
+ { v: 'Gouache Paint (classic Disney)', i: '🏰' },
+ { v: 'Oil Paint on Glass (loving Vincent style)', i: '🖼' },
+ { v: 'Pencil Rough Animation (sketch style)', i: '📝' },
+ { v: 'Charcoal / Pastel Texture', i: '🖤' },
+ { v: 'Flat Color Vector (no texture)', i: '📐' }
+ ]},
+ { g: '── TEXTURAS ESPECIALES ──', items: [
+ { v: 'Film Grain Overlay (nostalgic analog feel)', i: '📽' },
+ { v: 'Halftone Pattern (comic book print)', i: '📖' },
+ { v: 'VHS Degraded (retro anime OVA look)', i: '📼' },
+ { v: 'Paper Texture Background', i: '📜' },
+ { v: 'Cel Animation Texture (classic 80s-90s)', i: '📺' },
+ { v: 'No Texture (pure digital clean)', i: '💻' }
+ ]}
+];
+
+var ANIMELENSFILTER_DATA = [
+ { g: '── FILTROS DE GLOW / BLOOM ──', items: [
+ { v: 'Soft Bloom / Glow (Ghibli magic light)', i: '✨' },
+ { v: 'Anamorphic Lens Flare (cinematic streaks)', i: '✴️' },
+ { v: 'God Rays / Volumetric Light', i: '☀️' },
+ { v: 'Glimmerglass Soft Focus', i: '💎' },
+ { v: 'Dreamy Diffusion Filter', i: '🕊' }
+ ]},
+ { g: '── EFECTOS POST-PROCESO ──', items: [
+ { v: 'Chromatic Aberration (RGB fringe)', i: '🌈' },
+ { v: 'Vignette (darkened edges)', i: '⬛' },
+ { v: 'Depth of Field Blur (background blur)', i: '🌀' },
+ { v: 'Motion Blur (action lines)', i: '💨' },
+ { v: 'Radial Blur (speed zoom)', i: '🔄' }
+ ]},
+ { g: '── FILTROS DE COLOR ──', items: [
+ { v: 'Warm Color Grade (amber, gold)', i: '🌇' },
+ { v: 'Cool Color Grade (blue, teal)', i: '🔵' },
+ { v: 'Desaturated / Muted Grade', i: '🌫' },
+ { v: 'High Contrast Grade', i: '◐' },
+ { v: 'Cross-Process Color Shift', i: '🔀' },
+ { v: 'Sepia / Vintage Filter', i: '📜' }
+ ]},
+ { g: '── SIN FILTRO ──', items: [
+ { v: 'No Filter (clean neutral render)', i: '⬜' }
+ ]}
+];
+
+var ANIMEGRAIN_DATA = [
+ { g: '── TEXTURA ORGÁNICA / ANALÓGICA ──', items: [
+ { v: 'Subtle Film Grain (cinematic nostalgia)', i: '📽' },
+ { v: 'Heavy Film Grain (retro anime OVA 80s)', i: '📼' },
+ { v: 'Watercolor Paper Grain (wet media feel)', i: '🎨' },
+ { v: 'Pencil Sketch Texture', i: '✏️' },
+ { v: 'Charcoal Smudge Texture', i: '🖤' },
+ { v: 'Halftone Screen Texture (comic/manga)', i: '📖' },
+ { v: 'Cel Paint Texture (classic Disney/Ghibli)', i: '🏰' },
+ { v: 'Rough Canvas / Oil Paint Texture', i: '🖼' }
+ ]},
+ { g: '── TEXTURA DIGITAL ──', items: [
+ { v: 'Clean No Grain (modern CGI / Pixar)', i: '💻' },
+ { v: 'Subtle Digital Noise (realism CGI)', i: '🔲' },
+ { v: 'Pixel Art Dithering (retro game)', i: '👾' },
+ { v: 'VHS Scan Lines (analog horror anime)', i: '📺' }
+ ]},
+ { g: '── EFECTOS ESPECIALES DE TEXTURA ──', items: [
+ { v: 'Ink Bleed / Sumi-e Overflow', i: '🖌' },
+ { v: 'Paint Drip / Wet Paint', i: '🎨' },
+ { v: 'Crumpled Paper / Aged Effect', i: '📜' },
+ { v: 'Glitch Artifact / Corrupt Data', i: '⚠️' },
+ { v: 'No Grain / No Texture (pure flat)', i: '⬜' }
+ ]}
+];
+
 var ANIMESTYLE_DATA = [
   { g: '── ANIME CLÁSICO / RETRO ──', items: [
     { v: '70s Anime (Mazinger, Heidi)', i: '📺' },
@@ -3957,6 +4165,11 @@ function abrirModal(id) {
   if (id === 'horrorFilm') datos = HORRORFILM_DATA;
   if (id === 'horrorAuthor') datos = HORRORAUTHOR_DATA;
   if (id === 'horrorFilmRef') datos = HORRORFILMREF_DATA;
+  if (id === 'animeCameraType') datos = ANIMECAMERATYPE_DATA;
+  if (id === 'animeLensType') datos = ANIMELENSTYPE_DATA;
+  if (id === 'animeFilmStock') datos = ANIMEFILMSTOCK_DATA;
+  if (id === 'animeLensFilter') datos = ANIMELENSFILTER_DATA;
+  if (id === 'animeGrain') datos = ANIMEGRAIN_DATA;
   if (id === 'photographer') datos = PHOTO_DATA;
   if (id === 'movieRef') datos = MOVIE_DATA;
   if (!datos) return;
@@ -3992,7 +4205,7 @@ function cerrarModal(id) {
 
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
-            var ids = ['shotType', 'lighting', 'photographer', 'movieRef', 'viewDirection', 'filmStock', 'focalLength', 'aperture', 'shutterSpeed', 'iso', 'lensFilter', 'filmGrain', 'aspectRatio', 'colorPalette', 'colorGrading', 'atmosphere', 'mood', 'animeStyle', 'animeColorPalette', 'animeMood', 'animeLighting', 'animeShot', 'animeDirector', 'animeFilmRef', 'horrorSubgenre', 'horrorAtmosphere', 'horrorMood', 'horrorLighting', 'horrorColor', 'horrorCamera', 'horrorLens', 'horrorShot', 'horrorFilm', 'horrorAuthor', 'horrorFilmRef'];
+             var ids = ['shotType', 'lighting', 'photographer', 'movieRef', 'viewDirection', 'filmStock', 'focalLength', 'aperture', 'shutterSpeed', 'iso', 'lensFilter', 'filmGrain', 'aspectRatio', 'colorPalette', 'colorGrading', 'atmosphere', 'mood', 'animeStyle', 'animeColorPalette', 'animeMood', 'animeLighting', 'animeShot', 'animeDirector', 'animeFilmRef', 'animeCameraType', 'animeLensType', 'animeFilmStock', 'animeLensFilter', 'animeGrain', 'horrorSubgenre', 'horrorAtmosphere', 'horrorMood', 'horrorLighting', 'horrorColor', 'horrorCamera', 'horrorLens', 'horrorShot', 'horrorFilm', 'horrorAuthor', 'horrorFilmRef'];
     ids.forEach(function(id) {
       var m = document.getElementById('kurimodal-' + id);
       if (m && m.style.display === 'flex') cerrarModal(id);
@@ -4154,27 +4367,36 @@ function buildPrompt() {
 
 // ========== BUILD ANIME ==========
 function buildAnimePrompt() {
-  var parts = [];
-  var style = gv('animeStyle'), subject = gv('animeSubject'), character = gv('animeCharacter');
-  var env = gv('animeEnvironment'), palette = gv('animeColorPalette'), mood = gv('animeMood');
-  var lighting = gv('animeLighting'), shot = gv('animeShot'), director = gv('animeDirector');
-  var filmRef = gv('animeFilmRef'), customRef = gv('animeCustomRef');
-  var aspect = gv('animeAspect'), resolution = gv('animeResolution'), quality = gv('animeQuality');
-  if (style) parts.push(style + ' style illustration.');
-  if (shot) parts.push(shot + '.');
-  if (subject) parts.push(subject + '.');
-  if (character) parts.push('Character: ' + character + '.');
-  if (env) parts.push('Setting: ' + env + '.');
-  if (lighting) parts.push(lighting + ' lighting.');
-  if (mood) parts.push(mood + ' mood and atmosphere.');
-  if (palette) parts.push(palette + ' color palette.');
-  if (director) parts.push('In the visual style of ' + director + '.');
-  if (filmRef) parts.push('Aesthetic inspired by ' + filmRef + '.');
-  if (customRef) parts.push('Referenced from ' + customRef + '.');
-  if (aspect) parts.push(aspect + ' format.');
-  parts.push(quality + ', ' + resolution + ' resolution.');
-  updatePromptDisplay(parts, style || subject);
-  updateJSONDisplay();
+ var parts = [];
+ var style = gv('animeStyle'), subject = gv('animeSubject'), character = gv('animeCharacter');
+ var env = gv('animeEnvironment'), palette = gv('animeColorPalette'), mood = gv('animeMood');
+ var lighting = gv('animeLighting'), shot = gv('animeShot'), director = gv('animeDirector');
+ var filmRef = gv('animeFilmRef'), customRef = gv('animeCustomRef');
+ var aspect = gv('animeAspect'), resolution = gv('animeResolution'), quality = gv('animeQuality');
+ var cameraType = gv('animeCameraType'), lensType = gv('animeLensType');
+ var filmStock = gv('animeFilmStock'), lensFilter = gv('animeLensFilter'), grain = gv('animeGrain');
+ var unaware = gc('animeSubjectUnaware');
+ if (style) parts.push(style + ' style illustration.');
+ if (shot) parts.push(shot + '.');
+ if (unaware) parts.push('Subject is unaware of the camera, not looking toward it.');
+ if (subject) parts.push(subject + '.');
+ if (character) parts.push('Character: ' + character + '.');
+ if (env) parts.push('Setting: ' + env + '.');
+ if (lighting) parts.push(lighting + ' lighting.');
+ if (mood) parts.push(mood + ' mood and atmosphere.');
+ if (palette) parts.push(palette + ' color palette.');
+ if (cameraType) parts.push('Rendered/captured with ' + cameraType + '.');
+ if (lensType) parts.push('Using ' + lensType + '.');
+ if (filmStock) parts.push(filmStock + ' render/film style.');
+ if (lensFilter) parts.push('Visual filter: ' + lensFilter + '.');
+ if (grain) parts.push('Texture/grain: ' + grain + '.');
+ if (director) parts.push('In the visual style of ' + director + '.');
+ if (filmRef) parts.push('Aesthetic inspired by ' + filmRef + '.');
+ if (customRef) parts.push('Referenced from ' + customRef + '.');
+ if (aspect) parts.push(aspect + ' format.');
+ parts.push(quality + ', ' + resolution + ' resolution.');
+ updatePromptDisplay(parts, style || subject);
+ updateJSONDisplay();
 }
 
 // ========== BUILD HORROR ==========
@@ -4554,6 +4776,9 @@ function collectAllData() {
     data.lighting = gv('animeLighting'); data.shot = gv('animeShot'); data.director = gv('animeDirector');
     data.filmRef = gv('animeFilmRef'); data.customRef = gv('animeCustomRef');
     data.aspect = gv('animeAspect'); data.resolution = gv('animeResolution'); data.quality = gv('animeQuality');
+    data.cameraType = gv('animeCameraType'); data.lensType = gv('animeLensType');
+    data.filmStock = gv('animeFilmStock'); data.lensFilter = gv('animeLensFilter');
+    data.grain = gv('animeGrain'); data.subjectUnaware = gc('animeSubjectUnaware');
   }
   if (tab === 'horror') {
     data.subgenre = gv('horrorSubgenre'); data.subject = gv('horrorSubject'); data.entity = gv('horrorEntity');
@@ -5210,6 +5435,71 @@ document.addEventListener('DOMContentLoaded', function() {
 <input type="text" placeholder="🔍 Buscar película..." oninput="buscarModal('horrorFilmRef',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
 </div>
 <div id="kurimodal-horrorFilmRef-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
+</div>
+</div>
+
+<div id="kurimodal-animeCameraType" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px" onclick="if(event.target===this)cerrarModal('animeCameraType')">
+<div style="background:#111;border:1px solid #333;border-radius:12px;width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:16px 20px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center">
+<h3 style="color:var(--active);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin:0">🎬 Tipo de Cámara</h3>
+<button type="button" onclick="cerrarModal('animeCameraType')" style="background:none;border:none;color:#888;font-size:1.5rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+<div style="padding:10px 20px;border-bottom:1px solid #333">
+<input type="text" placeholder="🔍 Buscar cámara..." oninput="buscarModal('animeCameraType',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
+</div>
+<div id="kurimodal-animeCameraType-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
+</div>
+</div>
+
+<div id="kurimodal-animeLensType" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px" onclick="if(event.target===this)cerrarModal('animeLensType')">
+<div style="background:#111;border:1px solid #333;border-radius:12px;width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:16px 20px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center">
+<h3 style="color:var(--active);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin:0">🔭 Tipo de Lente</h3>
+<button type="button" onclick="cerrarModal('animeLensType')" style="background:none;border:none;color:#888;font-size:1.5rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+<div style="padding:10px 20px;border-bottom:1px solid #333">
+<input type="text" placeholder="🔍 Buscar lente..." oninput="buscarModal('animeLensType',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
+</div>
+<div id="kurimodal-animeLensType-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
+</div>
+</div>
+
+<div id="kurimodal-animeFilmStock" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px" onclick="if(event.target===this)cerrarModal('animeFilmStock')">
+<div style="background:#111;border:1px solid #333;border-radius:12px;width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:16px 20px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center">
+<h3 style="color:var(--active);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin:0">🎞 Material de Película / Render</h3>
+<button type="button" onclick="cerrarModal('animeFilmStock')" style="background:none;border:none;color:#888;font-size:1.5rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+<div style="padding:10px 20px;border-bottom:1px solid #333">
+<input type="text" placeholder="🔍 Buscar material..." oninput="buscarModal('animeFilmStock',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
+</div>
+<div id="kurimodal-animeFilmStock-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
+</div>
+</div>
+
+<div id="kurimodal-animeLensFilter" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px" onclick="if(event.target===this)cerrarModal('animeLensFilter')">
+<div style="background:#111;border:1px solid #333;border-radius:12px;width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:16px 20px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center">
+<h3 style="color:var(--active);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin:0">🔮 Filtros / Efectos Visuales</h3>
+<button type="button" onclick="cerrarModal('animeLensFilter')" style="background:none;border:none;color:#888;font-size:1.5rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+<div style="padding:10px 20px;border-bottom:1px solid #333">
+<input type="text" placeholder="🔍 Buscar filtro..." oninput="buscarModal('animeLensFilter',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
+</div>
+<div id="kurimodal-animeLensFilter-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
+</div>
+</div>
+
+<div id="kurimodal-animeGrain" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px" onclick="if(event.target===this)cerrarModal('animeGrain')">
+<div style="background:#111;border:1px solid #333;border-radius:12px;width:100%;max-width:900px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden">
+<div style="padding:16px 20px;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center">
+<h3 style="color:var(--active);font-size:.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin:0">🎨 Grano y Textura Visual</h3>
+<button type="button" onclick="cerrarModal('animeGrain')" style="background:none;border:none;color:#888;font-size:1.5rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
+<div style="padding:10px 20px;border-bottom:1px solid #333">
+<input type="text" placeholder="🔍 Buscar textura..." oninput="buscarModal('animeGrain',this.value)" style="width:100%;background:#1a1a1a;border:1px solid #333;color:#e0e0e0;padding:10px;border-radius:8px;font-size:.85rem">
+</div>
+<div id="kurimodal-animeGrain-body" style="padding:16px 20px;overflow-y:auto;flex:1"></div>
 </div>
 </div>
 
