@@ -203,6 +203,55 @@ select option{background:var(--bg3);color:var(--text)}
 .kurimodal-name{padding:6px 8px;font-size:.7rem;color:#e0e0e0;line-height:1.3}
 .kurimodal-item.mhide{display:none}
 }
+
+/* ========== MODULE TOGGLE SYSTEM ========== */
+.module-toggle-bar {
+  display: flex;
+  gap: 0;
+  margin-bottom: 24px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.module-toggle-btn {
+  flex: 1;
+  padding: 14px 20px;
+  cursor: pointer;
+  font-size: .85rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-align: center;
+  background: var(--bg3);
+  color: var(--text2);
+  border: none;
+  transition: all .3s;
+  font-family: inherit;
+  text-transform: uppercase;
+}
+.module-toggle-btn.active-red {
+  background: #c0392b;
+  color: #fff;
+}
+.module-toggle-btn.active-green {
+  background: #27ae60;
+  color: #fff;
+}
+.module-toggle-btn:hover:not(.active-red):not(.active-green) {
+  background: var(--bg4);
+  color: var(--text);
+}
+.module-section {
+  display: none;
+}
+.module-section.visible {
+  display: block;
+}
+.module-red-border {
+  border: 2px solid #c0392b !important;
+}
+.module-green-border {
+  border: 2px solid #27ae60 !important;
+}
 </style>
 </head>
 <body>
@@ -1056,422 +1105,456 @@ select option{background:var(--bg3);color:var(--text)}
 
     </div><!-- end tab-horror -->
 
-    <!-- ==================== TAB: GRILLA ==================== -->
-    <div class="tab-content active" id="tab-grilla">
+<!-- ==================== TAB: GRILLA ==================== -->
+<div class="tab-content active" id="tab-grilla">
 
-  <!-- TURNAROUND: PERSONAJE -->
-  <div class="module">
-    <div class="module-header" onclick="toggleModule(this)">
-      <span class="module-number">A</span>
-      <h3>Descripción del Personaje</h3>
-    </div>
-    <div class="module-body">
-      <div class="field">
-        <div class="field-label">Personaje Principal</div>
-        <textarea id="tsCharacter" placeholder="Describe tu personaje en detalle: género, edad, complexión, vestimenta, accesorios, rasgos faciales, cicatrices, tatuajes, color de piel, expresión...&#10;&#10;Ej: Una guerrera ciberpunk, de 25 años, complexión atlética, cabello corto plateado con puntas azul neón, ojo izquierdo cibernético rojo, chaleco táctico negro con circuitos brillantes, botas de combate, katana en la espalda, sonrisa confiada..." oninput="buildGridPrompt()"></textarea>
+  <!-- SELECTOR DE MODO -->
+  <div class="module-toggle-bar">
+    <button class="module-toggle-btn active-red" 
+            id="btn-mode-red" 
+            onclick="setGrillaMode('red')">
+      🎭 MÓDULO A — DESCRIPCIÓN DEL PERSONAJE
+      <div style="font-size:.65rem;font-weight:400;margin-top:3px;opacity:.8">
+        Genera prompt de personaje completo (sin grilla)
       </div>
-      <div class="field">
-        <div class="field-label">Detalles de Vestimenta / Accesorios</div>
-        <textarea id="tsClothing" placeholder="Ej: Chaqueta de cuero desgastada con parches, anillos de plata en ambas manos, collar con placa militar, funda para pistola en el muslo derecho, guantes sin dedos..." oninput="buildGridPrompt()" style="min-height:60px"></textarea>
+    </button>
+    <button class="module-toggle-btn" 
+            id="btn-mode-green" 
+            onclick="setGrillaMode('green')">
+      📐 MÓDULO B — GENERADOR DE GRILLA
+      <div style="font-size:.65rem;font-weight:400;margin-top:3px;opacity:.8">
+        Genera prompt con ángulos y paneles
       </div>
-      <div class="field">
-        <div class="field-label">Cantidad de Personajes</div>
-        <select id="tsCharCount" onchange="buildGridPrompt()">
-          <option value="single">1 Personaje (individual)</option>
-          <option value="duo">2 Personajes (comparativa)</option>
-          <option value="group">3+ Personajes (grupo)</option>
-        </select>
-      </div>
-    </div>
+    </button>
   </div>
 
-  <!-- TURNAROUND: CÁMARA Y LENTE -->
-  <div class="module">
-    <div class="module-header" onclick="toggleModule(this)">
-      <span class="module-number">B</span>
-      <h3>Cámara y Lente de Estudio</h3>
-    </div>
-    <div class="module-body">
-      <div class="field-row">
-        <div class="field">
-          <div class="field-label">Cámara</div>
-          <select id="tsCamera" onchange="buildGridPrompt()">
-            <option value="">Seleccionar cámara...</option>
-            <optgroup label="── MEDIO FORMATO (Máxima Calidad) ──">
-              <option>Hasselblad X2D 100C</option>
-              <option>Hasselblad H6D-400c</option>
-              <option>Hasselblad 503CW</option>
-              <option>Hasselblad 500CM</option>
-              <option>Phase One IQ4 150MP</option>
-              <option>Phase One XF IQ4</option>
-              <option>Fujifilm GFX 100 II</option>
-              <option>Fujifilm GFX 100S</option>
-              <option>Mamiya RZ67</option>
-              <option>Pentax 645Z</option>
-              <option>Pentax 67</option>
-              <option>Rolleiflex 2.8F</option>
-            </optgroup>
-            <optgroup label="── FULL FRAME PRO ──">
-              <option>Canon EOS R5 Mark II</option>
-              <option>Canon EOS R5</option>
-              <option>Nikon Z9</option>
-              <option>Nikon Z8</option>
-              <option>Sony A1</option>
-              <option>Sony A7R V</option>
-              <option>Leica SL3</option>
-              <option>Leica S3</option>
-            </optgroup>
-            <optgroup label="── GRAN FORMATO ──">
-              <option>Large Format 4x5</option>
-              <option>Large Format 8x10</option>
-              <option>Graflex Speed Graphic</option>
-            </optgroup>
-          </select>
-        </div>
-        <div class="field">
-          <div class="field-label">Lente de Estudio</div>
-          <select id="tsLens" onchange="buildGridPrompt()">
-            <option value="">Seleccionar lente...</option>
-            <optgroup label="── RETRATO ESTUDIO ──">
-              <option>80mm f/2.8 Medium Format</option>
-              <option>100mm f/2.2 Studio Portrait</option>
-              <option>110mm f/2.0 Medium Format</option>
-              <option>120mm f/4.0 Macro Studio</option>
-              <option>150mm f/3.5 Compressed Portrait</option>
-            </optgroup>
-            <optgroup label="── 35mm EQUIVALENTE ──">
-              <option>85mm f/1.2 (extreme bokeh)</option>
-              <option>85mm f/1.4 (classic portrait)</option>
-              <option>105mm f/1.4 (compression + bokeh)</option>
-              <option>70-200mm f/2.8 (versatile zoom)</option>
-              <option>135mm f/1.8 (beautiful compression)</option>
-            </optgroup>
-            <optgroup label="── ESPECIALES ──">
-              <option>Zeiss Otus 85mm (maximum sharpness)</option>
-              <option>Leica Noctilux 50mm f/0.95</option>
-              <option>Sigma Art 105mm f/1.4</option>
-              <option>Canon RF 85mm f/1.2L</option>
-            </optgroup>
-          </select>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- ===== SECCIÓN ROJA: PERSONAJE (independiente) ===== -->
+  <div class="module-section visible" id="section-red">
 
-  <!-- TURNAROUND: FONDO Y ESTILO -->
-  <div class="module">
-    <div class="module-header" onclick="toggleModule(this)">
-      <span class="module-number">C</span>
-      <h3>Fondo, Estilo e Iluminación</h3>
-    </div>
-    <div class="module-body">
-      <div class="field-row">
+    <!-- TURNAROUND: PERSONAJE -->
+    <div class="module module-red-border">
+      <div class="module-header" onclick="toggleModule(this)">
+        <span class="module-number" style="background:#c0392b">A</span>
+        <h3>Descripción del Personaje</h3>
+      </div>
+      <div class="module-body">
         <div class="field">
-          <div class="field-label">Fondo</div>
-          <select id="tsBackground" onchange="buildGridPrompt()">
-            <option value="pure white background (#FFFFFF)">Blanco Puro ⬜</option>
-            <option value="neutral gray background (18% gray)">Gris Neutro (18%)</option>
-            <option value="light gray background">Gris Claro</option>
-            <option value="pure black background (#000000)">Negro Puro ⬛</option>
-            <option value="soft gradient white to light gray">Gradiente Blanco-Gris</option>
-            <option value="studio seamless paper backdrop">Fondo Seamless de Estudio</option>
-          </select>
+          <div class="field-label">Personaje Principal</div>
+          <textarea id="tsCharacter" 
+            placeholder="Describe tu personaje en detalle: género, edad, complexión, vestimenta, accesorios, rasgos faciales, cicatrices, tatuajes, color de piel, expresión...&#10;&#10;Ej: Una guerrera ciberpunk, de 25 años, complexión atlética, cabello corto plateado con puntas azul neón..." 
+            oninput="buildCharacterPrompt()"></textarea>
         </div>
         <div class="field">
-          <div class="field-label">Estilo de Sheet</div>
-          <select id="tsStyle" onchange="buildGridPrompt()">
-            <option value="">Seleccionar estilo...</option>
-            <option value="concept art character sheet">Concept Art</option>
-            <option value="fashion lookbook style">Fashion Lookbook</option>
-            <option value="3D model reference sheet">Referencia para Modelo 3D</option>
-            <option value="animation character turnaround">Turnaround de Animación</option>
-            <option value="costume design reference sheet">Diseño de Vestuario</option>
-            <option value="orthographic blueprint character reference">Blueprint Ortográfico</option>
-            <option value="video game character design sheet">Diseño de Videojuego</option>
-            <option value="comic book character model sheet">Model Sheet de Cómic</option>
-            <option value="realistic photographic character study">Estudio Fotográfico Realista</option>
+          <div class="field-label">Detalles de Vestimenta / Accesorios</div>
+          <textarea id="tsClothing" 
+            placeholder="Ej: Chaqueta de cuero desgastada con parches, anillos de plata en ambas manos, collar con placa militar..." 
+            oninput="buildCharacterPrompt()" 
+            style="min-height:60px"></textarea>
+        </div>
+        <div class="field">
+          <div class="field-label">Cantidad de Personajes</div>
+          <select id="tsCharCount" onchange="buildCharacterPrompt()">
+            <option value="single">1 Personaje (individual)</option>
+            <option value="duo">2 Personajes (comparativa)</option>
+            <option value="group">3+ Personajes (grupo)</option>
           </select>
         </div>
       </div>
-      <div class="field">
-        <div class="field-label">Iluminación de Estudio</div>
-        <select id="tsLighting" onchange="buildGridPrompt()">
-          <option value="">Seleccionar iluminación...</option>
-          <optgroup label="── ESTUDIO PROFESIONAL ──">
-            <option>Flat studio lighting (even, no shadows)</option>
-            <option>Soft diffused studio lighting</option>
-            <option>Beauty dish lighting (glamour)</option>
-            <option>Softbox key + fill (standard studio)</option>
-            <option>Rim light + soft fill (defined edges)</option>
-            <option>High key lighting (bright, clean)</option>
-          </optgroup>
-          <optgroup label="── CON CARÁCTER ──">
-            <option>Dramatic side key (one light)</option>
-            <option>Rembrandt studio lighting</option>
-            <option>Split lighting (half shadow)</option>
-            <option>Butterfly lighting (glamour portrait)</option>
-            <option>Clamshell lighting (fashion)</option>
-            <option>Cross lighting (two opposing lights)</option>
-          </optgroup>
-        </select>
-      </div>
-      <div class="field">
-        <div class="field-label">Resolución</div>
-        <select id="tsResolution" onchange="buildGridPrompt()">
-          <option value="1K">1K</option>
-          <option value="2K">2K</option>
-          <option value="4K" selected>4K (recomendado para sheets)</option>
-        </select>
-      </div>
     </div>
-  </div>
 
-      <!-- GRILLA: PROMPT GENERATOR -->
-      <div class="module">
-        <div class="module-header" onclick="toggleModule(this)">
-          <span class="module-number">01</span>
-          <h3>Generador de Prompt para Grilla</h3>
-        </div>
-        <div class="module-body">
-
+    <!-- TURNAROUND: CÁMARA Y LENTE -->
+    <div class="module module-red-border">
+      <div class="module-header" onclick="toggleModule(this)">
+        <span class="module-number" style="background:#c0392b">B</span>
+        <h3>Cámara y Lente de Estudio</h3>
+      </div>
+      <div class="module-body">
+        <div class="field-row">
           <div class="field">
-            <div class="field-label">Descripción de Escena / Personaje</div>
-            <textarea id="gridSubject" placeholder="Describe tu escena o personaje. Puedes pegar el prompt que ya usaste para la imagen original..." oninput="buildGridPrompt()"></textarea>
+            <div class="field-label">Cámara</div>
+            <select id="tsCamera" onchange="buildCharacterPrompt()">
+              <option value="">Seleccionar cámara...</option>
+              <optgroup label="── MEDIO FORMATO (Máxima Calidad) ──">
+                <option>Hasselblad X2D 100C</option>
+                <option>Hasselblad H6D-400c</option>
+                <option>Hasselblad 503CW</option>
+                <option>Hasselblad 500CM</option>
+                <option>Phase One IQ4 150MP</option>
+                <option>Phase One XF IQ4</option>
+                <option>Fujifilm GFX 100 II</option>
+                <option>Fujifilm GFX 100S</option>
+                <option>Mamiya RZ67</option>
+                <option>Pentax 645Z</option>
+                <option>Pentax 67</option>
+                <option>Rolleiflex 2.8F</option>
+              </optgroup>
+              <optgroup label="── FULL FRAME PRO ──">
+                <option>Canon EOS R5 Mark II</option>
+                <option>Canon EOS R5</option>
+                <option>Nikon Z9</option>
+                <option>Nikon Z8</option>
+                <option>Sony A1</option>
+                <option>Sony A7R V</option>
+                <option>Leica SL3</option>
+                <option>Leica S3</option>
+              </optgroup>
+              <optgroup label="── GRAN FORMATO ──">
+                <option>Large Format 4x5</option>
+                <option>Large Format 8x10</option>
+                <option>Graflex Speed Graphic</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="field">
+            <div class="field-label">Lente de Estudio</div>
+            <select id="tsLens" onchange="buildCharacterPrompt()">
+              <option value="">Seleccionar lente...</option>
+              <optgroup label="── RETRATO ESTUDIO ──">
+                <option>80mm f/2.8 Medium Format</option>
+                <option>100mm f/2.2 Studio Portrait</option>
+                <option>110mm f/2.0 Medium Format</option>
+                <option>120mm f/4.0 Macro Studio</option>
+                <option>150mm f/3.5 Compressed Portrait</option>
+              </optgroup>
+              <optgroup label="── 35mm EQUIVALENTE ──">
+                <option>85mm f/1.2 (extreme bokeh)</option>
+                <option>85mm f/1.4 (classic portrait)</option>
+                <option>105mm f/1.4 (compression + bokeh)</option>
+                <option>70-200mm f/2.8 (versatile zoom)</option>
+                <option>135mm f/1.8 (beautiful compression)</option>
+              </optgroup>
+              <optgroup label="── ESPECIALES ──">
+                <option>Zeiss Otus 85mm (maximum sharpness)</option>
+                <option>Leica Noctilux 50mm f/0.95</option>
+                <option>Sigma Art 105mm f/1.4</option>
+                <option>Canon RF 85mm f/1.2L</option>
+              </optgroup>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TURNAROUND: FONDO Y ESTILO -->
+    <div class="module module-red-border">
+      <div class="module-header" onclick="toggleModule(this)">
+        <span class="module-number" style="background:#c0392b">C</span>
+        <h3>Fondo, Estilo e Iluminación</h3>
+      </div>
+      <div class="module-body">
+        <div class="field-row">
+          <div class="field">
+            <div class="field-label">Fondo</div>
+            <select id="tsBackground" onchange="buildCharacterPrompt()">
+              <option value="pure white background (#FFFFFF)">Blanco Puro ⬜</option>
+              <option value="neutral gray background (18% gray)">Gris Neutro (18%)</option>
+              <option value="light gray background">Gris Claro</option>
+              <option value="pure black background (#000000)">Negro Puro ⬛</option>
+              <option value="soft gradient white to light gray">Gradiente Blanco-Gris</option>
+              <option value="studio seamless paper backdrop">Fondo Seamless de Estudio</option>
+            </select>
+          </div>
+          <div class="field">
+            <div class="field-label">Estilo de Sheet</div>
+            <select id="tsStyle" onchange="buildCharacterPrompt()">
+              <option value="">Seleccionar estilo...</option>
+              <option value="concept art character sheet">Concept Art</option>
+              <option value="fashion lookbook style">Fashion Lookbook</option>
+              <option value="3D model reference sheet">Referencia para Modelo 3D</option>
+              <option value="animation character turnaround">Turnaround de Animación</option>
+              <option value="costume design reference sheet">Diseño de Vestuario</option>
+              <option value="orthographic blueprint character reference">Blueprint Ortográfico</option>
+              <option value="video game character design sheet">Diseño de Videojuego</option>
+              <option value="comic book character model sheet">Model Sheet de Cómic</option>
+              <option value="realistic photographic character study">Estudio Fotográfico Realista</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <div class="field-label">Iluminación de Estudio</div>
+          <select id="tsLighting" onchange="buildCharacterPrompt()">
+            <option value="">Seleccionar iluminación...</option>
+            <optgroup label="── ESTUDIO PROFESIONAL ──">
+              <option>Flat studio lighting (even, no shadows)</option>
+              <option>Soft diffused studio lighting</option>
+              <option>Beauty dish lighting (glamour)</option>
+              <option>Softbox key + fill (standard studio)</option>
+              <option>Rim light + soft fill (defined edges)</option>
+              <option>High key lighting (bright, clean)</option>
+            </optgroup>
+            <optgroup label="── CON CARÁCTER ──">
+              <option>Dramatic side key (one light)</option>
+              <option>Rembrandt studio lighting</option>
+              <option>Split lighting (half shadow)</option>
+              <option>Butterfly lighting (glamour portrait)</option>
+              <option>Clamshell lighting (fashion)</option>
+              <option>Cross lighting (two opposing lights)</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="field">
+          <div class="field-label">Resolución</div>
+          <select id="tsResolution" onchange="buildCharacterPrompt()">
+            <option value="1K">1K</option>
+            <option value="2K">2K</option>
+            <option value="4K" selected>4K (recomendado para sheets)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end section-red -->
+
+  <!-- ===== SECCIÓN VERDE: GRILLA (independiente) ===== -->
+  <div class="module-section" id="section-green">
+
+    <!-- GRILLA: PROMPT GENERATOR -->
+    <div class="module module-green-border">
+      <div class="module-header" onclick="toggleModule(this)">
+        <span class="module-number" style="background:#27ae60">01</span>
+        <h3>Generador de Prompt para Grilla</h3>
+      </div>
+      <div class="module-body">
+        <div class="field">
+          <div class="field-label">Descripción de Escena / Personaje</div>
+          <textarea id="gridSubject" 
+            placeholder="Describe tu escena o personaje. Puedes pegar el prompt que ya usaste para la imagen original..." 
+            oninput="buildGridPrompt()"></textarea>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Estructura de Grilla</div>
+          <select id="gridStructure" onchange="updateGridPanels(); buildGridPrompt()">
+            <option value="2x2" selected>2×2 Grid (4 panels) — Recomendado</option>
+            <option value="1x2">1×2 Grid (2 panels in horizontal)</option>
+            <option value="2x1">2×1 Grid (2 panels in vertical)</option>
+            <option value="1x3">1×3 Grid (3 panels in horizontal)</option>
+            <option value="1x4">1×4 Grid (4 panels in row)</option>
+          </select>
+        </div>
+
+        <div id="gridPanelsContainer">
+          <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px">
+            <div class="field-label" style="margin:0;flex-shrink:0">📷 ÁNGULOS POR PANEL</div>
+            <div style="font-size:.7rem;color:var(--text2)">Selecciona vista + plano para cada panel</div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <div class="field-label">Panel 1 (arriba-izquierda)</div>
+              <select id="gridPanel1View" onchange="buildGridPrompt()">
+                <option value="">Seleccionar vista...</option>
+                <option>Front View</option>
+                <option>3/4 Front left</option>
+                <option>3/4 Front right</option>
+                <option>Profile left</option>
+                <option>Profile right</option>
+                <option>From Back</option>
+                <option>3/4 Back left</option>
+                <option>3/4 Back right</option>
+                <option>From Above</option>
+                <option>From Below</option>
+              </select>
+              <select id="gridPanel1Shot" onchange="buildGridPrompt()" style="margin-top:6px">
+                <option value="">Seleccionar plano...</option>
+                <option>Extreme Close Up</option>
+                <option>Close Up</option>
+                <option>Medium Close Up</option>
+                <option>Medium Shot</option>
+                <option>Medium Wide</option>
+                <option>Wide Shot</option>
+                <option>Full Body</option>
+                <option>Low Angle</option>
+                <option>High Angle</option>
+                <option>Dutch Angle</option>
+                <option>Over The Shoulder</option>
+                <option>POV</option>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Panel 2 (arriba-derecha)</div>
+              <select id="gridPanel2View" onchange="buildGridPrompt()">
+                <option value="">Seleccionar vista...</option>
+                <option>Front View</option>
+                <option>3/4 Front Left</option>
+                <option>3/4 Front Right</option>
+                <option>Profile Left</option>
+                <option>Profile Right</option>
+                <option>From The Back</option>
+                <option>3/4 Back Left</option>
+                <option>3/4 Back Right</option>
+                <option>From Above</option>
+                <option>From Below</option>
+              </select>
+              <select id="gridPanel2Shot" onchange="buildGridPrompt()" style="margin-top:6px">
+                <option value="">Seleccionar plano...</option>
+                <option>Extreme Close Up</option>
+                <option>Close Up</option>
+                <option>Medium Close Up</option>
+                <option>Medium Shot</option>
+                <option>Medium Wide</option>
+                <option>Wide Shot</option>
+                <option>Full Body</option>
+                <option>Low Angle</option>
+                <option>High Angle</option>
+                <option>Dutch Angle</option>
+                <option>Over The Shoulder</option>
+                <option>POV</option>
+              </select>
+            </div>
           </div>
 
+          <div class="field-row" id="gridRow2">
+            <div class="field">
+              <div class="field-label">Panel 3 (abajo-izquierda)</div>
+              <select id="gridPanel3View" onchange="buildGridPrompt()">
+                <option value="">Seleccionar vista...</option>
+                <option>Front View</option>
+                <option>3/4 Front Left</option>
+                <option>3/4 Front Right</option>
+                <option>Profile Left</option>
+                <option>Profile Right</option>
+                <option>From The Back</option>
+                <option>3/4 Back Left</option>
+                <option>3/4 Back Right</option>
+                <option>From Above</option>
+                <option>From Below</option>
+              </select>
+              <select id="gridPanel3Shot" onchange="buildGridPrompt()" style="margin-top:6px">
+                <option value="">Seleccionar plano...</option>
+                <option>Extreme Close Up</option>
+                <option>Close Up</option>
+                <option>Medium Close Up</option>
+                <option>Medium Shot</option>
+                <option>Medium Wide</option>
+                <option>Wide Shot</option>
+                <option>Full Body</option>
+                <option>Low Angle</option>
+                <option>High Angle</option>
+                <option>Dutch Angle</option>
+                <option>Over The Shoulder</option>
+                <option>POV</option>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Panel 4 (abajo-derecha)</div>
+              <select id="gridPanel4View" onchange="buildGridPrompt()">
+                <option value="">Seleccionar vista...</option>
+                <option>Front View</option>
+                <option>3/4 Front Left</option>
+                <option>3/4 Front Right</option>
+                <option>Profile Left</option>
+                <option>Profile Right</option>
+                <option>From The Back</option>
+                <option>3/4 Back Left</option>
+                <option>3/4 Back Right</option>
+                <option>From Above</option>
+                <option>From Below</option>
+              </select>
+              <select id="gridPanel4Shot" onchange="buildGridPrompt()" style="margin-top:6px">
+                <option value="">Seleccionar plano...</option>
+                <option>Extreme Close Up</option>
+                <option>Close Up</option>
+                <option>Medium Close Up</option>
+                <option>Medium Shot</option>
+                <option>Medium Wide</option>
+                <option>Wide Shot</option>
+                <option>Full Body</option>
+                <option>Low Angle</option>
+                <option>High Angle</option>
+                <option>Dutch Angle</option>
+                <option>Over The Shoulder</option>
+                <option>POV</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="field-label">Opciones de Consistencia</div>
+          <div class="checkbox-field" onclick="this.querySelector('input').click()">
+            <input type="checkbox" id="gridConsistentChar" checked onchange="buildGridPrompt()" onclick="event.stopPropagation()">
+            <span class="checkbox-label">Mantener mismo personaje en todos los paneles</span>
+          </div>
+          <div class="checkbox-field" onclick="this.querySelector('input').click()">
+            <input type="checkbox" id="gridConsistentLight" checked onchange="buildGridPrompt()" onclick="event.stopPropagation()">
+            <span class="checkbox-label">Mantener misma iluminación en todos los paneles</span>
+          </div>
+          <div class="checkbox-field" onclick="this.querySelector('input').click()">
+            <input type="checkbox" id="gridConsistentColor" checked onchange="buildGridPrompt()" onclick="event.stopPropagation()">
+            <span class="checkbox-label">Mantener misma gradación de color en todos los paneles</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GRILLA: SPLITTER -->
+    <div class="module module-green-border">
+      <div class="module-header" onclick="toggleModule(this)">
+        <span class="module-number" style="background:#27ae60">02</span>
+        <h3>Cortador de Grilla — Sin Pérdida de Calidad</h3>
+      </div>
+      <div class="module-body">
+        <div class="field-row">
           <div class="field">
             <div class="field-label">Estructura de Grilla</div>
-            <select id="gridStructure" onchange="updateGridPanels(); buildGridPrompt()">
-              <option value="2x2" selected>2×2 Grid (4 panels) — Recomendado</option>
+            <select id="splitStructure">
+              <option value="2x2">2×2 Grid (4 panels)</option>
               <option value="1x2">1×2 Grid (2 panels in horizontal)</option>
               <option value="2x1">2×1 Grid (2 panels in vertical)</option>
               <option value="1x3">1×3 Grid (3 panels in horizontal)</option>
               <option value="1x4">1×4 Grid (4 panels in row)</option>
             </select>
           </div>
-
-          <div id="gridPanelsContainer">
-            <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px">
-              <div class="field-label" style="margin:0;flex-shrink:0">📷 ÁNGULOS POR PANEL</div>
-              <div style="font-size:.7rem;color:var(--text2)">Selecciona vista + plano para cada panel</div>
-            </div>
-
-            <div class="field-row">
-              <div class="field">
-                <div class="field-label">Panel 1 (arriba-izquierda)</div>
-                <select id="gridPanel1View" onchange="buildGridPrompt()">
-                  <option value="">Seleccionar vista...</option>
-                  <option>Front View</option>
-                  <option>3/4 Front left</option>
-                  <option>3/4 Front right</option>
-                  <option>Profile left</option>
-                  <option>Profile right</option>
-                  <option>From Back</option>
-                  <option>3/4 Back left</option>
-                  <option>3/4 Back right</option>
-                  <option>From Above</option>
-                  <option>From Below</option>
-                </select>
-                <select id="gridPanel1Shot" onchange="buildGridPrompt()" style="margin-top:6px">
-                  <option value="">Seleccionar plano...</option>
-                  <option>Extreme Close Up</option>
-                  <option>Close Up</option>
-                  <option>Medium Close Up</option>
-                  <option>Medium Shot</option>
-                  <option>Medium Wide</option>
-                  <option>Wide Shot</option>
-                  <option>Full Body</option>
-                  <option>Low Angle</option>
-                  <option>High Angle</option>
-                  <option>Dutch Angle</option>
-                  <option>Over The Shoulder</option>
-                  <option>POV</option>
-                </select>
-              </div>
-              <div class="field">
-                <div class="field-label">Panel 2 (arriba-derecha)</div>
-                <select id="gridPanel2View" onchange="buildGridPrompt()">
-                  <option value="">Seleccionar vista...</option>
-                  <option>Front View</option>
-                  <option>3/4 Front Left</option>
-                  <option>3/4 Front Right</option>
-                  <option>Profile Left</option>
-                  <option>Profile Right</option>
-                  <option>From The Back</option>
-                  <option>3/4 Back Left</option>
-                  <option>3/4 Back Right</option>
-                  <option>From Above</option>
-                  <option>From Below</option>
-                </select>
-                <select id="gridPanel2Shot" onchange="buildGridPrompt()" style="margin-top:6px">
-                  <option value="">Seleccionar plano...</option>
-                  <option>Extreme Close Up</option>
-                  <option>Close Up</option>
-                  <option>Medium Close Up</option>
-                  <option>Medium Shot</option>
-                  <option>Medium Wide</option>
-                  <option>Wide Shot</option>
-                  <option>Full Body</option>
-                  <option>Low Angle</option>
-                  <option>High Angle</option>
-                  <option>Dutch Angle</option>
-                  <option>Over The Shoulder</option>
-                  <option>POV</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="field-row" id="gridRow2">
-              <div class="field">
-                <div class="field-label">Panel 3 (abajo-izquierda)</div>
-                <select id="gridPanel3View" onchange="buildGridPrompt()">
-                  <option value="">Seleccionar vista...</option>
-                  <option>Front View</option>
-                  <option>3/4 Front Left</option>
-                  <option>3/4 Front Right</option>
-                  <option>Profile Left</option>
-                  <option>Profile Right</option>
-                  <option>From The Back</option>
-                  <option>3/4 Back Left</option>
-                  <option>3/4 Back Right</option>
-                  <option>From Above</option>
-                  <option>From Below</option>
-                </select>
-                <select id="gridPanel3Shot" onchange="buildGridPrompt()" style="margin-top:6px">
-                  <option value="">Seleccionar plano...</option>
-                  <option>Extreme Close Up</option>
-                  <option>Close Up</option>
-                  <option>Medium Close Up</option>
-                  <option>Medium Shot</option>
-                  <option>Medium Wide</option>
-                  <option>Wide Shot</option>
-                  <option>Full Body</option>
-                  <option>Low Angle</option>
-                  <option>High Angle</option>
-                  <option>Dutch Angle</option>
-                  <option>Over The Shoulder</option>
-                  <option>POV</option>
-                </select>
-              </div>
-              <div class="field">
-                <div class="field-label">Panel 4 (abajo-derecha)</div>
-                <select id="gridPanel4View" onchange="buildGridPrompt()">
-                  <option value="">Seleccionar vista...</option>
-                  <option>Front View</option>
-                  <option>3/4 Front Left</option>
-                  <option>3/4 Front Right</option>
-                  <option>Profile Left</option>
-                  <option>Profile Right</option>
-                  <option>From The Back</option>
-                  <option>3/4 Back Left</option>
-                  <option>3/4 Back Right</option>
-                  <option>From Above</option>
-                  <option>From Below</option>
-                </select>
-                <select id="gridPanel4Shot" onchange="buildGridPrompt()" style="margin-top:6px">
-                  <option value="">Seleccionar plano...</option>
-                  <option>Extreme Close Up</option>
-                  <option>Close Up</option>
-                  <option>Medium Close Up</option>
-                  <option>Medium Shot</option>
-                  <option>Medium Wide</option>
-                  <option>Wide Shot</option>
-                  <option>Full Body</option>
-                  <option>Low Angle</option>
-                  <option>High Angle</option>
-                  <option>Dutch Angle</option>
-                  <option>Over The Shoulder</option>
-                  <option>POV</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
           <div class="field">
-            <div class="field-label">Opciones de Consistencia</div>
-            <div class="checkbox-field" onclick="this.querySelector('input').click()">
-              <input type="checkbox" id="gridConsistentChar" checked onchange="buildGridPrompt()" onclick="event.stopPropagation()">
-              <span class="checkbox-label">Mantener mismo personaje en todos los paneles</span>
+            <div class="field-label">Formato de Exportación</div>
+            <select id="splitFormat">
+              <option value="png">PNG (Sin Pérdida de Calidad) ★ Recomendado</option>
+              <option value="webp">WEBP (Alta calidad, archivo pequeño)</option>
+              <option value="jpeg">JPEG 100% (Máxima calidad)</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <div class="field-label">Subir Imagen de Grilla</div>
+          <div id="dropZone" 
+            style="border:2px dashed var(--border);border-radius:var(--radius);padding:40px 20px;text-align:center;cursor:pointer;transition:all .3s;position:relative"
+            onclick="document.getElementById('gridFileInput').click()"
+            ondragover="event.preventDefault();this.style.borderColor='var(--active)';this.style.background='rgba(255,255,255,0.02)'"
+            ondragleave="this.style.borderColor='var(--border)';this.style.background='transparent'"
+            ondrop="event.preventDefault();this.style.borderColor='var(--border)';this.style.background='transparent';handleGridFile(event.dataTransfer.files[0])">
+            <div style="font-size:2.5rem;margin-bottom:10px;opacity:.4">📁</div>
+            <div style="color:var(--text);font-size:.9rem;margin-bottom:6px">Arrastra tu imagen de grilla aquí</div>
+            <div style="color:var(--text2);font-size:.75rem">o haz click para seleccionar</div>
+            <input type="file" id="gridFileInput" accept="image/*" style="display:none" onchange="handleGridFile(this.files[0])">
+          </div>
+        </div>
+        <!-- Preview & Results -->
+        <div id="splitPreview" style="display:none">
+          <div class="field-label" style="margin-bottom:12px">📸 Imagen Original</div>
+          <div style="margin-bottom:16px;text-align:center">
+            <img id="splitOriginal" style="max-width:100%;max-height:300px;border-radius:var(--radius);border:1px solid var(--border)">
+          </div>
+          <div id="splitInfo" style="font-size:.75rem;color:var(--text2);margin-bottom:16px;padding:10px;background:var(--bg3);border-radius:var(--radius)"></div>
+          <button class="btn btn-primary" onclick="splitGrid()" style="width:100%;justify-content:center;padding:14px;font-size:.9rem;margin-bottom:16px">
+            ✂️ CORTAR IMAGEN
+          </button>
+          <div id="splitResults" style="display:none">
+            <div class="field-label" style="margin-bottom:12px">✅ Resultados — Sin Pérdida de Calidad</div>
+            <div id="splitGrid" style="display:grid;gap:8px;margin-bottom:16px"></div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button class="btn btn-primary" onclick="downloadAllSplits()" style="flex:1;justify-content:center">
+                📥 DESCARGAR TODAS (ZIP)
+              </button>
             </div>
-            <div class="checkbox-field" onclick="this.querySelector('input').click()">
-              <input type="checkbox" id="gridConsistentLight" checked onchange="buildGridPrompt()" onclick="event.stopPropagation()">
-              <span class="checkbox-label">Mantener misma iluminación en todos los paneles</span>
-            </div>
-            <div class="checkbox-field" onclick="this.querySelector('input').click()">
-              <input type="checkbox" id="gridConsistentColor" checked onchange="buildGridPrompt()" onclick="event.stopPropagation()">
-              <span class="checkbox-label">Mantener misma gradación de color en todos los paneles</span>
-            </div>
+            <div id="individualDownloads" style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap"></div>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- GRILLA: SPLITTER -->
-      <div class="module">
-        <div class="module-header" onclick="toggleModule(this)">
-          <span class="module-number">02</span>
-          <h3>Cortador de Grilla — Sin Pérdida de Calidad</h3>
-        </div>
-        <div class="module-body">
+  </div><!-- end section-green -->
 
-          <div class="field-row">
-            <div class="field">
-              <div class="field-label">Estructura de Grilla</div>
-              <select id="splitStructure">
-                <option value="2x2">2×2 Grid (4 panels)</option>
-                <option value="1x2">1×2 Grid (2 panels in horizontal)</option>
-                <option value="2x1">2×1 Grid (2 panels in vertical)</option>
-                <option value="1x3">1×3 Grid (3 panels in horizontal)</option>
-                <option value="1x4">1×4 Grid (4 panels in row)</option>
-              </select>
-            </div>
-            <div class="field">
-              <div class="field-label">Formato de Exportación</div>
-              <select id="splitFormat">
-                <option value="png">PNG (Sin Pérdida de Calidad) ★ Recomendado</option>
-                <option value="webp">WEBP (Alta calidad, archivo pequeño)</option>
-                <option value="jpeg">JPEG 100% (Máxima calidad)</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="field">
-            <div class="field-label">Subir Imagen de Grilla</div>
-            <div id="dropZone" style="border:2px dashed var(--border);border-radius:var(--radius);padding:40px 20px;text-align:center;cursor:pointer;transition:all .3s;position:relative" onclick="document.getElementById('gridFileInput').click()" ondragover="event.preventDefault();this.style.borderColor='var(--active)';this.style.background='rgba(255,255,255,0.02)'" ondragleave="this.style.borderColor='var(--border)';this.style.background='transparent'" ondrop="event.preventDefault();this.style.borderColor='var(--border)';this.style.background='transparent';handleGridFile(event.dataTransfer.files[0])">
-              <div style="font-size:2.5rem;margin-bottom:10px;opacity:.4">📁</div>
-              <div style="color:var(--text);font-size:.9rem;margin-bottom:6px">Arrastra tu imagen de grilla aquí</div>
-              <div style="color:var(--text2);font-size:.75rem">o haz click para seleccionar</div>
-              <input type="file" id="gridFileInput" accept="image/*" style="display:none" onchange="handleGridFile(this.files[0])">
-            </div>
-          </div>
-
-          <!-- Preview & Results -->
-          <div id="splitPreview" style="display:none">
-            <div class="field-label" style="margin-bottom:12px">📸 Imagen Original</div>
-            <div style="margin-bottom:16px;text-align:center">
-              <img id="splitOriginal" style="max-width:100%;max-height:300px;border-radius:var(--radius);border:1px solid var(--border)">
-            </div>
-            <div id="splitInfo" style="font-size:.75rem;color:var(--text2);margin-bottom:16px;padding:10px;background:var(--bg3);border-radius:var(--radius)"></div>
-
-            <button class="btn btn-primary" onclick="splitGrid()" style="width:100%;justify-content:center;padding:14px;font-size:.9rem;margin-bottom:16px">
-              ✂️ CORTAR IMAGEN
-            </button>
-
-            <div id="splitResults" style="display:none">
-              <div class="field-label" style="margin-bottom:12px">✅ Resultados — Sin Pérdida de Calidad</div>
-              <div id="splitGrid" style="display:grid;gap:8px;margin-bottom:16px"></div>
-              <div style="display:flex;gap:8px;flex-wrap:wrap">
-                <button class="btn btn-primary" onclick="downloadAllSplits()" style="flex:1;justify-content:center">
-                  📥 DESCARGAR TODAS (ZIP)
-                </button>
-              </div>
-              <div id="individualDownloads" style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap"></div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-    </div><!-- end tab-grilla -->
+</div><!-- end tab-grilla -->
 
    <!-- ==================== TAB: VIDEO ==================== -->
     <div class="tab-content" id="tab-video">
@@ -4136,41 +4219,48 @@ function buildHorrorPrompt() {
   updateJSONDisplay();
 }
 
-// ========== BUILD GRID ==========
+// ========== BUILD GRID (MÓDULO VERDE - INDEPENDIENTE) ==========
 function updateGridPanels() {
   var s = gv('gridStructure');
   var r = document.getElementById('gridRow2');
-  if (s === '1x2' || s === '2x1') { r.style.display = 'none'; } else { r.style.display = ''; }
+  if (s === '1x2' || s === '2x1') { 
+    r.style.display = 'none'; 
+  } else { 
+    r.style.display = ''; 
+  }
 }
+
 function buildGridPrompt() {
+  // Solo ejecutar si estamos en modo verde
+  if (grillaMode !== 'green') return;
+  
   var parts = [];
-  var structure = gv('gridStructure'), subject = gv('gridSubject');
-  var cc = gc('gridConsistentChar'), cl = gc('gridConsistentLight'), ccl = gc('gridConsistentColor');
+  var structure = gv('gridStructure') || '2x2';
+  var subject = gv('gridSubject');
+  var cc = gc('gridConsistentChar');
+  var cl = gc('gridConsistentLight');
+  var ccl = gc('gridConsistentColor');
 
-  // Nuevos campos de Turnaround Sheet
-  var tsCharacter = gv('tsCharacter'), tsClothing = gv('tsClothing'), tsCharCount = gv('tsCharCount');
-  var tsCamera = gv('tsCamera'), tsLens = gv('tsLens');
-  var tsBackground = gv('tsBackground'), tsStyle = gv('tsStyle');
-  var tsLighting = gv('tsLighting'), tsResolution = gv('tsResolution');
-
-  var cols = parseInt(structure.split('x')[0]), rows = parseInt(structure.split('x')[1]);
+  var cols = parseInt(structure.split('x')[0]);
+  var rows = parseInt(structure.split('x')[1]);
   var total = cols * rows;
+
   var lb = {
-    '2x2':['top-left','top-right','bottom-left','bottom-right'],
-    '1x2':['left','right'],
-    '2x1':['top','bottom'],
-    '1x3':['left','center','right'],
-    '1x4':['panel 1','panel 2','panel 3','panel 4']
+    '2x2': ['top-left','top-right','bottom-left','bottom-right'],
+    '1x2': ['left','right'],
+    '2x1': ['top','bottom'],
+    '1x3': ['left','center','right'],
+    '1x4': ['panel 1','panel 2','panel 3','panel 4']
   };
   var labels = lb[structure] || lb['2x2'];
 
-  // Encabezado del prompt
-  if (tsStyle) parts.push(tsStyle + '.');
+  // Encabezado — SOLO aparece en el módulo verde
   parts.push('A ' + structure.replace('x','x') + ' grid image, ' + total + ' panels showing the same character from different angles.');
 
   // Paneles con ángulos
   for (var i = 1; i <= Math.min(total, 4); i++) {
-    var v = gv('gridPanel' + i + 'View'), s = gv('gridPanel' + i + 'Shot');
+    var v = gv('gridPanel' + i + 'View');
+    var s = gv('gridPanel' + i + 'Shot');
     if (v || s) {
       var p = labels[i-1] + ': ';
       if (v) p += v.toLowerCase();
@@ -4180,13 +4270,7 @@ function buildGridPrompt() {
     }
   }
 
-  // Personaje
-  if (tsCharacter) parts.push('Character: ' + tsCharacter);
-  if (tsClothing) parts.push('Clothing details: ' + tsClothing);
-  if (tsCharCount === 'duo') parts.push('Two characters side by side for comparison.');
-  if (tsCharCount === 'group') parts.push('Multiple characters shown together.');
-
-  // Escena adicional
+  // Descripción adicional de escena (solo del campo gridSubject)
   if (subject) parts.push('Additional scene notes: ' + subject);
 
   // Consistencia
@@ -4196,25 +4280,11 @@ function buildGridPrompt() {
   if (ccl) con.push('color grading');
   if (con.length) parts.push('Maintain consistent ' + con.join(', ') + ' across ALL panels.');
 
-  // Fondo
-  if (tsBackground) parts.push(tsBackground + '.');
+  // Calidad
+  parts.push('pure white background (#FFFFFF). Consistent design across ALL views. 1K resolution, highly detailed, professional character reference sheet.');
 
-  // Cámara y lente
-  if (tsCamera || tsLens) {
-    var cp = [];
-    if (tsCamera) cp.push('shot on ' + tsCamera);
-    if (tsLens) cp.push(tsLens);
-    parts.push('Captured with ' + cp.join(', ') + '.');
-  }
-
-  // Iluminación
-  if (tsLighting) parts.push(tsLighting + '.');
-
-  // Resolución y calidad
-  var res = tsResolution || '4K';
-  parts.push('Consistent design across ALL views. ' + res + ' resolution, highly detailed, professional character reference sheet.');
-
-  updatePromptDisplay(parts, tsCharacter || subject);
+  var hasContent = !!(subject || gv('gridPanel1View') || gv('gridPanel2View'));
+  updatePromptDisplay(parts, hasContent);
   updateJSONDisplay();
 }
 
@@ -4594,6 +4664,98 @@ function clearAll() {
   var jb = document.getElementById('jsonBox'); if (jb) jb.textContent = '{ }';
   var tp = document.getElementById('platformTip'); if (tp) tp.style.display = 'none';
 }
+// ========== GRILLA MODE SWITCHER ==========
+var grillaMode = 'red'; // 'red' = personaje, 'green' = grilla
+
+function setGrillaMode(mode) {
+  grillaMode = mode;
+  
+  // Actualizar botones
+  var btnRed = document.getElementById('btn-mode-red');
+  var btnGreen = document.getElementById('btn-mode-green');
+  var sectionRed = document.getElementById('section-red');
+  var sectionGreen = document.getElementById('section-green');
+  
+  if (mode === 'red') {
+    btnRed.className = 'module-toggle-btn active-red';
+    btnGreen.className = 'module-toggle-btn';
+    sectionRed.classList.add('visible');
+    sectionGreen.classList.remove('visible');
+    // Limpiar el prompt box y reconstruir solo con datos del módulo rojo
+    buildCharacterPrompt();
+  } else {
+    btnRed.className = 'module-toggle-btn';
+    btnGreen.className = 'module-toggle-btn active-green';
+    sectionRed.classList.remove('visible');
+    sectionGreen.classList.add('visible');
+    // Limpiar el prompt box y reconstruir solo con datos del módulo verde
+    buildGridPrompt();
+  }
+}
+// ========== BUILD CHARACTER (MÓDULO ROJO - INDEPENDIENTE) ==========
+function buildCharacterPrompt() {
+  // Solo ejecutar si estamos en modo rojo
+  if (grillaMode !== 'red') return;
+  
+  var parts = [];
+  var tsCharacter = gv('tsCharacter');
+  var tsClothing = gv('tsClothing');
+  var tsCharCount = gv('tsCharCount');
+  var tsCamera = gv('tsCamera');
+  var tsLens = gv('tsLens');
+  var tsBackground = gv('tsBackground');
+  var tsStyle = gv('tsStyle');
+  var tsLighting = gv('tsLighting');
+  var tsResolution = gv('tsResolution');
+
+  // Estilo
+  if (tsStyle) parts.push(tsStyle + '.');
+
+  // Tipo de shot (SOLO full body, sin grilla)
+  parts.push('Full body character portrait, single image.');
+
+  // Personaje
+  if (tsCharacter) parts.push('Character: ' + tsCharacter);
+  if (tsClothing) parts.push('Clothing details: ' + tsClothing);
+
+  // Cantidad de personajes
+  if (tsCharCount === 'duo') parts.push('Two characters side by side for comparison.');
+  if (tsCharCount === 'group') parts.push('Multiple characters shown together.');
+
+  // Fondo
+  if (tsBackground) parts.push(tsBackground + '.');
+
+  // Cámara y lente
+  if (tsCamera || tsLens) {
+    var cp = [];
+    if (tsCamera) cp.push('shot on ' + tsCamera);
+    if (tsLens) cp.push(tsLens);
+    parts.push('Captured with ' + cp.join(', ') + '.');
+  }
+
+  // Iluminación
+  if (tsLighting) parts.push(tsLighting + '.');
+
+  // Resolución y calidad
+  var res = tsResolution || '4K';
+  parts.push(res + ' resolution, highly detailed, professional character reference.');
+
+  var hasContent = !!(tsCharacter || tsClothing || tsCamera || tsLighting);
+  updatePromptDisplay(parts, hasContent);
+  updateJSONDisplay();
+}
+// ========== INIT GRILLA MODE ==========
+// Asegura que el modo inicial sea correcto al cargar
+document.addEventListener('DOMContentLoaded', function() {
+  // Inicializar en modo rojo (personaje)
+  grillaMode = 'red';
+  // Limpiar prompt box al inicio
+  var pb = document.getElementById('promptBox');
+  if (pb) {
+    pb.textContent = 'Tu prompt aparecerá aquí en tiempo real mientras configuras los módulos...';
+    pb.classList.add('empty');
+  }
+});
 </script>
 
 <div id="kurimodal-shotType" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:99999;justify-content:center;align-items:center;padding:20px" onclick="if(event.target===this)cerrarModal('shotType')">
