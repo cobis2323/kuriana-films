@@ -4900,9 +4900,23 @@ function sc(id, val) { var e = document.getElementById(id); if (e) e.checked = v
 // ========== UPDATE DISPLAYS ==========
 function updatePromptDisplay(parts, hasContent) {
   var pb = document.getElementById('promptBox');
-  var fp = parts.join(' ').replace(/  +/g, ' ').trim();
-  if (hasContent) { pb.textContent = fp; pb.classList.remove('empty'); }
-  else { pb.textContent = 'Tu prompt aparecerá aquí en tiempo real mientras configuras los módulos...'; pb.classList.add('empty'); }
+  var fp = '';
+  if (Array.isArray(parts) && parts.length) {
+    // Si el primer elemento ya contiene saltos de línea (nuevo formato)
+    if (parts.length === 1 && parts[0].indexOf('\n') !== -1) {
+      fp = parts[0];
+    } else {
+      fp = parts.join(' ').replace(/ +/g, ' ').trim();
+    }
+  }
+  if (hasContent && fp) {
+    pb.textContent = fp;
+    pb.classList.remove('empty');
+  } else {
+    pb.textContent = 'Tu prompt cinematográfico aparecerá aquí en tiempo real mientras configuras los módulos...';
+    pb.classList.add('empty');
+    fp = '';
+  }
   document.getElementById('charCount').textContent = fp.length;
   document.getElementById('wordCount').textContent = fp.split(/\s+/).filter(function(w) { return w; }).length;
 }
@@ -4913,138 +4927,311 @@ function updateJSONDisplay() {
 
 // ========== BUILD CINE ==========
 function buildPrompt() {
-  var parts = [];
-  var subject = gv('subject'), shotType = gv('shotType'), viewDir = gv('viewDirection');
-  var unaware = gc('subjectUnaware'), env = gv('environment');
-  var lighting = gv('lighting'), atmosphere = gv('atmosphere'), mood = gv('mood'), customMood = gv('customMood');
-  var camera = gv('cameraBody'), focal = gv('focalLength'), lens = gv('lensType'), film = gv('filmStock');
-  var aperture = gv('aperture'), shutter = gv('shutterSpeed'), isoVal = gv('iso');
-  var lensFilter = gv('lensFilter'), filmGrain = gv('filmGrain');
-  var aspect = gv('aspectRatio'), palette = gv('colorPalette'), grading = gv('colorGrading');
-  var photog = gv('photographer'), movie = gv('movieRef'), customRef = gv('customRef'), resolution = gv('resolution');
+  var subject    = gv('subject');
+  var shotType   = gv('shotType');
+  var viewDir    = gv('viewDirection');
+  var unaware    = gc('subjectUnaware');
+  var env        = gv('environment');
+  var composition= gv('composition');
+  var lighting   = gv('lighting');
+  var atmosphere = gv('atmosphere');
+  var mood       = gv('mood');
+  var customMood = gv('customMood');
+  var camera     = gv('cameraBody');
+  var focal      = gv('focalLength');
+  var lens       = gv('lensType');
+  var film       = gv('filmStock');
+  var aperture   = gv('aperture');
+  var shutter    = gv('shutterSpeed');
+  var isoVal     = gv('iso');
+  var lensFilter = gv('lensFilter');
+  var filmGrain  = gv('filmGrain');
+  var aspect     = gv('aspectRatio');
+  var palette    = gv('colorPalette');
+  var grading    = gv('colorGrading');
+  var photog     = gv('photographer');
+  var movie      = gv('movieRef');
+  var customRef  = gv('customRef');
+  var resolution = gv('resolution');
 
-  var op = 'A photographic image';
-  if (shotType) op += ' of a ' + shotType.toLowerCase();
-  if (viewDir) op += ', viewed ' + viewDir.toLowerCase();
-  if (unaware) op += ', where the subject is unaware they are on camera';
-  parts.push(op + '.');
-  if (subject) parts.push(subject + '.');
-  var composition = gv('composition');
-  if (composition) parts.push(composition + '.');
-  if (env) parts.push('Set in ' + env + '.');
-  if (lighting || atmosphere || mood || customMood) {
-    var lp = [];
-    if (lighting) lp.push('illuminated by ' + lighting.toLowerCase());
-    if (atmosphere) lp.push(atmosphere.toLowerCase() + ' atmosphere');
-    if (mood) lp.push(mood.toLowerCase() + ' mood');
-    if (customMood) lp.push(customMood);
-    parts.push('The scene features ' + lp.join(', ') + '.');
+  // --- MAPA DE ASPECT RATIO A PARÁMETRO MIDJOURNEY ---
+  var arMap = {
+    '2.39:1 Anamorphic Scope'  : '--ar 239:100',
+    '2.35:1 Panavision Scope'  : '--ar 47:20',
+    '1.85:1 US Standard'       : '--ar 37:20',
+    '1.66:1 European'          : '--ar 5:3',
+    '1.43:1 IMAX'              : '--ar 143:100',
+    '16:9 HD/4K Standard'      : '--ar 16:9',
+    '21:9 Ultra Wide'          : '--ar 21:9',
+    '4:3 Classic TV'           : '--ar 4:3',
+    '1:1 Square'               : '--ar 1:1',
+    '9:16 TikTok/Reels'        : '--ar 9:16',
+    '4:5 Instagram Portrait'   : '--ar 4:5'
+  };
+
+  // --- MAPA DE RESOLUCIÓN A PARÁMETRO ---
+  var qMap = {
+    '1K': '--q 1',
+    '2K': '--q 1',
+    '4K': '--q 2',
+    '8K': '--q 2 --style raw'
+  };
+
+  // --- NEGATIVOS POR DEFECTO CINE ---
+  var negatives = '--no text, watermark, blurry, deformed, ugly, low quality, oversaturated, noise, extra limbs, bad anatomy';
+
+  var lines = [];
+
+  // BLOQUE 1 — SUJETO PRINCIPAL (peso alto :1.4)
+  var block1 = [];
+  if (subject) block1.push('(' + subject + ':1.4)');
+  if (shotType) {
+    var shotStr = shotType;
+    if (viewDir) shotStr += ', ' + viewDir;
+    block1.push('(' + shotStr + ':1.2)');
+  } else if (viewDir) {
+    block1.push('(' + viewDir + ':1.2)');
   }
-  if (camera || focal || lens || film || aperture || shutter || isoVal) {
-    var cp = [];
-    if (camera) cp.push('shot on ' + camera);
-    if (focal) cp.push(focal);
-    if (lens) cp.push(lens);
-    if (aperture) cp.push(aperture.split(' (')[0]);
-    if (shutter) cp.push(shutter.split(' (')[0] + ' shutter speed');
-    if (isoVal) cp.push(isoVal.split(' (')[0]);
-    if (film) cp.push(film + ' film stock');
-    parts.push('Captured with ' + cp.join(', ') + '.');
+  if (unaware) block1.push('(subject unaware of camera:1.0)');
+  if (env) block1.push('(Set in ' + env + ':1.1)');
+  if (composition) block1.push('(' + composition + ':1.0)');
+  if (block1.length) lines.push(block1.join(', '));
+
+  // BLOQUE 2 — ILUMINACIÓN Y ATMÓSFERA
+  var block2 = [];
+  if (lighting)    block2.push('(' + lighting + ':1.2)');
+  if (atmosphere)  block2.push('(' + atmosphere + ' atmosphere:1.1)');
+  if (mood)        block2.push('(' + mood + ' mood:1.0)');
+  if (customMood)  block2.push('(' + customMood + ':1.0)');
+  if (block2.length) lines.push(':: ' + block2.join(', '));
+
+  // BLOQUE 3 — CÁMARA Y TÉCNICA
+  var block3 = [];
+  if (camera)     block3.push('(' + camera + ':1.1)');
+  if (focal)      block3.push('(' + focal + ':1.2)');
+  if (lens)       block3.push('(' + lens + ':1.1)');
+  if (aperture)   block3.push('(' + aperture.split(' (')[0] + ':1.1)');
+  if (shutter)    block3.push('(' + shutter.split(' (')[0] + ' shutter:1.0)');
+  if (isoVal)     block3.push('(' + isoVal.split(' (')[0] + ':1.0)');
+  if (film)       block3.push('(' + film + ' film stock:1.1)');
+  if (lensFilter) block3.push('(' + lensFilter.split(' (')[0] + ' filter:1.0)');
+  if (filmGrain)  block3.push('(' + filmGrain.split(' (')[0] + ':1.0)');
+  if (block3.length) lines.push(':: ' + block3.join(', '));
+
+  // BLOQUE 4 — COLOR Y GRADACIÓN
+  var block4 = [];
+  if (palette) block4.push('(' + palette + ':1.1)');
+  if (grading) block4.push('(' + grading + ':1.1)');
+  if (block4.length) lines.push(':: ' + block4.join(', '));
+
+  // BLOQUE 5 — REFERENCIAS
+  var block5 = [];
+  if (photog)    block5.push('In the photography style of ' + photog);
+  if (movie)     block5.push('Visual aesthetic of ' + movie);
+  if (customRef) block5.push('Inspired by ' + customRef);
+  if (block5.length) lines.push(':: ' + block5.join('. ') + '.');
+
+  // PARÁMETROS TÉCNICOS
+  var params = [];
+  var arParam = arMap[aspect] || '';
+  var qParam  = qMap[resolution] || '--q 2';
+  if (arParam) params.push(arParam);
+  params.push(qParam);
+  params.push('--style raw');
+
+  // ENSAMBLADO FINAL
+  var prompt = '';
+  if (lines.length) {
+    prompt = lines.join('\n') + '\n' + params.join(' ') + '\n' + negatives;
   }
-  if (lensFilter) parts.push('Through a ' + lensFilter.split(' (')[0] + ' filter.');
-  if (filmGrain) parts.push('With ' + filmGrain.split(' (')[0] + ' texture.');
-  if (palette || grading) {
-    var col = [];
-    if (palette) col.push(palette + ' color palette');
-    if (grading) col.push(grading + ' color grading');
-    parts.push(col.join(' with ') + '.');
-  }
-  if (photog || movie || customRef) {
-    var ref = [];
-    if (photog) ref.push('photography style of ' + photog);
-    if (movie) ref.push('visual aesthetic of ' + movie);
-    if (customRef) ref.push('inspired by ' + customRef);
-    parts.push('In the ' + ref.join(', ') + '.');
-  }
-  if (aspect) parts.push('The image should be in ' + aspect + ' format.');
-  parts.push(resolution + ' resolution, hyper-realistic details, masterful composition.');
-  updatePromptDisplay(parts, subject || shotType || lighting || camera);
+
+  var hasContent = !!(subject || shotType || lighting || camera);
+  updatePromptDisplay(prompt ? [prompt] : [], hasContent);
   updateJSONDisplay();
 }
 
 // ========== BUILD ANIME ==========
 function buildAnimePrompt() {
- var parts = [];
- var style = gv('animeStyle'), subject = gv('animeSubject'), character = gv('animeCharacter');
- var env = gv('animeEnvironment'), palette = gv('animeColorPalette'), mood = gv('animeMood');
- var lighting = gv('animeLighting'), shot = gv('animeShot'), director = gv('animeDirector');
- var filmRef = gv('animeFilmRef'), customRef = gv('animeCustomRef');
- var aspect = gv('animeAspect'), resolution = gv('animeResolution'), quality = gv('animeQuality');
- var cameraType = gv('animeCameraType'), lensType = gv('animeLensType');
- var filmStock = gv('animeFilmStock'), lensFilter = gv('animeLensFilter'), grain = gv('animeGrain');
- var unaware = gc('animeSubjectUnaware');
- if (style) parts.push(style + ' style illustration.');
- if (shot) parts.push(shot + '.');
- if (unaware) parts.push('Subject is unaware of the camera, not looking toward it.');
- if (subject) parts.push(subject + '.');
- if (character) parts.push('Character: ' + character + '.');
- if (env) parts.push('Setting: ' + env + '.');
- if (lighting) parts.push(lighting + ' lighting.');
- if (mood) parts.push(mood + ' mood and atmosphere.');
- if (palette) parts.push(palette + ' color palette.');
- if (cameraType) parts.push('Rendered/captured with ' + cameraType + '.');
- if (lensType) parts.push('Using ' + lensType + '.');
- if (filmStock) parts.push(filmStock + ' render/film style.');
- if (lensFilter) parts.push('Visual filter: ' + lensFilter + '.');
- if (grain) parts.push('Texture/grain: ' + grain + '.');
- if (director) parts.push('In the visual style of ' + director + '.');
- if (filmRef) parts.push('Aesthetic inspired by ' + filmRef + '.');
- if (customRef) parts.push('Referenced from ' + customRef + '.');
- if (aspect) parts.push(aspect + ' format.');
- parts.push(quality + ', ' + resolution + ' resolution.');
- updatePromptDisplay(parts, style || subject);
- updateJSONDisplay();
+  var style      = gv('animeStyle');
+  var subject    = gv('animeSubject');
+  var character  = gv('animeCharacter');
+  var env        = gv('animeEnvironment');
+  var palette    = gv('animeColorPalette');
+  var mood       = gv('animeMood');
+  var lighting   = gv('animeLighting');
+  var shot       = gv('animeShot');
+  var director   = gv('animeDirector');
+  var filmRef    = gv('animeFilmRef');
+  var customRef  = gv('animeCustomRef');
+  var aspect     = gv('animeAspect');
+  var resolution = gv('animeResolution');
+  var quality    = gv('animeQuality');
+  var cameraType = gv('animeCameraType');
+  var lensType   = gv('animeLensType');
+  var filmStock  = gv('animeFilmStock');
+  var lensFilter = gv('animeLensFilter');
+  var grain      = gv('animeGrain');
+  var unaware    = gc('animeSubjectUnaware');
+
+  // NEGATIVOS ANIME
+  var negatives = '--no realistic, photographic, 3D render, ugly, deformed, extra limbs, low quality, bad anatomy, watermark';
+
+  // MAPA ASPECT RATIO
+  var arMap = {
+    '16:9 Widescreen'        : '--ar 16:9',
+    '1:1 Square'             : '--ar 1:1',
+    '4:3 Classic'            : '--ar 4:3',
+    '9:16 Vertical'          : '--ar 9:16',
+    '2.39:1 Cinematic Scope' : '--ar 239:100',
+    '21:9 Ultra Wide'        : '--ar 21:9',
+    '3:4 Manga Page'         : '--ar 3:4'
+  };
+  var qMap = { '1K':'--q 1', '2K':'--q 1', '4K':'--q 2', '8K':'--q 2' };
+
+  var lines = [];
+
+  // BLOQUE 1 — ESTILO + SUJETO
+  var block1 = [];
+  if (style)     block1.push('(' + style + ':1.3)');
+  if (shot)      block1.push('(' + shot + ':1.2)');
+  if (unaware)   block1.push('(subject unaware of camera:1.0)');
+  if (subject)   block1.push('(' + subject + ':1.4)');
+  if (character) block1.push('(Character details: ' + character + ':1.2)');
+  if (env)       block1.push('(Setting: ' + env + ':1.1)');
+  if (block1.length) lines.push(block1.join(', '));
+
+  // BLOQUE 2 — ILUMINACIÓN Y MOOD
+  var block2 = [];
+  if (lighting) block2.push('(' + lighting + ':1.2)');
+  if (mood)     block2.push('(' + mood + ':1.1)');
+  if (palette)  block2.push('(' + palette + ':1.1)');
+  if (block2.length) lines.push(':: ' + block2.join(', '));
+
+  // BLOQUE 3 — TÉCNICA DE RENDERIZADO
+  var block3 = [];
+  if (cameraType) block3.push('(' + cameraType + ':1.1)');
+  if (lensType)   block3.push('(' + lensType + ':1.1)');
+  if (filmStock)  block3.push('(' + filmStock + ':1.0)');
+  if (lensFilter) block3.push('(' + lensFilter + ':1.0)');
+  if (grain)      block3.push('(' + grain + ':1.0)');
+  if (quality)    block3.push('(' + quality + ':1.0)');
+  if (block3.length) lines.push(':: ' + block3.join(', '));
+
+  // BLOQUE 4 — REFERENCIAS
+  var block4 = [];
+  if (director)  block4.push('In the style of ' + director);
+  if (filmRef)   block4.push('Aesthetic inspired by ' + filmRef);
+  if (customRef) block4.push('Referenced from ' + customRef);
+  if (block4.length) lines.push(':: ' + block4.join('. ') + '.');
+
+  // PARÁMETROS
+  var params = [];
+  var arParam = arMap[aspect] || '';
+  var qParam  = qMap[resolution] || '--q 2';
+  if (arParam) params.push(arParam);
+  params.push(qParam);
+
+  var prompt = '';
+  if (lines.length) {
+    prompt = lines.join('\n') + '\n' + params.join(' ') + '\n' + negatives;
+  }
+
+  var hasContent = !!(style || subject);
+  updatePromptDisplay(prompt ? [prompt] : [], hasContent);
+  updateJSONDisplay();
 }
 
 // ========== BUILD HORROR ==========
 function buildHorrorPrompt() {
-  var parts = [];
-  var subgenre = gv('horrorSubgenre'), subject = gv('horrorSubject'), entity = gv('horrorEntity');
-  var env = gv('horrorEnvironment'), atmosphere = gv('horrorAtmosphere'), mood = gv('horrorMood');
-  var lighting = gv('horrorLighting'), color = gv('horrorColor');
-  var camera = gv('horrorCamera'), lens = gv('horrorLens'), shot = gv('horrorShot'), film = gv('horrorFilm');
-  var unaware = gc('horrorUnaware');
-  var author = gv('horrorAuthor'), filmRef = gv('horrorFilmRef'), customRef = gv('horrorCustomRef');
-  var aspect = gv('horrorAspect'), resolution = gv('horrorResolution');
-  var op = 'Cinematic horror photography';
-  if (subgenre) op = subgenre + ' cinematic photography';
-  if (shot) op += ', ' + shot.toLowerCase();
-  if (unaware) op += ', where the subject is unaware they are on camera';
-  parts.push(op + '.');
-  if (subject) parts.push(subject);
-  if (entity) parts.push('The entity: ' + entity);
-  if (env) parts.push('Set in ' + env + '.');
-  if (atmosphere || mood) {
-    var a = [];
-    if (atmosphere) a.push(atmosphere.toLowerCase());
-    if (mood) a.push(mood.toLowerCase());
-    parts.push('The atmosphere evokes ' + a.join(', creating a sense of ') + '.');
+  var subgenre   = gv('horrorSubgenre');
+  var subject    = gv('horrorSubject');
+  var entity     = gv('horrorEntity');
+  var env        = gv('horrorEnvironment');
+  var atmosphere = gv('horrorAtmosphere');
+  var mood       = gv('horrorMood');
+  var lighting   = gv('horrorLighting');
+  var color      = gv('horrorColor');
+  var camera     = gv('horrorCamera');
+  var lens       = gv('horrorLens');
+  var shot       = gv('horrorShot');
+  var film       = gv('horrorFilm');
+  var unaware    = gc('horrorUnaware');
+  var author     = gv('horrorAuthor');
+  var filmRef    = gv('horrorFilmRef');
+  var customRef  = gv('horrorCustomRef');
+  var aspect     = gv('horrorAspect');
+  var resolution = gv('horrorResolution');
+
+  // NEGATIVOS HORROR
+  var negatives = '--no bright colors, cheerful, happy, sunlight, flowers, text, watermark, low quality, oversaturated, clean';
+
+  // MAPA ASPECT RATIO
+  var arMap = {
+    '16:9 Widescreen'              : '--ar 16:9',
+    '2.39:1 Anamorphic Scope'      : '--ar 239:100',
+    '4:3 Classic Horror'           : '--ar 4:3',
+    '1:1 Square'                   : '--ar 1:1',
+    '1.19:1 Lighthouse Ratio'      : '--ar 119:100',
+    '9:16 Vertical (analog horror)': '--ar 9:16',
+    '21:9 Ultra Wide (cosmic scale)': '--ar 21:9'
+  };
+  var qMap = { '1K':'--q 1', '2K':'--q 1', '4K':'--q 2', '8K':'--q 2 --style raw' };
+
+  var lines = [];
+
+  // BLOQUE 1 — GÉNERO + SUJETO
+  var block1 = [];
+  if (subgenre) block1.push('(' + subgenre + ' cinematic horror:1.3)');
+  if (shot)     block1.push('(' + shot + ':1.2)');
+  if (unaware)  block1.push('(subject unaware of camera:1.0)');
+  if (subject)  block1.push('(' + subject + ':1.4)');
+  if (entity)   block1.push('(Entity: ' + entity + ':1.3)');
+  if (env)      block1.push('(Set in ' + env + ':1.1)');
+  if (block1.length) lines.push(block1.join(', '));
+
+  // BLOQUE 2 — ATMÓSFERA Y MOOD
+  var block2 = [];
+  if (atmosphere) block2.push('(' + atmosphere + ':1.2)');
+  if (mood)       block2.push('(' + mood + ':1.2)');
+  if (block2.length) lines.push(':: ' + block2.join(', '));
+
+  // BLOQUE 3 — ILUMINACIÓN Y COLOR
+  var block3 = [];
+  if (lighting) block3.push('(' + lighting + ':1.2)');
+  if (color)    block3.push('(' + color + ':1.1)');
+  if (block3.length) lines.push(':: ' + block3.join(', '));
+
+  // BLOQUE 4 — CÁMARA
+  var block4 = [];
+  if (camera) block4.push('(Shot on ' + camera + ':1.1)');
+  if (lens)   block4.push('(' + lens + ':1.1)');
+  if (film)   block4.push('(' + film + ':1.0)');
+  block4.push('(high contrast, deep shadows:1.2)');
+  block4.push('(hyper-realistic horror detail:1.1)');
+  if (block4.length) lines.push(':: ' + block4.join(', '));
+
+  // BLOQUE 5 — REFERENCIAS
+  var block5 = [];
+  if (author)    block5.push('In the visual style of ' + author);
+  if (filmRef)   block5.push('Aesthetic inspired by ' + filmRef);
+  if (customRef) block5.push('Referenced from ' + customRef);
+  if (block5.length) lines.push(':: ' + block5.join('. ') + '.');
+
+  // PARÁMETROS
+  var params = [];
+  var arParam = arMap[aspect] || '';
+  var qParam  = qMap[resolution] || '--q 2';
+  if (arParam) params.push(arParam);
+  params.push(qParam);
+  params.push('--style raw');
+
+  var prompt = '';
+  if (lines.length) {
+    prompt = lines.join('\n') + '\n' + params.join(' ') + '\n' + negatives;
   }
-  if (lighting) parts.push('Illuminated by ' + lighting.toLowerCase() + '.');
-  if (color) parts.push(color + ' color treatment.');
-  if (camera || lens || film) {
-    var c = [];
-    if (camera) c.push('shot on ' + camera);
-    if (lens) c.push(lens);
-    if (film) c.push(film);
-    parts.push('Captured with ' + c.join(', ') + '.');
-  }
-  if (author) parts.push('In the visual style of ' + author + '.');
-  if (filmRef) parts.push('Aesthetic inspired by ' + filmRef + '.');
-  if (customRef) parts.push('Referenced from ' + customRef + '.');
-  if (aspect) parts.push(aspect + ' format.');
-  parts.push('High contrast, ' + resolution + ' resolution, hyper-realistic details, masterful horror composition, deeply unsettling.');
-  updatePromptDisplay(parts, subgenre || subject);
+
+  var hasContent = !!(subgenre || subject);
+  updatePromptDisplay(prompt ? [prompt] : [], hasContent);
   updateJSONDisplay();
 }
 
@@ -5052,109 +5239,181 @@ function buildHorrorPrompt() {
 function updateGridPanels() {
   var s = gv('gridStructure');
   var r = document.getElementById('gridRow2');
-  if (s === '1x2' || s === '2x1') { 
-    r.style.display = 'none'; 
-  } else { 
-    r.style.display = ''; 
+  if (s === '1x2' || s === '2x1') {
+    r.style.display = 'none';
+  } else {
+    r.style.display = '';
   }
 }
 
 function buildGridPrompt() {
   // Solo ejecutar si estamos en modo verde
   if (grillaMode !== 'green') return;
-  
-  var parts = [];
+
   var structure = gv('gridStructure') || '2x2';
-  var subject = gv('gridSubject');
-  var cc = gc('gridConsistentChar');
-  var cl = gc('gridConsistentLight');
+  var subject   = gv('gridSubject');
+  var cc  = gc('gridConsistentChar');
+  var cl  = gc('gridConsistentLight');
   var ccl = gc('gridConsistentColor');
 
-  var cols = parseInt(structure.split('x')[0]);
-  var rows = parseInt(structure.split('x')[1]);
+  var cols  = parseInt(structure.split('x')[0]);
+  var rows  = parseInt(structure.split('x')[1]);
   var total = cols * rows;
 
   var lb = {
-    '2x2': ['top-left','top-right','bottom-left','bottom-right'],
-    '1x2': ['left','right'],
-    '2x1': ['top','bottom'],
-    '1x3': ['left','center','right'],
-    '1x4': ['panel 1','panel 2','panel 3','panel 4']
+    '2x2': ['Top-Left','Top-Right','Bottom-Left','Bottom-Right'],
+    '1x2': ['Left','Right'],
+    '2x1': ['Top','Bottom'],
+    '1x3': ['Left','Center','Right'],
+    '1x4': ['Panel 1','Panel 2','Panel 3','Panel 4']
   };
   var labels = lb[structure] || lb['2x2'];
 
-  // Encabezado — SOLO aparece en el módulo verde
-  parts.push('A ' + structure.replace('x','x') + ' grid image, ' + total + ' panels showing the same character from different angles.');
+  // NEGATIVOS GRILLA
+  var negatives = '--no text, watermark, inconsistent character, different person, ugly, deformed, low quality';
 
-  // Paneles con ángulos
+  var lines = [];
+
+  // ENCABEZADO
+  lines.push('(A ' + structure + ' grid image, ' + total + ' panels showing the same character from different angles:1.3)');
+  lines.push('(pure white background #FFFFFF, consistent design across ALL panels:1.2)');
+
+  // PANELES CON PESOS
   for (var i = 1; i <= Math.min(total, 4); i++) {
     var v = gv('gridPanel' + i + 'View');
     var s = gv('gridPanel' + i + 'Shot');
     if (v || s) {
-      var p = labels[i-1] + ': ';
-      if (v) p += v.toLowerCase();
-      if (v && s) p += ', ';
-      if (s) p += s.toLowerCase();
-      parts.push(p + '.');
+      var panelParts = [];
+      if (v) panelParts.push(v);
+      if (s) panelParts.push(s);
+      lines.push(':: (' + labels[i-1] + ' panel: ' + panelParts.join(', ') + ':1.2)');
     }
   }
 
-  // Descripción adicional de escena (solo del campo gridSubject)
-  if (subject) parts.push('Additional scene notes: ' + subject);
+  // DESCRIPCIÓN ADICIONAL
+  if (subject) lines.push(':: (Scene notes: ' + subject + ':1.1)');
 
-  // Consistencia
+  // CONSISTENCIA
   var con = [];
-  if (cc) con.push('character');
-  if (cl) con.push('lighting');
-  if (ccl) con.push('color grading');
-  if (con.length) parts.push('Maintain consistent ' + con.join(', ') + ' across ALL panels.');
+  if (cc)  con.push('(same character identity across all panels:1.3)');
+  if (cl)  con.push('(consistent lighting across all panels:1.1)');
+  if (ccl) con.push('(consistent color grading across all panels:1.1)');
+  if (con.length) lines.push(':: ' + con.join(', '));
 
-  // Calidad
-  parts.push('pure white background (#FFFFFF). Consistent design across ALL views. 1K resolution, highly detailed, professional character reference sheet.');
+  // CALIDAD
+  lines.push(':: (highly detailed, professional character reference sheet:1.2)');
+
+  // PARÁMETROS
+  var params = ['--ar 1:1', '--q 2'];
+
+  var prompt = '';
+  if (lines.length) {
+    prompt = lines.join('\n') + '\n' + params.join(' ') + '\n' + negatives;
+  }
 
   var hasContent = !!(subject || gv('gridPanel1View') || gv('gridPanel2View'));
-  updatePromptDisplay(parts, hasContent);
+  updatePromptDisplay(prompt ? [prompt] : [], hasContent);
   updateJSONDisplay();
 }
 
 // ========== BUILD VIDEO ==========
-function updateIntensityLabel() {
-  var val = gv('videoCameraIntensity');
-  var labels = { '1':'Nivel 1 — Muy Sutil', '2':'Nivel 2 — Lento', '3':'Nivel 3 — Normal', '4':'Nivel 4 — Rápido', '5':'Nivel 5 — Muy Agresivo' };
-  document.getElementById('intensityLabel').textContent = labels[val] || labels['3'];
-}
-function getSpeedText(level) {
-  var s = { '1':'with extremely slow and subtle movement intensity', '2':'with slow and steady movement intensity', '3':'with moderate movement intensity', '4':'with rapid and dynamic movement intensity', '5':'with extremely fast and aggressive movement intensity' };
-  return s[level] || s['3'];
-}
 function buildVideoPrompt() {
-  var parts = [];
-  var source = gv('videoSourcePrompt'), pVal = gv('videoPlatform');
-  var pEl = document.getElementById('videoPlatform');
-  var pText = pEl && pEl.selectedIndex > 0 ? pEl.options[pEl.selectedIndex].text : '';
-  var camMoveRaw = gv('videoCameraMove'), intensity = gv('videoCameraIntensity');
-  var subAct = gv('videoSubjectAction'), envMot = gv('videoEnvMotion');
-  var dur = gv('videoDuration'), fps = gv('videoFPS');
-  var tStart = gv('videoTransStart'), tEnd = gv('videoTransEnd');
-  var fx = gv('videoEffects'), audio = gv('videoAudio');
-  var aspect = gv('videoAspect'), quality = gv('videoQuality');
+  var source     = gv('videoSourcePrompt');
+  var pVal       = gv('videoPlatform');
+  var pEl        = document.getElementById('videoPlatform');
+  var pText      = pEl && pEl.selectedIndex > 0 ? pEl.options[pEl.selectedIndex].text : '';
+  var camMoveRaw = gv('videoCameraMove');
+  var intensity  = gv('videoCameraIntensity');
+  var subAct     = gv('videoSubjectAction');
+  var envMot     = gv('videoEnvMotion');
+  var dur        = gv('videoDuration');
+  var fps        = gv('videoFPS');
+  var tStart     = gv('videoTransStart');
+  var tEnd       = gv('videoTransEnd');
+  var fx         = gv('videoEffects');
+  var audio      = gv('videoAudio');
+  var aspect     = gv('videoAspect');
+  var quality    = gv('videoQuality');
+
+  // TIPS POR PLATAFORMA
   var tipEl = document.getElementById('platformTip');
-  var tips = { 'veo3':'Veo 3: Usa lenguaje natural detallado.', 'kling':'Kling: Excelente con image-to-video.', 'runway':'Runway Gen-4: Excelente control.', 'pika':'Pika: Bueno para clips cortos.', 'luma':'Luma: Fuerte en looks cinematográficos.', 'minimax':'Minimax: Buena calidad.', 'wan':'Wan 2.1: Responde bien a coordenadas.', 'seedance':'Seedance: Fórmulas dan resultados predecibles.', 'grok':'Grok: Usa fórmulas para ejes específicos.', 'qwen':'Qwen: Responde bien a ejes X,Y,Z.', 'generic':'Genérico: Universal.' };
-  if (pVal && tips[pVal]) { tipEl.textContent = tips[pVal]; tipEl.style.display = 'block'; } else { tipEl.style.display = 'none'; }
-  if (pText && pVal) parts.push('[Platform: ' + pText + ']');
-  if (source) parts.push('Scene: ' + source);
-  if (camMoveRaw) { parts.push(camMoveRaw.replace('{SPEED}', getSpeedText(intensity))); }
-  if (subAct) parts.push('Subject action: ' + subAct);
-  if (envMot) parts.push('Environment: ' + envMot);
-  if (tStart) parts.push('Opens with: ' + tStart.toLowerCase() + '.');
-  if (tEnd) parts.push('Ends with: ' + tEnd.toLowerCase() + '.');
-  if (dur) parts.push('Duration: ' + dur.split(' ')[0] + ' seconds.');
-  if (fps) parts.push(fps + '.');
-  if (fx) parts.push('Effect: ' + fx.toLowerCase() + '.');
-  if (audio) parts.push('Audio mood: ' + audio.toLowerCase() + '.');
-  if (aspect) parts.push(aspect + ' format.');
-  parts.push(quality + ', smooth motion, cinematic video.');
-  updatePromptDisplay(parts, source || camMoveRaw || subAct);
+  var tips = {
+    'veo3'    :'Veo 3: Usa lenguaje natural detallado.',
+    'kling'   :'Kling: Excelente con image-to-video.',
+    'runway'  :'Runway Gen-4: Excelente control de cámara.',
+    'pika'    :'Pika: Bueno para clips cortos e impactantes.',
+    'luma'    :'Luma: Fuerte en looks cinematográficos.',
+    'minimax' :'Minimax: Buena calidad general.',
+    'wan'     :'Wan 2.1: Responde bien a coordenadas de eje.',
+    'seedance':'Seedance: Fórmulas dan resultados predecibles.',
+    'grok'    :'Grok: Usa fórmulas para ejes X,Y,Z específicos.',
+    'qwen'    :'Qwen: Responde bien a ejes X,Y,Z.',
+    'generic' :'Genérico: Universal para cualquier plataforma.'
+  };
+  if (pVal && tips[pVal]) { tipEl.textContent = tips[pVal]; tipEl.style.display = 'block'; }
+  else { tipEl.style.display = 'none'; }
+
+  // NEGATIVOS VIDEO
+  var negatives = '--no static, frozen, blur, text, watermark, low quality, jitter, distortion, artifacts';
+
+  // MAPA ASPECT RATIO VIDEO
+  var arMap = {
+    '16:9 Landscape (standard)' : '--ar 16:9',
+    '9:16 Vertical (TikTok/Reels)': '--ar 9:16',
+    '1:1 Square (Instagram)'    : '--ar 1:1',
+    '2.39:1 Cinematic Scope'    : '--ar 239:100',
+    '4:3 Classic'               : '--ar 4:3',
+    '21:9 Ultra Wide'           : '--ar 21:9'
+  };
+
+  var lines = [];
+
+  // PLATAFORMA
+  if (pText && pVal) lines.push('[Platform: ' + pText + ']');
+
+  // BLOQUE 1 — ESCENA BASE
+  var block1 = [];
+  if (source) block1.push('(Scene: ' + source + ':1.4)');
+  if (quality) block1.push('(' + quality + ':1.1)');
+  if (block1.length) lines.push(block1.join(', '));
+
+  // BLOQUE 2 — MOVIMIENTO DE CÁMARA
+  if (camMoveRaw) {
+    var camFinal = camMoveRaw.replace('{SPEED}', getSpeedText(intensity));
+    lines.push(':: ' + camFinal);
+  }
+
+  // BLOQUE 3 — ACCIÓN DEL SUJETO Y ENTORNO
+  var block3 = [];
+  if (subAct) block3.push('(Subject action: ' + subAct + ':1.3)');
+  if (envMot) block3.push('(Environment: ' + envMot + ':1.1)');
+  if (block3.length) lines.push(':: ' + block3.join(', '));
+
+  // BLOQUE 4 — TIMING Y EFECTOS
+  var block4 = [];
+  if (tStart) block4.push('(Opens with: ' + tStart + ':1.0)');
+  if (tEnd)   block4.push('(Ends with: ' + tEnd + ':1.0)');
+  if (dur)    block4.push('(Duration: ' + dur.split(' ')[0] + ' seconds:1.0)');
+  if (fps)    block4.push('(' + fps + ':1.1)');
+  if (fx)     block4.push('(Effect: ' + fx + ':1.1)');
+  if (block4.length) lines.push(':: ' + block4.join(', '));
+
+  // BLOQUE 5 — AUDIO
+  if (audio) lines.push(':: (Audio mood: ' + audio + ':1.0)');
+
+  // PARÁMETROS
+  var params = [];
+  var arParam = arMap[aspect] || '';
+  if (arParam) params.push(arParam);
+  params.push('(smooth motion, cinematic video:1.1)');
+
+  var prompt = '';
+  if (lines.length) {
+    prompt = lines.join('\n') + '\n' + params.join(' ') + '\n' + negatives;
+  }
+
+  var hasContent = !!(source || camMoveRaw || subAct);
+  updatePromptDisplay(prompt ? [prompt] : [], hasContent);
   updateJSONDisplay();
 }
 
@@ -5686,52 +5945,62 @@ function setGrillaMode(mode) {
 function buildCharacterPrompt() {
   // Solo ejecutar si estamos en modo rojo
   if (grillaMode !== 'red') return;
-  
-  var parts = [];
-  var tsCharacter = gv('tsCharacter');
-  var tsClothing = gv('tsClothing');
-  var tsCharCount = gv('tsCharCount');
-  var tsCamera = gv('tsCamera');
-  var tsLens = gv('tsLens');
+
+  var tsCharacter  = gv('tsCharacter');
+  var tsClothing   = gv('tsClothing');
+  var tsCharCount  = gv('tsCharCount');
+  var tsCamera     = gv('tsCamera');
+  var tsLens       = gv('tsLens');
   var tsBackground = gv('tsBackground');
-  var tsStyle = gv('tsStyle');
-  var tsLighting = gv('tsLighting');
+  var tsStyle      = gv('tsStyle');
+  var tsLighting   = gv('tsLighting');
   var tsResolution = gv('tsResolution');
 
-  // Estilo
-  if (tsStyle) parts.push(tsStyle + '.');
+  // NEGATIVOS TURNAROUND
+  var negatives = '--no background clutter, text, watermark, deformed, ugly, extra limbs, bad anatomy, blurry, low quality, cropped';
 
-  // Tipo de shot (SOLO full body, sin grilla)
-  parts.push('Full body character portrait, single image.');
+  // MAPA RESOLUCIÓN
+  var qMap = { '1K':'--q 1', '2K':'--q 1', '4K':'--q 2' };
 
-  // Personaje
-  if (tsCharacter) parts.push('Character: ' + tsCharacter);
-  if (tsClothing) parts.push('Clothing details: ' + tsClothing);
+  var lines = [];
 
-  // Cantidad de personajes
-  if (tsCharCount === 'duo') parts.push('Two characters side by side for comparison.');
-  if (tsCharCount === 'group') parts.push('Multiple characters shown together.');
+  // BLOQUE 1 — TIPO DE SHEET Y ESTILO
+  var block1 = [];
+  if (tsStyle) block1.push('(' + tsStyle + ':1.3)');
+  block1.push('(Full body character portrait, single reference image:1.2)');
+  if (tsCharCount === 'duo')   block1.push('(Two characters side by side for comparison:1.1)');
+  if (tsCharCount === 'group') block1.push('(Multiple characters shown together:1.1)');
+  lines.push(block1.join(', '));
 
-  // Fondo
-  if (tsBackground) parts.push(tsBackground + '.');
+  // BLOQUE 2 — PERSONAJE
+  var block2 = [];
+  if (tsCharacter) block2.push('(Character: ' + tsCharacter + ':1.4)');
+  if (tsClothing)  block2.push('(Clothing & accessories: ' + tsClothing + ':1.2)');
+  if (block2.length) lines.push(':: ' + block2.join(', '));
 
-  // Cámara y lente
-  if (tsCamera || tsLens) {
-    var cp = [];
-    if (tsCamera) cp.push('shot on ' + tsCamera);
-    if (tsLens) cp.push(tsLens);
-    parts.push('Captured with ' + cp.join(', ') + '.');
+  // BLOQUE 3 — FONDO Y TÉCNICA
+  var block3 = [];
+  if (tsBackground) block3.push('(' + tsBackground + ':1.1)');
+  if (tsCamera)     block3.push('(Shot on ' + tsCamera + ':1.1)');
+  if (tsLens)       block3.push('(' + tsLens + ':1.2)');
+  block3.push('(consistent lighting across all views:1.1)');
+  block3.push('(highly detailed, professional character reference:1.2)');
+  if (block3.length) lines.push(':: ' + block3.join(', '));
+
+  // BLOQUE 4 — ILUMINACIÓN
+  if (tsLighting) lines.push(':: (' + tsLighting + ':1.1)');
+
+  // PARÁMETROS
+  var qParam = qMap[tsResolution] || '--q 2';
+  var params = ['--ar 1:1', qParam];
+
+  var prompt = '';
+  if (lines.length) {
+    prompt = lines.join('\n') + '\n' + params.join(' ') + '\n' + negatives;
   }
 
-  // Iluminación
-  if (tsLighting) parts.push(tsLighting + '.');
-
-  // Resolución y calidad
-  var res = tsResolution || '4K';
-  parts.push(res + ' resolution, highly detailed, professional character reference.');
-
   var hasContent = !!(tsCharacter || tsClothing || tsCamera || tsLighting);
-  updatePromptDisplay(parts, hasContent);
+  updatePromptDisplay(prompt ? [prompt] : [], hasContent);
   updateJSONDisplay();
 }
 // ========== INIT GRILLA MODE ==========
