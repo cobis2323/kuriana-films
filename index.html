@@ -464,7 +464,7 @@ select option{background:var(--bg3);color:var(--text)}
       <div class="module">
         <div class="module-header" onclick="toggleModule(this)">
           <span class="module-number">01</span>
-          <h3>Desarrollo de Personaje</h3>
+          <h3>Desarrollo de Personaje</<h3>
         </div>
         <div class="module-body">
 
@@ -869,34 +869,28 @@ select option{background:var(--bg3);color:var(--text)}
           <span class="module-number">⚙️</span>
           <h3>Configuración de Salida</h3>
         </div>
-        <div class="field-row">
- <div class="field">
-  <div class="field-label">Plataforma de Salida</div>
-  <select id="cinePlatform" onchange="buildPrompt()">
-   <option value="universal">Universal</option>
-   <option value="midjourney">Midjourney</option>
-   <option value="stable">Stable Diffusion</option>
-   <option value="llm">ChatGPT / Qwen / Grok</option>
-  </select>
- </div>
- <div class="field">
-  <div class="field-label">Resolución</div>
-  <select id="resolution" onchange="buildPrompt()">
-   <option value="1K">1K (1024×1024)</option>
-   <option value="2K">2K (2048×2048)</option>
-   <option value="4K">4K (4096×4096)</option>
-   <option value="8K">8K (7680x4320)</option>
-  </select>
- </div>
- <div class="field">
-  <div class="field-label">Creatividad</div>
-  <select id="temperature" onchange="buildPrompt()">
-   <option value="balanced" selected>⚖️ Balanceado (Recomendado)</option>
-   <option value="focused">💯 Exacto a mi idea (Estricto)</option>
-   <option value="creative">🔥 AI Creativa (Inventa más la AI)</option>
-  </select>
- </div>
-</div>
+        <div class="module-body">
+          <div class="field-row">
+            <div class="field">
+              <div class="field-label">Resolución</div>
+              <select id="resolution" onchange="buildPrompt()">
+                <option value="1K">1K (1024×1024)</option>
+                <option value="2K">2K (2048×2048)</option>
+                <option value="4K">4K (4096×4096)</option>
+                <option value="8K">8K (7680x4320)</option>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Creatividad</div>
+              <select id="temperature">
+                <option value="balanced" selected>⚖️ Balanceado (Recomendado)</option>
+                <option value="focused">💯 Exacto a mi idea (Estricto)</option>
+                <option value="creative">🔥 AI Creativa (Inventa más la AI)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
 
     </div><!-- end tab-cine -->
 
@@ -1093,38 +1087,29 @@ select option{background:var(--bg3);color:var(--text)}
         </div>
         <div class="module-body">
           <div class="field-row">
- <div class="field">
-  <div class="field-label">Plataforma de Salida</div>
-  <select id="animePlatform" onchange="buildAnimePrompt()">
-   <option value="universal">Universal</option>
-   <option value="midjourney">Midjourney</option>
-   <option value="stable">Stable Diffusion</option>
-   <option value="llm">ChatGPT / Qwen / Grok</option>
-  </select>
- </div>
- <div class="field">
-  <div class="field-label">Relación de Aspecto</div>
-  <select id="animeAspect" onchange="buildAnimePrompt()">
-   <option value="">Seleccionar ratio...</option>
-   <option>16:9 Widescreen</option>
-   <option>1:1 Square</option>
-   <option>4:3 Classic</option>
-   <option>9:16 Vertical</option>
-   <option>2.39:1 Cinematic Scope</option>
-   <option>21:9 Ultra Wide</option>
-   <option>3:4 Manga Page</option>
-  </select>
- </div>
- <div class="field">
-  <div class="field-label">Resolución</div>
-  <select id="animeResolution" onchange="buildAnimePrompt()">
-   <option value="1K">1K (1024×1024)</option>
-   <option value="2K">2K (2048×2048)</option>
-   <option value="4K">4K (4096×4096)</option>
-   <option value="8K">8K (7680x4320)</option>
-  </select>
- </div>
-</div>
+            <div class="field">
+              <div class="field-label">Relación de Aspecto</div>
+              <select id="animeAspect" onchange="buildAnimePrompt()">
+                <option value="">Seleccionar ratio...</option>
+                <option>16:9 Widescreen</option>
+                <option>1:1 Square</option>
+                <option>4:3 Classic</option>
+                <option>9:16 Vertical</option>
+                <option>2.39:1 Cinematic Scope</option>
+                <option>21:9 Ultra Wide</option>
+                <option>3:4 Manga Page</option>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Resolución</div>
+              <select id="animeResolution" onchange="buildAnimePrompt()">
+                <option value="1K">1K (1024×1024)</option>
+                <option value="2K">2K (2048×2048)</option>
+                <option value="4K">4K (4096×4096)</option>
+                <option value="8K">8K (7680x4320)</option>
+              </select>
+            </div>
+          </div>
           <div class="field">
             <div class="field-label">Palabras de Calidad</div>
             <select id="animeQuality" onchange="buildAnimePrompt()">
@@ -1320,38 +1305,31 @@ select option{background:var(--bg3);color:var(--text)}
         </div>
         <div class="module-body">
           <div class="field-row">
- <div class="field">
-  <div class="field-label">Plataforma de Salida</div>
-  <select id="horrorPlatform" onchange="buildHorrorPrompt()">
-   <option value="universal">Universal</option>
-   <option value="midjourney">Midjourney</option>
-   <option value="stable">Stable Diffusion</option>
-   <option value="llm">ChatGPT / Qwen / Grok</option>
-  </select>
- </div>
- <div class="field">
-  <div class="field-label">Aspect Ratio</div>
-  <select id="horrorAspect" onchange="buildHorrorPrompt()">
-   <option value="">Relación de Aspecto</option>
-   <option>16:9 Widescreen</option>
-   <option>2.39:1 Anamorphic Scope</option>
-   <option>4:3 Classic Horror</option>
-   <option>1:1 Square</option>
-   <option>1.19:1 Lighthouse Ratio</option>
-   <option>9:16 Vertical (analog horror)</option>
-   <option>21:9 Ultra Wide (cosmic scale)</option>
-  </select>
- </div>
- <div class="field">
-  <div class="field-label">Resolución</div>
-  <select id="horrorResolution" onchange="buildHorrorPrompt()">
-   <option value="1K">1K (1024×1024)</option>
-   <option value="2K">2K (2048×2048)</option>
-   <option value="4K">4K (4096×4096)</option>
-   <option value="8K">8K (7680x4320)</option>
-  </select>
- </div>
-</div>
+            <div class="field">
+              <div class="field-label">Aspect Ratio</div>
+              <select id="horrorAspect" onchange="buildHorrorPrompt()">
+                <option value="">Relación de Aspecto</option>
+                <option>16:9 Widescreen</option>
+                <option>2.39:1 Anamorphic Scope</option>
+                <option>4:3 Classic Horror</option>
+                <option>1:1 Square</option>
+                <option>1.19:1 Lighthouse Ratio</option>
+                <option>9:16 Vertical (analog horror)</option>
+                <option>21:9 Ultra Wide (cosmic scale)</option>
+              </select>
+            </div>
+            <div class="field">
+              <div class="field-label">Resolución</div>
+              <select id="horrorResolution" onchange="buildHorrorPrompt()">
+                <option value="1K">1K (1024×1024)</option>
+                <option value="2K">2K (2048×2048)</option>
+                <option value="4K">4K (4096×4096)</option>
+                <option value="8K">8K (7680x4320)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
 
     </div><!-- end tab-horror -->
 
@@ -1542,25 +1520,16 @@ select option{background:var(--bg3);color:var(--text)}
             </optgroup>
           </select>
         </div>
-        <div class="field-row">
- <div class="field">
-  <div class="field-label">Plataforma de Salida</div>
-  <select id="tsPlatform" onchange="buildCharacterPrompt()">
-   <option value="universal">Universal</option>
-   <option value="midjourney">Midjourney</option>
-   <option value="stable">Stable Diffusion</option>
-   <option value="llm">ChatGPT / Qwen / Grok</option>
-  </select>
- </div>
- <div class="field">
-  <div class="field-label">Resolución</div>
-  <select id="tsResolution" onchange="buildCharacterPrompt()">
-   <option value="1K">1K</option>
-   <option value="2K">2K</option>
-   <option value="4K" selected>4K (recomendado para sheets)</option>
-  </select>
- </div>
-</div>
+        <div class="field">
+          <div class="field-label">Resolución</div>
+          <select id="tsResolution" onchange="buildCharacterPrompt()">
+            <option value="1K">1K</option>
+            <option value="2K">2K</option>
+            <option value="4K" selected>4K (recomendado para sheets)</option>
+          </select>
+        </div>
+      </div>
+    </div>
 
   </div><!-- end section-red -->
 
@@ -1580,16 +1549,6 @@ select option{background:var(--bg3);color:var(--text)}
             placeholder="Describe tu escena o personaje. Puedes pegar el prompt que ya usaste para la imagen original..." 
             oninput="buildGridPrompt()"></textarea>
         </div>
-
-<div class="field">
- <div class="field-label">Plataforma de Salida</div>
- <select id="gridPlatform" onchange="buildGridPrompt()">
-  <option value="universal">Universal</option>
-  <option value="midjourney">Midjourney</option>
-  <option value="stable">Stable Diffusion</option>
-  <option value="llm">ChatGPT / Qwen / Grok</option>
- </select>
-</div>
 
         <div class="field">
           <div class="field-label">Estructura de Grilla</div>
@@ -4884,10 +4843,8 @@ function elegirModal(id, el) {
   if (tab === 'cine') buildPrompt();
   else if (tab === 'anime') buildAnimePrompt();
   else if (tab === 'horror') buildHorrorPrompt();
-  else if (tab === 'grilla') {
- if (grillaMode === 'red') buildCharacterPrompt();
- else buildGridPrompt();
-}
+  else if (tab === 'sheet') buildSheetPrompt();
+  else if (tab === 'grilla') buildGridPrompt();
   else if (tab === 'video') buildVideoPrompt();
   else if (tab === 'musica') buildMusicPrompt();
 }
@@ -4940,122 +4897,6 @@ function gc(id) { var e = document.getElementById(id); return e ? e.checked : fa
 function sv(id, val) { var e = document.getElementById(id); if (!e || !val) return; if (e.tagName === 'SELECT') { for (var i = 0; i < e.options.length; i++) { if (e.options[i].value === val || e.options[i].text === val) { e.selectedIndex = i; break; } } } else { e.value = val; } }
 function sc(id, val) { var e = document.getElementById(id); if (e) e.checked = val; }
 
-// ========== PROMPT ENGINEERING HELPERS ==========
-function cleanText(str) {
- if (!str) return '';
- return String(str)
-  .replace(/\s+/g, ' ')
-  .replace(/\s+\./g, '.')
-  .replace(/\s+,/g, ',')
-  .trim();
-}
-
-function stripParenText(str) {
- if (!str) return '';
- return cleanText(String(str).split(' (')[0]);
-}
-
-function joinComma(arr) {
- return arr.filter(Boolean).map(cleanText).filter(Boolean).join(', ');
-}
-
-function joinSentence(arr) {
- return arr.filter(Boolean).map(cleanText).filter(Boolean).join('. ');
-}
-
-function weighted(text, weight, platform) {
- text = cleanText(text);
- if (!text) return '';
- if (platform === 'stable') return '(' + text + ':' + weight + ')';
- if (platform === 'midjourney') return text + '::' + weight;
- return text;
-}
-
-function getAspectValue(raw) {
- if (!raw) return '';
- var map = {
-  '2.39:1 Anamorphic Scope': '2.39:1',
-  '2.35:1 Panavision Scope': '2.35:1',
-  '1.85:1 US Standard': '1.85:1',
-  '1.66:1 European': '1.66:1',
-  '1.43:1 IMAX': '1.43:1',
-  '16:9 HD/4K Standard': '16:9',
-  '21:9 Ultra Wide': '21:9',
-  '4:3 Classic TV': '4:3',
-  '1:1 Square': '1:1',
-  '9:16 TikTok/Reels': '9:16',
-  '4:5 Instagram Portrait': '4:5',
-  '16:9 Widescreen': '16:9',
-  '4:3 Classic': '4:3',
-  '9:16 Vertical': '9:16',
-  '2.39:1 Cinematic Scope': '2.39:1',
-  '1.19:1 Lighthouse Ratio': '1.19:1',
-  '9:16 Vertical (analog horror)': '9:16',
-  '21:9 Ultra Wide (cosmic scale)': '21:9',
-  '16:9 Landscape (standard)': '16:9',
-  '9:16 Vertical (TikTok/Reels)': '9:16',
-  '1:1 Square (Instagram)': '1:1',
-  '4:3 Classic': '4:3'
- };
- return map[raw] || raw;
-}
-
-function getQualityWordsByResolution(res) {
- if (!res) return [];
- if (res === '1K') return ['high quality'];
- if (res === '2K') return ['high quality', 'detailed'];
- if (res === '4K') return ['ultra detailed', 'high quality'];
- if (res === '8K') return ['ultra detailed', 'high quality', 'extremely detailed'];
- return [];
-}
-
-function getNegativePromptByCategory(category, platform) {
- var negatives = {
-  cine: ['text', 'watermark', 'logo', 'blurry', 'deformed', 'ugly', 'low quality', 'bad anatomy', 'extra fingers', 'oversaturated'],
-  anime: ['text', 'watermark', 'logo', 'blurry', 'low quality', 'bad hands', 'extra fingers', 'deformed anatomy', 'messy composition'],
-  horror: ['text', 'watermark', 'logo', 'blurry', 'low quality', 'bad anatomy', 'cheap gore', 'cartoonish', 'oversaturated'],
-  sheet: ['text', 'watermark', 'logo', 'cropped body', 'duplicate character', 'extra limbs', 'bad anatomy', 'cluttered background'],
-  grid: ['text', 'watermark', 'logo', 'panel mismatch', 'inconsistent character', 'extra limbs', 'cropped body', 'layout errors'],
-  video: ['text', 'watermark', 'logo', 'flicker', 'warping', 'deformed anatomy', 'jitter', 'glitch unless intended']
- };
- var list = negatives[category] || ['text', 'watermark', 'logo', 'blurry', 'low quality'];
- if (platform === 'midjourney') return '--no ' + list.join(', ');
- if (platform === 'stable') return 'Negative prompt: ' + list.join(', ');
- return 'Avoid: ' + list.join(', ') + '.';
-}
-
-function buildPlatformParams(platform, aspect, extra) {
- var params = [];
- var ar = getAspectValue(aspect);
- if (platform === 'midjourney') {
-  if (ar) params.push('--ar ' + ar);
-  if (extra && extra.raw) params.push('--style raw');
-  if (extra && extra.quality === 'high') params.push('--q 2');
- }
- return params.join(' ');
-}
-
-function formatPromptByPlatform(platform, category, positives, negatives, aspect, extra) {
- var pos = positives.filter(Boolean);
-
- if (platform === 'midjourney') {
-  var mj = pos.join(' :: ');
-  var mjParams = buildPlatformParams('midjourney', aspect, extra);
-  return cleanText([mj, mjParams, negatives].filter(Boolean).join(' '));
- }
-
- if (platform === 'stable') {
-  var stableText = pos.join(', ');
-  return cleanText(stableText) + '\n\n' + negatives;
- }
-
- if (platform === 'llm') {
-  return pos.join('. ') + '. ' + negatives;
- }
-
- return pos.join('. ') + '.';
-}
-
 // ========== UPDATE DISPLAYS ==========
 function updatePromptDisplay(parts, hasContent) {
   var pb = document.getElementById('promptBox');
@@ -5072,242 +4913,139 @@ function updateJSONDisplay() {
 
 // ========== BUILD CINE ==========
 function buildPrompt() {
- var platform = gv('cinePlatform') || 'universal';
- var subject = cleanText(gv('subject'));
- var shotType = cleanText(gv('shotType'));
- var viewDir = cleanText(gv('viewDirection'));
- var unaware = gc('subjectUnaware');
- var env = cleanText(gv('environment'));
- var lighting = cleanText(gv('lighting'));
- var atmosphere = cleanText(gv('atmosphere'));
- var mood = cleanText(gv('mood'));
- var customMood = cleanText(gv('customMood'));
- var camera = cleanText(gv('cameraBody'));
- var focal = cleanText(gv('focalLength'));
- var lens = cleanText(gv('lensType'));
- var film = cleanText(gv('filmStock'));
- var aperture = stripParenText(gv('aperture'));
- var shutter = stripParenText(gv('shutterSpeed'));
- var isoVal = stripParenText(gv('iso'));
- var lensFilter = stripParenText(gv('lensFilter'));
- var filmGrain = stripParenText(gv('filmGrain'));
- var aspect = cleanText(gv('aspectRatio'));
- var palette = cleanText(gv('colorPalette'));
- var grading = cleanText(gv('colorGrading'));
- var photog = cleanText(gv('photographer'));
- var movie = cleanText(gv('movieRef'));
- var customRef = cleanText(gv('customRef'));
- var composition = cleanText(gv('composition'));
- var resolution = cleanText(gv('resolution'));
- var temperature = cleanText(gv('temperature'));
+  var parts = [];
+  var subject = gv('subject'), shotType = gv('shotType'), viewDir = gv('viewDirection');
+  var unaware = gc('subjectUnaware'), env = gv('environment');
+  var lighting = gv('lighting'), atmosphere = gv('atmosphere'), mood = gv('mood'), customMood = gv('customMood');
+  var camera = gv('cameraBody'), focal = gv('focalLength'), lens = gv('lensType'), film = gv('filmStock');
+  var aperture = gv('aperture'), shutter = gv('shutterSpeed'), isoVal = gv('iso');
+  var lensFilter = gv('lensFilter'), filmGrain = gv('filmGrain');
+  var aspect = gv('aspectRatio'), palette = gv('colorPalette'), grading = gv('colorGrading');
+  var photog = gv('photographer'), movie = gv('movieRef'), customRef = gv('customRef'), resolution = gv('resolution');
 
- var positives = [];
- var qualityWords = getQualityWordsByResolution(resolution);
-
- if (platform === 'stable') {
-  positives.push(weighted('masterpiece', '1.2', platform));
-  positives.push(weighted('best quality', '1.2', platform));
- }
-
- if (subject) positives.push(weighted(subject, '1.4', platform));
- if (shotType) positives.push(weighted(stripParenText(shotType).toLowerCase(), '1.2', platform));
- if (viewDir) positives.push(weighted('viewed ' + stripParenText(viewDir).toLowerCase(), '1.1', platform));
- if (unaware) positives.push(weighted('subject unaware of camera', '1.1', platform));
- if (env) positives.push(weighted(env, '1.2', platform));
- if (composition) positives.push(weighted(composition, '1.1', platform));
- if (lighting) positives.push(weighted(stripParenText(lighting).toLowerCase() + ' lighting', '1.2', platform));
- if (atmosphere) positives.push(weighted(stripParenText(atmosphere).toLowerCase() + ' atmosphere', '1.1', platform));
- if (mood) positives.push(weighted(stripParenText(mood).toLowerCase() + ' mood', '1.1', platform));
- if (customMood) positives.push(weighted(customMood, '1.0', platform));
-
- var cameraBlock = joinComma([
-  camera,
-  focal,
-  lens,
-  aperture,
-  shutter ? shutter + ' shutter speed' : '',
-  isoVal,
-  film ? film + ' film stock' : ''
- ]);
- if (cameraBlock) positives.push(weighted(cameraBlock, '1.1', platform));
-
- if (lensFilter) positives.push(weighted(lensFilter + ' filter', '1.0', platform));
- if (filmGrain) positives.push(weighted(filmGrain + ' texture', '1.0', platform));
-
- var colorBlock = joinComma([
-  palette ? palette + ' color palette' : '',
-  grading ? grading + ' color grading' : ''
- ]);
- if (colorBlock) positives.push(weighted(colorBlock, '1.1', platform));
-
- if (photog) positives.push(weighted('photography style of ' + photog, '1.1', platform));
- if (movie) positives.push(weighted('visual aesthetic of ' + movie, '1.1', platform));
- if (customRef) positives.push(weighted('inspired by ' + customRef, '1.0', platform));
-
- qualityWords.forEach(function(q) {
-  positives.push(weighted(q, '1.1', platform));
- });
-
- if (temperature === 'focused') positives.push(weighted('high subject fidelity', '1.1', platform));
- if (temperature === 'creative') positives.push(weighted('creative interpretation', '1.0', platform));
-
- var negatives = getNegativePromptByCategory('cine', platform);
- var finalPrompt = formatPromptByPlatform(platform, 'cine', positives, negatives, aspect, { raw: true, quality: 'high' });
-
- var pb = document.getElementById('promptBox');
- var hasContent = !!(subject || shotType || lighting || camera || env);
- if (hasContent) {
-  pb.textContent = finalPrompt;
-  pb.classList.remove('empty');
- } else {
-  pb.textContent = 'Tu prompt cinematográfico aparecerá aquí en tiempo real mientras configuras los módulos...';
-  pb.classList.add('empty');
- }
-
- document.getElementById('charCount').textContent = finalPrompt.length;
- document.getElementById('wordCount').textContent = finalPrompt.split(/\s+/).filter(function(w) { return w; }).length;
- updateJSONDisplay();
+  var op = 'A photographic image';
+  if (shotType) op += ' of a ' + shotType.toLowerCase();
+  if (viewDir) op += ', viewed ' + viewDir.toLowerCase();
+  if (unaware) op += ', where the subject is unaware they are on camera';
+  parts.push(op + '.');
+  if (subject) parts.push(subject + '.');
+  var composition = gv('composition');
+  if (composition) parts.push(composition + '.');
+  if (env) parts.push('Set in ' + env + '.');
+  if (lighting || atmosphere || mood || customMood) {
+    var lp = [];
+    if (lighting) lp.push('illuminated by ' + lighting.toLowerCase());
+    if (atmosphere) lp.push(atmosphere.toLowerCase() + ' atmosphere');
+    if (mood) lp.push(mood.toLowerCase() + ' mood');
+    if (customMood) lp.push(customMood);
+    parts.push('The scene features ' + lp.join(', ') + '.');
+  }
+  if (camera || focal || lens || film || aperture || shutter || isoVal) {
+    var cp = [];
+    if (camera) cp.push('shot on ' + camera);
+    if (focal) cp.push(focal);
+    if (lens) cp.push(lens);
+    if (aperture) cp.push(aperture.split(' (')[0]);
+    if (shutter) cp.push(shutter.split(' (')[0] + ' shutter speed');
+    if (isoVal) cp.push(isoVal.split(' (')[0]);
+    if (film) cp.push(film + ' film stock');
+    parts.push('Captured with ' + cp.join(', ') + '.');
+  }
+  if (lensFilter) parts.push('Through a ' + lensFilter.split(' (')[0] + ' filter.');
+  if (filmGrain) parts.push('With ' + filmGrain.split(' (')[0] + ' texture.');
+  if (palette || grading) {
+    var col = [];
+    if (palette) col.push(palette + ' color palette');
+    if (grading) col.push(grading + ' color grading');
+    parts.push(col.join(' with ') + '.');
+  }
+  if (photog || movie || customRef) {
+    var ref = [];
+    if (photog) ref.push('photography style of ' + photog);
+    if (movie) ref.push('visual aesthetic of ' + movie);
+    if (customRef) ref.push('inspired by ' + customRef);
+    parts.push('In the ' + ref.join(', ') + '.');
+  }
+  if (aspect) parts.push('The image should be in ' + aspect + ' format.');
+  parts.push(resolution + ' resolution, hyper-realistic details, masterful composition.');
+  updatePromptDisplay(parts, subject || shotType || lighting || camera);
+  updateJSONDisplay();
 }
 
 // ========== BUILD ANIME ==========
 function buildAnimePrompt() {
- var platform = gv('animePlatform') || 'universal';
- var style = cleanText(gv('animeStyle'));
- var subject = cleanText(gv('animeSubject'));
- var character = cleanText(gv('animeCharacter'));
- var env = cleanText(gv('animeEnvironment'));
- var palette = cleanText(gv('animeColorPalette'));
- var mood = cleanText(gv('animeMood'));
- var lighting = cleanText(gv('animeLighting'));
- var shot = cleanText(gv('animeShot'));
- var director = cleanText(gv('animeDirector'));
- var filmRef = cleanText(gv('animeFilmRef'));
- var customRef = cleanText(gv('animeCustomRef'));
- var aspect = cleanText(gv('animeAspect'));
- var resolution = cleanText(gv('animeResolution'));
- var quality = cleanText(gv('animeQuality'));
- var cameraType = cleanText(gv('animeCameraType'));
- var lensType = cleanText(gv('animeLensType'));
- var filmStock = cleanText(gv('animeFilmStock'));
- var lensFilter = cleanText(gv('animeLensFilter'));
- var grain = cleanText(gv('animeGrain'));
+ var parts = [];
+ var style = gv('animeStyle'), subject = gv('animeSubject'), character = gv('animeCharacter');
+ var env = gv('animeEnvironment'), palette = gv('animeColorPalette'), mood = gv('animeMood');
+ var lighting = gv('animeLighting'), shot = gv('animeShot'), director = gv('animeDirector');
+ var filmRef = gv('animeFilmRef'), customRef = gv('animeCustomRef');
+ var aspect = gv('animeAspect'), resolution = gv('animeResolution'), quality = gv('animeQuality');
+ var cameraType = gv('animeCameraType'), lensType = gv('animeLensType');
+ var filmStock = gv('animeFilmStock'), lensFilter = gv('animeLensFilter'), grain = gv('animeGrain');
  var unaware = gc('animeSubjectUnaware');
-
- var positives = [];
- if (platform === 'stable') {
-  positives.push(weighted('masterpiece', '1.2', platform));
-  positives.push(weighted('best quality', '1.2', platform));
- }
-
- if (style) positives.push(weighted(style + ' style', '1.3', platform));
- if (shot) positives.push(weighted(shot, '1.1', platform));
- if (subject) positives.push(weighted(subject, '1.4', platform));
- if (character) positives.push(weighted('character details: ' + character, '1.2', platform));
- if (env) positives.push(weighted('setting: ' + env, '1.1', platform));
- if (unaware) positives.push(weighted('subject not looking at camera', '1.0', platform));
- if (lighting) positives.push(weighted(lighting + ' lighting', '1.1', platform));
- if (mood) positives.push(weighted(mood + ' mood', '1.1', platform));
- if (palette) positives.push(weighted(palette + ' color palette', '1.1', platform));
- if (cameraType) positives.push(weighted(cameraType, '1.0', platform));
- if (lensType) positives.push(weighted(lensType, '1.0', platform));
- if (filmStock) positives.push(weighted(filmStock, '1.0', platform));
- if (lensFilter) positives.push(weighted(lensFilter, '1.0', platform));
- if (grain) positives.push(weighted(grain, '1.0', platform));
- if (director) positives.push(weighted('in the visual style of ' + director, '1.1', platform));
- if (filmRef) positives.push(weighted('inspired by ' + filmRef, '1.1', platform));
- if (customRef) positives.push(weighted('inspired by ' + customRef, '1.0', platform));
- if (quality) positives.push(weighted(quality, '1.1', platform));
-
- getQualityWordsByResolution(resolution).forEach(function(q) {
-  positives.push(weighted(q, '1.0', platform));
- });
-
- var negatives = getNegativePromptByCategory('anime', platform);
- var finalPrompt = formatPromptByPlatform(platform, 'anime', positives, negatives, aspect, { raw: true, quality: 'high' });
-
- var pb = document.getElementById('promptBox');
- var hasContent = !!(style || subject || character);
- if (hasContent) {
-  pb.textContent = finalPrompt;
-  pb.classList.remove('empty');
- } else {
-  pb.textContent = 'Tu prompt aparecerá aquí en tiempo real mientras configuras los módulos...';
-  pb.classList.add('empty');
- }
-
- document.getElementById('charCount').textContent = finalPrompt.length;
- document.getElementById('wordCount').textContent = finalPrompt.split(/\s+/).filter(function(w) { return w; }).length;
+ if (style) parts.push(style + ' style illustration.');
+ if (shot) parts.push(shot + '.');
+ if (unaware) parts.push('Subject is unaware of the camera, not looking toward it.');
+ if (subject) parts.push(subject + '.');
+ if (character) parts.push('Character: ' + character + '.');
+ if (env) parts.push('Setting: ' + env + '.');
+ if (lighting) parts.push(lighting + ' lighting.');
+ if (mood) parts.push(mood + ' mood and atmosphere.');
+ if (palette) parts.push(palette + ' color palette.');
+ if (cameraType) parts.push('Rendered/captured with ' + cameraType + '.');
+ if (lensType) parts.push('Using ' + lensType + '.');
+ if (filmStock) parts.push(filmStock + ' render/film style.');
+ if (lensFilter) parts.push('Visual filter: ' + lensFilter + '.');
+ if (grain) parts.push('Texture/grain: ' + grain + '.');
+ if (director) parts.push('In the visual style of ' + director + '.');
+ if (filmRef) parts.push('Aesthetic inspired by ' + filmRef + '.');
+ if (customRef) parts.push('Referenced from ' + customRef + '.');
+ if (aspect) parts.push(aspect + ' format.');
+ parts.push(quality + ', ' + resolution + ' resolution.');
+ updatePromptDisplay(parts, style || subject);
  updateJSONDisplay();
 }
 
 // ========== BUILD HORROR ==========
 function buildHorrorPrompt() {
- var platform = gv('horrorPlatform') || 'universal';
- var subgenre = cleanText(gv('horrorSubgenre'));
- var subject = cleanText(gv('horrorSubject'));
- var entity = cleanText(gv('horrorEntity'));
- var env = cleanText(gv('horrorEnvironment'));
- var atmosphere = cleanText(gv('horrorAtmosphere'));
- var mood = cleanText(gv('horrorMood'));
- var lighting = cleanText(gv('horrorLighting'));
- var color = cleanText(gv('horrorColor'));
- var camera = cleanText(gv('horrorCamera'));
- var lens = cleanText(gv('horrorLens'));
- var shot = cleanText(gv('horrorShot'));
- var film = cleanText(gv('horrorFilm'));
- var unaware = gc('horrorUnaware');
- var author = cleanText(gv('horrorAuthor'));
- var filmRef = cleanText(gv('horrorFilmRef'));
- var customRef = cleanText(gv('horrorCustomRef'));
- var aspect = cleanText(gv('horrorAspect'));
- var resolution = cleanText(gv('horrorResolution'));
-
- var positives = [];
- if (platform === 'stable') {
-  positives.push(weighted('masterpiece', '1.2', platform));
-  positives.push(weighted('best quality', '1.2', platform));
- }
-
- if (subgenre) positives.push(weighted(subgenre + ' horror', '1.3', platform));
- if (shot) positives.push(weighted(shot, '1.2', platform));
- if (subject) positives.push(weighted(subject, '1.4', platform));
- if (entity) positives.push(weighted('entity: ' + entity, '1.3', platform));
- if (env) positives.push(weighted(env, '1.2', platform));
- if (atmosphere) positives.push(weighted(atmosphere, '1.2', platform));
- if (mood) positives.push(weighted(mood, '1.2', platform));
- if (lighting) positives.push(weighted(lighting, '1.1', platform));
- if (color) positives.push(weighted(color + ' color treatment', '1.1', platform));
- if (unaware) positives.push(weighted('subject unaware of camera', '1.0', platform));
-
- var cameraBlock = joinComma([camera, lens, film]);
- if (cameraBlock) positives.push(weighted(cameraBlock, '1.0', platform));
-
- if (author) positives.push(weighted('visual style of ' + author, '1.1', platform));
- if (filmRef) positives.push(weighted('inspired by ' + filmRef, '1.1', platform));
- if (customRef) positives.push(weighted('inspired by ' + customRef, '1.0', platform));
-
- getQualityWordsByResolution(resolution).forEach(function(q) {
-  positives.push(weighted(q, '1.0', platform));
- });
-
- positives.push(weighted('deeply unsettling', '1.1', platform));
-
- var negatives = getNegativePromptByCategory('horror', platform);
- var finalPrompt = formatPromptByPlatform(platform, 'horror', positives, negatives, aspect, { raw: true, quality: 'high' });
-
- var pb = document.getElementById('promptBox');
- var hasContent = !!(subgenre || subject || entity || env);
- if (hasContent) {
-  pb.textContent = finalPrompt;
-  pb.classList.remove('empty');
- } else {
-  pb.textContent = 'Tu prompt aparecerá aquí en tiempo real mientras configuras los módulos...';
-  pb.classList.add('empty');
- }
-
- document.getElementById('charCount').textContent = finalPrompt.length;
- document.getElementById('wordCount').textContent = finalPrompt.split(/\s+/).filter(function(w) { return w; }).length;
- updateJSONDisplay();
+  var parts = [];
+  var subgenre = gv('horrorSubgenre'), subject = gv('horrorSubject'), entity = gv('horrorEntity');
+  var env = gv('horrorEnvironment'), atmosphere = gv('horrorAtmosphere'), mood = gv('horrorMood');
+  var lighting = gv('horrorLighting'), color = gv('horrorColor');
+  var camera = gv('horrorCamera'), lens = gv('horrorLens'), shot = gv('horrorShot'), film = gv('horrorFilm');
+  var unaware = gc('horrorUnaware');
+  var author = gv('horrorAuthor'), filmRef = gv('horrorFilmRef'), customRef = gv('horrorCustomRef');
+  var aspect = gv('horrorAspect'), resolution = gv('horrorResolution');
+  var op = 'Cinematic horror photography';
+  if (subgenre) op = subgenre + ' cinematic photography';
+  if (shot) op += ', ' + shot.toLowerCase();
+  if (unaware) op += ', where the subject is unaware they are on camera';
+  parts.push(op + '.');
+  if (subject) parts.push(subject);
+  if (entity) parts.push('The entity: ' + entity);
+  if (env) parts.push('Set in ' + env + '.');
+  if (atmosphere || mood) {
+    var a = [];
+    if (atmosphere) a.push(atmosphere.toLowerCase());
+    if (mood) a.push(mood.toLowerCase());
+    parts.push('The atmosphere evokes ' + a.join(', creating a sense of ') + '.');
+  }
+  if (lighting) parts.push('Illuminated by ' + lighting.toLowerCase() + '.');
+  if (color) parts.push(color + ' color treatment.');
+  if (camera || lens || film) {
+    var c = [];
+    if (camera) c.push('shot on ' + camera);
+    if (lens) c.push(lens);
+    if (film) c.push(film);
+    parts.push('Captured with ' + c.join(', ') + '.');
+  }
+  if (author) parts.push('In the visual style of ' + author + '.');
+  if (filmRef) parts.push('Aesthetic inspired by ' + filmRef + '.');
+  if (customRef) parts.push('Referenced from ' + customRef + '.');
+  if (aspect) parts.push(aspect + ' format.');
+  parts.push('High contrast, ' + resolution + ' resolution, hyper-realistic details, masterful horror composition, deeply unsettling.');
+  updatePromptDisplay(parts, subgenre || subject);
+  updateJSONDisplay();
 }
 
 // ========== BUILD GRID (MÓDULO VERDE - INDEPENDIENTE) ==========
@@ -5322,70 +5060,61 @@ function updateGridPanels() {
 }
 
 function buildGridPrompt() {
- if (grillaMode !== 'green') return;
+  // Solo ejecutar si estamos en modo verde
+  if (grillaMode !== 'green') return;
+  
+  var parts = [];
+  var structure = gv('gridStructure') || '2x2';
+  var subject = gv('gridSubject');
+  var cc = gc('gridConsistentChar');
+  var cl = gc('gridConsistentLight');
+  var ccl = gc('gridConsistentColor');
 
- var platform = gv('gridPlatform') || 'universal';
- var structure = gv('gridStructure') || '2x2';
- var subject = cleanText(gv('gridSubject'));
- var cc = gc('gridConsistentChar');
- var cl = gc('gridConsistentLight');
- var ccl = gc('gridConsistentColor');
+  var cols = parseInt(structure.split('x')[0]);
+  var rows = parseInt(structure.split('x')[1]);
+  var total = cols * rows;
 
- var cols = parseInt(structure.split('x')[0]);
- var rows = parseInt(structure.split('x')[1]);
- var total = cols * rows;
+  var lb = {
+    '2x2': ['top-left','top-right','bottom-left','bottom-right'],
+    '1x2': ['left','right'],
+    '2x1': ['top','bottom'],
+    '1x3': ['left','center','right'],
+    '1x4': ['panel 1','panel 2','panel 3','panel 4']
+  };
+  var labels = lb[structure] || lb['2x2'];
 
- var labels = {
-  '2x2': ['top-left','top-right','bottom-left','bottom-right'],
-  '1x2': ['left','right'],
-  '2x1': ['top','bottom'],
-  '1x3': ['left','center','right'],
-  '1x4': ['panel 1','panel 2','panel 3','panel 4']
- }[structure] || ['top-left','top-right','bottom-left','bottom-right'];
+  // Encabezado — SOLO aparece en el módulo verde
+  parts.push('A ' + structure.replace('x','x') + ' grid image, ' + total + ' panels showing the same character from different angles.');
 
- var positives = [];
+  // Paneles con ángulos
+  for (var i = 1; i <= Math.min(total, 4); i++) {
+    var v = gv('gridPanel' + i + 'View');
+    var s = gv('gridPanel' + i + 'Shot');
+    if (v || s) {
+      var p = labels[i-1] + ': ';
+      if (v) p += v.toLowerCase();
+      if (v && s) p += ', ';
+      if (s) p += s.toLowerCase();
+      parts.push(p + '.');
+    }
+  }
 
- if (platform === 'stable') {
-  positives.push(weighted('character sheet', '1.2', platform));
-  positives.push(weighted('reference sheet', '1.2', platform));
- }
+  // Descripción adicional de escena (solo del campo gridSubject)
+  if (subject) parts.push('Additional scene notes: ' + subject);
 
- positives.push(weighted(structure + ' grid layout', '1.3', platform));
- positives.push(weighted(total + ' panels', '1.1', platform));
- positives.push(weighted('same character from different angles', '1.3', platform));
+  // Consistencia
+  var con = [];
+  if (cc) con.push('character');
+  if (cl) con.push('lighting');
+  if (ccl) con.push('color grading');
+  if (con.length) parts.push('Maintain consistent ' + con.join(', ') + ' across ALL panels.');
 
- for (var i = 1; i <= Math.min(total, 4); i++) {
-  var v = cleanText(gv('gridPanel' + i + 'View'));
-  var s = cleanText(gv('gridPanel' + i + 'Shot'));
-  var panelDesc = joinComma([labels[i-1], v, s]);
-  if (panelDesc) positives.push(weighted(panelDesc, '1.1', platform));
- }
+  // Calidad
+  parts.push('pure white background (#FFFFFF). Consistent design across ALL views. 1K resolution, highly detailed, professional character reference sheet.');
 
- if (subject) positives.push(weighted(subject, '1.2', platform));
- if (cc) positives.push(weighted('consistent character design across all panels', '1.3', platform));
- if (cl) positives.push(weighted('consistent lighting across all panels', '1.2', platform));
- if (ccl) positives.push(weighted('consistent color grading across all panels', '1.2', platform));
-
- positives.push(weighted('pure white background', '1.1', platform));
- positives.push(weighted('professional character reference sheet', '1.2', platform));
- positives.push(weighted('highly detailed', '1.1', platform));
-
- var negatives = getNegativePromptByCategory('grid', platform);
- var finalPrompt = formatPromptByPlatform(platform, 'grid', positives, negatives, '', { raw: true, quality: 'high' });
-
- var hasContent = !!(subject || gv('gridPanel1View') || gv('gridPanel2View'));
- var pb = document.getElementById('promptBox');
- if (hasContent) {
-  pb.textContent = finalPrompt;
-  pb.classList.remove('empty');
- } else {
-  pb.textContent = 'Tu prompt aparecerá aquí en tiempo real mientras configuras los módulos...';
-  pb.classList.add('empty');
- }
-
- document.getElementById('charCount').textContent = finalPrompt.length;
- document.getElementById('wordCount').textContent = finalPrompt.split(/\s+/).filter(function(w) { return w; }).length;
- updateJSONDisplay();
+  var hasContent = !!(subject || gv('gridPanel1View') || gv('gridPanel2View'));
+  updatePromptDisplay(parts, hasContent);
+  updateJSONDisplay();
 }
 
 // ========== BUILD VIDEO ==========
@@ -5399,74 +5128,34 @@ function getSpeedText(level) {
   return s[level] || s['3'];
 }
 function buildVideoPrompt() {
- var parts = [];
- var source = cleanText(gv('videoSourcePrompt'));
- var pVal = gv('videoPlatform');
- var pEl = document.getElementById('videoPlatform');
- var pText = pEl && pEl.selectedIndex > 0 ? pEl.options[pEl.selectedIndex].text : '';
- var camMoveRaw = cleanText(gv('videoCameraMove'));
- var intensity = gv('videoCameraIntensity');
- var subAct = cleanText(gv('videoSubjectAction'));
- var envMot = cleanText(gv('videoEnvMotion'));
- var dur = cleanText(gv('videoDuration'));
- var fps = cleanText(gv('videoFPS'));
- var tStart = cleanText(gv('videoTransStart'));
- var tEnd = cleanText(gv('videoTransEnd'));
- var fx = cleanText(gv('videoEffects'));
- var audio = cleanText(gv('videoAudio'));
- var aspect = cleanText(gv('videoAspect'));
- var quality = cleanText(gv('videoQuality'));
-
- var tipEl = document.getElementById('platformTip');
- var tips = {
-  'veo3':'Veo 3: Usa lenguaje natural detallado.',
-  'kling':'Kling: Excelente con image-to-video.',
-  'runway':'Runway Gen-4: Excelente control.',
-  'pika':'Pika: Bueno para clips cortos.',
-  'luma':'Luma: Fuerte en looks cinematográficos.',
-  'minimax':'Minimax: Buena calidad.',
-  'wan':'Wan 2.1: Responde bien a coordenadas.',
-  'seedance':'Seedance: Fórmulas dan resultados predecibles.',
-  'grok':'Grok: Usa fórmulas para ejes específicos.',
-  'qwen':'Qwen: Responde bien a ejes X,Y,Z.',
-  'generic':'Genérico: Universal.'
- };
- if (pVal && tips[pVal]) { tipEl.textContent = tips[pVal]; tipEl.style.display = 'block'; }
- else { tipEl.style.display = 'none'; }
-
- if (pVal === 'runway' || pVal === 'kling' || pVal === 'veo3' || pVal === 'luma' || pVal === 'generic') {
-  if (source) parts.push('Scene: ' + source + '.');
-  if (camMoveRaw) parts.push(camMoveRaw.replace('{SPEED}', getSpeedText(intensity)));
-  if (subAct) parts.push('Subject action: ' + subAct + '.');
-  if (envMot) parts.push('Environment motion: ' + envMot + '.');
-  if (dur) parts.push('Duration: ' + dur + '.');
-  if (fps) parts.push('Frame feel: ' + fps + '.');
-  if (tStart) parts.push('Opening transition: ' + tStart + '.');
-  if (tEnd) parts.push('Ending transition: ' + tEnd + '.');
-  if (fx) parts.push('Effects: ' + fx + '.');
-  if (audio) parts.push('Audio mood: ' + audio + '.');
-  if (aspect) parts.push('Aspect ratio: ' + aspect + '.');
-  if (quality) parts.push('Visual style: ' + quality + '.');
-  parts.push(getNegativePromptByCategory('video', 'llm'));
- } else {
+  var parts = [];
+  var source = gv('videoSourcePrompt'), pVal = gv('videoPlatform');
+  var pEl = document.getElementById('videoPlatform');
+  var pText = pEl && pEl.selectedIndex > 0 ? pEl.options[pEl.selectedIndex].text : '';
+  var camMoveRaw = gv('videoCameraMove'), intensity = gv('videoCameraIntensity');
+  var subAct = gv('videoSubjectAction'), envMot = gv('videoEnvMotion');
+  var dur = gv('videoDuration'), fps = gv('videoFPS');
+  var tStart = gv('videoTransStart'), tEnd = gv('videoTransEnd');
+  var fx = gv('videoEffects'), audio = gv('videoAudio');
+  var aspect = gv('videoAspect'), quality = gv('videoQuality');
+  var tipEl = document.getElementById('platformTip');
+  var tips = { 'veo3':'Veo 3: Usa lenguaje natural detallado.', 'kling':'Kling: Excelente con image-to-video.', 'runway':'Runway Gen-4: Excelente control.', 'pika':'Pika: Bueno para clips cortos.', 'luma':'Luma: Fuerte en looks cinematográficos.', 'minimax':'Minimax: Buena calidad.', 'wan':'Wan 2.1: Responde bien a coordenadas.', 'seedance':'Seedance: Fórmulas dan resultados predecibles.', 'grok':'Grok: Usa fórmulas para ejes específicos.', 'qwen':'Qwen: Responde bien a ejes X,Y,Z.', 'generic':'Genérico: Universal.' };
+  if (pVal && tips[pVal]) { tipEl.textContent = tips[pVal]; tipEl.style.display = 'block'; } else { tipEl.style.display = 'none'; }
   if (pText && pVal) parts.push('[Platform: ' + pText + ']');
   if (source) parts.push('Scene: ' + source);
-  if (camMoveRaw) parts.push(camMoveRaw.replace('{SPEED}', getSpeedText(intensity)));
+  if (camMoveRaw) { parts.push(camMoveRaw.replace('{SPEED}', getSpeedText(intensity))); }
   if (subAct) parts.push('Subject action: ' + subAct);
   if (envMot) parts.push('Environment: ' + envMot);
   if (tStart) parts.push('Opens with: ' + tStart.toLowerCase() + '.');
   if (tEnd) parts.push('Ends with: ' + tEnd.toLowerCase() + '.');
-  if (dur) parts.push('Duration: ' + dur + '.');
+  if (dur) parts.push('Duration: ' + dur.split(' ')[0] + ' seconds.');
   if (fps) parts.push(fps + '.');
   if (fx) parts.push('Effect: ' + fx.toLowerCase() + '.');
   if (audio) parts.push('Audio mood: ' + audio.toLowerCase() + '.');
   if (aspect) parts.push(aspect + ' format.');
-  if (quality) parts.push(quality + ', smooth motion, cinematic video.');
- }
-
- var finalPrompt = cleanText(parts.join(' '));
- updatePromptDisplay([finalPrompt], source || camMoveRaw || subAct);
- updateJSONDisplay();
+  parts.push(quality + ', smooth motion, cinematic video.');
+  updatePromptDisplay(parts, source || camMoveRaw || subAct);
+  updateJSONDisplay();
 }
 
 // ========== BUILD SHEET ==========
@@ -5822,7 +5511,6 @@ function collectAllData() {
     data.lighting = gv('sheetLighting'); data.grid = gv('sheetGrid'); data.resolution = gv('sheetResolution');
   }
   if (tab === 'cine') {
-    data.platform = gv('cinePlatform');
     data.subject = gv('subject'); data.shotType = gv('shotType'); data.viewDirection = gv('viewDirection');
     data.subjectUnaware = gc('subjectUnaware'); data.environment = gv('environment');
     data.lighting = gv('lighting'); data.atmosphere = gv('atmosphere'); data.mood = gv('mood');
@@ -5835,7 +5523,6 @@ function collectAllData() {
     data.customRef = gv('customRef'); data.composition = gv('composition'); data.resolution = gv('resolution'); data.temperature = gv('temperature');
   }
   if (tab === 'anime') {
-    data.platform = gv('animePlatform');
     data.style = gv('animeStyle'); data.subject = gv('animeSubject'); data.character = gv('animeCharacter');
     data.environment = gv('animeEnvironment'); data.palette = gv('animeColorPalette'); data.mood = gv('animeMood');
     data.lighting = gv('animeLighting'); data.shot = gv('animeShot'); data.director = gv('animeDirector');
@@ -5846,7 +5533,6 @@ function collectAllData() {
     data.grain = gv('animeGrain'); data.subjectUnaware = gc('animeSubjectUnaware');
   }
   if (tab === 'horror') {
-    data.platform = gv('horrorPlatform');
     data.subgenre = gv('horrorSubgenre'); data.subject = gv('horrorSubject'); data.entity = gv('horrorEntity');
     data.environment = gv('horrorEnvironment'); data.atmosphere = gv('horrorAtmosphere'); data.mood = gv('horrorMood');
     data.lighting = gv('horrorLighting'); data.color = gv('horrorColor'); data.camera = gv('horrorCamera');
@@ -5873,8 +5559,6 @@ function collectAllData() {
     data.aspect = gv('videoAspect'); data.quality = gv('videoQuality');
   }
   if (tab === 'grilla') {
-    data.tsPlatform = gv('tsPlatform');
-    data.gridPlatform = gv('gridPlatform');
     data.tsCharacter = gv('tsCharacter'); data.tsClothing = gv('tsClothing');
     data.tsCharCount = gv('tsCharCount'); data.tsCamera = gv('tsCamera');
     data.tsLens = gv('tsLens'); data.tsBackground = gv('tsBackground');
@@ -5928,9 +5612,9 @@ function loadJSON(input) {
       document.querySelectorAll('.tab').forEach(function(t) { if (t.dataset.tab === data.tab) t.click(); });
       setTimeout(function() {
         if (data.tab === 'sheet') { sv('sheetCharacter',data.character); sv('sheetClothing',data.clothing); sv('sheetCharCount',data.charCount); sv('sheetViews',data.views); sv('sheetCustomViews',data.customViews); sv('sheetCamera',data.camera); sv('sheetLens',data.lens); sv('sheetBackground',data.background); sv('sheetStyle',data.style); sv('sheetLighting',data.lighting); sv('sheetGrid',data.grid); sv('sheetResolution',data.resolution); buildSheetPrompt(); }
-        if (data.tab === 'cine') { sv('cinePlatform', data.platform); sv('subject',data.subject); sv('shotType',data.shotType); sv('viewDirection',data.viewDirection); sc('subjectUnaware',data.subjectUnaware); sv('environment',data.environment); sv('lighting',data.lighting); sv('atmosphere',data.atmosphere); sv('mood',data.mood); sv('customMood',data.customMood); sv('cameraBody',data.cameraBody); sv('focalLength',data.focalLength); sv('lensType',data.lensType); sv('filmStock',data.filmStock); sv('aperture',data.aperture); sv('shutterSpeed',data.shutterSpeed); sv('iso',data.iso); sv('lensFilter',data.lensFilter); sv('filmGrain',data.filmGrain); sv('aspectRatio',data.aspectRatio); sv('colorPalette',data.colorPalette); sv('colorGrading',data.colorGrading); sv('photographer',data.photographer); sv('movieRef',data.movieRef); sv('customRef',data.customRef); sv('composition', data.composition); sv('resolution',data.resolution); sv('temperature',data.temperature); buildPrompt(); }
-        if (data.tab === 'anime') { sv('animePlatform', data.platform); sv('animeStyle',data.style); sv('animeSubject',data.subject); sv('animeCharacter',data.character); sv('animeEnvironment',data.environment); sv('animeColorPalette',data.palette); sv('animeMood',data.mood); sv('animeLighting',data.lighting); sv('animeShot',data.shot); sv('animeDirector',data.director); sv('animeFilmRef',data.filmRef); sv('animeCustomRef',data.customRef); sv('animeAspect',data.aspect); sv('animeResolution',data.resolution); sv('animeQuality',data.quality); buildAnimePrompt(); }
-        if (data.tab === 'horror') { sv('horrorPlatform', data.platform); sv('horrorSubgenre',data.subgenre); sv('horrorSubject',data.subject); sv('horrorEntity',data.entity); sv('horrorEnvironment',data.environment); sv('horrorAtmosphere',data.atmosphere); sv('horrorMood',data.mood); sv('horrorLighting',data.lighting); sv('horrorColor',data.color); sv('horrorCamera',data.camera); sv('horrorLens',data.lens); sv('horrorShot',data.shot); sv('horrorFilm',data.film); sc('horrorUnaware',data.unaware); sv('horrorAuthor',data.author); sv('horrorFilmRef',data.filmRef); sv('horrorCustomRef',data.customRef); sv('horrorAspect',data.aspect); sv('horrorResolution',data.resolution); buildHorrorPrompt(); }
+        if (data.tab === 'cine') { sv('subject',data.subject); sv('shotType',data.shotType); sv('viewDirection',data.viewDirection); sc('subjectUnaware',data.subjectUnaware); sv('environment',data.environment); sv('lighting',data.lighting); sv('atmosphere',data.atmosphere); sv('mood',data.mood); sv('customMood',data.customMood); sv('cameraBody',data.cameraBody); sv('focalLength',data.focalLength); sv('lensType',data.lensType); sv('filmStock',data.filmStock); sv('aperture',data.aperture); sv('shutterSpeed',data.shutterSpeed); sv('iso',data.iso); sv('lensFilter',data.lensFilter); sv('filmGrain',data.filmGrain); sv('aspectRatio',data.aspectRatio); sv('colorPalette',data.colorPalette); sv('colorGrading',data.colorGrading); sv('photographer',data.photographer); sv('movieRef',data.movieRef); sv('customRef',data.customRef); sv('composition', data.composition); sv('resolution',data.resolution); sv('temperature',data.temperature); buildPrompt(); }
+        if (data.tab === 'anime') { sv('animeStyle',data.style); sv('animeSubject',data.subject); sv('animeCharacter',data.character); sv('animeEnvironment',data.environment); sv('animeColorPalette',data.palette); sv('animeMood',data.mood); sv('animeLighting',data.lighting); sv('animeShot',data.shot); sv('animeDirector',data.director); sv('animeFilmRef',data.filmRef); sv('animeCustomRef',data.customRef); sv('animeAspect',data.aspect); sv('animeResolution',data.resolution); sv('animeQuality',data.quality); buildAnimePrompt(); }
+        if (data.tab === 'horror') { sv('horrorSubgenre',data.subgenre); sv('horrorSubject',data.subject); sv('horrorEntity',data.entity); sv('horrorEnvironment',data.environment); sv('horrorAtmosphere',data.atmosphere); sv('horrorMood',data.mood); sv('horrorLighting',data.lighting); sv('horrorColor',data.color); sv('horrorCamera',data.camera); sv('horrorLens',data.lens); sv('horrorShot',data.shot); sv('horrorFilm',data.film); sc('horrorUnaware',data.unaware); sv('horrorAuthor',data.author); sv('horrorFilmRef',data.filmRef); sv('horrorCustomRef',data.customRef); sv('horrorAspect',data.aspect); sv('horrorResolution',data.resolution); buildHorrorPrompt(); }
         if (data.tab === 'musica') { sv('musicGenre',data.genre); sv('musicSubGenre',data.subGenre); sv('musicLeadInst',data.leadInst); sv('musicSupportInst',data.supportInst); sv('musicProduction',data.production); sv('musicVoiceType',data.voiceType); sv('musicLanguage',data.language); sv('musicMood',data.mood); sv('musicUse',data.use); sv('musicKey',data.key); sv('musicTexture',data.texture); sv('musicEra',data.era); sv('musicArtistRef',data.artistRef); sv('musicFilmRef',data.filmRef); sv('musicCustomRef',data.customRef); sv('musicStructure',data.structure); sv('musicDuration',data.duration); sv('musicQuality',data.quality); var bpmEl=document.getElementById('musicBPM'); if(bpmEl) bpmEl.value=data.bpm||'90'; updateBPMLabel(); updateStructurePreview(); }
         if (data.tab === 'video') { sv('videoSourcePrompt',data.source); sv('videoPlatform',data.platform); sv('videoCameraMove',data.cameraMove); var intEl=document.getElementById('videoCameraIntensity'); if(intEl) intEl.value=data.cameraIntensity||'3'; if(typeof updateIntensityLabel==='function') updateIntensityLabel(); sv('videoSubjectAction',data.subjectAction); sv('videoEnvMotion',data.envMotion); sv('videoDuration',data.duration); sv('videoFPS',data.fps); sv('videoTransStart',data.transStart); sv('videoTransEnd',data.transEnd); sv('videoEffects',data.effects); sv('videoAudio',data.audio); sv('videoAspect',data.aspect); sv('videoQuality',data.quality); buildVideoPrompt(); }
         alert('Proyecto cargado: ' + file.name);
@@ -6000,67 +5684,55 @@ function setGrillaMode(mode) {
 }
 // ========== BUILD CHARACTER (MÓDULO ROJO - INDEPENDIENTE) ==========
 function buildCharacterPrompt() {
- if (grillaMode !== 'red') return;
+  // Solo ejecutar si estamos en modo rojo
+  if (grillaMode !== 'red') return;
+  
+  var parts = [];
+  var tsCharacter = gv('tsCharacter');
+  var tsClothing = gv('tsClothing');
+  var tsCharCount = gv('tsCharCount');
+  var tsCamera = gv('tsCamera');
+  var tsLens = gv('tsLens');
+  var tsBackground = gv('tsBackground');
+  var tsStyle = gv('tsStyle');
+  var tsLighting = gv('tsLighting');
+  var tsResolution = gv('tsResolution');
 
- var platform = gv('tsPlatform') || 'universal';
- var tsCharacter = cleanText(gv('tsCharacter'));
- var tsClothing = cleanText(gv('tsClothing'));
- var tsCharCount = cleanText(gv('tsCharCount'));
- var tsCamera = cleanText(gv('tsCamera'));
- var tsLens = cleanText(gv('tsLens'));
- var tsBackground = cleanText(gv('tsBackground'));
- var tsStyle = cleanText(gv('tsStyle'));
- var tsLighting = cleanText(gv('tsLighting'));
- var tsResolution = cleanText(gv('tsResolution')) || '4K';
+  // Estilo
+  if (tsStyle) parts.push(tsStyle + '.');
 
- var positives = [];
+  // Tipo de shot (SOLO full body, sin grilla)
+  parts.push('Full body character portrait, single image.');
 
- if (platform === 'stable') {
-  positives.push(weighted('character sheet', '1.2', platform));
-  positives.push(weighted('reference sheet', '1.2', platform));
- }
+  // Personaje
+  if (tsCharacter) parts.push('Character: ' + tsCharacter);
+  if (tsClothing) parts.push('Clothing details: ' + tsClothing);
 
- if (tsStyle) positives.push(weighted(tsStyle, '1.2', platform));
- positives.push(weighted('full body character portrait', '1.3', platform));
- positives.push(weighted('single image', '1.0', platform));
- if (tsCharacter) positives.push(weighted('character: ' + tsCharacter, '1.4', platform));
- if (tsClothing) positives.push(weighted('clothing details: ' + tsClothing, '1.2', platform));
+  // Cantidad de personajes
+  if (tsCharCount === 'duo') parts.push('Two characters side by side for comparison.');
+  if (tsCharCount === 'group') parts.push('Multiple characters shown together.');
 
- if (tsCharCount === 'duo') positives.push(weighted('two characters side by side for comparison', '1.1', platform));
- if (tsCharCount === 'group') positives.push(weighted('multiple characters shown together', '1.1', platform));
+  // Fondo
+  if (tsBackground) parts.push(tsBackground + '.');
 
- if (tsBackground) positives.push(weighted(tsBackground, '1.1', platform));
+  // Cámara y lente
+  if (tsCamera || tsLens) {
+    var cp = [];
+    if (tsCamera) cp.push('shot on ' + tsCamera);
+    if (tsLens) cp.push(tsLens);
+    parts.push('Captured with ' + cp.join(', ') + '.');
+  }
 
- var cameraBlock = joinComma([
-  tsCamera ? 'shot on ' + tsCamera : '',
-  tsLens
- ]);
- if (cameraBlock) positives.push(weighted(cameraBlock, '1.0', platform));
+  // Iluminación
+  if (tsLighting) parts.push(tsLighting + '.');
 
- if (tsLighting) positives.push(weighted(tsLighting, '1.1', platform));
- positives.push(weighted('professional character reference', '1.2', platform));
- positives.push(weighted('highly detailed', '1.1', platform));
+  // Resolución y calidad
+  var res = tsResolution || '4K';
+  parts.push(res + ' resolution, highly detailed, professional character reference.');
 
- getQualityWordsByResolution(tsResolution).forEach(function(q) {
-  positives.push(weighted(q, '1.0', platform));
- });
-
- var negatives = getNegativePromptByCategory('sheet', platform);
- var finalPrompt = formatPromptByPlatform(platform, 'sheet', positives, negatives, '', { raw: true, quality: 'high' });
-
- var hasContent = !!(tsCharacter || tsClothing || tsCamera || tsLighting);
- var pb = document.getElementById('promptBox');
- if (hasContent) {
-  pb.textContent = finalPrompt;
-  pb.classList.remove('empty');
- } else {
-  pb.textContent = 'Tu prompt aparecerá aquí en tiempo real mientras configuras los módulos...';
-  pb.classList.add('empty');
- }
-
- document.getElementById('charCount').textContent = finalPrompt.length;
- document.getElementById('wordCount').textContent = finalPrompt.split(/\s+/).filter(function(w) { return w; }).length;
- updateJSONDisplay();
+  var hasContent = !!(tsCharacter || tsClothing || tsCamera || tsLighting);
+  updatePromptDisplay(parts, hasContent);
+  updateJSONDisplay();
 }
 // ========== INIT GRILLA MODE ==========
 // Asegura que el modo inicial sea correcto al cargar
