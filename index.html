@@ -417,6 +417,203 @@ select option{background:var(--bg3);color:var(--text)}
   margin-bottom: 12px;
 }
 .music-subgenre-select:focus { outline: none; border-color: var(--active); }
+
+/* ========== PLATFORM SELECTOR ========== */
+.platform-selector-module {
+  margin-bottom: 24px;
+  border: 2px solid var(--active);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--bg2);
+}
+.platform-selector-header {
+  padding: 14px 18px;
+  background: var(--bg3);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.platform-selector-header h3 {
+  font-size: .85rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--active);
+  font-weight: 700;
+  margin: 0;
+}
+.platform-selector-badge {
+  font-size: .7rem;
+  background: var(--active);
+  color: #000;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 800;
+}
+.platform-selector-body {
+  padding: 16px 18px;
+  background: var(--bg);
+}
+.platform-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.platform-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 8px;
+  background: var(--bg3);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all .25s;
+  font-family: inherit;
+  color: var(--text2);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.2;
+}
+.platform-btn:hover {
+  border-color: var(--active);
+  color: var(--text);
+  background: var(--bg4);
+  transform: translateY(-2px);
+}
+.platform-btn.selected {
+  border-color: var(--active);
+  background: var(--bg3);
+  color: var(--active);
+  box-shadow: 0 0 0 2px var(--active);
+}
+.platform-btn .plat-icon {
+  font-size: 1.4rem;
+  opacity: .8;
+}
+.platform-btn.selected .plat-icon {
+  opacity: 1;
+}
+.platform-mode-indicator {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-top: 4px;
+}
+.platform-mode-badge {
+  font-size: .65rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.platform-mode-badge.mode-universal { background: #4ff6ff; color: #000; }
+.platform-mode-badge.mode-midjourney { background: #ab46d4; color: #fff; }
+.platform-mode-badge.mode-sd { background: #fd79a8; color: #000; }
+.platform-mode-badge.mode-video { background: #25FFC4; color: #000; }
+.platform-mode-desc {
+  font-size: .75rem;
+  color: var(--text2);
+  line-height: 1.4;
+}
+.platform-negative-field {
+  margin-top: 12px;
+  display: none;
+}
+.platform-negative-field.visible {
+  display: block;
+}
+.platform-negative-field .field-label {
+  font-size: .72rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #fd79a8;
+  margin-bottom: 5px;
+  font-weight: 700;
+}
+.platform-negative-field input {
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid #fd79a8;
+  color: var(--text);
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  font-family: inherit;
+  font-size: .85rem;
+}
+.platform-negative-field input:focus {
+  outline: none;
+  border-color: #ff5eb0;
+}
+.platform-sd-weights {
+  margin-top: 10px;
+  display: none;
+}
+.platform-sd-weights.visible {
+  display: block;
+}
+.platform-sd-weights .field-label {
+  font-size: .72rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #fd79a8;
+  margin-bottom: 5px;
+  font-weight: 700;
+}
+.platform-mj-options {
+  display: none;
+  margin-top: 10px;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.platform-mj-options.visible {
+  display: flex;
+}
+.mj-option-field {
+  flex: 1;
+  min-width: 100px;
+}
+.mj-option-field label {
+  display: block;
+  font-size: .68rem;
+  letter-spacing: 1px;
+  color: #ab46d4;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.mj-option-field select,
+.mj-option-field input[type="number"] {
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid #ab46d4;
+  color: var(--text);
+  padding: 8px 10px;
+  border-radius: var(--radius);
+  font-family: inherit;
+  font-size: .82rem;
+  cursor: pointer;
+  appearance: none;
+}
+.mj-option-field input[type="number"] {
+  appearance: auto;
+}
+.mj-option-field select:focus,
+.mj-option-field input:focus {
+  outline: none;
+  border-color: var(--active);
+}
 </style>
 </head>
 <body>
@@ -459,6 +656,15 @@ select option{background:var(--bg3);color:var(--text)}
 
     <!-- ==================== TAB: CINE ==================== -->
     <div class="tab-content" id="tab-cine">
+
+<!-- PLATFORM SELECTOR: CINE -->
+<div id="platform-selector-cine"></div>
+<script>
+(function(){
+  var el = document.getElementById('platform-selector-cine');
+  if(el) el.outerHTML = buildPlatformSelectorHTML('cine','universales');
+})();
+</script>
 
       <!-- MODULE 01: SUBJECT & ACTION -->
       <div class="module">
@@ -897,6 +1103,15 @@ select option{background:var(--bg3);color:var(--text)}
     <!-- ==================== TAB: ANIMACIÓN ==================== -->
     <div class="tab-content" id="tab-anime">
 
+<!-- PLATFORM SELECTOR: ANIME -->
+<div id="platform-selector-anime"></div>
+<script>
+(function(){
+  var el = document.getElementById('platform-selector-anime');
+  if(el) el.outerHTML = buildPlatformSelectorHTML('anime','universales');
+})();
+</script>
+
       <!-- ANIME: STYLE -->
       <div class="module">
         <div class="module-header" onclick="toggleModule(this)">
@@ -1128,6 +1343,15 @@ select option{background:var(--bg3);color:var(--text)}
     <!-- ==================== TAB: HORROR ==================== -->
     <div class="tab-content" id="tab-horror">
 
+<!-- PLATFORM SELECTOR: HORROR -->
+<div id="platform-selector-horror"></div>
+<script>
+(function(){
+  var el = document.getElementById('platform-selector-horror');
+  if(el) el.outerHTML = buildPlatformSelectorHTML('horror','universales');
+})();
+</script>
+
       <!-- HORROR: SUBGENRE -->
       <div class="module">
         <div class="module-header" onclick="toggleModule(this)">
@@ -1335,6 +1559,15 @@ select option{background:var(--bg3);color:var(--text)}
 
 <!-- ==================== TAB: GRILLA ==================== -->
 <div class="tab-content active" id="tab-grilla">
+
+<!-- PLATFORM SELECTOR: GRILLA -->
+<div id="platform-selector-grilla"></div>
+<script>
+(function(){
+  var el = document.getElementById('platform-selector-grilla');
+  if(el) el.outerHTML = buildPlatformSelectorHTML('grilla','universales');
+})();
+</script>
 
   <!-- SELECTOR DE MODO -->
   <div class="module-toggle-bar">
@@ -1786,6 +2019,15 @@ select option{background:var(--bg3);color:var(--text)}
 
    <!-- ==================== TAB: VIDEO ==================== -->
     <div class="tab-content" id="tab-video">
+
+<!-- PLATFORM SELECTOR: VIDEO -->
+<div id="platform-selector-video"></div>
+<script>
+(function(){
+  var el = document.getElementById('platform-selector-video');
+  if(el) el.outerHTML = buildPlatformSelectorHTML('video','runway');
+})();
+</script>
 
       <!-- VIDEO: ORIGINAL PROMPT -->
       <div class="module">
@@ -4927,18 +5169,19 @@ function buildPrompt() {
   if (shotType) op += ' of a ' + shotType.toLowerCase();
   if (viewDir) op += ', viewed ' + viewDir.toLowerCase();
   if (unaware) op += ', where the subject is unaware they are on camera';
-  parts.push(op + '.');
-  if (subject) parts.push(subject + '.');
+  parts.push(op);
+
+  if (subject) parts.push(subject);
   var composition = gv('composition');
-  if (composition) parts.push(composition + '.');
-  if (env) parts.push('Set in ' + env + '.');
+  if (composition) parts.push(composition);
+  if (env) parts.push('Set in ' + env);
   if (lighting || atmosphere || mood || customMood) {
     var lp = [];
     if (lighting) lp.push('illuminated by ' + lighting.toLowerCase());
     if (atmosphere) lp.push(atmosphere.toLowerCase() + ' atmosphere');
     if (mood) lp.push(mood.toLowerCase() + ' mood');
     if (customMood) lp.push(customMood);
-    parts.push('The scene features ' + lp.join(', ') + '.');
+    parts.push('The scene features ' + lp.join(', '));
   }
   if (camera || focal || lens || film || aperture || shutter || isoVal) {
     var cp = [];
@@ -4949,61 +5192,80 @@ function buildPrompt() {
     if (shutter) cp.push(shutter.split(' (')[0] + ' shutter speed');
     if (isoVal) cp.push(isoVal.split(' (')[0]);
     if (film) cp.push(film + ' film stock');
-    parts.push('Captured with ' + cp.join(', ') + '.');
+    parts.push('Captured with ' + cp.join(', '));
   }
-  if (lensFilter) parts.push('Through a ' + lensFilter.split(' (')[0] + ' filter.');
-  if (filmGrain) parts.push('With ' + filmGrain.split(' (')[0] + ' texture.');
+  if (lensFilter) parts.push('Through a ' + lensFilter.split(' (')[0] + ' filter');
+  if (filmGrain) parts.push('With ' + filmGrain.split(' (')[0] + ' texture');
   if (palette || grading) {
     var col = [];
     if (palette) col.push(palette + ' color palette');
     if (grading) col.push(grading + ' color grading');
-    parts.push(col.join(' with ') + '.');
+    parts.push(col.join(' with '));
   }
   if (photog || movie || customRef) {
     var ref = [];
     if (photog) ref.push('photography style of ' + photog);
     if (movie) ref.push('visual aesthetic of ' + movie);
     if (customRef) ref.push('inspired by ' + customRef);
-    parts.push('In the ' + ref.join(', ') + '.');
+    parts.push('In the ' + ref.join(', '));
   }
-  if (aspect) parts.push('The image should be in ' + aspect + ' format.');
-  parts.push(resolution + ' resolution, hyper-realistic details, masterful composition.');
-  updatePromptDisplay(parts, subject || shotType || lighting || camera);
+  if (aspect) parts.push('Format: ' + aspect);
+  parts.push(resolution + ' resolution, hyper-realistic details, masterful composition');
+
+  var extraData = { subject: subject || op };
+  var finalText = formatPromptForPlatform('cine', parts, extraData);
+
+  var pb = document.getElementById('promptBox');
+  var hasContent = !!(subject || shotType || lighting || camera);
+  if (hasContent) { pb.textContent = finalText; pb.classList.remove('empty'); }
+  else { pb.textContent = 'Tu prompt cinematográfico aparecerá aquí en tiempo real mientras configuras los módulos...'; pb.classList.add('empty'); }
+  document.getElementById('charCount').textContent = finalText.length;
+  document.getElementById('wordCount').textContent = finalText.split(/\s+/).filter(function(w){ return w; }).length;
   updateJSONDisplay();
 }
 
 // ========== BUILD ANIME ==========
 function buildAnimePrompt() {
- var parts = [];
- var style = gv('animeStyle'), subject = gv('animeSubject'), character = gv('animeCharacter');
- var env = gv('animeEnvironment'), palette = gv('animeColorPalette'), mood = gv('animeMood');
- var lighting = gv('animeLighting'), shot = gv('animeShot'), director = gv('animeDirector');
- var filmRef = gv('animeFilmRef'), customRef = gv('animeCustomRef');
- var aspect = gv('animeAspect'), resolution = gv('animeResolution'), quality = gv('animeQuality');
- var cameraType = gv('animeCameraType'), lensType = gv('animeLensType');
- var filmStock = gv('animeFilmStock'), lensFilter = gv('animeLensFilter'), grain = gv('animeGrain');
- var unaware = gc('animeSubjectUnaware');
- if (style) parts.push(style + ' style illustration.');
- if (shot) parts.push(shot + '.');
- if (unaware) parts.push('Subject is unaware of the camera, not looking toward it.');
- if (subject) parts.push(subject + '.');
- if (character) parts.push('Character: ' + character + '.');
- if (env) parts.push('Setting: ' + env + '.');
- if (lighting) parts.push(lighting + ' lighting.');
- if (mood) parts.push(mood + ' mood and atmosphere.');
- if (palette) parts.push(palette + ' color palette.');
- if (cameraType) parts.push('Rendered/captured with ' + cameraType + '.');
- if (lensType) parts.push('Using ' + lensType + '.');
- if (filmStock) parts.push(filmStock + ' render/film style.');
- if (lensFilter) parts.push('Visual filter: ' + lensFilter + '.');
- if (grain) parts.push('Texture/grain: ' + grain + '.');
- if (director) parts.push('In the visual style of ' + director + '.');
- if (filmRef) parts.push('Aesthetic inspired by ' + filmRef + '.');
- if (customRef) parts.push('Referenced from ' + customRef + '.');
- if (aspect) parts.push(aspect + ' format.');
- parts.push(quality + ', ' + resolution + ' resolution.');
- updatePromptDisplay(parts, style || subject);
- updateJSONDisplay();
+  var parts = [];
+  var style = gv('animeStyle'), subject = gv('animeSubject'), character = gv('animeCharacter');
+  var env = gv('animeEnvironment'), palette = gv('animeColorPalette'), mood = gv('animeMood');
+  var lighting = gv('animeLighting'), shot = gv('animeShot'), director = gv('animeDirector');
+  var filmRef = gv('animeFilmRef'), customRef = gv('animeCustomRef');
+  var aspect = gv('animeAspect'), resolution = gv('animeResolution'), quality = gv('animeQuality');
+  var cameraType = gv('animeCameraType'), lensType = gv('animeLensType');
+  var filmStock = gv('animeFilmStock'), lensFilter = gv('animeLensFilter'), grain = gv('animeGrain');
+  var unaware = gc('animeSubjectUnaware');
+
+  if (style) parts.push(style + ' style illustration');
+  if (shot) parts.push(shot);
+  if (unaware) parts.push('Subject is unaware of the camera, not looking toward it');
+  if (subject) parts.push(subject);
+  if (character) parts.push('Character: ' + character);
+  if (env) parts.push('Setting: ' + env);
+  if (lighting) parts.push(lighting + ' lighting');
+  if (mood) parts.push(mood + ' mood and atmosphere');
+  if (palette) parts.push(palette + ' color palette');
+  if (cameraType) parts.push('Rendered with ' + cameraType);
+  if (lensType) parts.push('Using ' + lensType);
+  if (filmStock) parts.push(filmStock + ' render/film style');
+  if (lensFilter) parts.push('Visual filter: ' + lensFilter);
+  if (grain) parts.push('Texture/grain: ' + grain);
+  if (director) parts.push('In the visual style of ' + director);
+  if (filmRef) parts.push('Aesthetic inspired by ' + filmRef);
+  if (customRef) parts.push('Referenced from ' + customRef);
+  if (aspect) parts.push(aspect + ' format');
+  parts.push(quality + ', ' + resolution + ' resolution');
+
+  var extraData = { subject: subject || style || 'Anime character scene' };
+  var finalText = formatPromptForPlatform('anime', parts, extraData);
+
+  var pb = document.getElementById('promptBox');
+  var hasContent = !!(style || subject);
+  if (hasContent) { pb.textContent = finalText; pb.classList.remove('empty'); }
+  else { pb.textContent = 'Tu prompt aparecerá aquí en tiempo real...'; pb.classList.add('empty'); }
+  document.getElementById('charCount').textContent = finalText.length;
+  document.getElementById('wordCount').textContent = finalText.split(/\s+/).filter(function(w){ return w; }).length;
+  updateJSONDisplay();
 }
 
 // ========== BUILD HORROR ==========
@@ -5016,64 +5278,61 @@ function buildHorrorPrompt() {
   var unaware = gc('horrorUnaware');
   var author = gv('horrorAuthor'), filmRef = gv('horrorFilmRef'), customRef = gv('horrorCustomRef');
   var aspect = gv('horrorAspect'), resolution = gv('horrorResolution');
+
   var op = 'Cinematic horror photography';
   if (subgenre) op = subgenre + ' cinematic photography';
   if (shot) op += ', ' + shot.toLowerCase();
-  if (unaware) op += ', where the subject is unaware they are on camera';
-  parts.push(op + '.');
+  if (unaware) op += ', subject unaware of camera';
+  parts.push(op);
+
   if (subject) parts.push(subject);
   if (entity) parts.push('The entity: ' + entity);
-  if (env) parts.push('Set in ' + env + '.');
+  if (env) parts.push('Set in ' + env);
   if (atmosphere || mood) {
     var a = [];
     if (atmosphere) a.push(atmosphere.toLowerCase());
     if (mood) a.push(mood.toLowerCase());
-    parts.push('The atmosphere evokes ' + a.join(', creating a sense of ') + '.');
+    parts.push('The atmosphere evokes ' + a.join(', creating a sense of '));
   }
-  if (lighting) parts.push('Illuminated by ' + lighting.toLowerCase() + '.');
-  if (color) parts.push(color + ' color treatment.');
+  if (lighting) parts.push('Illuminated by ' + lighting.toLowerCase());
+  if (color) parts.push(color + ' color treatment');
   if (camera || lens || film) {
     var c = [];
     if (camera) c.push('shot on ' + camera);
     if (lens) c.push(lens);
     if (film) c.push(film);
-    parts.push('Captured with ' + c.join(', ') + '.');
+    parts.push('Captured with ' + c.join(', '));
   }
-  if (author) parts.push('In the visual style of ' + author + '.');
-  if (filmRef) parts.push('Aesthetic inspired by ' + filmRef + '.');
-  if (customRef) parts.push('Referenced from ' + customRef + '.');
-  if (aspect) parts.push(aspect + ' format.');
-  parts.push('High contrast, ' + resolution + ' resolution, hyper-realistic details, masterful horror composition, deeply unsettling.');
-  updatePromptDisplay(parts, subgenre || subject);
+  if (author) parts.push('In the visual style of ' + author);
+  if (filmRef) parts.push('Aesthetic inspired by ' + filmRef);
+  if (customRef) parts.push('Referenced from ' + customRef);
+  if (aspect) parts.push(aspect + ' format');
+  parts.push('High contrast, ' + resolution + ' resolution, hyper-realistic, deeply unsettling horror composition');
+
+  var extraData = { subject: subject || op };
+  var finalText = formatPromptForPlatform('horror', parts, extraData);
+
+  var pb = document.getElementById('promptBox');
+  var hasContent = !!(subgenre || subject);
+  if (hasContent) { pb.textContent = finalText; pb.classList.remove('empty'); }
+  else { pb.textContent = 'Tu prompt aparecerá aquí en tiempo real...'; pb.classList.add('empty'); }
+  document.getElementById('charCount').textContent = finalText.length;
+  document.getElementById('wordCount').textContent = finalText.split(/\s+/).filter(function(w){ return w; }).length;
   updateJSONDisplay();
 }
 
 // ========== BUILD GRID (MÓDULO VERDE - INDEPENDIENTE) ==========
-function updateGridPanels() {
-  var s = gv('gridStructure');
-  var r = document.getElementById('gridRow2');
-  if (s === '1x2' || s === '2x1') { 
-    r.style.display = 'none'; 
-  } else { 
-    r.style.display = ''; 
-  }
-}
-
 function buildGridPrompt() {
-  // Solo ejecutar si estamos en modo verde
   if (grillaMode !== 'green') return;
-  
   var parts = [];
   var structure = gv('gridStructure') || '2x2';
   var subject = gv('gridSubject');
   var cc = gc('gridConsistentChar');
   var cl = gc('gridConsistentLight');
   var ccl = gc('gridConsistentColor');
-
   var cols = parseInt(structure.split('x')[0]);
   var rows = parseInt(structure.split('x')[1]);
   var total = cols * rows;
-
   var lb = {
     '2x2': ['top-left','top-right','bottom-left','bottom-right'],
     '1x2': ['left','right'],
@@ -5083,10 +5342,8 @@ function buildGridPrompt() {
   };
   var labels = lb[structure] || lb['2x2'];
 
-  // Encabezado — SOLO aparece en el módulo verde
-  parts.push('A ' + structure.replace('x','x') + ' grid image, ' + total + ' panels showing the same character from different angles.');
+  parts.push('A ' + structure + ' grid image, ' + total + ' panels showing the same character from different angles');
 
-  // Paneles con ángulos
   for (var i = 1; i <= Math.min(total, 4); i++) {
     var v = gv('gridPanel' + i + 'View');
     var s = gv('gridPanel' + i + 'Shot');
@@ -5095,38 +5352,30 @@ function buildGridPrompt() {
       if (v) p += v.toLowerCase();
       if (v && s) p += ', ';
       if (s) p += s.toLowerCase();
-      parts.push(p + '.');
+      parts.push(p);
     }
   }
-
-  // Descripción adicional de escena (solo del campo gridSubject)
-  if (subject) parts.push('Additional scene notes: ' + subject);
-
-  // Consistencia
+  if (subject) parts.push('Scene notes: ' + subject);
   var con = [];
   if (cc) con.push('character');
   if (cl) con.push('lighting');
   if (ccl) con.push('color grading');
-  if (con.length) parts.push('Maintain consistent ' + con.join(', ') + ' across ALL panels.');
+  if (con.length) parts.push('Maintain consistent ' + con.join(', ') + ' across ALL panels');
+  parts.push('pure white background (#FFFFFF), consistent design, 1K resolution, professional character reference sheet');
 
-  // Calidad
-  parts.push('pure white background (#FFFFFF). Consistent design across ALL views. 1K resolution, highly detailed, professional character reference sheet.');
+  var extraData = { subject: subject || 'Character grid, multiple angles' };
+  var finalText = formatPromptForPlatform('grilla', parts, extraData);
 
   var hasContent = !!(subject || gv('gridPanel1View') || gv('gridPanel2View'));
-  updatePromptDisplay(parts, hasContent);
+  var pb = document.getElementById('promptBox');
+  if (hasContent) { pb.textContent = finalText; pb.classList.remove('empty'); }
+  else { pb.textContent = 'Tu prompt aparecerá aquí en tiempo real...'; pb.classList.add('empty'); }
+  document.getElementById('charCount').textContent = finalText.length;
+  document.getElementById('wordCount').textContent = finalText.split(/\s+/).filter(function(w){ return w; }).length;
   updateJSONDisplay();
 }
 
 // ========== BUILD VIDEO ==========
-function updateIntensityLabel() {
-  var val = gv('videoCameraIntensity');
-  var labels = { '1':'Nivel 1 — Muy Sutil', '2':'Nivel 2 — Lento', '3':'Nivel 3 — Normal', '4':'Nivel 4 — Rápido', '5':'Nivel 5 — Muy Agresivo' };
-  document.getElementById('intensityLabel').textContent = labels[val] || labels['3'];
-}
-function getSpeedText(level) {
-  var s = { '1':'with extremely slow and subtle movement intensity', '2':'with slow and steady movement intensity', '3':'with moderate movement intensity', '4':'with rapid and dynamic movement intensity', '5':'with extremely fast and aggressive movement intensity' };
-  return s[level] || s['3'];
-}
 function buildVideoPrompt() {
   var parts = [];
   var source = gv('videoSourcePrompt'), pVal = gv('videoPlatform');
@@ -5138,23 +5387,64 @@ function buildVideoPrompt() {
   var tStart = gv('videoTransStart'), tEnd = gv('videoTransEnd');
   var fx = gv('videoEffects'), audio = gv('videoAudio');
   var aspect = gv('videoAspect'), quality = gv('videoQuality');
+
   var tipEl = document.getElementById('platformTip');
-  var tips = { 'veo3':'Veo 3: Usa lenguaje natural detallado.', 'kling':'Kling: Excelente con image-to-video.', 'runway':'Runway Gen-4: Excelente control.', 'pika':'Pika: Bueno para clips cortos.', 'luma':'Luma: Fuerte en looks cinematográficos.', 'minimax':'Minimax: Buena calidad.', 'wan':'Wan 2.1: Responde bien a coordenadas.', 'seedance':'Seedance: Fórmulas dan resultados predecibles.', 'grok':'Grok: Usa fórmulas para ejes específicos.', 'qwen':'Qwen: Responde bien a ejes X,Y,Z.', 'generic':'Genérico: Universal.' };
-  if (pVal && tips[pVal]) { tipEl.textContent = tips[pVal]; tipEl.style.display = 'block'; } else { tipEl.style.display = 'none'; }
+  var tips = {
+    'veo3':'Veo 3: Usa lenguaje natural detallado.',
+    'kling':'Kling: Excelente con image-to-video.',
+    'runway':'Runway Gen-4: Excelente control de cámara.',
+    'pika':'Pika: Bueno para clips cortos.',
+    'luma':'Luma: Fuerte en looks cinematográficos.',
+    'minimax':'Minimax: Buena calidad general.',
+    'wan':'Wan 2.1: Responde bien a coordenadas.',
+    'seedance':'Seedance: Fórmulas dan resultados predecibles.',
+    'grok':'Grok: Usa fórmulas para ejes específicos.',
+    'qwen':'Qwen: Responde bien a ejes X,Y,Z.',
+    'generic':'Genérico: Universal.'
+  };
+  if (pVal && tips[pVal]) { tipEl.textContent = tips[pVal]; tipEl.style.display = 'block'; }
+  else { tipEl.style.display = 'none'; }
+
   if (pText && pVal) parts.push('[Platform: ' + pText + ']');
-  if (source) parts.push('Scene: ' + source);
-  if (camMoveRaw) { parts.push(camMoveRaw.replace('{SPEED}', getSpeedText(intensity))); }
-  if (subAct) parts.push('Subject action: ' + subAct);
-  if (envMot) parts.push('Environment: ' + envMot);
-  if (tStart) parts.push('Opens with: ' + tStart.toLowerCase() + '.');
-  if (tEnd) parts.push('Ends with: ' + tEnd.toLowerCase() + '.');
-  if (dur) parts.push('Duration: ' + dur.split(' ')[0] + ' seconds.');
-  if (fps) parts.push(fps + '.');
-  if (fx) parts.push('Effect: ' + fx.toLowerCase() + '.');
-  if (audio) parts.push('Audio mood: ' + audio.toLowerCase() + '.');
-  if (aspect) parts.push(aspect + ' format.');
-  parts.push(quality + ', smooth motion, cinematic video.');
-  updatePromptDisplay(parts, source || camMoveRaw || subAct);
+  if (source) parts.push(source);
+  if (camMoveRaw) parts.push(camMoveRaw.replace('{SPEED}', getSpeedText(intensity)));
+  if (subAct) parts.push(subAct);
+  if (envMot) parts.push(envMot);
+  if (tStart) parts.push('Opens with: ' + tStart.toLowerCase());
+  if (tEnd) parts.push('Ends with: ' + tEnd.toLowerCase());
+  if (dur) parts.push('Duration: ' + dur.split(' ')[0] + ' seconds');
+  if (fps) parts.push(fps);
+  if (fx) parts.push('Effect: ' + fx.toLowerCase());
+  if (audio) parts.push('Audio mood: ' + audio.toLowerCase());
+  if (aspect) parts.push(aspect + ' format');
+  parts.push(quality + ', smooth motion, cinematic video');
+
+  // Plataforma del selector visual (módulo superior)
+  var platState = getPlatformState('video');
+  var platCfg = PLATFORM_CONFIG[platState.platform] || PLATFORM_CONFIG['runway'];
+
+  // Para video, siempre usar estructura de video estructurado con los datos reales
+  var extraData = {
+    subject: source || 'Scene as described',
+    cameraMove: camMoveRaw ? camMoveRaw.replace('{SPEED}', getSpeedText(intensity)) : 'Static locked shot',
+    envMotion: envMot || 'Environment remains still',
+    duration: (dur ? dur.split(' ')[0] + ' seconds' : '5 seconds') + (fps ? ', ' + fps : ', 24fps cinematic')
+  };
+
+  var finalText;
+  // Si la plataforma seleccionada es de video, usar formato estructurado
+  if (platCfg.mode === 'video') {
+    finalText = buildVideoStructuredPrompt('video', parts, platState, extraData);
+  } else {
+    finalText = formatPromptForPlatform('video', parts, extraData);
+  }
+
+  var pb = document.getElementById('promptBox');
+  var hasContent = !!(source || camMoveRaw || subAct);
+  if (hasContent) { pb.textContent = finalText; pb.classList.remove('empty'); }
+  else { pb.textContent = 'Tu prompt de video aparecerá aquí en tiempo real...'; pb.classList.add('empty'); }
+  document.getElementById('charCount').textContent = finalText.length;
+  document.getElementById('wordCount').textContent = finalText.split(/\s+/).filter(function(w){ return w; }).length;
   updateJSONDisplay();
 }
 
@@ -5684,9 +5974,7 @@ function setGrillaMode(mode) {
 }
 // ========== BUILD CHARACTER (MÓDULO ROJO - INDEPENDIENTE) ==========
 function buildCharacterPrompt() {
-  // Solo ejecutar si estamos en modo rojo
   if (grillaMode !== 'red') return;
-  
   var parts = [];
   var tsCharacter = gv('tsCharacter');
   var tsClothing = gv('tsClothing');
@@ -5698,41 +5986,323 @@ function buildCharacterPrompt() {
   var tsLighting = gv('tsLighting');
   var tsResolution = gv('tsResolution');
 
-  // Estilo
-  if (tsStyle) parts.push(tsStyle + '.');
-
-  // Tipo de shot (SOLO full body, sin grilla)
-  parts.push('Full body character portrait, single image.');
-
-  // Personaje
+  if (tsStyle) parts.push(tsStyle);
+  parts.push('Full body character portrait, single image');
   if (tsCharacter) parts.push('Character: ' + tsCharacter);
   if (tsClothing) parts.push('Clothing details: ' + tsClothing);
-
-  // Cantidad de personajes
-  if (tsCharCount === 'duo') parts.push('Two characters side by side for comparison.');
-  if (tsCharCount === 'group') parts.push('Multiple characters shown together.');
-
-  // Fondo
-  if (tsBackground) parts.push(tsBackground + '.');
-
-  // Cámara y lente
+  if (tsCharCount === 'duo') parts.push('Two characters side by side for comparison');
+  if (tsCharCount === 'group') parts.push('Multiple characters shown together');
+  if (tsBackground) parts.push(tsBackground);
   if (tsCamera || tsLens) {
     var cp = [];
     if (tsCamera) cp.push('shot on ' + tsCamera);
     if (tsLens) cp.push(tsLens);
-    parts.push('Captured with ' + cp.join(', ') + '.');
+    parts.push('Captured with ' + cp.join(', '));
   }
-
-  // Iluminación
-  if (tsLighting) parts.push(tsLighting + '.');
-
-  // Resolución y calidad
+  if (tsLighting) parts.push(tsLighting);
   var res = tsResolution || '4K';
-  parts.push(res + ' resolution, highly detailed, professional character reference.');
+  parts.push(res + ' resolution, highly detailed, professional character reference');
+
+  var extraData = { subject: tsCharacter || 'Character portrait' };
+  var finalText = formatPromptForPlatform('grilla', parts, extraData);
 
   var hasContent = !!(tsCharacter || tsClothing || tsCamera || tsLighting);
-  updatePromptDisplay(parts, hasContent);
+  var pb = document.getElementById('promptBox');
+  if (hasContent) { pb.textContent = finalText; pb.classList.remove('empty'); }
+  else { pb.textContent = 'Tu prompt aparecerá aquí en tiempo real...'; pb.classList.add('empty'); }
+  document.getElementById('charCount').textContent = finalText.length;
+  document.getElementById('wordCount').textContent = finalText.split(/\s+/).filter(function(w){ return w; }).length;
   updateJSONDisplay();
+}
+// ========== PLATFORM SELECTOR SYSTEM ==========
+var PLATFORM_CONFIG = {
+  'nanobana':   { name:'Nano Banana', icon:'🍌', mode:'universal', label:'UNIVERSAL / NATURAL', badgeClass:'mode-universal', desc:'Lenguaje natural descriptivo — texto fluido y detallado.' },
+  'chatgpt':    { name:'ChatGPT',     icon:'🤖', mode:'universal', label:'UNIVERSAL / NATURAL', badgeClass:'mode-universal', desc:'Lenguaje natural descriptivo — texto fluido y detallado.' },
+  'qwen':       { name:'Qwen',        icon:'🔷', mode:'universal', label:'UNIVERSAL / NATURAL', badgeClass:'mode-universal', desc:'Lenguaje natural descriptivo — texto fluido y detallado.' },
+  'grok':       { name:'Grok',        icon:'⚡', mode:'universal', label:'UNIVERSAL / NATURAL', badgeClass:'mode-universal', desc:'Lenguaje natural descriptivo — texto fluido y detallado.' },
+  'universales':{ name:'Universal',   icon:'🌐', mode:'universal', label:'UNIVERSAL / NATURAL', badgeClass:'mode-universal', desc:'Compatible con cualquier plataforma de imagen.' },
+  'midjourney': { name:'Midjourney',  icon:'🎨', mode:'midjourney',label:'MIDJOURNEY',          badgeClass:'mode-midjourney', desc:'Sintaxis MJ: :: pesos, --ar, --style, --no, --q, --stylize' },
+  'sd':         { name:'Stable Diffusion', icon:'🌀', mode:'sd',  label:'STABLE DIFFUSION',    badgeClass:'mode-sd',         desc:'Sintaxis SD: (token:peso), negativos separados por coma.' },
+  'runway':     { name:'Runway',      icon:'🎬', mode:'video',     label:'VIDEO / RUNWAY',       badgeClass:'mode-video',     desc:'Estructura: Subject / Camera / Environment / Timing / Style / Avoid' },
+  'kling':      { name:'Kling',       icon:'🎥', mode:'video',     label:'VIDEO / KLING',        badgeClass:'mode-video',     desc:'Estructura: Subject / Camera / Environment / Timing / Style / Avoid' }
+};
+
+// Estado por pestaña
+var platformState = {
+  grilla:  { platform: 'universales', negatives: '', mjAr: '3:2', mjStyle: 'raw', mjStylize: '100', mjQ: '2', sdWeight: '1.3' },
+  cine:    { platform: 'universales', negatives: '', mjAr: '3:2', mjStyle: 'raw', mjStylize: '100', mjQ: '2', sdWeight: '1.3' },
+  anime:   { platform: 'universales', negatives: '', mjAr: '3:2', mjStyle: 'raw', mjStylize: '100', mjQ: '2', sdWeight: '1.3' },
+  horror:  { platform: 'universales', negatives: '', mjAr: '3:2', mjStyle: 'raw', mjStylize: '100', mjQ: '2', sdWeight: '1.3' },
+  video:   { platform: 'runway',      negatives: '', mjAr: '16:9', mjStyle: 'raw', mjStylize: '100', mjQ: '2', sdWeight: '1.3' }
+};
+
+function selectPlatform(tabName, platformKey) {
+  if (!platformState[tabName]) return;
+  platformState[tabName].platform = platformKey;
+  var cfg = PLATFORM_CONFIG[platformKey];
+  if (!cfg) return;
+
+  // Actualizar botones visuales
+  var btns = document.querySelectorAll('[data-plat-tab="' + tabName + '"]');
+  btns.forEach(function(b) {
+    b.classList.remove('selected');
+    if (b.dataset.platKey === platformKey) b.classList.add('selected');
+  });
+
+  // Actualizar badge e indicador
+  var badge = document.getElementById('plat-badge-' + tabName);
+  var desc  = document.getElementById('plat-desc-' + tabName);
+  if (badge) {
+    badge.textContent = cfg.label;
+    badge.className = 'platform-mode-badge ' + cfg.badgeClass;
+  }
+  if (desc) desc.textContent = cfg.desc;
+
+  // Mostrar/ocultar campos según modo
+  var negField = document.getElementById('plat-neg-field-' + tabName);
+  var mjOpts   = document.getElementById('plat-mj-opts-' + tabName);
+  var sdWts    = document.getElementById('plat-sd-weights-' + tabName);
+
+  if (negField) negField.classList.toggle('visible', cfg.mode === 'sd' || cfg.mode === 'midjourney');
+  if (mjOpts)   mjOpts.classList.toggle('visible',   cfg.mode === 'midjourney');
+  if (sdWts)    sdWts.classList.toggle('visible',    cfg.mode === 'sd');
+
+  // Rebuilds
+  triggerTabBuild(tabName);
+}
+
+function getPlatformState(tabName) {
+  return platformState[tabName] || { platform: 'universales', negatives: '', mjAr: '3:2', mjStyle: 'raw', mjStylize: '100', mjQ: '2', sdWeight: '1.3' };
+}
+
+function updatePlatformNeg(tabName, val) {
+  if (platformState[tabName]) platformState[tabName].negatives = val;
+  triggerTabBuild(tabName);
+}
+
+function updatePlatformMJ(tabName, field, val) {
+  if (platformState[tabName]) platformState[tabName][field] = val;
+  triggerTabBuild(tabName);
+}
+
+function triggerTabBuild(tabName) {
+  if (tabName === 'cine')   buildPrompt();
+  else if (tabName === 'anime')  buildAnimePrompt();
+  else if (tabName === 'horror') buildHorrorPrompt();
+  else if (tabName === 'grilla') {
+    if (grillaMode === 'red') buildCharacterPrompt();
+    else buildGridPrompt();
+  }
+  else if (tabName === 'video')  buildVideoPrompt();
+}
+
+// Formateador de salida por plataforma
+function formatPromptForPlatform(tabName, rawParts, extraData) {
+  var state = getPlatformState(tabName);
+  var cfg = PLATFORM_CONFIG[state.platform] || PLATFORM_CONFIG['universales'];
+  var mode = cfg.mode;
+
+  if (mode === 'universal') {
+    return rawParts.join(' ').replace(/ +/g, ' ').trim();
+  }
+
+  if (mode === 'midjourney') {
+    return buildMJPrompt(tabName, rawParts, state, extraData);
+  }
+
+  if (mode === 'sd') {
+    return buildSDPrompt(tabName, rawParts, state, extraData);
+  }
+
+  if (mode === 'video') {
+    return buildVideoStructuredPrompt(tabName, rawParts, state, extraData);
+  }
+
+  return rawParts.join(' ').trim();
+}
+
+function buildMJPrompt(tabName, rawParts, state, extra) {
+  extra = extra || {};
+  var lines = [];
+
+  // Sujeto principal con peso
+  var subject = extra.subject || rawParts[0] || '';
+  if (subject) lines.push(subject);
+
+  // Resto de partes descriptivas
+  var rest = rawParts.slice(1);
+  if (rest.length) lines.push(rest.join(', '));
+
+  var base = lines.join(' :: ');
+
+  // Negativos
+  var negs = state.negatives || '';
+
+  // Parámetros MJ
+  var params = [];
+  if (state.mjAr)      params.push('--ar ' + state.mjAr);
+  if (state.mjStyle)   params.push('--style ' + state.mjStyle);
+  if (state.mjStylize) params.push('--stylize ' + state.mjStylize);
+  if (state.mjQ)       params.push('--q ' + state.mjQ);
+  if (negs)            params.push('--no ' + negs);
+
+  return base + ' ' + params.join(' ');
+}
+
+function buildSDPrompt(tabName, rawParts, state, extra) {
+  extra = extra || {};
+  var weight = state.sdWeight || '1.3';
+  var negs   = state.negatives || '';
+
+  // Construir partes con pesos SD
+  var positiveParts = rawParts.map(function(p, i) {
+    if (!p) return '';
+    p = p.trim().replace(/\.$/, '');
+    if (i === 0) return '(' + p + ':' + weight + ')';
+    return p;
+  }).filter(Boolean);
+
+  var result = positiveParts.join(', ');
+
+  if (negs) {
+    result += '\n\nNegative prompt: ' + negs;
+  }
+  return result;
+}
+
+function buildVideoStructuredPrompt(tabName, rawParts, state, extra) {
+  extra = extra || {};
+  var platName = (PLATFORM_CONFIG[getPlatformState(tabName).platform] || {}).name || 'Video';
+  var lines = ['[' + platName.toUpperCase() + ' — VIDEO PROMPT]', ''];
+
+  lines.push('SUBJECT:');
+  lines.push(extra.subject || rawParts[0] || 'Describe the subject here.');
+  lines.push('');
+
+  lines.push('CAMERA MOVEMENT:');
+  lines.push(extra.cameraMove || 'Static locked shot.');
+  lines.push('');
+
+  lines.push('ENVIRONMENT MOTION:');
+  lines.push(extra.envMotion || 'Environment remains still.');
+  lines.push('');
+
+  lines.push('TIMING:');
+  lines.push(extra.duration || '5 seconds, 24fps cinematic.');
+  lines.push('');
+
+  lines.push('STYLE:');
+  var styleparts = rawParts.slice(1).join(', ').replace(/ +/g, ' ').trim();
+  lines.push(styleparts || 'Cinematic, high quality.');
+  lines.push('');
+
+  var negs = state.negatives || '';
+  lines.push('AVOID:');
+  lines.push(negs || 'text, watermark, blur, distortion, artifacts.');
+
+  return lines.join('\n');
+}
+
+// HTML del módulo selector de plataformas — genera para cada tab
+function buildPlatformSelectorHTML(tabName, defaultPlatform) {
+  var platforms = [
+    { key:'nanobana',   name:'Nano Banana', icon:'🍌' },
+    { key:'chatgpt',    name:'ChatGPT',     icon:'🤖' },
+    { key:'midjourney', name:'Midjourney',  icon:'🎨' },
+    { key:'runway',     name:'Runway',      icon:'🎬' },
+    { key:'kling',      name:'Kling',       icon:'🎥' },
+    { key:'sd',         name:'Stable Diff', icon:'🌀' },
+    { key:'qwen',       name:'Qwen',        icon:'🔷' },
+    { key:'grok',       name:'Grok',        icon:'⚡' },
+    { key:'universales',name:'Universal',   icon:'🌐' }
+  ];
+
+  var defCfg = PLATFORM_CONFIG[defaultPlatform] || PLATFORM_CONFIG['universales'];
+  var isVideo = (tabName === 'video');
+
+  var html = '<div class="platform-selector-module">';
+  html += '<div class="platform-selector-header">';
+  html += '<span class="platform-selector-badge">🖥️</span>';
+  html += '<h3>Selector de Plataforma</h3>';
+  html += '</div>';
+  html += '<div class="platform-selector-body">';
+
+  // Grid de botones
+  html += '<div class="platform-grid">';
+  platforms.forEach(function(p) {
+    var isSelected = (p.key === defaultPlatform);
+    html += '<button type="button" class="platform-btn' + (isSelected ? ' selected' : '') + '" ';
+    html += 'data-plat-tab="' + tabName + '" data-plat-key="' + p.key + '" ';
+    html += 'onclick="selectPlatform(\'' + tabName + '\',\'' + p.key + '\')">';
+    html += '<span class="plat-icon">' + p.icon + '</span>';
+    html += p.name;
+    html += '</button>';
+  });
+  html += '</div>';
+
+  // Indicador de modo activo
+  html += '<div class="platform-mode-indicator">';
+  html += '<span class="platform-mode-badge ' + defCfg.badgeClass + '" id="plat-badge-' + tabName + '">' + defCfg.label + '</span>';
+  html += '<span class="platform-mode-desc" id="plat-desc-' + tabName + '">' + defCfg.desc + '</span>';
+  html += '</div>';
+
+  // Campo de negativos (SD y MJ)
+  var negVis = (defCfg.mode === 'sd' || defCfg.mode === 'midjourney') ? ' visible' : '';
+  html += '<div class="platform-negative-field' + negVis + '" id="plat-neg-field-' + tabName + '">';
+  html += '<div class="field-label">⛔ Negativos / Avoid — Lo que NO debe aparecer</div>';
+  html += '<input type="text" placeholder="Ej: text, watermark, blur, bad hands, deformed..." ';
+  html += 'oninput="updatePlatformNeg(\'' + tabName + '\', this.value)">';
+  html += '</div>';
+
+  // Opciones Midjourney
+  var mjVis = (defCfg.mode === 'midjourney') ? ' visible' : '';
+  html += '<div class="platform-mj-opts' + mjVis + '" id="plat-mj-opts-' + tabName + '">';
+
+  html += '<div class="mj-option-field">';
+  html += '<label>--ar (Aspect Ratio)</label>';
+  html += '<select onchange="updatePlatformMJ(\'' + tabName + '\', \'mjAr\', this.value)">';
+  ['1:1','3:2','2:3','16:9','9:16','4:3','3:4','2:1','2.39:1','21:9'].forEach(function(ar) {
+    html += '<option' + (ar === '3:2' ? ' selected' : '') + '>' + ar + '</option>';
+  });
+  html += '</select></div>';
+
+  html += '<div class="mj-option-field">';
+  html += '<label>--style</label>';
+  html += '<select onchange="updatePlatformMJ(\'' + tabName + '\', \'mjStyle\', this.value)">';
+  ['raw','4a','4b','4c','expressive','cute','scenic','original'].forEach(function(s) {
+    html += '<option' + (s === 'raw' ? ' selected' : '') + '>' + s + '</option>';
+  });
+  html += '</select></div>';
+
+  html += '<div class="mj-option-field">';
+  html += '<label>--stylize (0-1000)</label>';
+  html += '<input type="number" min="0" max="1000" value="100" ';
+  html += 'oninput="updatePlatformMJ(\'' + tabName + '\', \'mjStylize\', this.value)">';
+  html += '</div>';
+
+  html += '<div class="mj-option-field">';
+  html += '<label>--q (Calidad)</label>';
+  html += '<select onchange="updatePlatformMJ(\'' + tabName + '\', \'mjQ\', this.value)">';
+  ['.25','.5','1','2'].forEach(function(q) {
+    html += '<option' + (q === '2' ? ' selected' : '') + '>' + q + '</option>';
+  });
+  html += '</select></div>';
+
+  html += '</div>'; // end mj-opts
+
+  // Opciones Stable Diffusion
+  var sdVis = (defCfg.mode === 'sd') ? ' visible' : '';
+  html += '<div class="platform-sd-weights' + sdVis + '" id="plat-sd-weights-' + tabName + '">';
+  html += '<div class="field-label">⚖️ Peso del Sujeto Principal (1.0 = normal, 1.5 = muy importante)</div>';
+  html += '<select onchange="updatePlatformMJ(\'' + tabName + '\', \'sdWeight\', this.value)">';
+  ['1.0','1.1','1.2','1.3','1.4','1.5','1.6','1.7','1.8','2.0'].forEach(function(w) {
+    html += '<option' + (w === '1.3' ? ' selected' : '') + '>' + w + '</option>';
+  });
+  html += '</select>';
+  html += '</div>';
+
+  html += '</div></div>'; // end body + module
+  return html;
 }
 // ========== INIT GRILLA MODE ==========
 // Asegura que el modo inicial sea correcto al cargar
